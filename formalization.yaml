@@ -7,8 +7,9 @@ version: "v0.4"
 project:
   name: "general-linear-groups"
   description: >-
-    Finite general linear groups over possibly noncommutative rings: Whitehead
-    block factorization and doubled lifting, reindexing, nil and quasiregular
+    Finite general linear groups over possibly noncommutative rings: elementary
+    units and subgroup membership, Whitehead block factorization and doubled
+    lifting, reindexing, nil and quasiregular
     ideals, congruence subgroups and quotient lifting, nonunital unitization,
     and matrix trace modulo additive commutators. The trace quotient is an
     additive group, not a quotient ring; its corner inverse requires a chosen
@@ -16,7 +17,7 @@ project:
   authors:
     - "Formal Frontier Agents"
     - "Prism (AI agent; general-linear/ideal theory and source trace research)"
-    - "formalization-worker-b (AI agent; trace extraction Task identified under automation)"
+    - "formalization-worker-b (AI agent; trace extraction and distinct elementary proof and transfer Tasks identified under automation)"
     - "formalization-worker-a (AI agent; explicit positive-power recursor successor Task identified under automation)"
   responsible_maintainers:
     - "Prism (on behalf of the source-maintainer team)"
@@ -44,6 +45,17 @@ sources:
       established; access to the source is not permission to reproduce it.
 
 related_formalizations:
+  - id: "FormalFrontier/incubator@38bd4b3932409b6116cc999137b52f4fd49d2f14"
+    relationship: "adapts"
+    note: >-
+      The original elementary Ring-only proof modules, noncommutative/degenerate
+      client and standalone guide were transferred from this frozen incubator
+      candidate, unaccepted at the transfer-author checkpoint of
+      2026-09-27 06:11 UTC. Only imports, paths, license/author notices and
+      destination-facing documentation changed; no incubator dependency or
+      development ancestry enters this library. Its original author and
+      independent mathematical review are distinct from the destination
+      transfer and its separate computational and promotion decisions.
   - id: "https://github.com/leanprover-community/mathlib4/tree/e37d88a26f3791ed5a93daa1f949af1021b8d103"
     relationship: "builds-on"
     note: >-
@@ -95,6 +107,17 @@ related_formalizations:
 
 status:
   scope: >-
+    Elementary-transfer author-time snapshot at 2026-09-27 06:11 UTC, not a
+    live acceptance or release registry. The new elementary modules were an
+    unaccepted promotion candidate from incubator revision
+    38bd4b3932409b6116cc999137b52f4fd49d2f14 on the previously
+    published destination base 342469a41e5d58e4aec8ac56a14ffd8ed6b79fb6.
+    New-graph CI, fresh independent promotion review, Prism's acceptance,
+    reviewed destination release, GitHub verification and subsequent incubator
+    conversion were separate outstanding gates at that checkpoint. Later
+    decisions bind their exact revisions and are not inferred from this dated
+    observation. The following account is a distinct predecessor snapshot,
+    not the current acceptance status of the elementary transfer.
     Author-time snapshot at 2026-09-26 05:52 UTC, not a live release registry.
     This assembly combines ordinary-readiness input
     0e157fe30daa46dfba4a3bdfb0237b66fddb61ac and metadata input
@@ -114,6 +137,32 @@ status:
     release or completed release verification is claimed. Detailed source
     coverage decisions remain in source repositories.
   main_results:
+    - declaration: "Matrix.GeneralLinearGroup.elementaryUnit"
+      file: "GeneralLinearGroups/Elementary.lean"
+      note: >-
+        Off-diagonal unit 1 + single i j c over any Ring, with inverse,
+        coefficient-addition product and a CommRing-only native-transvection
+        comparison. It requires a finite decidable index type and i different
+        from j, not a commutative coefficient ring.
+    - declaration: "Matrix.GeneralLinearGroup.elementarySubgroup"
+      file: "GeneralLinearGroups/Elementary.lean"
+      note: >-
+        Closure of elementary units, including generator and ordered-list
+        product membership. It is bottom for subsingleton indices without
+        implying that the entire GL group is trivial.
+    - declaration: "Matrix.GeneralLinearGroup.upperUnit_mem_elementarySubgroup"
+      file: "GeneralLinearGroups/ElementaryWhitehead.lean"
+      note: >-
+        Upper block units lie in the elementary subgroup by single-entry
+        decomposition, including empty indices and noncommutative rings.
+    - declaration: "Matrix.GeneralLinearGroup.lowerUnit_mem_elementarySubgroup"
+      file: "GeneralLinearGroups/ElementaryWhitehead.lean"
+      note: "Lower block units use the negative lower-left block over any Ring."
+    - declaration: "Matrix.GeneralLinearGroup.blockDiagonalUnit_mem_elementarySubgroup"
+      file: "GeneralLinearGroups/ElementaryWhitehead.lean"
+      note: >-
+        Doubled diag(g, g⁻¹) lies in the elementary subgroup using the signed
+        swap membership and the existing ordered Whitehead factorization.
     - declaration: "Matrix.GeneralLinearGroup.mapRingHom"
       file: "GeneralLinearGroups/Whitehead.lean"
       note: "Coefficient maps on finite general linear groups over arbitrary semirings."
@@ -245,6 +294,14 @@ automation:
         hive-request-c96601c24931622decfa5ba51d85ecc1377deddb,
         UID ea63f3e8-a310-41c8-89e4-84e9082ca10f; it made no new
         mathematical or native-analysis contribution.
+        The Ring-only elementary proofs, noncommutative/degenerate client and
+        guide were authored in incubator PR84 by distinct worker-b Hive Task
+        hive-request-1d40c1435bdcf9b74e70656bc81b7b2a3179626f,
+        UID 8d3f955e-1034-4229-9ec1-6fc750e9771a. This destination-only
+        transfer and its registration/docs are by worker-b Hive Task
+        hive-request-d5b170c2c524d08ea237131ac1b634cbefb66165,
+        UID 66b8826e-5348-42d2-bf91-7494acf88159. Prism retains
+        responsible-maintainer acceptance and integration.
         Agents used compiler feedback, native mathlib APIs and ordinary Lean
         tactics, including simp, rw, ext, noncomm_ring, abel and omega.
       prompting_notes: >-
@@ -267,11 +324,27 @@ fidelity:
     hypothesis. The trace inverse needs a chosen index although the forward
     map includes empty indices. Neither trace coefficient naturality,
     conjugation, stabilization, projective-module trace nor K0 descent is
-    provided. No stable/direct-limit GL or full source-coverage claim follows.
+    provided. Elementary generators and block membership need Ring only;
+    singleton-index elementary closure is bottom without trivializing GL.
+    No SL=E, elementary normality, stable K1, stable/direct-limit GL or full
+    source-coverage claim follows.
 
 review:
-  status: "revision-specific agent review; successor acceptance external"
+  status: "revision-specific agent review; dated author-time checkpoints below"
   notes: >-
+    At the elementary-transfer author checkpoint of 2026-09-27 06:11 UTC,
+    destination promotion review and full CI were pending. This dated history
+    neither claims later acceptance nor describes later reviews as still pending.
+    Original incubator PR84 commit
+    38bd4b3932409b6116cc999137b52f4fd49d2f14 received independent
+    mathematical/API/provenance approval by worker-a Task
+    hive-request-c9fa9b5503b46dcbbdf27f383a3aea50f2f864c2,
+    UID fec541bc-c631-4a69-bf21-812d9e3523b8, subject to missing
+    full-graph computational acceptance. This does not approve this different
+    destination candidate, establish its e37 mathlib compatibility (which
+    needs a separate destination check), complete its full-root build/private-
+    inclusive axiom audit, or make it a release.
+    The rest of this field describes dated predecessor review history only.
     At the author-time snapshot of 2026-09-26 05:52 UTC, this metadata and the
     explicit-recursor successor had not received fresh independent review;
     that dated observation is not the active review status. Subsequently,

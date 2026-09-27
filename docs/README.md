@@ -1,13 +1,18 @@
 # Native API reference
 
-[API.md](API.md) documents the 128 authored public declarations in this library:
-native displayed signatures including implicit parameters, source docstrings and
-relative links to the same checkout. The aggregate `GeneralLinearGroups` imports
-13 subject modules. `MatrixTraceClient` and `PublicAPIClient` are private test
-modules, not extra public API. All 16 native module records are checked.
+[API.md](API.md) is a **pre-elementary generated snapshot** of 128 authored
+public declarations: native displayed signatures including implicit parameters,
+source docstrings and relative links to unchanged source files. It was bound to
+source revision `907124e973dd20f3efdeb8de0cad42e331b9c6d8`, with 13
+subject modules and the two then-existing private clients, `MatrixTraceClient`
+and `PublicAPIClient` (16 module records). It does **not** cover the new
+`Elementary`, `ElementaryWhitehead` or `ElementaryClient` modules. See the
+[current elementary-matrix guide](ElementaryMatrices.md) for their APIs,
+imports, examples and scope; do not treat this archived inventory as a current
+declaration count or as evidence of new-graph proof integrity.
 
-The root [README](../README.md) gives the mathematical scope and ordinary-import
-example. This reference is not a census of private or generated declarations,
+The root [README](../README.md) gives the current mathematical scope and ordinary-import
+example. The generated snapshot is not a census of private or generated declarations,
 nor a proof or release certificate. Display signatures use the source module's
 namespace, notation and imports; they are not standalone proof-bearing commands.
 No dependency website, HTML, JavaScript, fonts or other web assets are shipped.
@@ -21,10 +26,12 @@ with `lake build doc-gen4`. If the runtime compiler wrapper is not on PATH, add
 the directory containing `elan which lean` to that build's PATH. Do not change
 either manifest or the library's mathematical pins to install the tool.
 
-In this library, fetch the matching mathlib cache successfully before `lake build`.
-Run doc-gen4 in this library's `lake env`, not the tool's. The exact module/source
-map is `MODULE_PATHS` in [the adapter](../scripts/generate_api.py); it includes the
-root, all 13 subject modules, and both `tests/` source files. Analyze each once
+For reproduction of this historical snapshot, use its bound source revision,
+not the current elementary candidate: fetch the matching mathlib cache before
+`lake build` and run doc-gen4 in that library's `lake env`, not the tool's.
+The historical module/source map is `MODULE_PATHS` in
+[the adapter](../scripts/generate_api.py); it includes the root, the original
+13 subject modules, and two `tests/` source files. Analyze each once
 into a fresh shared database. `FULL_SOURCE_COMMIT` below is the 40-character
 `analyzed_source_revision` in [api-manifest.json](api-manifest.json).
 
@@ -112,12 +119,16 @@ the independent worker-b PR35 review of full commit
 `9cec4e1ccee427c7f2748524d194cd7c48ac4214` authenticated the native
 records and renderer and found no mathematical, proof or current-file rights
 defect. It recorded **REQUEST_CHANGES** for ordinary integration and **NONPASS**
-for whole-current-artifact internal readiness because this live prose and
-active metadata needed correction. The declaration linter still exits 1 on
+for whole-current-artifact internal readiness because the prose and
+metadata at that dated checkpoint needed correction. The declaration linter exited 1 on
 four `simpNF` findings and one unused private-test hypothesis; that reviewer
 accepted only those exact convention departures, the truthful-header format
 departure and the two private-only client refusals, not clean lints or a rights
-waiver. This new documentation/metadata correction needs independent review of
-its exact tree and Prism's disposition. Neither the earlier review nor this
-description establishes official internal acceptance, public-history rights,
-GitHub publication, human review or source coverage.
+waiver. At that checkpoint, the documentation/metadata correction needed
+independent review of its exact tree and Prism's disposition; its later
+acceptance/publication must be checked in exact records, not inferred from this
+historical paragraph. The elementary addition was separate and unaccepted at
+its **2026-09-27 06:11 UTC** transfer-author checkpoint; that dated observation
+does not state its later revision-specific status. Neither these older review
+findings nor the archived generated
+reference certify its release, human review or source coverage.

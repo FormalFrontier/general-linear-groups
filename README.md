@@ -8,6 +8,13 @@ arbitrary ring, proves the Whitehead factorization of
 surjective ring homomorphism without claiming that the original general linear
 group map is surjective.
 
+The elementary-matrix layer supplies off-diagonal GL units and their generated
+subgroup for arbitrary, possibly noncommutative rings. Its upper/lower/signed-swap
+and doubled block-diagonal membership results reuse that existing Whitehead
+factorization. See the [elementary-matrix guide](docs/ElementaryMatrices.md) for
+imports, hypotheses, signs, products and degenerate cases. No `SL = E`,
+normality or stable `K₁` result follows.
+
 The reindexing layer transports general linear groups along equivalences of
 finite index types, with identity, composition, inverse and coefficient-map
 naturality laws. It keeps fixed-cardinality notation as an external
@@ -102,14 +109,20 @@ schema-valid metadata alone is not an official release. The root
 author-time snapshot alongside revision-specific agent review status, not a live
 release registry. Internal research and discussion systems are not needed to use
 the public mathematical interface.
+At the elementary-transfer author checkpoint (**2026-09-27 06:11 UTC**), the
+added modules were an **unaccepted promotion candidate**. This dated observation
+is not a live acceptance or release registry; later decisions bind their exact
+revision. Previously published content does not confer release status on additions.
 
 ## Public imports and examples
 
-The [generated API reference](docs/API.md) lists all 128 authored public
-declarations with native signatures, docstrings and local source links.
-Its [reproduction contract](docs/README.md) checks the source/pin binding without
-requiring internal Git history or claiming a published repository address.
-This public reference is distinct from the complete private/generated proof census.
+The [generated API reference](docs/API.md) records a **pre-elementary snapshot**
+of 128 authored public declarations, with native signatures, docstrings and
+local source links. It does not list the new elementary declarations or client;
+use the [current elementary guide](docs/ElementaryMatrices.md) and Lean source
+for those. The [snapshot reproduction contract](docs/README.md) binds its
+original source/pins without requiring internal Git history. This historical
+reference is distinct from the complete private/generated proof census.
 
 Use `import GeneralLinearGroups` for the complete public interface, or a subject
 module such as `GeneralLinearGroups.MatrixTrace` for narrower dependencies.
@@ -132,12 +145,13 @@ example {R S n : Type*} [Ring R] [Ring S] [Fintype n] [DecidableEq n]
 ```
 
 The same statement is retained as a named private stored-proof declaration in
-`tests/PublicAPIClient.lean`. Both client modules are default build targets;
+`tests/PublicAPIClient.lean`. All three client modules are default build targets;
 test declarations are deliberately private and are not additional library API.
 
 | Subject module(s) | Representative public interface | Boundary |
 | --- | --- | --- |
 | `Whitehead`, `Reindex` | `mapRingHom_liftBlockDiagonal`, `reindexEquiv` | Doubled lift and equal-cardinality reindexing, not stable GL |
+| `Elementary`, `ElementaryWhitehead` | `elementaryUnit`, `elementarySubgroup`, `blockDiagonalUnit_mem_elementarySubgroup` | Ring-only elementary membership after doubling; no `SL = E` or normality assertion |
 | `QuasiregularIdeal`, `NilIdeal`, `MatrixQuasiregular` | `IsQuasiregular`, `IsNil`, `IsQuasiregular.matrix` in `TwoSidedIdeal` | Global ideal predicates; pointwise nil is not uniform ideal nilpotence |
 | `LocalQuotient` | `TwoSidedIdeal.quotientDivisionRing` | Explicit local structure, not a global instance |
 | `CongruenceSubgroup`, `QuasiregularQuotient` | `idealGeneralLinearGroupEquivCongruence`, `isUnit_of_mapMatrix_quotient_isUnit` | Exactness for any ideal; unit reflection and quotient surjectivity require quasiregularity |
@@ -168,12 +182,13 @@ lake build
 ```
 
 The cache fetch must succeed before building. The literal default build includes
-all library modules and both clients. To repeat focused and direct source checks:
+all library modules and three clients. To repeat focused and direct source checks:
 
 ```sh
 lake --wfail -KwarningAsError=true build GeneralLinearGroups GeneralLinearGroupsTests
 lake env lean -DwarningAsError=true tests/PublicAPIClient.lean
 lake env lean -DwarningAsError=true tests/MatrixTraceClient.lean
+lake env lean -DwarningAsError=true tests/ElementaryClient.lean
 ```
 
 An ordinary replay with `-T0` removes Lean's allocation timeout; it is not a
@@ -197,10 +212,10 @@ acceptance requires independent review, guarded preparation and a durable record
 binding the full commit and tree. Public-lineage review, promotion and publication
 are separate. Tags are deferred. No cross-mathlib-pin compatibility is claimed.
 
-Earlier ordinary-readiness baseline (Linux, Lean4.34rc2, `LEAN_NUM_THREADS=2`, matching
+Pre-elementary ordinary-readiness baseline (Linux, Lean4.34rc2, `LEAN_NUM_THREADS=2`, matching
 dependency cache already fetched): after `lake clean general-linear-groups`,
 the warning-fatal literal default build rebuilt all16 project modules, including
-both clients, in16.635 seconds wall time (29.111 seconds user,8.613 seconds system;
+both then-existing clients, in16.635 seconds wall time (29.111 seconds user,8.613 seconds system;
 1832 Lake jobs including cached dependencies). This is a warm-dependency,
 clean-project measurement, not an all-dependency source-build time or a speedup
 claim. Cache retrieval took approximately101 seconds in that run. Timings depend
@@ -216,7 +231,7 @@ modules failed the private-module linter by design, a separately accepted
 non-export convention departure. These findings are not blanket lint waivers;
 full release and public-history rights checks are separate.
 
-The subsequent full-readiness author run (same pinned environment and two Lean
+The pre-elementary full-readiness author run (same pinned environment and two Lean
 threads) fetched the matching cache before a clean default build: 1832 jobs,
 all 16 modules, 18.913 seconds wall time. It then added 58 docstrings without
 changing any mathematical/proof text or attributes; the rebuild passed and native
@@ -244,6 +259,12 @@ any acceptance; the prior REQUEST_CHANGES/NONPASS do not approve this successor.
 No official internal release, public-lineage review, GitHub publication or
 source-coverage decision is asserted here.
 
+The preceding paragraph records the **pre-elementary author-time checkpoint**;
+its pending decisions and no-publication statement are not live status for the
+previously published base. They do not apply as a review or computation pass to
+the elementary addition: its exact-candidate CI, independent promotion review,
+Prism's acceptance and release decisions are separate revision-specific records.
+
 ## License, authors and provenance
 
 Original project contributions are distributed under the
@@ -260,6 +281,21 @@ development reviews were contributed by the worker identities and Anchor,
 Atlas, Beacon and Lattice; exact authors, Task execution identifiers, revisions,
 review scopes and findings are retained in the repository history and issues.
 Collective author credit does not assert a copyright holder.
+
+The original Ring-only elementary proofs, client and guide were authored for
+the incubator by worker-b Task
+`hive-request-1d40c1435bdcf9b74e70656bc81b7b2a3179626f` (UID
+`8d3f955e-1034-4229-9ec1-6fc750e9771a`). The distinct worker-b Task
+`hive-request-d5b170c2c524d08ea237131ac1b634cbefb66165` (UID
+`66b8826e-5348-42d2-bf91-7494acf88159`) transfers that unchanged
+mathematics into this library, adapting imports, headers and destination
+documentation. At that transfer's **2026-09-27 06:11 UTC** checkpoint, the source
+review approved only the frozen mathematical/API/provenance content, conditional
+on computational acceptance; destination review and full checks were pending.
+This is provenance history, not the status of later exact-revision decisions.
+Prism authored the reused Whitehead layer and
+is the responsible maintainer for the destination decision. Mathlib contributors
+retain credit and licensing for the imported foundational APIs.
 
 The distinct worker-a fixture Task
 `hive-request-301d13e69087461df1d9f6514c98f2515fe43c2f`

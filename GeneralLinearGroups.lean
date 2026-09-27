@@ -5,6 +5,8 @@ Authors: Formal Frontier Agents
 module
 
 public import GeneralLinearGroups.Whitehead
+public import GeneralLinearGroups.Elementary
+public import GeneralLinearGroups.ElementaryWhitehead
 public import GeneralLinearGroups.Reindex
 public import GeneralLinearGroups.CongruenceSubgroup
 public import GeneralLinearGroups.QuasiregularIdeal
@@ -25,6 +27,10 @@ Reusable results about general linear groups, ideal congruence subgroups, nil
 and quasi-regular ideals, reflection of matrix units through quasi-regular
 quotients, local quotients, block factorizations, stability, and matrix trace
 modulo additive commutators over arbitrary unital rings.
+
+The elementary layer supplies Ring-only off-diagonal GL units, their generated
+subgroup, and membership of Whitehead's upper/lower/signed-swap and doubled
+block-diagonal units, including empty index types and trivial rings.
 
 The nonunital-nilpotent layer defines positive-power nilpotence without a
 multiplicative identity, proves strictly upper triangular matrices nilpotent,

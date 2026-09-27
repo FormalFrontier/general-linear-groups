@@ -13,4 +13,4 @@ name = "GeneralLinearGroups"
 [[lean_lib]]
 name = "GeneralLinearGroupsTests"
 srcDir = "tests"
-roots = ["MatrixTraceClient", "PublicAPIClient"]
+roots = ["MatrixTraceClient", "PublicAPIClient", "ElementaryClient"]
