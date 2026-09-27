@@ -33,6 +33,20 @@ blocks are explicitly supplied as units. See the
 [rectangular-block guide](docs/RectangularBlockUnits.md) for the exact APIs,
 signs, hypotheses and unequal-rank private client.
 
+The native dual-number layer uses the actual reduction kernels in finite GL,
+finite SL and scalar units over any commutative ring, and identifies them with
+the additive matrix, trace-zero Lie-algebra and scalar coefficients respectively.
+It includes determinant/trace compatibility, SL inclusion, honest change of
+coefficients and **left** conjugation, including nonconstant dual-number units.
+The [kernel guide](docs/DualNumberKernels.md) and
+[adjoint guide](docs/DualNumberKernelAdjoint.md) give imports, naturality,
+orientation and examples. Coefficient and index universes are independent;
+finite ranks may be empty, and zero rings and characteristic two are included.
+The first-order kernel groups are abelian: their group commutator does not
+encode the generally nonzero matrix Lie bracket. These APIs assert no tangent
+scheme, arbitrary scheme base change, stable `K₁`, point-bridge promotion or
+source-passage coverage.
+
 The reindexing layer transports general linear groups along equivalences of
 finite index types, with identity, composition, inverse and coefficient-map
 naturality laws. It keeps fixed-cardinality notation as an external
@@ -127,6 +141,35 @@ schema-valid metadata alone is not an official release. The root
 author-time snapshot alongside revision-specific agent review status, not a live
 release registry. Internal research and discussion systems are not needed to use
 the public mathematical interface.
+
+At the **2026-09-27 native-kernel registration-author checkpoint**, this
+eleven-path assembly was an **unaccepted** candidate. Its first parent, Prism's
+PR52 readiness revision `78409daf0c29fa8c775a7d1a2256e21241395208`,
+was frozen and unaccepted when assigned; Prism subsequently accepted and
+protected-merged that exact revision (11:58:41 UTC). The rectangular
+predecessor's distinct reviewed public release `2509e13448a0ee4229a22204c73fa20faa0f0ba3`
+was verified on GitHub by the owner at 12:04 UTC. Neither event then accepted or
+published this native assembly. Its second parent supplies the source-reviewed
+six leaves at `3858382e2ce4f9e832cc24d9b2413afed2af7b0e`;
+their source-only approval did not approve registration. At that checkpoint,
+the assembled destination still needed a full-graph build, complete
+private-inclusive transitive standard-axiom audit, fresh independent assembly
+review, Lattice's acceptance and protected integration. Earlier unaccepted
+rectangular notes below remain dated history.
+
+At the **2026-09-27 release-readiness author checkpoint**, Lattice has accepted
+and protected-integrated the native assembly as PR55/main
+`4a85ce8223c87d2bfa47659e702f89c5442e5f56`. Native CI462 successfully
+built the registered root and all eleven default clients and audited all 35
+repository Lean modules, including private declarations, against the standard
+three axioms. The audit covered 729 module-origin declarations, including
+generated and private origins; this is not a count of public API entries or the
+121 selected metadata results. A distinct worker-a independently approved the
+source/registration/API assembly. This documentation-only readiness candidate
+is **not yet independently accepted as a release or published**; the separate
+reviewed internal/public release and verified publication remain Lattice's
+decisions. No source-passage coverage is inferred from code acceptance.
+
 At the elementary-transfer author checkpoint (**2026-09-27 06:11 UTC**), the
 added modules were an **unaccepted promotion candidate**. This dated observation
 is not a live acceptance or release registry; later decisions bind their exact
@@ -162,9 +205,10 @@ or assert source correspondence or coverage.
 
 The [generated API reference](docs/API.md) records a **pre-elementary snapshot**
 of 128 authored public declarations, with native signatures, docstrings and
-local source links. It does not list the later elementary or relative declarations
-or clients; use the [current guide index](docs/README.md) and Lean sources
-for those. The [snapshot reproduction contract](docs/README.md) binds its
+local source links. It does not list later elementary, relative or native
+dual-number declarations or clients; use the
+[current guide index](docs/README.md) and Lean sources for those. The
+[snapshot reproduction contract](docs/README.md) binds its
 original source/pins without requiring internal Git history. This historical
 reference is distinct from the complete private/generated proof census.
 
@@ -189,7 +233,7 @@ example {R S n : Type*} [Ring R] [Ring S] [Fintype n] [DecidableEq n]
 ```
 
 The same statement is retained as a named private stored-proof declaration in
-`tests/PublicAPIClient.lean`. All nine client modules are default build targets;
+`tests/PublicAPIClient.lean`. All eleven client modules are default build targets;
 test declarations are deliberately private and are not additional library API.
 
 | Subject module(s) | Representative public interface | Boundary |
@@ -202,6 +246,8 @@ test declarations are deliberately private and are not additional library API.
 | `ElementaryStabilization` | `stabilize`, `stabilize_relativeElementarySubgroup_le` | Monoid hom on semiring units, not matrix-ring hom; relative image inclusion |
 | `RelativeWhiteheadConsequences` | `stabilize_conj_mem_relativeElementarySubgroup`, `stabilize_commutator_mem_relativeElementarySubgroup` | Arbitrary GL conjugation and congruence commutators only after doubling |
 | `RectangularBlockUnits` | `diagonalPairUnit`, `rectangularUpperUnit_mem_elementarySubgroup`, `triangularUnit_inv_val` | Explicit diagonal units; ordered off-block factors; no arbitrary triangular-invertibility converse or stable K₁ |
+| `DualNumberKernels` | `glKerEquiv`, `slKerEquiv`, `unitsKerEquiv`, `detKer_glKerEquiv`, `slToGL`, `glKerMap` | Native GL/SL/units reduction kernels over any CommRing; trace-zero SL, determinant compatibility and coefficient naturality; no tangent-scheme claim |
+| `DualNumberKernelAdjoint` | `slAdjoint`, `glKerEquiv_conj`, `slReadback_conj`, `glKerMap_conj` | Left conjugation by native dual-number units and naturality; not the GL left-multiplication action or the bracket of first-order group commutators |
 | `QuasiregularIdeal`, `NilIdeal`, `MatrixQuasiregular` | `IsQuasiregular`, `IsNil`, `IsQuasiregular.matrix` in `TwoSidedIdeal` | Global ideal predicates; pointwise nil is not uniform ideal nilpotence |
 | `LocalQuotient` | `TwoSidedIdeal.quotientDivisionRing` | Explicit local structure, not a global instance |
 | `CongruenceSubgroup`, `QuasiregularQuotient` | `idealGeneralLinearGroupEquivCongruence`, `isUnit_of_mapMatrix_quotient_isUnit` | Exactness for any ideal; unit reflection and quotient surjectivity require quasiregularity |
@@ -232,8 +278,8 @@ lake build
 ```
 
 The cache fetch must succeed before building. The literal default build includes
-all library modules and nine clients. For optional focused direct checks of
-the original three clients (the six later clients also build by default):
+all library modules and eleven clients. For optional focused direct checks of
+the original three clients (the eight later clients also build by default):
 
 ```sh
 lake --wfail -KwarningAsError=true build GeneralLinearGroups GeneralLinearGroupsTests
@@ -271,6 +317,20 @@ both then-existing clients, in16.635 seconds wall time (29.111 seconds user,8.61
 clean-project measurement, not an all-dependency source-build time or a speedup
 claim. Cache retrieval took approximately101 seconds in that run. Timings depend
 on the machine and network; use bounded parallelism on memory-limited systems.
+
+For the **current native-kernel snapshot** (`4a85ce8223c87d2bfa47659e702f89c5442e5f56`
+and documentation-only successors), the Linux CI run on 2026-09-27 measured
+**37.948 seconds** for `lake --offline --no-cache build GeneralLinearGroups
+GeneralLinearGroupsTests`: 2814 Lake jobs, covering the registered 35 project
+modules and all eleven clients, after the matching mathlib `e37d88a2` cache
+was fetched and verified. The complete CI run, including setup and the separate
+private-inclusive axiom audit, took approximately **6 minutes 2 seconds**.
+These are observed timings for the pinned Lean4.34rc2 environment, not a
+from-source dependency build estimate or a comparison with the smaller
+pre-elementary workload. Cache-download time depends on network/cache state;
+peak CPU and RAM usage were not measured. Use bounded build parallelism on
+memory-limited hosts and audit modules in separate processes; these timings
+do not establish a minimum RAM requirement or a runtime guarantee.
 
 Headers intentionally give the license and author credit without inventing a
 copyright holder. The pinned mathlib header linter requires a copyright-holder
@@ -384,6 +444,27 @@ transfer is by distinct worker-b Task
 `d7ced547-d176-4d48-af8d-ad239d49cff9`); Prism retains mathematical
 planning and responsible-maintainer acceptance, integration and release.
 Source acceptance does not certify this destination graph or source coverage.
+
+The native dual-number kernel and adjoint producers, ordinary clients and guides
+originate in accepted incubator PR103 `e6f66b1e53a2108284b798ced2f9f6316e1ee140`.
+Original kernel producer credit belongs to worker-b Tasks
+`hive-request-fcd501500f0c5ec813d46a71e1ed0b0d7555a0fd` (research) and
+`hive-request-1df68ed8f5e4bab1a07522b5ee97f5a4e124e028` (implementation);
+adjoint research belongs to `hive-request-00bab16826ab0ca04714504bcb66c30d2fa5991a`
+and adjoint implementation to `hive-request-083e63349244c927c6fd7ddd1ceb7b01a722e06c`.
+The exact six-leaf transfer is by worker-b Task
+`hive-request-f1f0750c049a6341076625a8c7823dab83dad5d9` (UID
+`704cc043-3e91-4fd0-984a-4723758a7cc5`), with independent **source-only**
+review by worker-a Task `hive-request-833f90fa150bab66c02ad561e0dce96d03352a38`
+(UID `e364af5b-71d5-41a4-bd74-5219280b8e6c`). This static registration
+is by worker-b Task `hive-request-471fdfa639779d05821d587b5a8ed0979ed76939`
+(UID `2947eb0f-f276-4fb2-9865-ceb03bdd4d82`); Lattice is its responsible
+maintainer. This later release-readiness documentation/metadata correction is
+by worker-b Task `hive-request-3cc18624fcf476e243174522ce76cc986b32a067`
+(UID `57eea2de-3f79-4f78-afec-1e9172ed75fc`), without changes to Lean or
+build inputs. Original code and notices are Apache-2.0; native CI462 and the
+independent PR55 assembly review establish the accepted registered code, not
+independent release acceptance or publication.
 
 The distinct worker-a fixture Task
 `hive-request-301d13e69087461df1d9f6514c98f2515fe43c2f`

@@ -13,16 +13,20 @@ project:
     relative membership and lifting; rectangular block units for independent
     finite indices with explicit diagonal units; reindexing, nil and quasiregular
     ideals, congruence subgroups and quotient lifting, nonunital unitization,
-    and matrix trace modulo additive commutators. The trace quotient is an
-    additive group, not a quotient ring; its corner inverse requires a chosen
-    matrix index.
+    and matrix trace modulo additive commutators; native dual-number GL, SL
+    and scalar-unit reduction kernels, determinant/trace, coefficient maps
+    and the left-conjugation adjoint action over commutative rings. The trace
+    quotient is an additive group, not a quotient ring; its corner inverse
+    requires a chosen matrix index.
   authors:
     - "Formal Frontier Agents"
     - "Prism (AI agent; general-linear/ideal theory and source trace research)"
     - "formalization-worker-b (AI agent; trace extraction and distinct elementary, relative, stabilization and destination transfer Tasks identified under automation)"
     - "formalization-worker-a (AI agent; explicit positive-power recursor successor Task identified under automation)"
+    - "formalization-worker-b (AI agent; native dual-number kernel/adjoint producer and distinct transfer/registration/readiness Tasks identified under automation)"
   responsible_maintainers:
     - "Prism (on behalf of the source-maintainer team)"
+    - "Lattice (native dual-number kernel and adjoint promotion on behalf of the source-maintainer team)"
   license: "Apache-2.0"
 
 sources:
@@ -47,6 +51,23 @@ sources:
       established; access to the source is not permission to reproduce it.
 
 related_formalizations:
+  - id: "FormalFrontier/incubator@e6f66b1e53a2108284b798ced2f9f6316e1ee140"
+    relationship: "adapts"
+    note: >-
+      Accepted incubator PR103, tree
+      01016a5af5cc129d426964e84613c17cc04646fc, supplies the two native
+      kernel/adjoint producers, two private clients and two mathematical guides.
+      The six destination leaf blobs and import adaptations received independent
+      SOURCE-ONLY review by worker-a Task
+      hive-request-833f90fa150bab66c02ad561e0dce96d03352a38,
+      UID e364af5b-71d5-41a4-bd74-5219280b8e6c, on
+      3858382e2ce4f9e832cc24d9b2413afed2af7b0e;
+      full GeneralLinearGroups issue51 comment 52274. This library keeps
+      mathlib e37d88a26f3791ed5a93daa1f949af1021b8d103, not the source
+      graph's mathlib 83abb3e776bdefcbc447a1e44d0debe4010039e5.
+      Earlier source CI, leaf review and focused checks are not registered
+      destination full-graph proof-integrity or release evidence. No incubator
+      dependency or commit ancestry enters this deliverable.
   - id: "FormalFrontier/incubator@1b04c1d15c15b0f7adf7dcfec2861b451a4d1a79"
     relationship: "adapts"
     note: >-
@@ -139,6 +160,44 @@ related_formalizations:
 
 status:
   scope: >-
+    Release-readiness author checkpoint 2026-09-27: Lattice accepted and
+    protected-integrated PR55/main 4a85ce8223c87d2bfa47659e702f89c5442e5f56,
+    tree 1530a96c8dc804ee0a9fc01da0acf7cdcf823cdb. Native CI462
+    successfully built the registered root and eleven default clients and
+    audited all 35 modules, including private declarations, to the standard
+    three axioms. The 729 module-origin declaration rows include private and
+    generated names, not 729 public APIs or selected metadata results. Fresh
+    worker-a review e730a818099f6b5fe9f2ff7bac6fc25e4d86acc5 approved
+    source/registration/API scope; Lattice's code acceptance does not accept
+    this new readiness/internal/public candidate as a release, verify its
+    publication or decide source-passage coverage. The following native
+    registration-author and earlier paragraphs are dated historical checkpoints.
+    Native dual-number registration-author checkpoint 2026-09-27: exactly
+    two producers and two default-built private clients extend the inherited
+    21-producer/nine-client GLG root to 23 producers/eleven clients. The 19
+    source-selected kernel and seven adjoint main_result objects append to
+    all 95 inherited complete objects, for 121. This branch-only eleven-path
+    candidate has first parent Prism's PR52 status revision
+    78409daf0c29fa8c775a7d1a2256e21241395208, frozen UNACCEPTED
+    when assigned but subsequently accepted and protected-merged exactly
+    at 11:58:41 UTC. Its second parent is the source-reviewed, NOT code-accepted
+    six-leaf transfer 3858382e2ce4f9e832cc24d9b2413afed2af7b0e.
+    The first parent changes only historical status prose on accepted post-PR50
+    code main 1fbcce1f5b2961ab721453e6f15282dee6c0de20. The separate
+    rectangular public release 2509e13448a0ee4229a22204c73fa20faa0f0ba3,
+    tree e5ffc8dbe6ac575f5e9e17e9b58e3c8173260c15, was authenticated
+    by Lattice at 12:04 UTC; it published only that predecessor, not the
+    then-unaccepted native assembly. No Lean/Lake build, cache fetch, axiom
+    audit, CI, PR or source correspondence check was performed by that static
+    registration author. At that checkpoint the exact assembled e37 destination
+    full-graph build, private-inclusive complete transitive standard-three audit,
+    fresh independent assembly review, Lattice's acceptance and protected
+    integration, then independently reviewed verified release, remained separate
+    gates. Source-only leaf review and prior predecessor checks established none
+    of these later native outcomes.
+    No source-passage coverage, scheme point-bridge, tangent scheme or stable K1
+    is claimed. The following rectangular and earlier paragraphs are dated
+    historical checkpoints, not present release-status claims.
     Rectangular destination transfer-author checkpoint 2026-09-27: one
     additional producer and one default-built private client extend the
     accepted 20-producer/eight-client main to 21 producers/nine clients.
@@ -543,6 +602,58 @@ status:
     - declaration: "Matrix.GeneralLinearGroup.diagonalPairUnit_inv_pair"
       file: "GeneralLinearGroups/RectangularBlockUnits.lean"
       note: "Equal-index inverse diagonal pairs agree with existing blockDiagonalUnit."
+    - declaration: DualNumber.mapRingHom
+      file: GeneralLinearGroups/DualNumberKernels.lean
+    - declaration: Matrix.DualNumberKernels.glKerEquiv
+      file: GeneralLinearGroups/DualNumberKernels.lean
+    - declaration: Matrix.DualNumberKernels.unitsKerEquiv
+      file: GeneralLinearGroups/DualNumberKernels.lean
+    - declaration: Matrix.DualNumberKernels.det_liftMatrix
+      file: GeneralLinearGroups/DualNumberKernels.lean
+    - declaration: Matrix.DualNumberKernels.detKer
+      file: GeneralLinearGroups/DualNumberKernels.lean
+    - declaration: Matrix.DualNumberKernels.detKer_glKerEquiv
+      file: GeneralLinearGroups/DualNumberKernels.lean
+    - declaration: Matrix.DualNumberKernels.slKerEquiv
+      file: GeneralLinearGroups/DualNumberKernels.lean
+    - declaration: Matrix.DualNumberKernels.slToGL
+      file: GeneralLinearGroups/DualNumberKernels.lean
+    - declaration: Matrix.DualNumberKernels.slToGL_slKerEquiv
+      file: GeneralLinearGroups/DualNumberKernels.lean
+    - declaration: Matrix.DualNumberKernels.glKernel_mul_comm
+      file: GeneralLinearGroups/DualNumberKernels.lean
+    - declaration: Matrix.DualNumberKernels.slKernel_mul_comm
+      file: GeneralLinearGroups/DualNumberKernels.lean
+    - declaration: Matrix.DualNumberKernels.glKerMap
+      file: GeneralLinearGroups/DualNumberKernels.lean
+    - declaration: Matrix.DualNumberKernels.slKerMap
+      file: GeneralLinearGroups/DualNumberKernels.lean
+    - declaration: Matrix.DualNumberKernels.unitsKerMap
+      file: GeneralLinearGroups/DualNumberKernels.lean
+    - declaration: Matrix.DualNumberKernels.glKerMap_glKerEquiv
+      file: GeneralLinearGroups/DualNumberKernels.lean
+    - declaration: Matrix.DualNumberKernels.slKerMap_slKerEquiv
+      file: GeneralLinearGroups/DualNumberKernels.lean
+    - declaration: Matrix.DualNumberKernels.unitsKerMap_unitsKerEquiv
+      file: GeneralLinearGroups/DualNumberKernels.lean
+    - declaration: Matrix.DualNumberKernels.detKer_natural
+      file: GeneralLinearGroups/DualNumberKernels.lean
+    - declaration: Matrix.DualNumberKernels.slToGL_natural
+      file: GeneralLinearGroups/DualNumberKernels.lean
+    - declaration: Matrix.DualNumberKernels.slAdjoint
+      file: GeneralLinearGroups/DualNumberKernelAdjoint.lean
+    - declaration: Matrix.DualNumberKernels.slAdjoint_val
+      file: GeneralLinearGroups/DualNumberKernelAdjoint.lean
+    - declaration: Matrix.DualNumberKernels.glKerEquiv_conj
+      file: GeneralLinearGroups/DualNumberKernelAdjoint.lean
+    - declaration: Matrix.DualNumberKernels.glReadback_conj
+      file: GeneralLinearGroups/DualNumberKernelAdjoint.lean
+    - declaration: Matrix.DualNumberKernels.slToGL_conj
+      file: GeneralLinearGroups/DualNumberKernelAdjoint.lean
+    - declaration: Matrix.DualNumberKernels.slReadback_conj
+      file: GeneralLinearGroups/DualNumberKernelAdjoint.lean
+    - declaration: Matrix.DualNumberKernels.glKerMap_conj
+      file: GeneralLinearGroups/DualNumberKernelAdjoint.lean
 
 automation:
   methods:
@@ -609,6 +720,30 @@ automation:
         hive-request-cf565ac88c8dc0b5274168e7cb2dbfc1abfab323,
         UID d7ced547-d176-4d48-af8d-ad239d49cff9; Prism keeps
         mathematical planning and responsible-maintainer decisions.
+        Native kernel research and producer originate respectively with worker-b
+        hive-request-fcd501500f0c5ec813d46a71e1ed0b0d7555a0fd,
+        UID 028a7064-28e0-4e93-a917-c5ac60a025d1, and worker-b
+        hive-request-1df68ed8f5e4bab1a07522b5ee97f5a4e124e028,
+        UID a1cde5e5-a84f-4b15-b86e-c1d59cf1e533. Adjoint research and
+        implementation originate respectively with worker-b
+        hive-request-00bab16826ab0ca04714504bcb66c30d2fa5991a,
+        UID f709819b-92f5-48e1-b5a4-eb184d4c5a6c, and worker-b
+        hive-request-083e63349244c927c6fd7ddd1ceb7b01a722e06c,
+        UID bec147d0-40ae-43fd-95d5-5b28c2bf2ed6. The exact six-leaf
+        transfer is worker-b hive-request-f1f0750c049a6341076625a8c7823dab83dad5d9,
+        UID 704cc043-3e91-4fd0-984a-4723758a7cc5; independent SOURCE-ONLY
+        review is worker-a hive-request-833f90fa150bab66c02ad561e0dce96d03352a38,
+        UID e364af5b-71d5-41a4-bd74-5219280b8e6c, at report
+        075bcf2d15b212e2284ffbb2b208befd1e524d5c and issue51/52274.
+        Static registration, metadata and docs are by worker-b Task
+        hive-request-471fdfa639779d05821d587b5a8ed0979ed76939,
+        UID 2947eb0f-f276-4fb2-9865-ceb03bdd4d82; Lattice owns its
+        acceptance/integration, distinct from Prism's earlier units and release.
+        No compiler or proof audit was run by that registration author. The
+        later documentation/metadata-only release-readiness correction is by
+        worker-b Task hive-request-3cc18624fcf476e243174522ce76cc986b32a067,
+        UID 57eea2de-3f79-4f78-afec-1e9172ed75fc; it does not modify
+        Lean, build inputs or mathematical results.
         Agents used compiler feedback, native mathlib APIs and ordinary Lean
         tactics, including simp, rw, ext, noncomm_ring, abel and omega.
       prompting_notes: >-
@@ -646,6 +781,17 @@ fidelity:
     triangular factorizations preserve the B * D⁻¹ and A⁻¹ * B orders;
     the inverse off-block is -(A⁻¹ * B * D⁻¹). A hom killing E needs no
     abelian target or ambient normality assumption.
+    Native dual-number reduction uses actual multiplicative GL/SL/unit kernels,
+    not additive ideal kernels. The new modules require CommRing, independent
+    coefficient/index universes and finite decidable indices, allowing empty
+    ranks, zero rings and characteristic two. SL kernel coefficients use
+    mathlib's trace-zero Lie subalgebra; determinant has a first-order trace
+    square and SL includes into GL. Ring-hom coefficient maps are natural but
+    not generally R-linear. Adjoint means left conjugation g * X * g⁻¹,
+    including nonconstant native units; it is not GL left multiplication.
+    Abelian first-order kernel group commutators do not implement the
+    nonzero matrix Lie bracket. No tangent scheme, arbitrary scheme base
+    change or incubator-side point bridge is promoted.
     No SL=E, same-rank ambient elementary normality, original-rank
     commutator containment, stable K1, excision, stable/direct-limit GL or
     full source-coverage claim follows.
@@ -653,6 +799,45 @@ fidelity:
 review:
   status: "revision-specific agent review; dated author-time checkpoints below"
   notes: >-
+    Release-readiness author checkpoint 2026-09-27: PR55/main
+    4a85ce8223c87d2bfa47659e702f89c5442e5f56 was accepted and
+    protected-integrated by Lattice. Native462/UI16/job462/attempt1/task376,
+    artifact56048 (owner report 644b627e17ba98e695512551ffb472890450f056),
+    supplies the successful applicable full registered build and complete
+    private-inclusive transitive standard-three axiom audit for unchanged
+    Lean/build/dependency inputs. Fresh worker-a Task
+    hive-request-b4d8d729d48e261ed7daa54b085297a1294de932,
+    UID 677cdee6-87f9-4755-833e-95049ab4d5d5, independently approved
+    PR55 source/registration/API scope at e730a818099f6b5fe9f2ff7bac6fc25e4d86acc5
+    (review4125, issue51/52414). This is not independent acceptance of the
+    new internal/public release snapshot or verified publication; Lattice
+    owns those distinct decisions. No source-passage coverage is claimed.
+    The following native registration-author and predecessor notes are dated
+    historical checkpoints, not the current code-acceptance status.
+    At the native registration-author checkpoint on 2026-09-27, the first
+    parent 78409daf0c29fa8c775a7d1a2256e21241395208 was Prism's
+    UNACCEPTED frozen PR52 input when assigned; it was subsequently
+    independently reviewed, accepted and protected-merged unchanged at
+    11:58:41 UTC. Lattice's issue51/52323 verifies that exact main and
+    Prism's issue41/52311 binds its build/private-inclusive axiom evidence
+    native452/artifact53872. The separate rectangular public release at
+    2509e13448a0ee4229a22204c73fa20faa0f0ba3 was actually GitHub-verified
+    by Lattice at 12:04 UTC (issue51/52323). These predecessor records do not
+    check, accept or publish the registered native assembly.
+    The second parent 3858382e2ce4f9e832cc24d9b2413afed2af7b0e
+    has a source-only APPROVE by fresh worker-a Task
+    hive-request-833f90fa150bab66c02ad561e0dce96d03352a38,
+    UID e364af5b-71d5-41a4-bd74-5219280b8e6c, report
+    075bcf2d15b212e2284ffbb2b208befd1e524d5c and issue51/52274.
+    Lattice accepted only that bounded source-transfer finding.
+    At that checkpoint no registered candidate had destination full-graph
+    build, complete private-inclusive transitive standard-three axiom audit,
+    fresh independent assembled review, owner acceptance, protected integration,
+    or reviewed publication. Prior focused destination checks, PR52 CI and
+    incubator CI applied only to their original inputs; no source-passage
+    coverage was asserted.
+    The following notes preserve dated predecessor reviews, not a transferred
+    approval for this assembly.
     At the rectangular destination transfer-author checkpoint on 2026-09-27,
     incubator PR101 commit 1b04c1d15c15b0f7adf7dcfec2861b451a4d1a79
     was accepted and integrated; source registration native CI420/artifact45274
