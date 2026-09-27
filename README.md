@@ -69,7 +69,16 @@ not `1`; this is compatible with abelian first-order kernel commutators.
 Independent coefficient/index universes, empty and singleton ranks, zero
 rings and characteristic two are allowed. See the
 [mixed native GL commutator guide](docs/DualNumberMixedCommutator.md) and its
-ordinary-import client; no SL, scheme-point or global Lie claim is made.
+ordinary-import client; this GL-only identity makes no SL, scheme-point or
+global Lie claim by itself.
+
+For trace-zero matrices, the native SL refinement proves the ordered
+commutator of actual `SpecialLinearGroup` factors is the mixed lift of the
+`XY - YX` bracket. Its value lies in the actual outer SL reduction kernel and
+has pure-inner trace-zero readback, including empty ranks, zero rings and
+characteristic two. See the [mixed native SL commutator guide](docs/DualNumberMixedSLCommutator.md)
+for the exact factors and direct-import client. This is not a determinant
+theorem for arbitrary GL commutators.
 
 The reindexing layer transports general linear groups along equivalences of
 finite index types, with identity, composition, inverse and coefficient-map
@@ -165,6 +174,48 @@ schema-valid metadata alone is not an official release. The root
 author-time snapshot alongside revision-specific agent review status, not a live
 release registry. Internal research and discussion systems are not needed to use
 the public mathematical interface.
+
+At the **2026-09-27 20:44:01 UTC mixed-SL code-acceptance checkpoint**,
+Lattice accepted and protected-integrated PR68 as `main`
+`51f7a833740557de4eddeeebd4a802a9b43bb81a` (tree
+`967c0724e635fece9fad2754bf996af2f9db2e5e`). The repaired incubator
+PR124 source was accepted and integrated as
+`92e1b3523a7c6871c333351c5f42175602acf23a` (tree
+`da5fcf0b3c16f0b38e9f428d7614b59267172ddb`); source acceptance is
+distinct from this destination's code acceptance and from source-passage
+coverage. Fresh independent affected review
+`e4c1de0a90afde821b8982215adcb5333e956a22` applies to the accepted
+eight-path registration. Complete destination native593/UI31 evidence,
+preserved at nonshipping commit `41018c09565a75a06751dff285ea71a7cdc67389`,
+built both default targets and audited all 41 modules (including private
+declarations), 164 selected names and 855 module-origin rows to only
+`propext`, `Classical.choice` and `Quot.sound`. This prose/metadata-only
+readiness candidate does not change those checked Lean, dependency or checker
+inputs. The prior **GL-only** official release
+`8d243d20593baf025ffe0868fe6f88dabb4730c8` was verified on private
+GitHub at 20:12:07 UTC; it does not publish this SL addition. This combined
+readiness and its same-tree public candidate remain **unaccepted and
+unpublished**. Lattice retains independent final release review and acceptance,
+serial protected promotions and actual private GitHub publication readback;
+later incubator conversion requires the verified combined official release.
+
+At the **earlier 2026-09-27 conditional mixed-SL registration-author checkpoint**,
+this unaccepted candidate composes the frozen, unaccepted mixed-GL
+release-readiness revision `61790764d3278519b3a67e3bf420405b81399887`
+with the independently source-reviewed but unaccepted SL leaves at
+`f2a13476044baf1f1ced2cd507171249e0d495b3`. It registers 26 producer
+modules, fourteen default-built clients and the root (41 repository Lean
+modules), with 164 selected results. The inherited native CI562/audit covers
+only the prior 39-module mixed-GL graph; focused SL checks and leaf review do
+not certify this new registered graph. Its full destination build and
+private-inclusive transitive standard-axiom audit, fresh affected independent
+review, owner acceptance and protected integration, serial mixed-GL and SL
+reviewed releases and verified publications, and later reviewed incubator
+conversion were separate gates at that checkpoint. The incubator SL source
+was also unaccepted then; no source-passage correspondence or coverage is
+inferred. The following mixed-GL release-readiness paragraph retains its
+**earlier, unchanged-input** scope and is not an assertion about this 41-module
+successor or the later verified GL-only publication.
 
 At the **2026-09-27 18:57:26 UTC mixed-GL code-acceptance checkpoint**,
 Lattice accepted and protected-integrated PR64 as `main`
@@ -333,7 +384,7 @@ example {R S n : Type*} [Ring R] [Ring S] [Fintype n] [DecidableEq n]
 ```
 
 The same statement is retained as a named private stored-proof declaration in
-`tests/PublicAPIClient.lean`. All thirteen client modules are default build targets;
+`tests/PublicAPIClient.lean`. All fourteen client modules are default build targets;
 test declarations are deliberately private and are not additional library API.
 
 | Subject module(s) | Representative public interface | Boundary |
@@ -380,8 +431,8 @@ lake build
 ```
 
 The cache fetch must succeed before building. The literal default build includes
-all library modules and thirteen clients. For optional focused direct checks of
-the original three clients (the ten later clients also build by default):
+all library modules and fourteen clients. For optional focused direct checks of
+the original three clients (the eleven later clients also build by default):
 
 ```sh
 lake --wfail -KwarningAsError=true build GeneralLinearGroups GeneralLinearGroupsTests
@@ -433,7 +484,7 @@ pre-elementary workload. Cache-download time depends on network/cache state;
 peak CPU and RAM usage were not measured. Use bounded build parallelism on
 memory-limited hosts and audit modules in separate processes; these timings
 do not establish a minimum RAM requirement or a runtime guarantee. These
-35-module timings do **not** measure this 39-module mixed-commutator graph.
+35-module timings do **not** measure the later 39- or current 41-module graph.
 
 For the **accepted PR64 mixed-GL code snapshot**
 `6d351f75aa81153bcb620005f77aaedd680b3e3b`, strict native CI562/UI27
@@ -444,9 +495,23 @@ built `GeneralLinearGroups` plus `GeneralLinearGroupsTests` in **44.929 seconds*
 The 39 fresh private-inclusive transitive axiom-audit commands together took
 241.865 seconds. The full run spanned **18:45:00–18:51:24 UTC** (about 6 minutes
 24 seconds), including dependency setup and audit; that wall time is **not**
-project build time or a promise for another host. This readiness candidate
-changes no build input and does not rerun these checks. The preceding
+project build time or a promise for another host. That 39-module readiness
+candidate changed no build input and did not rerun these checks. The preceding
 35-module timing remains a dated, smaller-workload measurement.
+
+For the **accepted PR68 mixed-SL code snapshot**
+`51f7a833740557de4eddeeebd4a802a9b43bb81a`, strict native CI593/UI31 on
+2026-09-27 (Linux, Lean4.34.0-rc2, pinned mathlib
+`e37d88a26f3791ed5a93daa1f949af1021b8d103`) fetched the matching
+precompiled mathlib cache (8892 files, 40.959221 seconds), verified cached
+Mathlib without rebuilding it (8907 Lake jobs, 6.035477 seconds), and built
+both default targets, `GeneralLinearGroups` and `GeneralLinearGroupsTests`, in
+**49.496248 seconds** (2822 Lake jobs, 41 repository Lean modules and fourteen
+default clients). The full **20:31:50–20:38:29 UTC** native run also included
+setup and the separate private-inclusive standard-axiom audit; it was not just
+project build time. These are observed host/cache/network-dependent timings,
+not from-source dependency costs, a speedup claim, a minimum RAM requirement
+or a guarantee for another host. Peak CPU and RAM were not measured.
 
 Headers intentionally give the license and author credit without inventing a
 copyright holder. The pinned mathlib header linter requires a copyright-holder

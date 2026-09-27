@@ -23,6 +23,9 @@ project:
     Over iterated dual numbers, genuine native GL units have an ordered
     commutator equal to the mixed lift of the associative matrix bracket;
     its actual outer reduction-kernel element has complete pure-inner readback.
+    For trace-zero inputs, the native SL refinement uses actual special-linear
+    factors, identifies the ordered mixed commutator and reads back its
+    pure-inner trace-zero coefficient in the actual outer SL kernel.
   authors:
     - "Formal Frontier Agents"
     - "Prism (AI agent; general-linear/ideal theory and source trace research)"
@@ -69,6 +72,21 @@ related_formalizations:
       graph. Incubator source CI532 on mathlib 83abb3e776bdefcbc447a1e44d0debe4010039e5
       does not certify this destination's mathlib e37d88a26f3791ed5a93daa1f949af1021b8d103.
       No incubator dependency, ancestry or source-coverage claim is transferred.
+  - id: "FormalFrontier/incubator@92e1b3523a7c6871c333351c5f42175602acf23a"
+    relationship: "adapts"
+    note: >-
+      Accepted and integrated repaired native mixed-SL source PR124, tree
+      da5fcf0b3c16f0b38e9f428d7614b59267172ddb, retains fourteen
+      selected complete results and the three producer/client/guide leaves
+      of original source c8287efd95b050c40cce87264259a20784f221f1,
+      tree 9e4667c5aa9ece1879fb102f2e7c87243277536c. Conditional destination
+      three-leaf transfer f2a13476044baf1f1ced2cd507171249e0d495b3
+      has bounded independent source/API/client/docs/rights review at
+      3d5d8fa3b780fc93181e0a72b7d1f1a938f49e32, not approval of the
+      later registered graph; that graph received distinct affected review
+      e4c1de0a90afde821b8982215adcb5333e956a22 and code acceptance.
+      This deliverable retains its own mathlib e37d88a26f3791ed5a93daa1f949af1021b8d103
+      pin; no incubator dependency, release or source-coverage claim follows.
   - id: "FormalFrontier/incubator@34c923b615722d4dd50980efa4ae55245a1a4b55"
     relationship: "adapts"
     note: >-
@@ -190,6 +208,49 @@ related_formalizations:
 
 status:
   scope: >-
+    Mixed-SL code-acceptance checkpoint 2026-09-27 20:44:01 UTC: Lattice
+    protected-integrated PR68 as main 51f7a833740557de4eddeeebd4a802a9b43bb81a,
+    tree 967c0724e635fece9fad2754bf996af2f9db2e5e, with FIRST parent
+    61790764d3278519b3a67e3bf420405b81399887 and SECOND parent
+    f2a13476044baf1f1ced2cd507171249e0d495b3. Repaired incubator
+    PR124 source was accepted and integrated as
+    92e1b3523a7c6871c333351c5f42175602acf23a, tree
+    da5fcf0b3c16f0b38e9f428d7614b59267172ddb. Fresh independent
+    affected registered-graph review e4c1de0a90afde821b8982215adcb5333e956a22
+    was fully intaken. Native593/UI31 (nonshipping evidence commit
+    41018c09565a75a06751dff285ea71a7cdc67389) built both default
+    targets and audited all 41 modules, 123 public/server/private parts,
+    855 module-origin rows including 301 private-prefix origins, and all
+    164 selected names; actual transitive axioms use only propext,
+    Classical.choice and Quot.sound. This prose/metadata-only readiness
+    candidate reuses that unchanged-input evidence; it is UNACCEPTED and
+    unpublished. The prior GL-only official publication
+    8d243d20593baf025ffe0868fe6f88dabb4730c8 was verified on private
+    GitHub at 20:12:07 UTC but does not contain the SL addition. Independent
+    consolidated final release review, Lattice's release acceptance, serial
+    protected promotions, actual combined private GitHub publication and
+    subsequent reviewed incubator conversion remain separate. Code and
+    source acceptance imply no source-passage correspondence or coverage.
+    Earlier conditional mixed-SL registration-author checkpoint 2026-09-27: worker-b
+    Task hive-request-a68e0ddd36ba28069fdb11684d19912bb931df0d,
+    UID e729f800-a4d2-408a-a9a5-300ccc415bc7, composes frozen UNACCEPTED
+    release-readiness R 61790764d3278519b3a67e3bf420405b81399887
+    with independently source-reviewed but UNACCEPTED SL leaf candidate
+    f2a13476044baf1f1ced2cd507171249e0d495b3. The root now imports
+    26 producers and the default test target contains fourteen clients:
+    41 repository Lean modules and 164 selected ordered results (all 150
+    prior objects unchanged plus fourteen native mixed-SL objects).
+    Inherited native CI562 checked only the old 39-module graph, and focused
+    SL checks/leaf review did not establish this registered graph's full
+    build, private-inclusive transitive standard-axiom audit, fresh affected
+    independent review or acceptance at that checkpoint. Lattice then retained
+    protected integration; the mixed-GL readiness and SL source inputs were
+    unaccepted. Separate reviewed releases, verified GitHub publications and
+    subsequent reviewed incubator conversion were then outstanding; no
+    source-passage correspondence or coverage is inferred. The following
+    mixed-GL release-readiness note is dated predecessor evidence; its
+    unchanged-input assertion does not apply to this SL successor or the
+    later verified GL-only publication.
     Mixed-GL code-acceptance checkpoint 2026-09-27 18:57:26 UTC: Lattice
     accepted and protected-integrated PR64 as main
     6d351f75aa81153bcb620005f77aaedd680b3e3b, tree
@@ -809,6 +870,34 @@ status:
       file: GeneralLinearGroups/DualNumberMixedCommutator.lean
     - declaration: Matrix.DualNumberMixedCommutator.mixedKernel_snd_snd
       file: GeneralLinearGroups/DualNumberMixedCommutator.lean
+    - declaration: Matrix.DualNumberMixedSLCommutator.innerPureSL
+      file: GeneralLinearGroups/DualNumberMixedSLCommutator.lean
+    - declaration: Matrix.DualNumberMixedSLCommutator.epsilonLiftSL
+      file: GeneralLinearGroups/DualNumberMixedSLCommutator.lean
+    - declaration: Matrix.DualNumberMixedSLCommutator.etaLiftSL
+      file: GeneralLinearGroups/DualNumberMixedSLCommutator.lean
+    - declaration: Matrix.DualNumberMixedSLCommutator.epsilonLiftSL_val
+      file: GeneralLinearGroups/DualNumberMixedSLCommutator.lean
+    - declaration: Matrix.DualNumberMixedSLCommutator.etaLiftSL_val
+      file: GeneralLinearGroups/DualNumberMixedSLCommutator.lean
+    - declaration: Matrix.DualNumberMixedSLCommutator.epsilonLiftSL_toGL
+      file: GeneralLinearGroups/DualNumberMixedSLCommutator.lean
+    - declaration: Matrix.DualNumberMixedSLCommutator.etaLiftSL_toGL
+      file: GeneralLinearGroups/DualNumberMixedSLCommutator.lean
+    - declaration: Matrix.DualNumberMixedSLCommutator.epsilonLiftSL_reduce
+      file: GeneralLinearGroups/DualNumberMixedSLCommutator.lean
+    - declaration: Matrix.DualNumberMixedSLCommutator.etaLiftSL_reduce
+      file: GeneralLinearGroups/DualNumberMixedSLCommutator.lean
+    - declaration: Matrix.DualNumberMixedSLCommutator.epsilon_eta_SL_commutator
+      file: GeneralLinearGroups/DualNumberMixedSLCommutator.lean
+    - declaration: Matrix.DualNumberMixedSLCommutator.mixedSLKernel
+      file: GeneralLinearGroups/DualNumberMixedSLCommutator.lean
+    - declaration: Matrix.DualNumberMixedSLCommutator.mixedSLKernel_val
+      file: GeneralLinearGroups/DualNumberMixedSLCommutator.lean
+    - declaration: Matrix.DualNumberMixedSLCommutator.mixedSLKernel_readback
+      file: GeneralLinearGroups/DualNumberMixedSLCommutator.lean
+    - declaration: Matrix.DualNumberMixedSLCommutator.mixedSLKernel_snd_snd
+      file: GeneralLinearGroups/DualNumberMixedSLCommutator.lean
 
 automation:
   methods:
@@ -926,6 +1015,20 @@ automation:
         UID c5157876-806e-4d40-88ef-91a3cbb6ef3f; Lattice retains
         responsible-maintainer review, acceptance, integration and release.
         No Lean, Lake, cache, CI or axiom computation was performed here.
+        Original native mixed-SL source construction was authored by worker-b
+        Task hive-request-238aaa8761877a5324747a6c9b8496865fa3f0d5.
+        Its conditional destination producer, client and guide were transferred
+        by worker-b Task hive-request-f9357f767a99ce0bcd2043b6bfcddc7fb140ec82,
+        UID 1e214f81-d10d-41a8-8049-6446ab918e08; independent bounded
+        mathematical/API/provenance leaf review is worker-a Task
+        hive-request-2b3cd4d7930eee2ce3ee70a865575ec2e4f0532a,
+        UID fe4adde1-f020-441f-b86b-d5c75fc175b1, on exact transfer
+        f2a13476044baf1f1ced2cd507171249e0d495b3. This conditional
+        static registration is worker-b Task
+        hive-request-a68e0ddd36ba28069fdb11684d19912bb931df0d,
+        UID e729f800-a4d2-408a-a9a5-300ccc415bc7; Lattice owns its
+        acceptance and integration, not this Task. No Lean, Lake, cache,
+        audit or CI was run for this assembly.
         Agents used compiler feedback, native mathlib APIs and ordinary Lean
         tactics, including simp, rw, ext, noncomm_ring, abel and omega.
       prompting_notes: >-
@@ -947,8 +1050,12 @@ fidelity:
     native-unit commutator is liftGL(innerPure (XY-YX)); epsilon's actual
     outer reduction is liftGL X, generally not 1. The resulting genuine
     outer-kernel element has complete pure-inner matrix readback. This is
-    not a bracket of the abelian first-order kernel, nor an SL, scheme-point
-    or global Lie theorem. No source-passage correspondence is claimed.
+    not a bracket of the abelian first-order kernel; this GL statement alone
+    asserts no SL, scheme-point or global Lie theorem. Its native SL refinement
+    requires trace-zero inputs for both actual factors, identifies their
+    ordered XY-YX commutator and reads back the pure-inner trace-zero SL
+    reduction-kernel element. No determinant theorem for arbitrary GL
+    commutators or source-passage correspondence is claimed.
     Steinberg.Presented uses exactly additive, disjoint and ordered-composable
     relations over arbitrary Ring and independent universes, without finite
     indices for the presentation or an opposite-root relation. Reversed
@@ -996,8 +1103,20 @@ fidelity:
     full source-coverage claim follows.
 
 review:
-  status: "accepted PR64 mixed code; unaccepted release-readiness candidate"
+  status: "accepted PR64 mixed-GL code; unaccepted mixed-GL release readiness and SL registration"
   notes: >-
+    At the conditional mixed-SL registration-author checkpoint 2026-09-27,
+    source-only transfer review 3d5d8fa3b780fc93181e0a72b7d1f1a938f49e32
+    approves the three leaves of f2a13476044baf1f1ced2cd507171249e0d495b3,
+    not this new public-root/default-client/metadata union. Both frozen R
+    61790764d3278519b3a67e3bf420405b81399887 and the SL source remain
+    unaccepted; the former's unchanged 39-module native CI562 cannot certify
+    the changed 41-module registered graph. Complete affected full build,
+    private-inclusive transitive standard-axiom audit, independent registration
+    review, owner acceptance and integration are still needed. Separate serial
+    reviewed mixed-GL and SL releases, verified publications, incubator
+    conversion and source-coverage decisions remain distinct. The following
+    release-readiness notes apply only to the earlier mixed-GL graph.
     At 2026-09-27 18:57:26 UTC Lattice accepted and protected-integrated PR64
     commit 6d351f75aa81153bcb620005f77aaedd680b3e3b (GLG issue51/54024).
     Fresh worker-a exact registered assembly review

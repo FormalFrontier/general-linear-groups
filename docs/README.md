@@ -10,8 +10,9 @@ and `PublicAPIClient` (16 module records). It does **not** cover the later
 corresponding private clients, `RectangularBlockUnits` and its ninth private
 client, the dual-number kernel/adjoint modules and their two private clients,
 or the Steinberg presentation and its private client.
-The snapshot also excludes the later mixed dual-number commutator and its
-private client; the historical 128-declaration count is not its API count.
+The snapshot also excludes the later mixed dual-number GL and SL commutators
+and their private clients; the historical 128-declaration count is not their
+API count.
 For the current finite APIs and examples see
 [elementary matrices](ElementaryMatrices.md),
 [commutators and perfectness](ElementaryCommutators.md),
@@ -22,11 +23,17 @@ For the current finite APIs and examples see
 [rectangular upper block units](RectangularBlockUnits.md),
 [native dual-number kernels](DualNumberKernels.md) and
 [their adjoint action](DualNumberKernelAdjoint.md),
-[the finite-rank Steinberg presentation](FiniteRankSteinberg.md), and
-[the mixed native GL commutator](DualNumberMixedCommutator.md). These standalone
+[the finite-rank Steinberg presentation](FiniteRankSteinberg.md),
+[the mixed native GL commutator](DualNumberMixedCommutator.md), and
+[the mixed native SL commutator](DualNumberMixedSLCommutator.md). These standalone
 guides do not replace the archived inventory with a new native analysis.
 Do not treat 128 as the current declaration count or as proof integrity
 evidence for this destination candidate.
+The later native SL addition is accepted code on the 41-module development
+graph, with a complete destination build and private-inclusive standard-axiom
+audit (native593/UI31); its combined GL/SL release is not yet accepted or
+published. The dated snapshot remains a historical reference, not an updated
+inventory for that graph.
 
 The root [README](../README.md) gives the current mathematical scope and ordinary-import
 example. The generated snapshot is not a census of private or generated declarations,

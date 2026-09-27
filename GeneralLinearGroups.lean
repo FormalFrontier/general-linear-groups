@@ -29,6 +29,7 @@ public import GeneralLinearGroups.DualNumberKernels
 public import GeneralLinearGroups.DualNumberKernelAdjoint
 public import GeneralLinearGroups.Steinberg
 public import GeneralLinearGroups.DualNumberMixedCommutator
+public import GeneralLinearGroups.DualNumberMixedSLCommutator
 
 /-!
 # General linear groups
@@ -74,6 +75,11 @@ The iterated dual-number layer proves an ordered commutator of genuine native GL
 units is the mixed coefficient lift of the associative matrix bracket. It
 identifies the resulting element in the actual outer reduction kernel and
 reads back its full pure-inner matrix over arbitrary commutative rings.
+
+For trace-zero inputs, its native SL refinement identifies the ordered
+commutator of actual special-linear factors with the mixed lift of `XY - YX`.
+It packages the result in the actual SL outer reduction kernel and reads back
+its pure-inner trace-zero coefficient, without an arbitrary-GL determinant claim.
 
 The Steinberg layer gives a native presented group on additive, disjoint and
 ordered-composable elementary-symbol relations over any ring, with universal
