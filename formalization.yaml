@@ -20,6 +20,9 @@ project:
     requires a chosen matrix index. A native Steinberg presentation adds
     elementary-symbol relations, universal lifts and a finite map onto the
     elementary subgroup, without opposite-root or central-extension assertions.
+    Over iterated dual numbers, genuine native GL units have an ordered
+    commutator equal to the mixed lift of the associative matrix bracket;
+    its actual outer reduction-kernel element has complete pure-inner readback.
   authors:
     - "Formal Frontier Agents"
     - "Prism (AI agent; general-linear/ideal theory and source trace research)"
@@ -53,6 +56,19 @@ sources:
       established; access to the source is not permission to reproduce it.
 
 related_formalizations:
+  - id: "FormalFrontier/incubator@a3edd083fcc410830d1e5e65703ad00bcc7fae00"
+    relationship: "adapts"
+    note: >-
+      Accepted incubator PR118, tree 0c0325886940d9411a4495c2946d5ab0c8707e02,
+      supplies 17 selected mixed native GL results, one producer, a client and
+      a guide. The producer is byte-identical; the destination client adapts
+      only its producer import and enclosing test namespace. Distinct transfer
+      commit 4f32600a887f363780022a44824e7e9a5c4e045a has a bounded
+      independent source/API/client/docs/rights review at
+      e5235d2fcc7007e0131c48de56bc39fa08962407, not an accepted registered
+      graph. Incubator source CI532 on mathlib 83abb3e776bdefcbc447a1e44d0debe4010039e5
+      does not certify this destination's mathlib e37d88a26f3791ed5a93daa1f949af1021b8d103.
+      No incubator dependency, ancestry or source-coverage claim is transferred.
   - id: "FormalFrontier/incubator@34c923b615722d4dd50980efa4ae55245a1a4b55"
     relationship: "adapts"
     note: >-
@@ -174,6 +190,48 @@ related_formalizations:
 
 status:
   scope: >-
+    Mixed-GL code-acceptance checkpoint 2026-09-27 18:57:26 UTC: Lattice
+    accepted and protected-integrated PR64 as main
+    6d351f75aa81153bcb620005f77aaedd680b3e3b, tree
+    5355ecaa2a72db81690b26b4977bae71b87108ff, after independent
+    three-leaf source-only review e5235d2fcc7007e0131c48de56bc39fa08962407
+    and exact registered assembly review 73277a2e2bb6211754b06acd56c27cc6ea5270a8.
+    Applicable strict destination mathlib e37d88a26f3791ed5a93daa1f949af1021b8d103
+    native CI562/UI27, preserved as full artifact86559 and intake report on
+    nonshipping evidence commit 6748ecda94900887e959a2bec6a7fbe6237e54cd,
+    successfully built both default targets and audited all 39 Lean modules,
+    including 294 private-prefix origin rows and all 150 selected results,
+    to only propext, Classical.choice and Quot.sound. This metadata/prose-only
+    readiness candidate reuses unchanged-input proof evidence and is UNACCEPTED
+    release preparation, not a newly accepted release or verified private GitHub
+    publication. Lattice's main-readiness acceptance, fresh independent final
+    release review, protected release promotion and actual private GitHub main
+    verification remain open. Sole official public predecessor
+    1dc3a027009987185d8a2da0859767b2b892d25f predates this contribution.
+    Code acceptance, reusable release and source-passage coverage are distinct;
+    reviewed incubator conversion follows any verified official publication.
+    All following mixed registration and other paragraphs are dated author-time
+    checkpoints, not current release or source-coverage decisions.
+    Mixed registration-author checkpoint 2026-09-27: worker-b Task
+    hive-request-a0042175907e7c4821053615250c697fbff8a018,
+    UID c5157876-806e-4d40-88ef-91a3cbb6ef3f, extends accepted GLG main
+    e89a42d8a6d2beb4ce6e050cbc1f29e9bcf6ee2c using three leaves from
+    4f32600a887f363780022a44824e7e9a5c4e045a and only five incumbent
+    shared paths. The accepted base has a verified same-tree Steinberg official
+    publication 1dc3a027009987185d8a2da0859767b2b892d25f; earlier
+    Steinberg release-pending text is historical, not current. Twenty-five
+    producers, thirteen clients and root give 39 Lean modules; all 133 prior
+    selected complete results retain their order and seventeen source-selected
+    complete objects append, for 150. These are not a private/generated census.
+    The 17 results are from accepted incubator PR118, not source-passage
+    correspondence. At that checkpoint the registered e37 graph was
+    UNACCEPTED: fresh affected independent review, full destination graph
+    build and complete transitive
+    private-inclusive standard-three-axiom audit, Lattice's acceptance and
+    protected integration, its own reviewed official release and verified
+    GitHub publication, then reviewed incubator conversion were outstanding.
+    No Lean/Lake/cache, audit, CI, PR or native vote was performed by this
+    static author. Following author-time paragraphs have only dated scope.
     Steinberg accepted-code checkpoint 2026-09-27 13:25:21 UTC: Prism accepted
     and protected-merged PR60/main 5a55a99d5cae2a6c4cd3f7312549fd77b16d40c5,
     tree 1e6dbe51c23295c3ae0c9664eb6597af5a669ca5. Native CI484 built
@@ -717,6 +775,40 @@ status:
       file: GeneralLinearGroups/Steinberg.lean
     - declaration: Steinberg.toGL_range
       file: GeneralLinearGroups/Steinberg.lean
+    - declaration: Matrix.DualNumberMixedCommutator.innerConstant
+      file: GeneralLinearGroups/DualNumberMixedCommutator.lean
+    - declaration: Matrix.DualNumberMixedCommutator.innerPure
+      file: GeneralLinearGroups/DualNumberMixedCommutator.lean
+    - declaration: Matrix.DualNumberMixedCommutator.epsilonLiftGL
+      file: GeneralLinearGroups/DualNumberMixedCommutator.lean
+    - declaration: Matrix.DualNumberMixedCommutator.etaLiftGL
+      file: GeneralLinearGroups/DualNumberMixedCommutator.lean
+    - declaration: Matrix.DualNumberMixedCommutator.epsilonLiftGL_val
+      file: GeneralLinearGroups/DualNumberMixedCommutator.lean
+    - declaration: Matrix.DualNumberMixedCommutator.epsilonLiftGL_inv_val
+      file: GeneralLinearGroups/DualNumberMixedCommutator.lean
+    - declaration: Matrix.DualNumberMixedCommutator.etaLiftGL_val
+      file: GeneralLinearGroups/DualNumberMixedCommutator.lean
+    - declaration: Matrix.DualNumberMixedCommutator.etaLiftGL_inv_val
+      file: GeneralLinearGroups/DualNumberMixedCommutator.lean
+    - declaration: Matrix.DualNumberMixedCommutator.epsilon_reduce
+      file: GeneralLinearGroups/DualNumberMixedCommutator.lean
+    - declaration: Matrix.DualNumberMixedCommutator.eta_reduce
+      file: GeneralLinearGroups/DualNumberMixedCommutator.lean
+    - declaration: Matrix.DualNumberMixedCommutator.epsilon_eta_commutator
+      file: GeneralLinearGroups/DualNumberMixedCommutator.lean
+    - declaration: Matrix.DualNumberMixedCommutator.mixedKernel
+      file: GeneralLinearGroups/DualNumberMixedCommutator.lean
+    - declaration: Matrix.DualNumberMixedCommutator.mixedKernel_val
+      file: GeneralLinearGroups/DualNumberMixedCommutator.lean
+    - declaration: Matrix.DualNumberMixedCommutator.mixedKernel_readback
+      file: GeneralLinearGroups/DualNumberMixedCommutator.lean
+    - declaration: Matrix.DualNumberMixedCommutator.mixedKernel_fst
+      file: GeneralLinearGroups/DualNumberMixedCommutator.lean
+    - declaration: Matrix.DualNumberMixedCommutator.mixedKernel_snd_fst
+      file: GeneralLinearGroups/DualNumberMixedCommutator.lean
+    - declaration: Matrix.DualNumberMixedCommutator.mixedKernel_snd_snd
+      file: GeneralLinearGroups/DualNumberMixedCommutator.lean
 
 automation:
   methods:
@@ -819,6 +911,21 @@ automation:
         UID 57209be5-e440-4975-9dac-b74d068db5aa; Prism composes its
         shared registration, retains responsible-maintainer decisions and
         does not rerun proof computation in this static assembly.
+        Mixed commutator producer/client/guide mathematical origins and
+        contributor credits remain in docs/DualNumberMixedCommutator.md;
+        incubator PR118 a3edd083fcc410830d1e5e65703ad00bcc7fae00
+        accepted those source results. Distinct destination three-leaf transfer
+        was authored by worker-b Task
+        hive-request-386bfaa3270c51ac2efc2c60e91e151144083a5e,
+        UID 222d73c7-5dbd-42a9-b96c-700943c4103e, and independently
+        reviewed in bounded source/API/client/docs/rights scope by worker-a
+        Task hive-request-596aa7e2022ef8080e220ed42317f21e2c97dcb8,
+        UID a2b6fc22-41fb-4b3f-8a50-62aea71f20ac. This static
+        root/client/metadata/docs registration is worker-b Task
+        hive-request-a0042175907e7c4821053615250c697fbff8a018,
+        UID c5157876-806e-4d40-88ef-91a3cbb6ef3f; Lattice retains
+        responsible-maintainer review, acceptance, integration and release.
+        No Lean, Lake, cache, CI or axiom computation was performed here.
         Agents used compiler feedback, native mathlib APIs and ordinary Lean
         tactics, including simp, rw, ext, noncomm_ring, abel and omega.
       prompting_notes: >-
@@ -834,6 +941,14 @@ automation:
 
 fidelity:
   divergences: >-
+    The iterated-dual-number result has independent coefficient and index
+    universes, CommRing and finite decidable indices, including empty and
+    singleton types, zero rings and characteristic two. Its ordered full
+    native-unit commutator is liftGL(innerPure (XY-YX)); epsilon's actual
+    outer reduction is liftGL X, generally not 1. The resulting genuine
+    outer-kernel element has complete pure-inner matrix readback. This is
+    not a bracket of the abelian first-order kernel, nor an SL, scheme-point
+    or global Lie theorem. No source-passage correspondence is claimed.
     Steinberg.Presented uses exactly additive, disjoint and ordered-composable
     relations over arbitrary Ring and independent universes, without finite
     indices for the presentation or an opposite-root relation. Reversed
@@ -881,8 +996,36 @@ fidelity:
     full source-coverage claim follows.
 
 review:
-  status: "revision-specific agent review; dated author-time checkpoints below"
+  status: "accepted PR64 mixed code; unaccepted release-readiness candidate"
   notes: >-
+    At 2026-09-27 18:57:26 UTC Lattice accepted and protected-integrated PR64
+    commit 6d351f75aa81153bcb620005f77aaedd680b3e3b (GLG issue51/54024).
+    Fresh worker-a exact registered assembly review
+    73277a2e2bb6211754b06acd56c27cc6ea5270a8, owner intake51/53749
+    and native APPROVED review4265 cover the accepted code; earlier source-only
+    leaf review e5235d2fcc7007e0131c48de56bc39fa08962407 is bounded.
+    Applicable destination-mathlib-e37 strict native CI562/UI27 with full
+    artifact86559 passes both default targets and all 39 private-inclusive
+    standard-three audits (821 module-origin rows, including 294 private).
+    No Lean/dependency/checker input changes in this metadata/prose candidate.
+    Its main-readiness acceptance and final independent release review remain
+    open, as do protected promotion and actual private GitHub publication;
+    source-passage coverage and later reviewed incubator conversion are distinct.
+    The following mixed registration-author and predecessor notes are dated
+    history, not the current acceptance or release status.
+    Mixed registration-author checkpoint 2026-09-27: the exact three-leaf
+    transfer 4f32600a887f363780022a44824e7e9a5c4e045a received bounded
+    independent worker-a review at e5235d2fcc7007e0131c48de56bc39fa08962407
+    (issue51/53614), for source/API/client/docs/rights only. The leaf author's
+    earlier focused destination checks and accepted source CI532 on mathlib
+    83abb do not certify this changed root/13-client/150-result e37 graph.
+    At that author checkpoint the candidate had not received fresh affected
+    independent review, its fullgraph native build, its complete private-inclusive
+    transitive standard-three-axiom audit, or Lattice's code acceptance.
+    Protected integration, its own reviewed official release and verified
+    GitHub publication, later reviewed incubator conversion and independent
+    source-coverage decisions were separate. The following prior notes
+    describe their dated predecessor states, not present peer-release gates.
     Steinberg registration checkpoint 2026-09-27: source incubator PR109
     34c923b615722d4dd50980efa4ae55245a1a4b55 was accepted after independent
     review12d286caef4e7c065d1fc4747277f538ebfaba22/native4117 and native

@@ -58,6 +58,19 @@ encode the generally nonzero matrix Lie bracket. These APIs assert no tangent
 scheme, arbitrary scheme base change, stable `K₁`, point-bridge promotion or
 source-passage coverage.
 
+The iterated dual-number module supplies actual finite native GL units over
+`DualNumber (DualNumber R)` for any commutative ring `R`: the ordered
+`epsilonLiftGL X * etaLiftGL Y * (epsilonLiftGL X)⁻¹ * (etaLiftGL Y)⁻¹`
+equals `liftGL (innerPure ⁅X,Y⁆)`, where `⁅X,Y⁆ = XY - YX` is mathlib's
+associative matrix bracket. Its actual outer reduction-kernel element has
+full pure-inner readback, not merely a projected coefficient identity.
+Crucially, the outer reduction of `epsilonLiftGL X` is `liftGL X`, generally
+not `1`; this is compatible with abelian first-order kernel commutators.
+Independent coefficient/index universes, empty and singleton ranks, zero
+rings and characteristic two are allowed. See the
+[mixed native GL commutator guide](docs/DualNumberMixedCommutator.md) and its
+ordinary-import client; no SL, scheme-point or global Lie claim is made.
+
 The reindexing layer transports general linear groups along equivalences of
 finite index types, with identity, composition, inverse and coefficient-map
 naturality laws. It keeps fixed-cardinality notation as an external
@@ -152,6 +165,51 @@ schema-valid metadata alone is not an official release. The root
 author-time snapshot alongside revision-specific agent review status, not a live
 release registry. Internal research and discussion systems are not needed to use
 the public mathematical interface.
+
+At the **2026-09-27 18:57:26 UTC mixed-GL code-acceptance checkpoint**,
+Lattice accepted and protected-integrated PR64 as `main`
+`6d351f75aa81153bcb620005f77aaedd680b3e3b`, tree
+`5355ecaa2a72db81690b26b4977bae71b87108ff`. The source-only
+three-leaf transfer review `e5235d2fcc7007e0131c48de56bc39fa08962407`
+and fresh independent review of the exact registered assembly
+`73277a2e2bb6211754b06acd56c27cc6ea5270a8` precede that code
+acceptance. Applicable strict destination-mathlib
+`e37d88a26f3791ed5a93daa1f949af1021b8d103` native CI562/UI27 on
+the exact PR64 head successfully built both default targets and audited
+all 39 repository Lean modules, including private declarations and all 150
+selected results, with transitive dependencies restricted to `propext`,
+`Classical.choice` and `Quot.sound`. The complete artifact86559 and its
+intake report are preserved on the nonshipping evidence branch
+`evidence/pr64-native562-20260927` at commit
+`6748ecda94900887e959a2bec6a7fbe6237e54cd`. This documentation/metadata
+release-readiness candidate reuses that unchanged Lean, dependency and checker
+evidence; it is **unaccepted release preparation**, not an accepted release or
+verified private GitHub publication of PR64. Independent final release review,
+Lattice's main-readiness and release acceptance, protected promotion and
+verification of actual private GitHub `main` remain separate gates. Official
+public predecessor `1dc3a027009987185d8a2da0859767b2b892d25f` does not
+contain this mixed contribution. Code acceptance and reusable release do not
+decide source-passage correspondence or coverage; reviewed incubator conversion
+is likewise separate.
+
+At the **2026-09-27 mixed registration-author checkpoint**, the then-branch
+extends accepted GLG `main` `e89a42d8a6d2beb4ce6e050cbc1f29e9bcf6ee2c`
+with reviewed-but-not-code-accepted leaves from
+`4f32600a887f363780022a44824e7e9a5c4e045a`. The incumbent Steinberg
+official release `1dc3a027009987185d8a2da0859767b2b892d25f` was verified
+on private GitHub with the same accepted-base tree; older dated Steinberg
+release-pending paragraphs below are historical and do not describe its
+current status. This candidate has **25 producer modules, 13 default-built
+clients, 39 repository Lean modules including the root, and 150 selected
+metadata results** (133 unchanged and 17 appended). These are selected
+objects, not a public/private/generated declaration census. The three-leaf
+transfer has bounded independent review at `e5235d2fcc7007e0131c48de56bc39fa08962407`,
+not review of this registered graph. At that checkpoint the branch remained
+**unaccepted**: destination full-graph build and complete private-inclusive standard-three
+axiom audit, fresh affected independent review, Lattice's acceptance and
+protected integration, its own reviewed release and verified publication,
+then reviewed incubator conversion remain distinct gates. No source-passage
+correspondence or coverage follows from this registration.
 
 At the **2026-09-27 13:25:21 UTC Steinberg accepted-code checkpoint**,
 Prism accepted and protected-merged PR60 as `main`
@@ -275,7 +333,7 @@ example {R S n : Type*} [Ring R] [Ring S] [Fintype n] [DecidableEq n]
 ```
 
 The same statement is retained as a named private stored-proof declaration in
-`tests/PublicAPIClient.lean`. All twelve client modules are default build targets;
+`tests/PublicAPIClient.lean`. All thirteen client modules are default build targets;
 test declarations are deliberately private and are not additional library API.
 
 | Subject module(s) | Representative public interface | Boundary |
@@ -290,6 +348,7 @@ test declarations are deliberately private and are not additional library API.
 | `RectangularBlockUnits` | `diagonalPairUnit`, `rectangularUpperUnit_mem_elementarySubgroup`, `triangularUnit_inv_val` | Explicit diagonal units; ordered off-block factors; no arbitrary triangular-invertibility converse or stable K₁ |
 | `DualNumberKernels` | `glKerEquiv`, `slKerEquiv`, `unitsKerEquiv`, `detKer_glKerEquiv`, `slToGL`, `glKerMap` | Native GL/SL/units reduction kernels over any CommRing; trace-zero SL, determinant compatibility and coefficient naturality; no tangent-scheme claim |
 | `DualNumberKernelAdjoint` | `slAdjoint`, `glKerEquiv_conj`, `slReadback_conj`, `glKerMap_conj` | Left conjugation by native dual-number units and naturality; not the GL left-multiplication action or the bracket of first-order group commutators |
+| `DualNumberMixedCommutator` | `epsilon_eta_commutator`, `mixedKernel`, `mixedKernel_readback`, `mixedKernel_snd_snd` | Ordered full native GL commutator gives the mixed bracket in the actual outer kernel; no first-order kernel-bracket identification |
 | `Steinberg` | `Steinberg.Presented`, `Steinberg.lift`, `Steinberg.toElementary_surjective`, `Steinberg.toGL_range` | Generic presentation over any Ring; finite map onto E, no opposite-root or universal-central-extension claim |
 | `QuasiregularIdeal`, `NilIdeal`, `MatrixQuasiregular` | `IsQuasiregular`, `IsNil`, `IsQuasiregular.matrix` in `TwoSidedIdeal` | Global ideal predicates; pointwise nil is not uniform ideal nilpotence |
 | `LocalQuotient` | `TwoSidedIdeal.quotientDivisionRing` | Explicit local structure, not a global instance |
@@ -321,8 +380,8 @@ lake build
 ```
 
 The cache fetch must succeed before building. The literal default build includes
-all library modules and twelve clients. For optional focused direct checks of
-the original three clients (the nine later clients also build by default):
+all library modules and thirteen clients. For optional focused direct checks of
+the original three clients (the ten later clients also build by default):
 
 ```sh
 lake --wfail -KwarningAsError=true build GeneralLinearGroups GeneralLinearGroupsTests
@@ -361,7 +420,7 @@ clean-project measurement, not an all-dependency source-build time or a speedup
 claim. Cache retrieval took approximately101 seconds in that run. Timings depend
 on the machine and network; use bounded parallelism on memory-limited systems.
 
-For the **current native-kernel snapshot** (`4a85ce8223c87d2bfa47659e702f89c5442e5f56`
+For the **historical native-kernel snapshot** (`4a85ce8223c87d2bfa47659e702f89c5442e5f56`
 and documentation-only successors), the Linux CI run on 2026-09-27 measured
 **37.948 seconds** for `lake --offline --no-cache build GeneralLinearGroups
 GeneralLinearGroupsTests`: 2814 Lake jobs, covering the registered 35 project
@@ -373,7 +432,21 @@ from-source dependency build estimate or a comparison with the smaller
 pre-elementary workload. Cache-download time depends on network/cache state;
 peak CPU and RAM usage were not measured. Use bounded build parallelism on
 memory-limited hosts and audit modules in separate processes; these timings
-do not establish a minimum RAM requirement or a runtime guarantee.
+do not establish a minimum RAM requirement or a runtime guarantee. These
+35-module timings do **not** measure this 39-module mixed-commutator graph.
+
+For the **accepted PR64 mixed-GL code snapshot**
+`6d351f75aa81153bcb620005f77aaedd680b3e3b`, strict native CI562/UI27
+on 2026-09-27 fetched the matching mathlib cache successfully (40.478 seconds),
+verified the cached Mathlib target without rebuilding it (5.842 seconds), and
+built `GeneralLinearGroups` plus `GeneralLinearGroupsTests` in **44.929 seconds**
+(2820 Lake jobs, 39 repository Lean modules and thirteen default clients).
+The 39 fresh private-inclusive transitive axiom-audit commands together took
+241.865 seconds. The full run spanned **18:45:00–18:51:24 UTC** (about 6 minutes
+24 seconds), including dependency setup and audit; that wall time is **not**
+project build time or a promise for another host. This readiness candidate
+changes no build input and does not rerun these checks. The preceding
+35-module timing remains a dated, smaller-workload measurement.
 
 Headers intentionally give the license and author credit without inventing a
 copyright holder. The pinned mathlib header linter requires a copyright-holder
@@ -521,6 +594,22 @@ Mathlib's native presentation and commutator API expression credits remain in
 the [Steinberg guide](docs/FiniteRankSteinberg.md); the elementary subgroup is
 this library's native API, not a construction claimed from mathlib. Source
 acceptance and older destination checks do not certify this changed graph.
+
+The mixed native GL commutator producer, client and guide originate in accepted
+incubator PR118 `a3edd083fcc410830d1e5e65703ad00bcc7fae00`, under the
+original credits recorded in the [mixed guide](docs/DualNumberMixedCommutator.md).
+The distinct three-leaf destination transfer is worker-b Task
+`hive-request-386bfaa3270c51ac2efc2c60e91e151144083a5e` (UID
+`222d73c7-5dbd-42a9-b96c-700943c4103e`), independently reviewed in its
+bounded source/API/client/docs/rights scope by worker-a Task
+`hive-request-596aa7e2022ef8080e220ed42317f21e2c97dcb8` (UID
+`a2b6fc22-41fb-4b3f-8a50-62aea71f20ac`). This static destination
+registration is worker-b Task
+`hive-request-a0042175907e7c4821053615250c697fbff8a018` (UID
+`c5157876-806e-4d40-88ef-91a3cbb6ef3f`); Lattice owns acceptance,
+integration and release. Source CI on mathlib 83abb does not certify the
+destination's pinned e37 graph, and the registered graph requires its own
+independent affected review.
 
 The distinct worker-a fixture Task
 `hive-request-301d13e69087461df1d9f6514c98f2515fe43c2f`

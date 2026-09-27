@@ -28,6 +28,7 @@ public import GeneralLinearGroups.RectangularBlockUnits
 public import GeneralLinearGroups.DualNumberKernels
 public import GeneralLinearGroups.DualNumberKernelAdjoint
 public import GeneralLinearGroups.Steinberg
+public import GeneralLinearGroups.DualNumberMixedCommutator
 
 /-!
 # General linear groups
@@ -68,6 +69,11 @@ reduction kernels over commutative rings with additive first-order coefficients,
 and relates determinant, trace, coefficient maps and left conjugation to their
 matrix and trace-zero Lie-algebra counterparts. It includes empty finite ranks
 and does not identify abelian kernel commutators with matrix Lie brackets.
+
+The iterated dual-number layer proves an ordered commutator of genuine native GL
+units is the mixed coefficient lift of the associative matrix bracket. It
+identifies the resulting element in the actual outer reduction kernel and
+reads back its full pure-inner matrix over arbitrary commutative rings.
 
 The Steinberg layer gives a native presented group on additive, disjoint and
 ordered-composable elementary-symbol relations over any ring, with universal
