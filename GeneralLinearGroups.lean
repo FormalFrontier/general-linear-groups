@@ -19,6 +19,11 @@ public import GeneralLinearGroups.UnitalComparison
 public import GeneralLinearGroups.NonUnitalQuasiregular
 public import GeneralLinearGroups.AdditiveCommutator
 public import GeneralLinearGroups.MatrixTrace
+public import GeneralLinearGroups.ElementaryCommutator
+public import GeneralLinearGroups.RelativeElementary
+public import GeneralLinearGroups.RelativeWhitehead
+public import GeneralLinearGroups.ElementaryStabilization
+public import GeneralLinearGroups.RelativeWhiteheadConsequences
 
 /-!
 # General linear groups
@@ -31,6 +36,10 @@ modulo additive commutators over arbitrary unital rings.
 The elementary layer supplies Ring-only off-diagonal GL units, their generated
 subgroup, and membership of Whitehead's upper/lower/signed-swap and doubled
 block-diagonal units, including empty index types and trivial rings.
+The finite relative layer provides ordered elementary commutators and
+rank-at-least-three perfectness, ideal-coefficient normal closure inside the
+elementary subgroup, doubled relative Whitehead membership, and stabilization
+of elementary and congruence subgroups over arbitrary rings.
 
 The nonunital-nilpotent layer defines positive-power nilpotence without a
 multiplicative identity, proves strictly upper triangular matrices nilpotent,

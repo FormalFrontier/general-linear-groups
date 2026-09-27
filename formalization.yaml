@@ -8,8 +8,9 @@ project:
   name: "general-linear-groups"
   description: >-
     Finite general linear groups over possibly noncommutative rings: elementary
-    units and subgroup membership, Whitehead block factorization and doubled
-    lifting, reindexing, nil and quasiregular
+    units, ordered commutators, relative normal closures inside elementary
+    groups, finite stabilization, Whitehead block factorization and doubled
+    relative membership and lifting; reindexing, nil and quasiregular
     ideals, congruence subgroups and quotient lifting, nonunital unitization,
     and matrix trace modulo additive commutators. The trace quotient is an
     additive group, not a quotient ring; its corner inverse requires a chosen
@@ -17,7 +18,7 @@ project:
   authors:
     - "Formal Frontier Agents"
     - "Prism (AI agent; general-linear/ideal theory and source trace research)"
-    - "formalization-worker-b (AI agent; trace extraction and distinct elementary proof and transfer Tasks identified under automation)"
+    - "formalization-worker-b (AI agent; trace extraction and distinct elementary, relative, stabilization and destination transfer Tasks identified under automation)"
     - "formalization-worker-a (AI agent; explicit positive-power recursor successor Task identified under automation)"
   responsible_maintainers:
     - "Prism (on behalf of the source-maintainer team)"
@@ -45,6 +46,22 @@ sources:
       established; access to the source is not permission to reproduce it.
 
 related_formalizations:
+  - id: "FormalFrontier/incubator@a7ef4703603c3002e964be6fb289aa9eeb903af9"
+    relationship: "adapts"
+    note: >-
+      Prism accepted incubator PR95 at this exact commit, tree
+      956ed94cca79087525cd6f07bb944213d9277cf3, with original
+      ElementaryCommutator, RelativeElementary, RelativeWhitehead,
+      ElementaryStabilization and RelativeWhiteheadConsequences producers,
+      clients and guides plus the six public ElementaryWhitehead helpers.
+      Their original authors are named in automation and the five guides.
+      Only their Lean imports, destination module paths and headers differ;
+      the six existing destination helpers change visibility/docstrings, not
+      proofs. This source used mathlib 83abb3e776bdefcbc447a1e44d0debe4010039e5;
+      this destination retains e37d88a26f3791ed5a93daa1f949af1021b8d103.
+      Incubator acceptance and its CI are not destination-pin CI, promotion
+      review or an official GLG release. No incubator dependency or commit
+      ancestry enters this deliverable; research is not needed by consumers.
   - id: "FormalFrontier/incubator@38bd4b3932409b6116cc999137b52f4fd49d2f14"
     relationship: "adapts"
     note: >-
@@ -107,6 +124,25 @@ related_formalizations:
 
 status:
   scope: >-
+    Finite-relative destination transfer checkpoint 2026-09-27: this
+    candidate promotes exactly five accepted incubator PR95 producer/client
+    pairs into the existing finite GLG interface and makes six existing
+    ElementaryWhitehead helpers public in place. It adds 42 producer
+    declarations and six helpers to the selected 27 main_result objects,
+    for 75; the root includes 20 producer modules and eight ordinary
+    private clients. This is a source-only author checkpoint, not a release:
+    the new e37 nine-package destination graph has not been built or
+    private-inclusive standard-axiom audited, and fresh independent exact
+    promotion review, Prism's acceptance, official reviewed publication
+    and any later incubator conversion remain separate. Previous published
+    GLG base 589094186158c7ddec5cac40fad08ac9ab42494f corresponds to
+    official release fe3e506fe33635e057c4cc1d8fa40e33d9d1dbd0;
+    that prior publication does not include this candidate. The original
+    relative group is normal only inside the elementary subgroup;
+    stabilization is a semiring unit-group monoid hom, with no stable union,
+    stable K1, original-rank ambient normality or source coverage claim.
+    The following elementary and earlier checkpoints are preserved dated
+    history, not live statements of this relative promotion's status.
     Elementary-transfer author-time snapshot at 2026-09-27 06:11 UTC, not a
     live acceptance or release registry. The new elementary modules were an
     unaccepted promotion candidate from incubator revision
@@ -270,6 +306,151 @@ status:
         membership criterion, inverse/representative laws and corner independence.
         No ring equivalence or empty-index inverse is asserted.
 
+    - declaration: "Matrix.GeneralLinearGroup.elementaryUnit_commute_disjoint"
+      file: "GeneralLinearGroups/ElementaryCommutator.lean"
+      note: "Elementary units commute when neither off-diagonal position composes with the other."
+    - declaration: "Matrix.GeneralLinearGroup.elementaryUnit_commutator"
+      file: "GeneralLinearGroups/ElementaryCommutator.lean"
+      note: "The ordered elementary commutator relation, valid for noncommutative rings."
+    - declaration: "Matrix.GeneralLinearGroup.elementaryUnit_eq_commutator"
+      file: "GeneralLinearGroups/ElementaryCommutator.lean"
+      note: "A third index expresses every elementary generator as a commutator of generators."
+    - declaration: "Matrix.GeneralLinearGroup.elementarySubgroup_isPerfect_of_three_le_card"
+      file: "GeneralLinearGroups/ElementaryCommutator.lean"
+      note: "The finite-rank elementary subgroup is perfect as soon as there are three indices."
+    - declaration: "Matrix.GeneralLinearGroup.mapRingHom_elementaryUnit"
+      file: "GeneralLinearGroups/RelativeElementary.lean"
+      note: "Entrywise coefficient mapping sends an elementary unit to an elementary unit."
+    - declaration: "Matrix.GeneralLinearGroup.mapRingHom_elementarySubgroup_le"
+      file: "GeneralLinearGroups/RelativeElementary.lean"
+      note: "Entrywise coefficient mapping preserves the absolute elementary subgroup."
+    - declaration: "Matrix.GeneralLinearGroup.mapElementarySubgroup"
+      file: "GeneralLinearGroups/RelativeElementary.lean"
+      note: "The native restricted map on elementary subgroups."
+    - declaration: "Matrix.GeneralLinearGroup.mapElementarySubgroup_coe"
+      file: "GeneralLinearGroups/RelativeElementary.lean"
+      note: "The restricted coefficient map has the same ambient GL value as mapRingHom."
+    - declaration: "Matrix.GeneralLinearGroup.mapElementarySubgroup_elementaryUnit"
+      file: "GeneralLinearGroups/RelativeElementary.lean"
+      note: "The restricted coefficient map sends an elementary generator to its mapped-coefficient generator."
+    - declaration: "Matrix.GeneralLinearGroup.mapElementarySubgroup_id"
+      file: "GeneralLinearGroups/RelativeElementary.lean"
+      note: "Identity ring hom induces the identity restricted elementary map."
+    - declaration: "Matrix.GeneralLinearGroup.mapElementarySubgroup_comp"
+      file: "GeneralLinearGroups/RelativeElementary.lean"
+      note: "Composition of ring homs agrees with composition of restricted elementary maps."
+    - declaration: "Matrix.GeneralLinearGroup.relativeElementaryGenerators"
+      file: "GeneralLinearGroups/RelativeElementary.lean"
+      note: "Elementary generators with coefficients in `I`, viewed as members of `E(R)`."
+    - declaration: "Matrix.GeneralLinearGroup.relativeElementarySubgroup"
+      file: "GeneralLinearGroups/RelativeElementary.lean"
+      note: "The normal closure of the ideal-coefficient generators **inside** `E(R)`."
+    - declaration: "Matrix.GeneralLinearGroup.elementaryUnit_mem_relativeElementarySubgroup"
+      file: "GeneralLinearGroups/RelativeElementary.lean"
+      note: "Every ideal-coefficient elementary unit belongs to the relative subgroup."
+    - declaration: "Matrix.GeneralLinearGroup.relativeElementarySubgroup_normal"
+      file: "GeneralLinearGroups/RelativeElementary.lean"
+      note: "The relative subgroup is normal inside the absolute elementary group."
+    - declaration: "Matrix.GeneralLinearGroup.relativeElementarySubgroup_mono"
+      file: "GeneralLinearGroups/RelativeElementary.lean"
+      note: "Enlarging the ideal enlarges its relative elementary subgroup."
+    - declaration: "Matrix.GeneralLinearGroup.relativeElementarySubgroup_bot"
+      file: "GeneralLinearGroups/RelativeElementary.lean"
+      note: "The zero ideal has trivial relative elementary subgroup, including in rank zero or one."
+    - declaration: "Matrix.GeneralLinearGroup.relativeElementarySubgroup_le_congruenceSubgroup"
+      file: "GeneralLinearGroups/RelativeElementary.lean"
+      note: "Relative elementary elements reduce to the identity modulo their ideal."
+    - declaration: "Matrix.GeneralLinearGroup.relativeElementarySubgroup_map_subtype_le_congruenceSubgroup"
+      file: "GeneralLinearGroups/RelativeElementary.lean"
+      note: "The image of the relative group in the ambient GL lies in the existing congruence kernel. This is an image inclusion, not a claim of ambient normality."
+    - declaration: "Matrix.GeneralLinearGroup.mapElementarySubgroup_relativeElementarySubgroup_le"
+      file: "GeneralLinearGroups/RelativeElementary.lean"
+      note: "Compatible coefficient maps carry relative elementary groups into relative elementary groups, without any surjectivity assumption."
+    - declaration: "Matrix.GeneralLinearGroup.upperUnit_zero"
+      file: "GeneralLinearGroups/ElementaryWhitehead.lean"
+      note: "The upper block unit with zero off-diagonal block is the identity."
+    - declaration: "Matrix.GeneralLinearGroup.lowerUnit_zero"
+      file: "GeneralLinearGroups/ElementaryWhitehead.lean"
+      note: "The lower block unit with zero off-diagonal block is the identity."
+    - declaration: "Matrix.GeneralLinearGroup.upperUnit_add"
+      file: "GeneralLinearGroups/ElementaryWhitehead.lean"
+      note: "Upper block units turn matrix addition into group multiplication."
+    - declaration: "Matrix.GeneralLinearGroup.lowerUnit_add"
+      file: "GeneralLinearGroups/ElementaryWhitehead.lean"
+      note: "Lower block units turn matrix addition into group multiplication."
+    - declaration: "Matrix.GeneralLinearGroup.upperUnit_single"
+      file: "GeneralLinearGroups/ElementaryWhitehead.lean"
+      note: "A single upper-block entry is an off-block elementary unit."
+    - declaration: "Matrix.GeneralLinearGroup.lowerUnit_single"
+      file: "GeneralLinearGroups/ElementaryWhitehead.lean"
+      note: "A single lower-block entry is elementary with coefficient `-c`."
+    - declaration: "Matrix.GeneralLinearGroup.upperUnit_mem_relativeElementarySubgroup"
+      file: "GeneralLinearGroups/RelativeWhitehead.lean"
+      note: "An ideal-valued upper block unit belongs to the doubled relative elementary subgroup; this also holds for an empty index type."
+    - declaration: "Matrix.GeneralLinearGroup.lowerUnit_mem_relativeElementarySubgroup"
+      file: "GeneralLinearGroups/RelativeWhitehead.lean"
+      note: "An ideal-valued lower block unit belongs to the doubled relative elementary subgroup. Its lower-left block is `-a`, so its elementary generators use `-a i j`."
+    - declaration: "Matrix.GeneralLinearGroup.blockDiagonalUnit_eq_five"
+      file: "GeneralLinearGroups/RelativeWhitehead.lean"
+      note: "The native five-factor block identity; `lowerUnit b` has lower-left block `-b`. No ideal hypothesis is needed."
+    - declaration: "Matrix.GeneralLinearGroup.blockDiagonalUnit_mem_relativeElementarySubgroup"
+      file: "GeneralLinearGroups/RelativeWhitehead.lean"
+      note: "The Whitehead diagonal of a congruence unit is relative elementary after doubling, with conjugation only inside the existing elementary subgroup."
+    - declaration: "Matrix.GeneralLinearGroup.stabilize"
+      file: "GeneralLinearGroups/ElementaryStabilization.lean"
+      note: "Extend an invertible matrix by an identity block, with no positivity assumption on the sizes of either block."
+    - declaration: "Matrix.GeneralLinearGroup.stabilize_apply_inl_inl"
+      file: "GeneralLinearGroups/ElementaryStabilization.lean"
+      note: "Stabilization agrees with the original unit on the upper-left block."
+    - declaration: "Matrix.GeneralLinearGroup.stabilize_apply_inl_inr"
+      file: "GeneralLinearGroups/ElementaryStabilization.lean"
+      note: "Stabilization has zero upper-right block."
+    - declaration: "Matrix.GeneralLinearGroup.stabilize_apply_inr_inl"
+      file: "GeneralLinearGroups/ElementaryStabilization.lean"
+      note: "Stabilization has zero lower-left block."
+    - declaration: "Matrix.GeneralLinearGroup.stabilize_apply_inr_inr"
+      file: "GeneralLinearGroups/ElementaryStabilization.lean"
+      note: "Stabilization has the identity lower-right block."
+    - declaration: "Matrix.GeneralLinearGroup.stabilize_injective"
+      file: "GeneralLinearGroups/ElementaryStabilization.lean"
+      note: "The original matrix can be recovered from the upper-left block."
+    - declaration: "Matrix.GeneralLinearGroup.mapRingHom_stabilize"
+      file: "GeneralLinearGroups/ElementaryStabilization.lean"
+      note: "Stabilization commutes with entrywise mapping of coefficients."
+    - declaration: "Matrix.GeneralLinearGroup.stabilize_elementaryUnit"
+      file: "GeneralLinearGroups/ElementaryStabilization.lean"
+      note: "Stabilization sends an elementary generator exactly to the corresponding generator on the first summand."
+    - declaration: "Matrix.GeneralLinearGroup.stabilize_elementarySubgroup_le"
+      file: "GeneralLinearGroups/ElementaryStabilization.lean"
+      note: "The image of the absolute elementary group under stabilization remains elementary."
+    - declaration: "Matrix.GeneralLinearGroup.stabilizeElementarySubgroup"
+      file: "GeneralLinearGroups/ElementaryStabilization.lean"
+      note: "Stabilization restricted to the existing elementary subgroups."
+    - declaration: "Matrix.GeneralLinearGroup.stabilizeElementarySubgroup_coe"
+      file: "GeneralLinearGroups/ElementaryStabilization.lean"
+      note: "Restricted stabilization has the same ambient value as the unit-group monoid hom."
+    - declaration: "Matrix.GeneralLinearGroup.stabilizeElementarySubgroup_elementaryUnit"
+      file: "GeneralLinearGroups/ElementaryStabilization.lean"
+      note: "Restricted stabilization evaluates on existing elementary generators."
+    - declaration: "Matrix.GeneralLinearGroup.stabilize_relativeElementarySubgroup_le"
+      file: "GeneralLinearGroups/ElementaryStabilization.lean"
+      note: "Relative elementary normal closures are preserved by stabilization as an image inclusion, without asserting surjectivity of the restricted map."
+    - declaration: "Matrix.GeneralLinearGroup.stabilize_congruenceSubgroup_le"
+      file: "GeneralLinearGroups/ElementaryStabilization.lean"
+      note: "Stabilization preserves the existing quotient-reduction congruence kernel."
+    - declaration: "Matrix.GeneralLinearGroup.stabilize_conj_eq_blockDiagonalUnit_conj"
+      file: "GeneralLinearGroups/RelativeWhiteheadConsequences.lean"
+      note: "Stabilized conjugation by `g` is conjugation by its elementary Whitehead diagonal, with no congruence assumption on `g`."
+    - declaration: "Matrix.GeneralLinearGroup.stabilize_commutator_eq_blockDiagonalUnit_mul"
+      file: "GeneralLinearGroups/RelativeWhiteheadConsequences.lean"
+      note: "The ordered commutator has a three-diagonal factorization after doubling. The final diagonal is indexed by `(h * g)⁻¹`, not `(g * h)⁻¹`."
+    - declaration: "Matrix.GeneralLinearGroup.stabilize_conj_mem_relativeElementarySubgroup"
+      file: "GeneralLinearGroups/RelativeWhiteheadConsequences.lean"
+      note: "An arbitrary general linear conjugator preserves relative elementary membership after doubling, in the ambient general linear group."
+    - declaration: "Matrix.GeneralLinearGroup.stabilize_commutator_mem_relativeElementarySubgroup"
+      file: "GeneralLinearGroups/RelativeWhiteheadConsequences.lean"
+      note: "The ordered commutator of two congruence units is relative elementary after doubling, with no original-rank commutator containment asserted."
+
 automation:
   methods:
     - method: "agent"
@@ -302,6 +483,26 @@ automation:
         hive-request-d5b170c2c524d08ea237131ac1b634cbefb66165,
         UID 66b8826e-5348-42d2-bf91-7494acf88159. Prism retains
         responsible-maintainer acceptance and integration.
+        The accepted incubator PR95 producer/client mathematical origins are
+        separate worker-b Tasks: elementary commutators
+        hive-request-35aa9748fd43bd94b3ec738f1ad463b088d4ae0b,
+        UID 2e849319-c5e4-4143-8824-4e604660c6c5; relative elementary
+        hive-request-fe47d83d9ec7ed0603df9afa59272f91b6c1d25b,
+        UID aa475138-96f3-40c8-9d3e-a2ed8997d269; relative Whitehead
+        and six helper docstrings hive-request-474d5a18341359e66cfefad57a2fe7fce5fd95be,
+        UID 201cfd05-92f3-411c-9f16-9927145c58ca; elementary
+        stabilization hive-request-c6d28d96c8c6a1c3dc45b276cd199a8cee20e982,
+        UID 79046b95-69ff-4154-945a-95b1b410bc7c; finite relative
+        consequences hive-request-f9c9518717f9190ac25e3ad72fc01ab6a8aadee6,
+        UID 956a92f7-088d-407d-9ec0-3110d03431c8. Prism developed
+        the underlying finite factorization exposition and relative plans.
+        Their accepted incubator source revision is
+        a7ef4703603c3002e964be6fb289aa9eeb903af9. This distinct
+        GLG promotion transfer, public helper visibility and current
+        documentation/metadata were authored by worker-b Task
+        hive-request-5da2d3a64872f8d02f43a4373691317fea0453de,
+        UID 0c79d3fe-3ca4-433d-9f11-152854f183e2; this is not a
+        new proof or a computational acceptance claim.
         Agents used compiler feedback, native mathlib APIs and ordinary Lean
         tactics, including simp, rw, ext, noncomm_ring, abel and omega.
       prompting_notes: >-
@@ -326,12 +527,32 @@ fidelity:
     conjugation, stabilization, projective-module trace nor K0 descent is
     provided. Elementary generators and block membership need Ring only;
     singleton-index elementary closure is bottom without trivializing GL.
-    No SL=E, elementary normality, stable K1, stable/direct-limit GL or full
-    source-coverage claim follows.
+    Finite perfectness needs at least three indices; relative elementary
+    normal closure is internal to E, and compatible coefficient maps give
+    inclusions, not surjectivity. Semiring stabilization is a monoid hom on
+    GL units; lower Whitehead blocks use a minus sign. Doubled relative
+    conjugation permits arbitrary GL conjugators only after stabilization;
+    the ordered commutator factor ends with the diagonal of (h*g)⁻¹.
+    No SL=E, same-rank ambient elementary normality, original-rank
+    commutator containment, stable K1, excision, stable/direct-limit GL or
+    full source-coverage claim follows.
 
 review:
   status: "revision-specific agent review; dated author-time checkpoints below"
   notes: >-
+    At the finite-relative destination-transfer author checkpoint on
+    2026-09-27, Prism has accepted incubator PR95 commit
+    a7ef4703603c3002e964be6fb289aa9eeb903af9; its native 18-pin
+    source CI and earlier independent reviews are accepted source evidence,
+    not destination e37 compatibility, CI or fresh destination review.
+    This candidate's default-root 8-client build, all-private transitive
+    standard-axiom audit, author-distinct exact promotion review, owner
+    acceptance and verified official release have not yet occurred. The
+    already published GLG base 589094186158c7ddec5cac40fad08ac9ab42494f
+    and official release fe3e506fe33635e057c4cc1d8fa40e33d9d1dbd0
+    have the same tree and do not include this addition. Those are dated
+    author-time facts, not a mutable future acceptance registry. Source
+    correspondence remains separately decided in source repositories.
     At the elementary-transfer author checkpoint of 2026-09-27 06:11 UTC,
     destination promotion review and full CI were pending. This dated history
     neither claims later acceptance nor describes later reviews as still pending.

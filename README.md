@@ -15,6 +15,15 @@ factorization. See the [elementary-matrix guide](docs/ElementaryMatrices.md) for
 imports, hypotheses, signs, products and degenerate cases. No `SL = E`,
 normality or stable `K₁` result follows.
 
+The finite commutator/relative layer proves ordered elementary commutator
+relations and perfectness at rank at least three; defines the normal closure
+of ideal-coefficient generators **inside** the elementary subgroup; and
+gives compatible coefficient maps, doubled relative Whitehead factorization,
+semiring-unit stabilization and doubled conjugation/commutator membership.
+See the five [finite elementary and relative guides](docs/README.md) for
+precise hypotheses, signs, imports and private clients. These APIs assert
+neither same-rank ambient normality nor stable `K₁` or full source coverage.
+
 The reindexing layer transports general linear groups along equivalences of
 finite index types, with identity, composition, inverse and coefficient-map
 naturality laws. It keeps fixed-cardinality notation as an external
@@ -114,12 +123,23 @@ added modules were an **unaccepted promotion candidate**. This dated observation
 is not a live acceptance or release registry; later decisions bind their exact
 revision. Previously published content does not confer release status on additions.
 
+At this **2026-09-27 finite-relative transfer checkpoint**, the five new
+producer/client pairs and six previously private block helpers are a fresh,
+**unaccepted destination candidate** adapted from accepted incubator PR95
+`a7ef4703603c3002e964be6fb289aa9eeb903af9`. The existing GLG main
+`589094186158c7ddec5cac40fad08ac9ab42494f` matches previously published
+official release `fe3e506fe33635e057c4cc1d8fa40e33d9d1dbd0` by tree;
+that publication covers the previous elementary layer, **not** this finite
+relative addition. Destination-pin native CI, full private-inclusive axiom
+audit, fresh independent review, Prism's acceptance and a separate reviewed
+official release remain distinct gates at this dated author checkpoint.
+
 ## Public imports and examples
 
 The [generated API reference](docs/API.md) records a **pre-elementary snapshot**
 of 128 authored public declarations, with native signatures, docstrings and
-local source links. It does not list the new elementary declarations or client;
-use the [current elementary guide](docs/ElementaryMatrices.md) and Lean source
+local source links. It does not list the later elementary or relative declarations
+or clients; use the [current guide index](docs/README.md) and Lean sources
 for those. The [snapshot reproduction contract](docs/README.md) binds its
 original source/pins without requiring internal Git history. This historical
 reference is distinct from the complete private/generated proof census.
@@ -145,13 +165,18 @@ example {R S n : Type*} [Ring R] [Ring S] [Fintype n] [DecidableEq n]
 ```
 
 The same statement is retained as a named private stored-proof declaration in
-`tests/PublicAPIClient.lean`. All three client modules are default build targets;
+`tests/PublicAPIClient.lean`. All eight client modules are default build targets;
 test declarations are deliberately private and are not additional library API.
 
 | Subject module(s) | Representative public interface | Boundary |
 | --- | --- | --- |
 | `Whitehead`, `Reindex` | `mapRingHom_liftBlockDiagonal`, `reindexEquiv` | Doubled lift and equal-cardinality reindexing, not stable GL |
 | `Elementary`, `ElementaryWhitehead` | `elementaryUnit`, `elementarySubgroup`, `blockDiagonalUnit_mem_elementarySubgroup` | Ring-only elementary membership after doubling; no `SL = E` or normality assertion |
+| `ElementaryCommutator` | `elementaryUnit_commutator`, `elementarySubgroup_isPerfect_of_three_le_card` | Ordered products over any Ring; perfectness needs at least three indices |
+| `RelativeElementary` | `relativeElementarySubgroup`, `mapElementarySubgroup_relativeElementarySubgroup_le` | Ideal-coefficient normal closure inside E; compatible coefficient images give inclusions, not surjectivity |
+| `RelativeWhitehead` | `blockDiagonalUnit_eq_five`, `blockDiagonalUnit_mem_relativeElementarySubgroup` | Signed ordered five-factor identity; relative membership after doubling |
+| `ElementaryStabilization` | `stabilize`, `stabilize_relativeElementarySubgroup_le` | Monoid hom on semiring units, not matrix-ring hom; relative image inclusion |
+| `RelativeWhiteheadConsequences` | `stabilize_conj_mem_relativeElementarySubgroup`, `stabilize_commutator_mem_relativeElementarySubgroup` | Arbitrary GL conjugation and congruence commutators only after doubling |
 | `QuasiregularIdeal`, `NilIdeal`, `MatrixQuasiregular` | `IsQuasiregular`, `IsNil`, `IsQuasiregular.matrix` in `TwoSidedIdeal` | Global ideal predicates; pointwise nil is not uniform ideal nilpotence |
 | `LocalQuotient` | `TwoSidedIdeal.quotientDivisionRing` | Explicit local structure, not a global instance |
 | `CongruenceSubgroup`, `QuasiregularQuotient` | `idealGeneralLinearGroupEquivCongruence`, `isUnit_of_mapMatrix_quotient_isUnit` | Exactness for any ideal; unit reflection and quotient surjectivity require quasiregularity |
@@ -182,7 +207,8 @@ lake build
 ```
 
 The cache fetch must succeed before building. The literal default build includes
-all library modules and three clients. To repeat focused and direct source checks:
+all library modules and eight clients. For optional focused direct checks of
+the original three clients (the five new clients also build by default):
 
 ```sh
 lake --wfail -KwarningAsError=true build GeneralLinearGroups GeneralLinearGroupsTests
@@ -296,6 +322,26 @@ This is provenance history, not the status of later exact-revision decisions.
 Prism authored the reused Whitehead layer and
 is the responsible maintainer for the destination decision. Mathlib contributors
 retain credit and licensing for the imported foundational APIs.
+
+The five new finite commutator/relative/stabilization producer/client pairs
+come from separate accepted incubator author Tasks: respectively
+`hive-request-35aa9748fd43bd94b3ec738f1ad463b088d4ae0b`
+(UID `2e849319-c5e4-4143-8824-4e604660c6c5`),
+`hive-request-fe47d83d9ec7ed0603df9afa59272f91b6c1d25b`
+(UID `aa475138-96f3-40c8-9d3e-a2ed8997d269`),
+`hive-request-474d5a18341359e66cfefad57a2fe7fce5fd95be`
+(UID `201cfd05-92f3-411c-9f16-9927145c58ca`),
+`hive-request-c6d28d96c8c6a1c3dc45b276cd199a8cee20e982`
+(UID `79046b95-69ff-4154-945a-95b1b410bc7c`) and
+`hive-request-f9c9518717f9190ac25e3ad72fc01ab6a8aadee6`
+(UID `956a92f7-088d-407d-9ec0-3110d03431c8`). Prism supplied the
+original relative proof exposition/planning and is the responsible maintainer.
+The separate GLG source-only transfer and six-helper visibility/docstring
+change are by worker-b Task
+`hive-request-5da2d3a64872f8d02f43a4373691317fea0453de`
+(UID `0c79d3fe-3ca4-433d-9f11-152854f183e2`). The previous release
+does not include these changes, and the original authors' source checks
+do not establish e37 compatibility.
 
 The distinct worker-a fixture Task
 `hive-request-301d13e69087461df1d9f6514c98f2515fe43c2f`

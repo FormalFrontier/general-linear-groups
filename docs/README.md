@@ -5,11 +5,18 @@ public declarations: native displayed signatures including implicit parameters,
 source docstrings and relative links to unchanged source files. It was bound to
 source revision `907124e973dd20f3efdeb8de0cad42e331b9c6d8`, with 13
 subject modules and the two then-existing private clients, `MatrixTraceClient`
-and `PublicAPIClient` (16 module records). It does **not** cover the new
-`Elementary`, `ElementaryWhitehead` or `ElementaryClient` modules. See the
-[current elementary-matrix guide](ElementaryMatrices.md) for their APIs,
-imports, examples and scope; do not treat this archived inventory as a current
-declaration count or as evidence of new-graph proof integrity.
+and `PublicAPIClient` (16 module records). It does **not** cover the later
+`Elementary`, `ElementaryWhitehead`, five finite relative producers or six
+corresponding private clients. For the current finite APIs and examples see
+[elementary matrices](ElementaryMatrices.md),
+[commutators and perfectness](ElementaryCommutators.md),
+[relative elementary groups](RelativeElementary.md),
+[relative Whitehead factorization](RelativeWhitehead.md),
+[finite stabilization](ElementaryStabilization.md) and
+[relative consequences](RelativeWhiteheadConsequences.md). These standalone
+guides do not replace the archived inventory with a new native analysis.
+Do not treat 128 as the current declaration count or as proof integrity
+evidence for this destination candidate.
 
 The root [README](../README.md) gives the current mathematical scope and ordinary-import
 example. The generated snapshot is not a census of private or generated declarations,

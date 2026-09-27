@@ -41,6 +41,16 @@ For a matrix `a : Matrix ι ι R`, `upperUnit a = [I,a;0,I]` and
 multiply as the corresponding block units, and a one-entry block is exactly
 one off-block elementary generator. This works for the empty index type.
 
+Six helper theorems in `Matrix.GeneralLinearGroup` are now **public** in this
+module. `upperUnit_zero` and `lowerUnit_zero` identify the unit of the zero
+block; `upperUnit_add a b` and `lowerUnit_add a b` turn addition into the
+ordered product of block units. `upperUnit_single i j c` identifies a single
+upper-right entry with elementary coefficient `c`, while
+`lowerUnit_single i j c` uses coefficient **`-c`** at the corresponding
+lower-left position. Their proofs, like the four existing membership theorems,
+work with arbitrary Ring coefficients and empty indices. These six helpers
+are also used by [relative Whitehead factorization](RelativeWhitehead.md).
+
 The signed swap `swapUnit = [0,-I;I,0]` is the ordered product
 `upperUnit (-1) * lowerUnit (-1) * upperUnit (-1)`; the sign is essential.
 Finally GLG's existing Whitehead factorization expresses
@@ -53,3 +63,9 @@ The client `tests/ElementaryClient.lean` exercises a
 genuinely noncommutative coefficient ring `Matrix (Fin 2) (Fin 2) ℤ`,
 commutative comparison, empty and singleton indices, and `ZMod 1`.
 No normality, determinant generation, quotient or stable `K₁` result is claimed.
+Further finite developments are documented in
+[elementary commutators](ElementaryCommutators.md),
+[relative elementary subgroups](RelativeElementary.md),
+[relative Whitehead blocks](RelativeWhitehead.md),
+[elementary stabilization](ElementaryStabilization.md), and
+[relative Whitehead consequences](RelativeWhiteheadConsequences.md).

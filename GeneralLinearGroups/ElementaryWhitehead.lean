@@ -26,27 +26,32 @@ universe u v
 variable {ι : Type u} [Fintype ι] [DecidableEq ι]
   {R : Type v} [Ring R]
 
-private theorem upperUnit_zero :
+/-- The upper block unit with zero off-diagonal block is the identity. -/
+theorem upperUnit_zero :
     upperUnit (0 : Matrix ι ι R) = 1 := by
   apply Units.ext
   simp [upperUnit]
 
-private theorem lowerUnit_zero :
+/-- The lower block unit with zero off-diagonal block is the identity. -/
+theorem lowerUnit_zero :
     lowerUnit (0 : Matrix ι ι R) = 1 := by
   apply Units.ext
   simp [lowerUnit]
 
-private theorem upperUnit_add (a b : Matrix ι ι R) :
+/-- Upper block units turn matrix addition into group multiplication. -/
+theorem upperUnit_add (a b : Matrix ι ι R) :
     upperUnit (a + b) = upperUnit a * upperUnit b := by
   apply Units.ext
   simp [upperUnit, Matrix.fromBlocks_multiply, add_comm]
 
-private theorem lowerUnit_add (a b : Matrix ι ι R) :
+/-- Lower block units turn matrix addition into group multiplication. -/
+theorem lowerUnit_add (a b : Matrix ι ι R) :
     lowerUnit (a + b) = lowerUnit a * lowerUnit b := by
   apply Units.ext
   simp [lowerUnit, Matrix.fromBlocks_multiply, add_comm]
 
-private theorem upperUnit_single (i j : ι) (c : R) :
+/-- A single upper-block entry is an off-block elementary unit. -/
+theorem upperUnit_single (i j : ι) (c : R) :
     upperUnit (Matrix.single i j c) =
       elementaryUnit (Sum.inl i) (Sum.inr j) (by simp) c := by
   apply Units.ext
@@ -54,7 +59,8 @@ private theorem upperUnit_single (i j : ι) (c : R) :
   rcases row with row | row <;> rcases col with col | col <;>
     simp [upperUnit, elementaryUnit, Matrix.single_apply, Matrix.one_apply]
 
-private theorem lowerUnit_single (i j : ι) (c : R) :
+/-- A single lower-block entry is elementary with coefficient `-c`. -/
+theorem lowerUnit_single (i j : ι) (c : R) :
     lowerUnit (Matrix.single i j c) =
       elementaryUnit (Sum.inr i) (Sum.inl j) (by simp) (-c) := by
   apply Units.ext
