@@ -10,7 +10,8 @@ project:
     Finite general linear groups over possibly noncommutative rings: elementary
     units, ordered commutators, relative normal closures inside elementary
     groups, finite stabilization, Whitehead block factorization and doubled
-    relative membership and lifting; reindexing, nil and quasiregular
+    relative membership and lifting; rectangular block units for independent
+    finite indices with explicit diagonal units; reindexing, nil and quasiregular
     ideals, congruence subgroups and quotient lifting, nonunital unitization,
     and matrix trace modulo additive commutators. The trace quotient is an
     additive group, not a quotient ring; its corner inverse requires a chosen
@@ -46,6 +47,20 @@ sources:
       established; access to the source is not permission to reproduce it.
 
 related_formalizations:
+  - id: "FormalFrontier/incubator@1b04c1d15c15b0f7adf7dcfec2861b451a4d1a79"
+    relationship: "adapts"
+    note: >-
+      Accepted incubator PR101, tree
+      6731b0eda517474973e500133bfa416d10ab1208, supplies the original
+      RectangularBlockUnits producer, private client and mathematical guide,
+      including 20 main_result declarations. This transfer preserves their
+      mathematical proof bodies and client examples, changing only imports,
+      license/author headers, paths and destination-facing documentation.
+      The source used mathlib 83abb3e776bdefcbc447a1e44d0debe4010039e5;
+      this library retains e37d88a26f3791ed5a93daa1f949af1021b8d103.
+      Prior incubator leaf review and native source CI are not destination
+      compatibility, full-root proof-integrity evidence or promotion approval.
+      No incubator dependency, ancestry or source-coverage claim is added.
   - id: "FormalFrontier/incubator@a7ef4703603c3002e964be6fb289aa9eeb903af9"
     relationship: "adapts"
     note: >-
@@ -124,6 +139,24 @@ related_formalizations:
 
 status:
   scope: >-
+    Rectangular destination transfer-author checkpoint 2026-09-27: one
+    additional producer and one default-built private client extend the
+    accepted 20-producer/eight-client main to 21 producers/nine clients.
+    Its 20 rectangular result objects append to the 75 complete incumbent
+    objects, for 95. The source-only candidate started at GLG main
+    72861c49b8ed620096b4749e171e25405c3652d2, tree
+    49875102b8c0fa130e751788869a73de80837325, matching previously
+    published official release 51a4ca8e4a61eef09ce8164a53f4f37c3f520a00.
+    The previous publication did not contain this addition. At that checkpoint,
+    the new e37 destination graph was UNACCEPTED/UNBUILT: default-root nine-client
+    build, complete transitive standard-axiom CI including private origins,
+    fresh independent promotion review, Prism's acceptance, separate
+    reviewed GitHub publication and later incubator conversion were pending.
+    This is dated author-time history, not live acceptance or release status;
+    later decisions bind exact revisions. No source correspondence or formalized
+    milestone is asserted. The following relative and elementary transfer
+    snapshots describe earlier
+    dated checkpoints, not live rectangular candidate status.
     Finite-relative destination transfer checkpoint 2026-09-27: this
     candidate promotes exactly five accepted incubator PR95 producer/client
     pairs into the existing finite GLG interface and makes six existing
@@ -450,6 +483,66 @@ status:
     - declaration: "Matrix.GeneralLinearGroup.stabilize_commutator_mem_relativeElementarySubgroup"
       file: "GeneralLinearGroups/RelativeWhiteheadConsequences.lean"
       note: "The ordered commutator of two congruence units is relative elementary after doubling, with no original-rank commutator containment asserted."
+    - declaration: "Matrix.GeneralLinearGroup.diagonalPairUnit"
+      file: "GeneralLinearGroups/RectangularBlockUnits.lean"
+      note: "Assembles explicit diagonal GL units over independent finite X and Y using existing stabilization and reindexing; works over Semiring and includes empty blocks."
+    - declaration: "Matrix.GeneralLinearGroup.diagonalPairUnit_val"
+      file: "GeneralLinearGroups/RectangularBlockUnits.lean"
+      note: "The assembled unit is the diagonal block matrix with zero off-diagonal blocks."
+    - declaration: "Matrix.GeneralLinearGroup.diagonalPairUnit_inv"
+      file: "GeneralLinearGroups/RectangularBlockUnits.lean"
+      note: "The inverse is the diagonal pair of the supplied inverse units."
+    - declaration: "Matrix.GeneralLinearGroup.diagonalPairUnit_one_right"
+      file: "GeneralLinearGroups/RectangularBlockUnits.lean"
+      note: "An identity right block recovers the existing stabilization map."
+    - declaration: "Matrix.GeneralLinearGroup.diagonalPairUnit_one_left"
+      file: "GeneralLinearGroups/RectangularBlockUnits.lean"
+      note: "An identity left block recovers reindexed stabilization of the right unit."
+    - declaration: "Matrix.GeneralLinearGroup.rectangularUpperUnit"
+      file: "GeneralLinearGroups/RectangularBlockUnits.lean"
+      note: "Upper off-block unipotent GL unit for rectangular C over any Ring; its inverse has block -C."
+    - declaration: "Matrix.GeneralLinearGroup.rectangularUpperUnit_val"
+      file: "GeneralLinearGroups/RectangularBlockUnits.lean"
+      note: "Reads the upper off-diagonal C and identity diagonal blocks."
+    - declaration: "Matrix.GeneralLinearGroup.rectangularUpperUnit_inv"
+      file: "GeneralLinearGroups/RectangularBlockUnits.lean"
+      note: "The inverse upper unit has off-block -C."
+    - declaration: "Matrix.GeneralLinearGroup.rectangularUpperUnit_zero"
+      file: "GeneralLinearGroups/RectangularBlockUnits.lean"
+      note: "The zero rectangular block gives the identity unit."
+    - declaration: "Matrix.GeneralLinearGroup.rectangularUpperUnit_add"
+      file: "GeneralLinearGroups/RectangularBlockUnits.lean"
+      note: "Addition of rectangular blocks becomes ordered multiplication of upper units."
+    - declaration: "Matrix.GeneralLinearGroup.rectangularUpperUnit_single"
+      file: "GeneralLinearGroups/RectangularBlockUnits.lean"
+      note: "A single off-block entry is the existing elementary generator."
+    - declaration: "Matrix.GeneralLinearGroup.rectangularUpperUnit_mem_elementarySubgroup"
+      file: "GeneralLinearGroups/RectangularBlockUnits.lean"
+      note: "Every upper rectangular unit lies in the existing finite elementary subgroup, including empty-block cases."
+    - declaration: "Matrix.GeneralLinearGroup.triangularUnit"
+      file: "GeneralLinearGroups/RectangularBlockUnits.lean"
+      note: "Uses explicit diagonal units A and D and ordered B * D⁻¹ to assemble an upper triangular unit over any Ring."
+    - declaration: "Matrix.GeneralLinearGroup.triangularUnit_eq_upper_mul_diagonal"
+      file: "GeneralLinearGroups/RectangularBlockUnits.lean"
+      note: "First factorization is upper unit of B * D⁻¹ times the diagonal pair."
+    - declaration: "Matrix.GeneralLinearGroup.triangularUnit_val"
+      file: "GeneralLinearGroups/RectangularBlockUnits.lean"
+      note: "Reads the upper triangular block matrix A, B, 0, D."
+    - declaration: "Matrix.GeneralLinearGroup.triangularUnit_eq_diagonal_mul_upper"
+      file: "GeneralLinearGroups/RectangularBlockUnits.lean"
+      note: "Complementary ordered factorization is diagonal pair times upper unit of A⁻¹ * B."
+    - declaration: "Matrix.GeneralLinearGroup.triangularUnit_inv_val"
+      file: "GeneralLinearGroups/RectangularBlockUnits.lean"
+      note: "Ordered inverse off-block is -(A⁻¹ * B * D⁻¹), not a reversed or unsigned product."
+    - declaration: "Matrix.GeneralLinearGroup.map_triangularUnit_eq_diagonalPairUnit"
+      file: "GeneralLinearGroups/RectangularBlockUnits.lean"
+      note: "A group hom killing E forgets the off-block, with no abelian-target or ambient-normality hypothesis."
+    - declaration: "Matrix.GeneralLinearGroup.rectangularUpperUnit_eq_upperUnit"
+      file: "GeneralLinearGroups/RectangularBlockUnits.lean"
+      note: "Equal-index rectangular upper units agree with existing Whitehead upperUnit."
+    - declaration: "Matrix.GeneralLinearGroup.diagonalPairUnit_inv_pair"
+      file: "GeneralLinearGroups/RectangularBlockUnits.lean"
+      note: "Equal-index inverse diagonal pairs agree with existing blockDiagonalUnit."
 
 automation:
   methods:
@@ -503,6 +596,19 @@ automation:
         hive-request-5da2d3a64872f8d02f43a4373691317fea0453de,
         UID 0c79d3fe-3ca4-433d-9f11-152854f183e2; this is not a
         new proof or a computational acceptance claim.
+        The rectangular proof/client/guide originated with worker-b Task
+        hive-request-f05b4be9b9263abe877517328bf1ff2eb3ccbe6c,
+        UID f689b30f-0a76-4727-8ec2-68907a224546; incubator registration
+        was by distinct worker-b Task
+        hive-request-9f77f8c1f4015db6ddf102989bf1d24ae36a6048,
+        UID 63beac6e-e93f-4a54-8fb8-650114a41967. Independent original
+        leaf review was by worker-a Task
+        hive-request-d58bc9fb1f33c1ab04462845819fa599cfd02540,
+        UID 21cca7cb-eaa7-4145-89fc-d310aa764158. The separate
+        source-only rectangular GLG transfer is by worker-b Task
+        hive-request-cf565ac88c8dc0b5274168e7cb2dbfc1abfab323,
+        UID d7ced547-d176-4d48-af8d-ad239d49cff9; Prism keeps
+        mathematical planning and responsible-maintainer decisions.
         Agents used compiler feedback, native mathlib APIs and ordinary Lean
         tactics, including simp, rw, ext, noncomm_ring, abel and omega.
       prompting_notes: >-
@@ -533,6 +639,13 @@ fidelity:
     GL units; lower Whitehead blocks use a minus sign. Doubled relative
     conjugation permits arbitrary GL conjugators only after stabilization;
     the ordered commutator factor ends with the diagonal of (h*g)⁻¹.
+    Rectangular upper units work over arbitrary Ring; diagonal pairs already
+    work over Semiring. Independent finite indices may be empty and their
+    universes may differ. Both diagonal units are explicit inputs, not
+    consequences asserted from triangular invertibility. Upper unit and
+    triangular factorizations preserve the B * D⁻¹ and A⁻¹ * B orders;
+    the inverse off-block is -(A⁻¹ * B * D⁻¹). A hom killing E needs no
+    abelian target or ambient normality assumption.
     No SL=E, same-rank ambient elementary normality, original-rank
     commutator containment, stable K1, excision, stable/direct-limit GL or
     full source-coverage claim follows.
@@ -540,6 +653,25 @@ fidelity:
 review:
   status: "revision-specific agent review; dated author-time checkpoints below"
   notes: >-
+    At the rectangular destination transfer-author checkpoint on 2026-09-27,
+    incubator PR101 commit 1b04c1d15c15b0f7adf7dcfec2861b451a4d1a79
+    was accepted and integrated; source registration native CI420/artifact45274
+    and original leaf review 3e029bdab05ecad4425abc79c0ba59ff6361c10b
+    cover their respective source graphs. The destination started at accepted
+    GLG main 72861c49b8ed620096b4749e171e25405c3652d2, whose tree
+    matches official published 51a4ca8e4a61eef09ce8164a53f4f37c3f520a00.
+    Its previous GLG CI422/artifact44428 is limited to the old 20-producer,
+    eight-client graph. Neither check establishes this distinct 21-producer,
+    nine-client destination graph at mathlib e37. At that author checkpoint,
+    the candidate was unaccepted;
+    native complete default-root/private-inclusive standard-axiom CI,
+    fresh author-distinct exact-revision promotion review, Prism's acceptance,
+    protected integration and separate reviewed official release were pending.
+    These are historical facts, not live review or release status; later
+    decisions bind their exact revisions.
+    No source-milestone correspondence or coverage is established here.
+    The following relative and elementary review descriptions are dated
+    predecessor snapshots, not additional live rectangular review verdicts.
     At the finite-relative destination-transfer author checkpoint on
     2026-09-27, Prism has accepted incubator PR95 commit
     a7ef4703603c3002e964be6fb289aa9eeb903af9; its native 18-pin

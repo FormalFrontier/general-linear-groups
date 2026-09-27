@@ -7,13 +7,15 @@ source revision `907124e973dd20f3efdeb8de0cad42e331b9c6d8`, with 13
 subject modules and the two then-existing private clients, `MatrixTraceClient`
 and `PublicAPIClient` (16 module records). It does **not** cover the later
 `Elementary`, `ElementaryWhitehead`, five finite relative producers or six
-corresponding private clients. For the current finite APIs and examples see
+corresponding private clients, or `RectangularBlockUnits` and its ninth
+private client. For the current finite APIs and examples see
 [elementary matrices](ElementaryMatrices.md),
 [commutators and perfectness](ElementaryCommutators.md),
 [relative elementary groups](RelativeElementary.md),
 [relative Whitehead factorization](RelativeWhitehead.md),
 [finite stabilization](ElementaryStabilization.md) and
-[relative consequences](RelativeWhiteheadConsequences.md). These standalone
+[relative consequences](RelativeWhiteheadConsequences.md) and
+[rectangular upper block units](RectangularBlockUnits.md). These standalone
 guides do not replace the archived inventory with a new native analysis.
 Do not treat 128 as the current declaration count or as proof integrity
 evidence for this destination candidate.

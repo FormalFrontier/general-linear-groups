@@ -24,6 +24,15 @@ See the five [finite elementary and relative guides](docs/README.md) for
 precise hypotheses, signs, imports and private clients. These APIs assert
 neither same-rank ambient normality nor stable `K₁` or full source coverage.
 
+The rectangular-block layer builds upper unipotent and upper triangular
+general-linear-group units for independent finite indices, including empty
+blocks, over potentially noncommutative rings. It reuses finite stabilization
+and reindexing, proves elementary membership of the upper off-block factor,
+and retains the ordered diagonal factorizations and inverse. Its diagonal
+blocks are explicitly supplied as units. See the
+[rectangular-block guide](docs/RectangularBlockUnits.md) for the exact APIs,
+signs, hypotheses and unequal-rank private client.
+
 The reindexing layer transports general linear groups along equivalences of
 finite index types, with identity, composition, inverse and coefficient-map
 naturality laws. It keeps fixed-cardinality notation as an external
@@ -134,6 +143,21 @@ relative addition. Destination-pin native CI, full private-inclusive axiom
 audit, fresh independent review, Prism's acceptance and a separate reviewed
 official release remain distinct gates at this dated author checkpoint.
 
+At the **2026-09-27 rectangular transfer-author checkpoint**, the accepted
+incubator PR #101 source revision
+`1b04c1d15c15b0f7adf7dcfec2861b451a4d1a79` was being promoted to an
+**unaccepted** GLG candidate on then-main
+`72861c49b8ed620096b4749e171e25405c3652d2`. That main had the same
+tree as official published release
+`51a4ca8e4a61eef09ce8164a53f4f37c3f520a00`, which did **not** contain
+this addition. Incubator source build/review does not establish destination
+e37 compatibility; new default-root nine-client build, complete private-inclusive
+axiom CI, fresh independent promotion review, Prism's acceptance and separate
+reviewed official release were separate outstanding gates at that checkpoint.
+This historical note is not live acceptance or release status; later decisions
+bind their exact revisions. It does not revise earlier author-time snapshots
+or assert source correspondence or coverage.
+
 ## Public imports and examples
 
 The [generated API reference](docs/API.md) records a **pre-elementary snapshot**
@@ -165,7 +189,7 @@ example {R S n : Type*} [Ring R] [Ring S] [Fintype n] [DecidableEq n]
 ```
 
 The same statement is retained as a named private stored-proof declaration in
-`tests/PublicAPIClient.lean`. All eight client modules are default build targets;
+`tests/PublicAPIClient.lean`. All nine client modules are default build targets;
 test declarations are deliberately private and are not additional library API.
 
 | Subject module(s) | Representative public interface | Boundary |
@@ -177,6 +201,7 @@ test declarations are deliberately private and are not additional library API.
 | `RelativeWhitehead` | `blockDiagonalUnit_eq_five`, `blockDiagonalUnit_mem_relativeElementarySubgroup` | Signed ordered five-factor identity; relative membership after doubling |
 | `ElementaryStabilization` | `stabilize`, `stabilize_relativeElementarySubgroup_le` | Monoid hom on semiring units, not matrix-ring hom; relative image inclusion |
 | `RelativeWhiteheadConsequences` | `stabilize_conj_mem_relativeElementarySubgroup`, `stabilize_commutator_mem_relativeElementarySubgroup` | Arbitrary GL conjugation and congruence commutators only after doubling |
+| `RectangularBlockUnits` | `diagonalPairUnit`, `rectangularUpperUnit_mem_elementarySubgroup`, `triangularUnit_inv_val` | Explicit diagonal units; ordered off-block factors; no arbitrary triangular-invertibility converse or stable K₁ |
 | `QuasiregularIdeal`, `NilIdeal`, `MatrixQuasiregular` | `IsQuasiregular`, `IsNil`, `IsQuasiregular.matrix` in `TwoSidedIdeal` | Global ideal predicates; pointwise nil is not uniform ideal nilpotence |
 | `LocalQuotient` | `TwoSidedIdeal.quotientDivisionRing` | Explicit local structure, not a global instance |
 | `CongruenceSubgroup`, `QuasiregularQuotient` | `idealGeneralLinearGroupEquivCongruence`, `isUnit_of_mapMatrix_quotient_isUnit` | Exactness for any ideal; unit reflection and quotient surjectivity require quasiregularity |
@@ -207,8 +232,8 @@ lake build
 ```
 
 The cache fetch must succeed before building. The literal default build includes
-all library modules and eight clients. For optional focused direct checks of
-the original three clients (the five new clients also build by default):
+all library modules and nine clients. For optional focused direct checks of
+the original three clients (the six later clients also build by default):
 
 ```sh
 lake --wfail -KwarningAsError=true build GeneralLinearGroups GeneralLinearGroupsTests
@@ -339,9 +364,26 @@ original relative proof exposition/planning and is the responsible maintainer.
 The separate GLG source-only transfer and six-helper visibility/docstring
 change are by worker-b Task
 `hive-request-5da2d3a64872f8d02f43a4373691317fea0453de`
-(UID `0c79d3fe-3ca4-433d-9f11-152854f183e2`). The previous release
-does not include these changes, and the original authors' source checks
-do not establish e37 compatibility.
+(UID `0c79d3fe-3ca4-433d-9f11-152854f183e2`). At that transfer-author
+checkpoint, the previous release `fe3e506fe33635e057c4cc1d8fa40e33d9d1dbd0`
+did not include those changes. The original authors' source checks alone
+do not establish destination e37 compatibility.
+
+The rectangular producer/client and mathematical guide originated with
+`formalization-worker-b`, Hive Task
+`hive-request-f05b4be9b9263abe877517328bf1ff2eb3ccbe6c` (UID
+`f689b30f-0a76-4727-8ec2-68907a224546`); independent original-leaf
+review was by worker-a Task
+`hive-request-d58bc9fb1f33c1ab04462845819fa599cfd02540` (UID
+`21cca7cb-eaa7-4145-89fc-d310aa764158`). The accepted incubator
+registration was by worker-b Task
+`hive-request-9f77f8c1f4015db6ddf102989bf1d24ae36a6048` (UID
+`63beac6e-e93f-4a54-8fb8-650114a41967`). This source-only destination
+transfer is by distinct worker-b Task
+`hive-request-cf565ac88c8dc0b5274168e7cb2dbfc1abfab323` (UID
+`d7ced547-d176-4d48-af8d-ad239d49cff9`); Prism retains mathematical
+planning and responsible-maintainer acceptance, integration and release.
+Source acceptance does not certify this destination graph or source coverage.
 
 The distinct worker-a fixture Task
 `hive-request-301d13e69087461df1d9f6514c98f2515fe43c2f`

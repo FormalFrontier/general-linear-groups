@@ -24,6 +24,7 @@ public import GeneralLinearGroups.RelativeElementary
 public import GeneralLinearGroups.RelativeWhitehead
 public import GeneralLinearGroups.ElementaryStabilization
 public import GeneralLinearGroups.RelativeWhiteheadConsequences
+public import GeneralLinearGroups.RectangularBlockUnits
 
 /-!
 # General linear groups
@@ -54,4 +55,8 @@ ordinary finite general linear group for a unital ring.
 The nonunital-quasiregular layer identifies matrix quasiregularity with
 invertibility after entrywise unitization and with representability by `1 + x`
 in the augmentation-kernel general linear group.
+
+The rectangular-block layer assembles explicit diagonal units and ordered
+upper triangular units for independent finite index types, including empty
+blocks, over arbitrary rings. Its upper off-block factor is elementary.
 -/
