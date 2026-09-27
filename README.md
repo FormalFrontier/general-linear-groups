@@ -24,6 +24,17 @@ See the five [finite elementary and relative guides](docs/README.md) for
 precise hypotheses, signs, imports and private clients. These APIs assert
 neither same-rank ambient normality nor stable `K₁` or full source coverage.
 
+The Steinberg presentation layer uses mathlib's native `PresentedGroup` for
+additive, disjoint and ordered-composable elementary-symbol relations over any
+ring. It supplies universal lifts and a map onto this library's elementary
+subgroup for finite decidable indices, not onto all of `GL`. The reverse
+commutator has coefficient `-(b*a)`; no opposite-root relation is imposed.
+See the [finite-rank Steinberg guide](docs/FiniteRankSteinberg.md) for independent
+universes, arbitrary-ring hypotheses and low-rank boundary clients. Rank at
+least three is the usual interpretation; finite rank does not imply finite
+presentation, and no kernel-centrality, universal-central-extension or `K₂`
+claim follows.
+
 The rectangular-block layer builds upper unipotent and upper triangular
 general-linear-group units for independent finite indices, including empty
 blocks, over potentially noncommutative rings. It reuses finite stabilization
@@ -142,6 +153,37 @@ author-time snapshot alongside revision-specific agent review status, not a live
 release registry. Internal research and discussion systems are not needed to use
 the public mathematical interface.
 
+At the **2026-09-27 13:25:21 UTC Steinberg accepted-code checkpoint**,
+Prism accepted and protected-merged PR60 as `main`
+`5a55a99d5cae2a6c4cd3f7312549fd77b16d40c5`, tree
+`1e6dbe51c23295c3ae0c9664eb6597af5a669ca5`. Native CI484 built
+the root and twelve default clients and completed the private-inclusive
+transitive standard-three-axiom audit of all 37 Lean modules on that exact
+graph; fresh independent promotion review preceded code acceptance. The
+preceding native-kernel release `045ba3ac1e77a7b7f49e053792cb3fb122889ffa`
+was verified on private GitHub at 13:22:10 UTC. This Steinberg code acceptance
+does **not** accept or publish a Steinberg release: its separate reviewed
+internal/public release and verified publication remain outstanding. The
+registration status below is preserved as dated author-time history, not the
+current code status; no source-passage coverage decision follows.
+
+At the **2026-09-27 Steinberg registration checkpoint**, Prism composed three
+source-only destination leaves with the frozen, separately unaccepted
+native-kernel readiness revision `2aa7ba9a7f2ab5fb28e179618cf991e3ffe1b446`.
+This adds one producer, one default-built private client and twelve principal
+metadata results: 24 producers, twelve clients and 133 selected results.
+Accepted incubator PR109 `34c923b615722d4dd50980efa4ae55245a1a4b55`
+supplies the unchanged mathematical bodies, not proof of compatibility with
+destination mathlib `e37d88a26f3791ed5a93daa1f949af1021b8d103`.
+At this checkpoint the new registered graph is **unaccepted**: native full
+build/private-inclusive standard-axiom CI, fresh independent exact promotion
+review, predecessor readiness acceptance and Prism's integration remain open.
+Its separate reviewed release follows the native-kernel verified publication;
+no change is made to that frozen release candidate. The unchanged leaf guide's
+unregistered wording records its earlier leaf-transfer checkpoint, not this
+registration. No source-coverage or official publication decision is implied.
+The following native-kernel and earlier paragraphs retain their dated scopes.
+
 At the **2026-09-27 native-kernel registration-author checkpoint**, this
 eleven-path assembly was an **unaccepted** candidate. Its first parent, Prism's
 PR52 readiness revision `78409daf0c29fa8c775a7d1a2256e21241395208`,
@@ -233,7 +275,7 @@ example {R S n : Type*} [Ring R] [Ring S] [Fintype n] [DecidableEq n]
 ```
 
 The same statement is retained as a named private stored-proof declaration in
-`tests/PublicAPIClient.lean`. All eleven client modules are default build targets;
+`tests/PublicAPIClient.lean`. All twelve client modules are default build targets;
 test declarations are deliberately private and are not additional library API.
 
 | Subject module(s) | Representative public interface | Boundary |
@@ -248,6 +290,7 @@ test declarations are deliberately private and are not additional library API.
 | `RectangularBlockUnits` | `diagonalPairUnit`, `rectangularUpperUnit_mem_elementarySubgroup`, `triangularUnit_inv_val` | Explicit diagonal units; ordered off-block factors; no arbitrary triangular-invertibility converse or stable K₁ |
 | `DualNumberKernels` | `glKerEquiv`, `slKerEquiv`, `unitsKerEquiv`, `detKer_glKerEquiv`, `slToGL`, `glKerMap` | Native GL/SL/units reduction kernels over any CommRing; trace-zero SL, determinant compatibility and coefficient naturality; no tangent-scheme claim |
 | `DualNumberKernelAdjoint` | `slAdjoint`, `glKerEquiv_conj`, `slReadback_conj`, `glKerMap_conj` | Left conjugation by native dual-number units and naturality; not the GL left-multiplication action or the bracket of first-order group commutators |
+| `Steinberg` | `Steinberg.Presented`, `Steinberg.lift`, `Steinberg.toElementary_surjective`, `Steinberg.toGL_range` | Generic presentation over any Ring; finite map onto E, no opposite-root or universal-central-extension claim |
 | `QuasiregularIdeal`, `NilIdeal`, `MatrixQuasiregular` | `IsQuasiregular`, `IsNil`, `IsQuasiregular.matrix` in `TwoSidedIdeal` | Global ideal predicates; pointwise nil is not uniform ideal nilpotence |
 | `LocalQuotient` | `TwoSidedIdeal.quotientDivisionRing` | Explicit local structure, not a global instance |
 | `CongruenceSubgroup`, `QuasiregularQuotient` | `idealGeneralLinearGroupEquivCongruence`, `isUnit_of_mapMatrix_quotient_isUnit` | Exactness for any ideal; unit reflection and quotient surjectivity require quasiregularity |
@@ -278,8 +321,8 @@ lake build
 ```
 
 The cache fetch must succeed before building. The literal default build includes
-all library modules and eleven clients. For optional focused direct checks of
-the original three clients (the eight later clients also build by default):
+all library modules and twelve clients. For optional focused direct checks of
+the original three clients (the nine later clients also build by default):
 
 ```sh
 lake --wfail -KwarningAsError=true build GeneralLinearGroups GeneralLinearGroupsTests
@@ -465,6 +508,19 @@ by worker-b Task `hive-request-3cc18624fcf476e243174522ce76cc986b32a067`
 build inputs. Original code and notices are Apache-2.0; native CI462 and the
 independent PR55 assembly review establish the accepted registered code, not
 independent release acceptance or publication.
+
+The Steinberg producer and client originate with worker-b Task
+`hive-request-6b39f9a4c79e5938a346f45309940f84d0b16772` (UID
+`f2682c03-c1b7-4de5-9a2e-1cd6a3da9c98`), accepted through incubator PR109.
+The distinct destination transfer is by worker-b Task
+`hive-request-c645ac24da6ddcd181e73c4627845063d58a40ad` (UID
+`57209be5-e440-4975-9dac-b74d068db5aa`), preserving mathematical bodies
+while adapting headers, the client import and standalone guide. Prism composed
+its root/client registration and metadata on the agreed frozen readiness base.
+Mathlib's native presentation and commutator API expression credits remain in
+the [Steinberg guide](docs/FiniteRankSteinberg.md); the elementary subgroup is
+this library's native API, not a construction claimed from mathlib. Source
+acceptance and older destination checks do not certify this changed graph.
 
 The distinct worker-a fixture Task
 `hive-request-301d13e69087461df1d9f6514c98f2515fe43c2f`

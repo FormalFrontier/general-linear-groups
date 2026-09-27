@@ -27,6 +27,7 @@ public import GeneralLinearGroups.RelativeWhiteheadConsequences
 public import GeneralLinearGroups.RectangularBlockUnits
 public import GeneralLinearGroups.DualNumberKernels
 public import GeneralLinearGroups.DualNumberKernelAdjoint
+public import GeneralLinearGroups.Steinberg
 
 /-!
 # General linear groups
@@ -67,4 +68,9 @@ reduction kernels over commutative rings with additive first-order coefficients,
 and relates determinant, trace, coefficient maps and left conjugation to their
 matrix and trace-zero Lie-algebra counterparts. It includes empty finite ranks
 and does not identify abelian kernel commutators with matrix Lie brackets.
+
+The Steinberg layer gives a native presented group on additive, disjoint and
+ordered-composable elementary-symbol relations over any ring, with universal
+lifts and, for finite decidable indices, a surjection onto the elementary
+subgroup. It imposes no opposite-root relation or central-extension claim.
 -/

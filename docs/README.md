@@ -8,7 +8,8 @@ subject modules and the two then-existing private clients, `MatrixTraceClient`
 and `PublicAPIClient` (16 module records). It does **not** cover the later
 `Elementary`, `ElementaryWhitehead`, five finite relative producers or six
 corresponding private clients, `RectangularBlockUnits` and its ninth private
-client, or the dual-number kernel/adjoint modules and their two private clients.
+client, the dual-number kernel/adjoint modules and their two private clients,
+or the Steinberg presentation and its private client.
 For the current finite APIs and examples see
 [elementary matrices](ElementaryMatrices.md),
 [commutators and perfectness](ElementaryCommutators.md),
@@ -18,7 +19,8 @@ For the current finite APIs and examples see
 [relative consequences](RelativeWhiteheadConsequences.md),
 [rectangular upper block units](RectangularBlockUnits.md),
 [native dual-number kernels](DualNumberKernels.md) and
-[their adjoint action](DualNumberKernelAdjoint.md). These standalone
+[their adjoint action](DualNumberKernelAdjoint.md), and
+[the finite-rank Steinberg presentation](FiniteRankSteinberg.md). These standalone
 guides do not replace the archived inventory with a new native analysis.
 Do not treat 128 as the current declaration count or as proof integrity
 evidence for this destination candidate.

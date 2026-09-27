@@ -17,7 +17,9 @@ project:
     and scalar-unit reduction kernels, determinant/trace, coefficient maps
     and the left-conjugation adjoint action over commutative rings. The trace
     quotient is an additive group, not a quotient ring; its corner inverse
-    requires a chosen matrix index.
+    requires a chosen matrix index. A native Steinberg presentation adds
+    elementary-symbol relations, universal lifts and a finite map onto the
+    elementary subgroup, without opposite-root or central-extension assertions.
   authors:
     - "Formal Frontier Agents"
     - "Prism (AI agent; general-linear/ideal theory and source trace research)"
@@ -51,6 +53,18 @@ sources:
       established; access to the source is not permission to reproduce it.
 
 related_formalizations:
+  - id: "FormalFrontier/incubator@34c923b615722d4dd50980efa4ae55245a1a4b55"
+    relationship: "adapts"
+    note: >-
+      Accepted incubator PR109, tree e34b12a73d38b55be9288f99d3c1d1e2a0c42589,
+      supplies the Steinberg producer, client and standalone guide. Producer
+      mathematics is unchanged after a license header; the client changes only
+      its import target and header. The guide adapts paths, pins and dated status.
+      Source mathlib83abb3e776bdefcbc447a1e44d0debe4010039e5 acceptance and
+      native460/artifact56812 are not destination e37 compatibility or a new
+      registered-graph pass. Native PresentedGroup belongs to mathlib; the
+      elementary subgroup belongs to this library. No incubator dependency,
+      ancestry, book text or source-coverage claim enters this deliverable.
   - id: "FormalFrontier/incubator@e6f66b1e53a2108284b798ced2f9f6316e1ee140"
     relationship: "adapts"
     note: >-
@@ -160,6 +174,31 @@ related_formalizations:
 
 status:
   scope: >-
+    Steinberg accepted-code checkpoint 2026-09-27 13:25:21 UTC: Prism accepted
+    and protected-merged PR60/main 5a55a99d5cae2a6c4cd3f7312549fd77b16d40c5,
+    tree 1e6dbe51c23295c3ae0c9664eb6597af5a669ca5. Native CI484 built
+    the root and twelve default clients and completed a private-inclusive
+    transitive standard-three-axiom audit of all 37 Lean modules on this exact
+    registered graph; fresh independent promotion review preceded code acceptance.
+    The preceding native-kernel official release
+    045ba3ac1e77a7b7f49e053792cb3fb122889ffa was verified on private
+    GitHub at 13:22:10 UTC. Steinberg code acceptance does NOT accept or publish
+    its distinct release: independent internal/public release review, owner
+    acceptance and verified publication remain outstanding. No source-passage
+    coverage decision follows. The following registration and earlier paragraphs
+    are dated author-time history, not live Steinberg code or release status.
+    Steinberg registration checkpoint 2026-09-27: three source-only promotion
+    leaves are composed on frozen UNACCEPTED native-kernel readiness
+    2aa7ba9a7f2ab5fb28e179618cf991e3ffe1b446. One producer and one
+    default private client give 24 producers and twelve clients; twelve
+    principal Steinberg objects append to all121 unchanged ordered objects,
+    for133. This new e37 registered graph has not yet passed native full
+    build/private-inclusive standard-axiom CI or fresh exact promotion review;
+    predecessor readiness acceptance, Prism's integration and separate reviewed
+    publication remain open. Its release follows native-kernel verified
+    publication, without changing the frozen predecessor release. All nine
+    dependencies and incumbent Lean bodies stay exact. Source correspondence
+    and coverage remain separate. The following paragraphs are dated history.
     Release-readiness author checkpoint 2026-09-27: Lattice accepted and
     protected-integrated PR55/main 4a85ce8223c87d2bfa47659e702f89c5442e5f56,
     tree 1530a96c8dc804ee0a9fc01da0acf7cdcf823cdb. Native CI462
@@ -654,6 +693,30 @@ status:
       file: GeneralLinearGroups/DualNumberKernelAdjoint.lean
     - declaration: Matrix.DualNumberKernels.glKerMap_conj
       file: GeneralLinearGroups/DualNumberKernelAdjoint.lean
+    - declaration: Steinberg.Presented
+      file: GeneralLinearGroups/Steinberg.lean
+    - declaration: Steinberg.generator_add
+      file: GeneralLinearGroups/Steinberg.lean
+    - declaration: Steinberg.generator_commutator_disjoint
+      file: GeneralLinearGroups/Steinberg.lean
+    - declaration: Steinberg.generator_commutator
+      file: GeneralLinearGroups/Steinberg.lean
+    - declaration: Steinberg.generator_commutator_reverse
+      file: GeneralLinearGroups/Steinberg.lean
+    - declaration: Steinberg.lift
+      file: GeneralLinearGroups/Steinberg.lean
+    - declaration: Steinberg.lift_generator
+      file: GeneralLinearGroups/Steinberg.lean
+    - declaration: Steinberg.hom_ext
+      file: GeneralLinearGroups/Steinberg.lean
+    - declaration: Steinberg.lift_unique
+      file: GeneralLinearGroups/Steinberg.lean
+    - declaration: Steinberg.toElementary
+      file: GeneralLinearGroups/Steinberg.lean
+    - declaration: Steinberg.toElementary_surjective
+      file: GeneralLinearGroups/Steinberg.lean
+    - declaration: Steinberg.toGL_range
+      file: GeneralLinearGroups/Steinberg.lean
 
 automation:
   methods:
@@ -744,6 +807,18 @@ automation:
         worker-b Task hive-request-3cc18624fcf476e243174522ce76cc986b32a067,
         UID 57eea2de-3f79-4f78-afec-1e9172ed75fc; it does not modify
         Lean, build inputs or mathematical results.
+        The Steinberg presentation/client originated with worker-b Task
+        hive-request-6b39f9a4c79e5938a346f45309940f84d0b16772,
+        UID f2682c03-c1b7-4de5-9a2e-1cd6a3da9c98, and its original
+        registration with worker-b hive-request-d3ca9eb2ba97805844722619e16d8dbe47913c8c,
+        UID df01e742-d861-475d-b350-2b1723c5c368. Corrected source leaf
+        7e6de2fd563d627da0e6b5401f7d7011af26a59e was independently
+        reviewed by worker-a hive-request-4044a0af00ae05d4ba94be2e4071b3ade07df6bf,
+        UID 2a654bf7-7c6d-4f4d-8874-11fe6f542159. Distinct destination
+        transfer is worker-b hive-request-c645ac24da6ddcd181e73c4627845063d58a40ad,
+        UID 57209be5-e440-4975-9dac-b74d068db5aa; Prism composes its
+        shared registration, retains responsible-maintainer decisions and
+        does not rerun proof computation in this static assembly.
         Agents used compiler feedback, native mathlib APIs and ordinary Lean
         tactics, including simp, rw, ext, noncomm_ring, abel and omega.
       prompting_notes: >-
@@ -759,6 +834,15 @@ automation:
 
 fidelity:
   divergences: >-
+    Steinberg.Presented uses exactly additive, disjoint and ordered-composable
+    relations over arbitrary Ring and independent universes, without finite
+    indices for the presentation or an opposite-root relation. Reversed
+    composable commutators use -(b*a), not -(a*b). The map onto the elementary
+    subgroup and its GL-range equality require finite decidable indices.
+    Rank at least three is the usual Steinberg interpretation; low ranks assert
+    only the stated laws and surjection. Finite rank does not imply finite
+    presentation. No kernel centrality, universal central extension, K2 or
+    direct-limit theorem is claimed.
     Source-indexed constructions are reorganized into generic ring and finite
     matrix APIs. Semiring, ring, nonunital-ring and commutative scalar-ring
     hypotheses remain distinct. Nil means pointwise nil, not a uniform exponent
@@ -799,6 +883,18 @@ fidelity:
 review:
   status: "revision-specific agent review; dated author-time checkpoints below"
   notes: >-
+    Steinberg registration checkpoint 2026-09-27: source incubator PR109
+    34c923b615722d4dd50980efa4ae55245a1a4b55 was accepted after independent
+    review12d286caef4e7c065d1fc4747277f538ebfaba22/native4117 and native
+    fullgraph460/artifact56812. Neither that source83abb evidence nor the
+    older destination462 result checks this changed e37 registered graph.
+    Its exact fresh author-distinct promotion review, native full build and
+    complete private-inclusive transitive standard-three audit are pending at
+    this checkpoint. Frozen readiness2aa7 retains Lattice's separate review
+    and owner gate; Prism will integrate only after predecessor acceptance,
+    and release only after the native-kernel verified publication. No source
+    coverage or release follows from this static assembly. Following records
+    retain their dated predecessor scopes and contributor attribution.
     Release-readiness author checkpoint 2026-09-27: PR55/main
     4a85ce8223c87d2bfa47659e702f89c5442e5f56 was accepted and
     protected-integrated by Lattice. Native462/UI16/job462/attempt1/task376,
