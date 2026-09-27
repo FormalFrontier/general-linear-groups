@@ -1,0 +1,55 @@
+# Copy to .forgejo/workflows/lean-ci.yaml and set the checker digest below.
+# The runner image supplies ff-lean-ci and ff-lean-auth; no host volumes are used.
+name: Lean CI
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+concurrency:
+  group: lean-ci-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+jobs:
+  lean:
+    name: Lean build and audit
+    runs-on: lean-ci
+    timeout-minutes: 90
+    env:
+      # Run `ff-lean-ci tools-sha` in the selected image. Update this pin whenever
+      # the checker changes; docs-only reuse requires the same workflow bytes.
+      FF_LEAN_CI_TOOLS_SHA256: 9ae3f0a53361cfdc85cd22f96c0f7f63b445a55958288ab652d017cca58e75a3
+    steps:
+      - name: Check out the proposed commit
+        uses: https://data.forgejo.org/actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Record exact inputs
+        id: inputs
+        run: ff-lean-ci inputs --github-output "$GITHUB_OUTPUT"
+      - name: Check for proven docs-only reuse
+        id: reuse
+        env:
+          FF_LEAN_CI_API_TOKEN: ${{ github.token }}
+        run: ff-lean-ci reuse --github-output "$GITHUB_OUTPUT"
+      - name: Set up scoped dependency reads
+        if: steps.reuse.outputs.reused != 'true'
+        env:
+          LEAN_CI_READ_AUTH: ${{ secrets.LEAN_CI_READ_AUTH }}
+        run: ff-lean-auth setup
+      - name: Check the pinned toolchain and fetch exact dependencies
+        if: steps.reuse.outputs.reused != 'true'
+        run: ff-lean-ci prepare
+      - name: Remove dependency credentials
+        if: always()
+        run: ff-lean-auth cleanup
+      - name: Build and run the configured audit
+        if: steps.reuse.outputs.reused != 'true'
+        run: ff-lean-ci run
+      - name: Preserve commands, inputs, audit output and result
+        if: always()
+        uses: https://data.forgejo.org/actions/upload-artifact@c6a3b2bd78b3985e4b2f15397fec357f0fd808de # v3.2.2-node20, Forgejo-compatible
+        with:
+          name: lean-ci-evidence
+          path: .lean-ci-evidence/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 30

@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "mode": "strict",
+  "projects": [
+    {
+      "path": ".",
+      "targets": [
+        "GeneralLinearGroups",
+        "GeneralLinearGroupsTests"
+      ],
+      "source_roots": [
+        ".",
+        "tests"
+      ]
+    }
+  ],
+  "docs_only_paths": []
+}
