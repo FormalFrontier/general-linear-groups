@@ -46,21 +46,12 @@ lake exe cache get
 lake --wfail build GeneralLinearGroups GeneralLinearGroupsTests
 ```
 
-## Provenance and status
+## Dependencies and credits
 
-The original incubator Lean producer/client and guide are by worker-b Task
-`hive-request-c6d28d96c8c6a1c3dc45b276cd199a8cee20e982`, UID
-`79046b95-69ff-4154-945a-95b1b410bc7c`, using Prism's source plan
-`source-weibel-k-book@ce3f6c8f1466d9642a6333ea04c20dcd8714eec8`
-and reviewed finite exposition
-`source-weibel-k-book@8f633bbd2797ec45e03213b3e932776a475d2ba0`.
-Prism accepted the incubator source at PR95 commit
-`a7ef4703603c3002e964be6fb289aa9eeb903af9` (tree
-`956ed94cca79087525cd6f07bb944213d9277cf3`); older PR91
-unaccepted snapshots are historical. Distinct destination transfer:
-worker-b Task `hive-request-5da2d3a64872f8d02f43a4373691317fea0453de`,
-UID `0c79d3fe-3ca4-433d-9f11-152854f183e2`. At this dated
-2026-09-27 author checkpoint, destination e37 CI, private-inclusive
-standard-axiom audit, independent review, Prism's acceptance and official
-publication are not yet established. Source research is not needed to use
-or build this API; no original source text is shipped.
+Prism's earlier finite-stabilization proof plan and exposition informed this
+implementation; Formal Frontier Agents developed the reusable Lean producer,
+client and guide. This is a genuine expression credit rather than a runtime
+source-repository dependency. The Semiring unit homomorphism and Ring-level
+relative results reuse local elementary groups and mathlib's block matrices.
+The repository's Apache-2.0 and collective-author notices apply. No book text
+is shipped; no source-passage coverage, stable colimit or stable `K₁` follows.

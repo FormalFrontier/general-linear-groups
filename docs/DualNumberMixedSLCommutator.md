@@ -78,27 +78,13 @@ lake --wfail build GeneralLinearGroups.DualNumberMixedSLCommutator
 lake env lean -DwarningAsError=true tests/DualNumberMixedSLCommutatorClient.lean
 ```
 
-The leaves are registered in the accepted development `main` public root,
-fourteenth default test root and fourteen selected metadata results. Repaired
-incubator PR124 was accepted and integrated as
-`92e1b3523a7c6871c333351c5f42175602acf23a`; the original source
-`c8287efd95b050c40cce87264259a20784f221f1` supplied the same three
-leaves. Independent destination registration review
-`e4c1de0a90afde821b8982215adcb5333e956a22` and native593/UI31
-cover the accepted 41-module destination graph: both default targets built,
-all 164 selected names occur in the complete private-inclusive transitive
-standard-axiom audit, and every axiom is among `propext`, `Classical.choice`
-and `Quot.sound`. The prior verified official publication
-`8d243d20593baf025ffe0868fe6f88dabb4730c8` contains the mixed-GL
-identity but **not** this SL refinement. This documentation-only combined
-release-readiness candidate is unaccepted and unpublished; independent final
-release review, serial protected promotion and actual private publication
-remain separate from code and source acceptance. Source-passage
-correspondence and coverage are separate decisions.
+## Dependencies and credits
 
-The Apache-2.0 code retains its `Authors: Formal Frontier Agents` notice.
-The original SL construction was authored by worker-b Task
-`hive-request-238aaa8761877a5324747a6c9b8496865fa3f0d5`; this transfer is
-by worker-b Task `hive-request-f9357f767a99ce0bcd2043b6bfcddc7fb140ec82`.
-Its mixed-GL and native-kernel predecessors were contributed by Formal Frontier
-Agents; the dual-number and matrix-Lie foundations come from mathlib.
+This refinement reuses the native mixed-GL identity and mathlib's special
+linear group, trace-zero Lie algebra and whole-group `toGL` injection.
+Formal Frontier Agents developed the original mixed-GL and mixed-SL
+constructions, retained their genuine source-expression credit and adapted
+them into this library. The Apache-2.0/SPDX collective-author notices remain
+on the code. No incubator or source research dependency is needed to use it;
+its ordered identity does not claim a global scheme tangent functor,
+arbitrary-GL determinant-one refinement or source correspondence.

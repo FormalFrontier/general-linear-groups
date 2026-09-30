@@ -56,20 +56,12 @@ lake exe cache get
 lake --wfail build GeneralLinearGroups GeneralLinearGroupsTests
 ```
 
-## Provenance and status
+## Dependencies and expression credit
 
-Prism developed the mathematical factorization in source exposition
-`source-weibel-k-book@8f633bbd2797ec45e03213b3e932776a475d2ba0`;
-the original reusable producer/client and six published-in-incubator helper
-docstrings were authored by worker-b Task
-`hive-request-474d5a18341359e66cfefad57a2fe7fce5fd95be`, UID
-`201cfd05-92f3-411c-9f16-9927145c58ca`. This is a transfer of Prism's
-accepted incubator PR95 `a7ef4703603c3002e964be6fb289aa9eeb903af9`
-(tree `956ed94cca79087525cd6f07bb944213d9277cf3`) by distinct worker-b
-Task `hive-request-5da2d3a64872f8d02f43a4373691317fea0453de`, UID
-`0c79d3fe-3ca4-433d-9f11-152854f183e2`. Incubator PR91's old
-unaccepted/branch-only status is historical, not source PR95's status. At
-this 2026-09-27 **unaccepted destination** checkpoint, new native CI with
-private-inclusive axiom audit, independent promotion review, maintainer
-acceptance and an official release still require separate decisions. No
-original book text or source-repository dependency is included.
+Prism's original finite Whitehead proof exposition informed this five-factor
+identity; Formal Frontier Agents authored its reusable producer/client and
+the supporting elementary-block helper docstrings. The library adapts that
+original project expression without importing source research or shipping
+book text. The code retains Apache-2.0/collective-author notices. The
+relative membership is a doubled statement, not same-rank ambient normality
+or a claim of source-passage coverage.

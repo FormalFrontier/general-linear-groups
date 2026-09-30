@@ -40,7 +40,7 @@ surjectivity, excision, stable `K₁` or source-coverage decision follows.
 
 The exact environment is Lean `v4.34.0-rc2`, mathlib
 `e37d88a26f3791ed5a93daa1f949af1021b8d103`, and the unchanged
-nine-package `lake-manifest.json`. To build the root and all eight clients
+nine-package `lake-manifest.json`. To build the root and all fourteen clients
 from this repository, first fetch its matching mathlib cache:
 
 ```sh
@@ -48,19 +48,13 @@ lake exe cache get
 lake --wfail build GeneralLinearGroups GeneralLinearGroupsTests
 ```
 
-## Provenance and status
+## Dependencies and expression credit
 
-Prism designed the relative API in source research
-`source-weibel-k-book@dc2dc4d8946b0ab83b8ce916d6f68ad87c4ac749`;
-the original reusable Lean producer/client and guide are by worker-b Task
-`hive-request-fe47d83d9ec7ed0603df9afa59272f91b6c1d25b`, UID
-`aa475138-96f3-40c8-9d3e-a2ed8997d269`. Prism accepted the full
-incubator source PR95 at `a7ef4703603c3002e964be6fb289aa9eeb903af9`
-(tree `956ed94cca79087525cd6f07bb944213d9277cf3`). Distinct GLG
-transfer: worker-b Task `hive-request-5da2d3a64872f8d02f43a4373691317fea0453de`,
-UID `0c79d3fe-3ca4-433d-9f11-152854f183e2`. Earlier unaccepted PR87/88
-snapshots in the incubator guide are history. At this dated 2026-09-27
-destination author checkpoint, native e37 graph checks, fresh independent
-promotion review, Prism's acceptance and reviewed official publication remain
-outstanding. The source research is provenance, not a build/use dependency;
-no book text is distributed here.
+Prism's source-research design informed the relative subgroup and coefficient
+map API; Formal Frontier Agents developed the reusable producer, client and
+guide and adapted that original project expression into the standalone
+library. The relative normal closure is explicitly **inside** this library's
+`elementarySubgroup`; mathlib supplies the subgroup and ideal foundations.
+The code retains its Apache-2.0/collective-author notices. No source
+repository is a runtime dependency; bibliographic motivation and original
+book text are not formalized source-coverage assertions.

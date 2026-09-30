@@ -60,24 +60,21 @@ Scheme-point transport, tangent functors, higher-order infinitesimals,
 differentials, global dimension, general Lie theory, and source correspondence
 are outside this standalone API.
 
-## Provenance and status
+## Dependencies and credits
 
-Copyright notice: SPDX-License-Identifier: Apache-2.0, matching the repository
-and the imported mathlib modules. Underlying dual numbers/
-`TrivSqZeroExt` are from mathlib (notably Eric Wieser's
-`Mathlib/Algebra/DualNumber.lean`); this implementation reuses mathlib's native
-GL/SL group definitions, trace-zero `sl`, and quadratic determinant remainder.
-The original kernel API investigation is credited to worker-b Task
-`hive-request-fcd501500f0c5ec813d46a71e1ed0b0d7555a0fd`,
-UID `028a7064-28e0-4e93-a917-c5ac60a025d1`. The original kernel
-implementation is credited to worker-b Task
-`hive-request-1df68ed8f5e4bab1a07522b5ee97f5a4e124e028`,
-UID `a1cde5e5-a84f-4b15-b86e-c1d59cf1e533`. The accepted original
-implementation was transferred to a then-**UNACCEPTED destination candidate**
-by worker-b Task `hive-request-f1f0750c049a6341076625a8c7823dab83dad5d9`,
-UID `704cc043-3e91-4fd0-984a-4723758a7cc5`. The source/registration review,
-native CI462 registered build and private-inclusive standard-axiom audit, and
-Lattice's PR55 code acceptance and integration subsequently completed. This
-guide's release-readiness text does not itself accept or publish the new
-internal/public release; independent release review and verified publication
-remain separate. This guide makes no source coverage or scheme-point claim.
+This producer imports mathlib's dual numbers (`TrivSqZeroExt`, notably Eric
+Wieser's `Mathlib/Algebra/DualNumber.lean`), native GL/SL groups, trace-zero
+Lie algebra and determinant identities. Formal Frontier Agents developed the
+native identity-fiber constructions and naturality results; Lattice coordinated
+their integration into this library. These are original project formalizations
+with Apache-2.0/SPDX and collective-author notices. They do not import source
+research, promote a scheme-point equivalence, or claim source coverage.
+
+The library pins Lean `v4.34.0-rc2` and mathlib
+`e37d88a26f3791ed5a93daa1f949af1021b8d103`. For a clean build including
+the native-kernel client, first fetch the matching cache:
+
+```sh
+lake exe cache get
+lake --wfail build GeneralLinearGroups GeneralLinearGroupsTests
+```

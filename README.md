@@ -1,375 +1,133 @@
-# general-linear-groups
+# General linear groups
 
-Reusable Lean theory of general linear groups, block factorizations, and stability.
+A reusable Lean library for finite general linear groups over rings: elementary
+matrices, ordered block factorizations, congruence and quasi-regular ideals,
+additive matrix trace, finite stabilization, a Steinberg presentation, and
+native dual-number GL/SL kernels and commutators. The core ring results allow
+noncommutative coefficients; dual-number and determinant results use
+commutative rings. Matrix indices are finite with decidable equality where
+required. The [module guide index](docs/README.md) leads to detailed statements,
+worked examples and limitations; [mathlib](https://github.com/leanprover-community/mathlib4)
+supplies the underlying matrix, group, ideal and dual-number APIs.
 
-The initial development unit constructs the elementary block units over an
-arbitrary ring, proves the Whitehead factorization of
-`diag(g, g⁻¹)`, and uses it to lift this block-diagonal unit through a
-surjective ring homomorphism without claiming that the original general linear
-group map is surjective.
+## Headline results
 
-The elementary-matrix layer supplies off-diagonal GL units and their generated
-subgroup for arbitrary, possibly noncommutative rings. Its upper/lower/signed-swap
-and doubled block-diagonal membership results reuse that existing Whitehead
-factorization. See the [elementary-matrix guide](docs/ElementaryMatrices.md) for
-imports, hypotheses, signs, products and degenerate cases. No `SL = E`,
-normality or stable `K₁` result follows.
+- **Whitehead factorization and doubled lifting.** Over any `Ring`, the
+  block diagonal `diag(g, g⁻¹)` of a unit is elementary. A surjective ring
+  homomorphism lifts this *doubled* block as a unit; it need not lift the
+  original same-rank unit. For separately finite block indices, explicitly
+  supplied diagonal units also give rectangular upper-triangular units with
+  ordered inverse block `-(A⁻¹ * B * D⁻¹)`.
+  [Factorization](GeneralLinearGroups/Whitehead.lean),
+  [doubled lift](GeneralLinearGroups/Whitehead.lean#L164),
+  [elementary membership](GeneralLinearGroups/ElementaryWhitehead.lean#L117),
+  [rectangular guide](docs/RectangularBlockUnits.md).
 
-The finite commutator/relative layer proves ordered elementary commutator
-relations and perfectness at rank at least three; defines the normal closure
-of ideal-coefficient generators **inside** the elementary subgroup; and
-gives compatible coefficient maps, doubled relative Whitehead factorization,
-semiring-unit stabilization and doubled conjugation/commutator membership.
-See the five [finite elementary and relative guides](docs/README.md) for
-precise hypotheses, signs, imports and private clients. These APIs assert
-neither same-rank ambient normality nor stable `K₁` or full source coverage.
+- **Lifting modulo quasi-regular ideals.** For a two-sided ideal, its
+  unitization general linear group identifies with the congruence kernel;
+  quasi-regularity of *every* ideal element additionally makes the quotient
+  GL map surjective. The Jacobson radical is the greatest quasi-regular
+  ideal, and pointwise nil ideals provide examples without a shared nilpotence
+  exponent.
+  [Kernel equivalence](GeneralLinearGroups/CongruenceSubgroup.lean#L292),
+  [quotient lifting](GeneralLinearGroups/QuasiregularQuotient.lean#L139),
+  [ideal characterization](GeneralLinearGroups/QuasiregularIdeal.lean#L207).
 
-The Steinberg presentation layer uses mathlib's native `PresentedGroup` for
-additive, disjoint and ordered-composable elementary-symbol relations over any
-ring. It supplies universal lifts and a map onto this library's elementary
-subgroup for finite decidable indices, not onto all of `GL`. The reverse
-commutator has coefficient `-(b*a)`; no opposite-root relation is imposed.
-See the [finite-rank Steinberg guide](docs/FiniteRankSteinberg.md) for independent
-universes, arbitrary-ring hypotheses and low-rank boundary clients. Rank at
-least three is the usual interpretation; finite rank does not imply finite
-presentation, and no kernel-centrality, universal-central-extension or `K₂`
-claim follows.
+- **Trace modulo additive commutators.** For a chosen index `p : n`,
+  trace gives an additive equivalence from square matrices modulo additive
+  commutators to the coefficient ring modulo additive commutators; its inverse
+  inserts a scalar in the `p,p` corner. The forward map also works at empty
+  rank. These are *additive groups*, not quotient rings or a `K₀` descent.
+  [Equivalence](GeneralLinearGroups/MatrixTrace.lean#L166),
+  [forward map](GeneralLinearGroups/MatrixTrace.lean#L63).
 
-The rectangular-block layer builds upper unipotent and upper triangular
-general-linear-group units for independent finite indices, including empty
-blocks, over potentially noncommutative rings. It reuses finite stabilization
-and reindexing, proves elementary membership of the upper off-block factor,
-and retains the ordered diagonal factorizations and inverse. Its diagonal
-blocks are explicitly supplied as units. See the
-[rectangular-block guide](docs/RectangularBlockUnits.md) for the exact APIs,
-signs, hypotheses and unequal-rank private client.
+- **Finite elementary and relative structure.** Off-diagonal elementary
+  units generate `E`; ordered commutator laws prove that `E` is perfect at
+  rank at least three. A two-sided ideal defines the relative normal closure
+  *inside `E`*, not a claimed same-rank normal subgroup of ambient `GL`.
+  Congruence units become relatively elementary after Whitehead doubling;
+  stabilization preserves elementary, relative and congruence inclusions.
+  [Perfectness](GeneralLinearGroups/ElementaryCommutator.lean#L80),
+  [relative subgroup](GeneralLinearGroups/RelativeElementary.lean#L98),
+  [relative Whitehead](GeneralLinearGroups/RelativeWhitehead.lean#L134),
+  [guides](docs/README.md).
 
-The native dual-number layer uses the actual reduction kernels in finite GL,
-finite SL and scalar units over any commutative ring, and identifies them with
-the additive matrix, trace-zero Lie-algebra and scalar coefficients respectively.
-It includes determinant/trace compatibility, SL inclusion, honest change of
-coefficients and **left** conjugation, including nonconstant dual-number units.
-The [kernel guide](docs/DualNumberKernels.md) and
-[adjoint guide](docs/DualNumberKernelAdjoint.md) give imports, naturality,
-orientation and examples. Coefficient and index universes are independent;
-finite ranks may be empty, and zero rings and characteristic two are included.
-The first-order kernel groups are abelian: their group commutator does not
-encode the generally nonzero matrix Lie bracket. These APIs assert no tangent
-scheme, arbitrary scheme base change, stable `K₁`, point-bridge promotion or
-source-passage coverage.
+- **A Steinberg presentation and universal maps.** Over any `Ring`, for an
+  arbitrary index type, symbols satisfy precisely the additive, disjoint-root
+  and ordered-composable-root relations, and compatible maps extend uniquely.
+  Finite decidable indices additionally give a surjection onto `E`, not
+  onto all of `GL`. The reverse relation has coefficient `-(b * a)`; no
+  opposite-root, central-kernel or `K₂` theorem is claimed.
+  [Universal lift](GeneralLinearGroups/Steinberg.lean#L121),
+  [onto-`E` map](GeneralLinearGroups/Steinberg.lean#L206),
+  [presentation guide](docs/FiniteRankSteinberg.md).
 
-The iterated dual-number module supplies actual finite native GL units over
-`DualNumber (DualNumber R)` for any commutative ring `R`: the ordered
-`epsilonLiftGL X * etaLiftGL Y * (epsilonLiftGL X)⁻¹ * (etaLiftGL Y)⁻¹`
-equals `liftGL (innerPure ⁅X,Y⁆)`, where `⁅X,Y⁆ = XY - YX` is mathlib's
-associative matrix bracket. Its actual outer reduction-kernel element has
-full pure-inner readback, not merely a projected coefficient identity.
-Crucially, the outer reduction of `epsilonLiftGL X` is `liftGL X`, generally
-not `1`; this is compatible with abelian first-order kernel commutators.
-Independent coefficient/index universes, empty and singleton ranks, zero
-rings and characteristic two are allowed. See the
-[mixed native GL commutator guide](docs/DualNumberMixedCommutator.md) and its
-ordinary-import client; this GL-only identity makes no SL, scheme-point or
-global Lie claim by itself.
+- **First-order dual-number kernels and conjugation.** Over any `CommRing`,
+  the *multiplicative* native GL, SL and scalar-unit reduction identity fibers
+  identify with additive matrices, trace-zero matrices and scalars. Native
+  determinant corresponds to trace; arbitrary ring-hom coefficient maps
+  commute with these constructions without being implicitly `R`-linear.
+  Actual native-unit **left conjugation** corresponds to `g * X * g⁻¹`,
+  even for nonconstant dual-number units; the SL-kernel action uses SL
+  conjugators. First-order fiber groups are abelian, so their commutator is
+  not the generally nonzero matrix Lie bracket.
+  [Kernel equivalences](GeneralLinearGroups/DualNumberKernels.lean#L132),
+  [determinant/trace](GeneralLinearGroups/DualNumberKernels.lean#L264),
+  [adjoint guide](docs/DualNumberKernelAdjoint.md).
 
-For trace-zero matrices, the native SL refinement proves the ordered
-commutator of actual `SpecialLinearGroup` factors is the mixed lift of the
-`XY - YX` bracket. Its value lies in the actual outer SL reduction kernel and
-has pure-inner trace-zero readback, including empty ranks, zero rings and
-characteristic two. See the [mixed native SL commutator guide](docs/DualNumberMixedSLCommutator.md)
-for the exact factors and direct-import client. This is not a determinant
-theorem for arbitrary GL commutators.
+- **Mixed dual-number GL and SL commutators.** For finite matrices over a
+  `CommRing`, actual units over iterated dual numbers satisfy the ordered
+  identity `[1 + εX, 1 + ηY] = 1 + εη(XY - YX)` with full outer-kernel
+  readback. When *each input* is trace zero, actual special-linear factors
+  yield the analogous native SL identity and trace-zero readback. The
+  ε-factor reduces to the inner lift `liftGL X` (in SL, `liftSL X`), usually
+  not `1`: this is not a bracket of two elements of the abelian first-order
+  outer kernel, nor a global Lie- or scheme-tangent theorem.
+  [GL identity](GeneralLinearGroups/DualNumberMixedCommutator.lean#L155),
+  [SL identity](GeneralLinearGroups/DualNumberMixedSLCommutator.lean#L93),
+  [GL guide](docs/DualNumberMixedCommutator.md),
+  [SL guide](docs/DualNumberMixedSLCommutator.md).
 
-The reindexing layer transports general linear groups along equivalences of
-finite index types, with identity, composition, inverse and coefficient-map
-naturality laws. It keeps fixed-cardinality notation as an external
-specialization of the generic API.
+## Modules and scope
 
-The quasi-regular-ideal layer characterizes two-sided ideals whose elements are
-all quasi-regular. In particular, it proves that a globally quantified
-right-quasi-inverse condition already supplies two-sided quasi-inverses, without
-commutativity or direct-finiteness assumptions, and identifies the Jacobson
-radical as the greatest quasi-regular two-sided ideal. This is reusable
-groundwork for later quotient-lifting results.
+Import the [aggregate root](GeneralLinearGroups.lean) to publicly access its
+26 subject modules, or import a [specific subject module](GeneralLinearGroups/)
+to keep a narrower dependency surface. Its `public import` declarations expose
+the corresponding module APIs to downstream ordinary imports. The default
+build also checks fourteen client roots under `tests/`, including examples at
+empty and singleton index types, over noncommutative rings and the zero ring;
+client-only helpers are not promises of the library API.
 
-The nil-ideal layer uses the pointwise definition: every element is nilpotent,
-with no common exponent required for the ideal. It proves monotonicity, the
-zero-ideal case, quasi-regularity, and containment in the Jacobson radical for
-arbitrary rings.
+| Subject | Start here | Important boundary |
+| --- | --- | --- |
+| Elementary blocks and reindexing | [Elementary matrices](docs/ElementaryMatrices.md), [commutators](docs/ElementaryCommutators.md) | Ring-only units; no `SL = E` |
+| Relative groups and doubled identities | [Relative elementary](docs/RelativeElementary.md), [Whitehead](docs/RelativeWhitehead.md), [consequences](docs/RelativeWhiteheadConsequences.md) | Normal closure inside `E`; arbitrary-GL conjugation only after doubling |
+| Finite stabilization and rectangular blocks | [Stabilization](docs/ElementaryStabilization.md), [rectangular blocks](docs/RectangularBlockUnits.md) | Semiring stabilization is a *monoid hom on units*, not a matrix-ring hom or a surjectivity theorem |
+| Presented elementary group | [Steinberg](docs/FiniteRankSteinberg.md) | Finite rank does not imply finite presentation over an arbitrary ring |
+| Nil and quasi-regular ideal quotients | [QuasiregularIdeal](GeneralLinearGroups/QuasiregularIdeal.lean), [QuasiregularQuotient](GeneralLinearGroups/QuasiregularQuotient.lean), [NonUnitalQuasiregular](GeneralLinearGroups/NonUnitalQuasiregular.lean) | Extra ideal hypothesis is needed to lift arbitrary quotient units |
+| Additive trace quotient | [MatrixTrace](GeneralLinearGroups/MatrixTrace.lean), [AdditiveCommutator](GeneralLinearGroups/AdditiveCommutator.lean) | An inverse needs a chosen index; no ring quotient or `K₀` theorem |
+| Native first-order and mixed dual numbers | [Kernel guide](docs/DualNumberKernels.md), [adjoint guide](docs/DualNumberKernelAdjoint.md), [mixed GL guide](docs/DualNumberMixedCommutator.md), [mixed SL guide](docs/DualNumberMixedSLCommutator.md) | `CommRing`, finite decidable indices; SL requires individual trace-zero factors |
 
-The matrix quasi-regularity layer proves that entrywise finite matrix ideals
-preserve quasi-regularity over arbitrary rings, including for an empty index
-type, by reusing the Jacobson radical and matrix-ideal APIs.
+Additional [nonunital](GeneralLinearGroups/NonUnitalNilpotent.lean),
+[local quotient](GeneralLinearGroups/LocalQuotient.lean) and
+[unital comparison](GeneralLinearGroups/UnitalComparison.lean) modules retain
+their own docstrings and statements. Matrix index and coefficient types may
+live in independent universes. Empty indices, singleton indices and zero
+rings are not silently excluded; theorems requiring a chosen index state it.
+There is **no** claimed stable/direct-limit `GL`, stable `K₁`, excision,
+`K₂`, source-complete K-theory, ambient relative normality or universal
+triangular-invertibility converse.
 
-The congruence-subgroup layer defines the general linear group of a nonunital
-two-sided ideal as the augmentation kernel over its unitization. It identifies
-this group canonically with the kernel of reduction from the ambient general
-linear group, and proves that its ambient map is injective and multiplicatively
-exact for every two-sided ideal.
+The [historical API snapshot](docs/API.md) covers only 128 authored public
+entries and 16 module records from an earlier library stage, with source links
+on thirteen unchanged producer modules. It is **not** an exhaustive reference
+for the present 41-module default graph or subsequent results. The current
+Lean sources, subject guides and ordinary-import clients describe those
+results; the snapshot has not been regenerated for this revision.
 
-The nonunital-nilpotent layer defines strictly positive powers without a
-multiplicative identity and uses them to express nilpotence over arbitrary
-nonunital rings. It proves that unitization preserves these powers, constructs
-the relative general-linear-group element represented by `1 + x` with an
-explicit finite geometric-series inverse, and proves strictly upper triangular
-finite matrices nilpotent without commutativity.
+## Use and build
 
-The unital-comparison layer identifies the unitization of any unital algebra
-with the product of its scalar ring and the original algebra. It transports
-this equivalence to finite general linear groups and canonically identifies the
-augmentation-kernel definition with the ordinary general linear group for a
-unital ring, without commutativity or nonempty-index assumptions.
-
-The nonunital-quasiregular layer reuses mathlib's nonunital
-`IsQuasiregular` predicate and identifies it, for finite square matrices, with
-invertibility of `1 + x` after entrywise unitization and with representability
-by that matrix in the augmentation-kernel general linear group. The index and
-coefficient universes are independent, and empty matrices and trivial rings
-are included.
-
-The quasi-regular-quotient layer proves that a specified finite square matrix
-is a unit whenever its image modulo a quasi-regular two-sided ideal is a unit.
-It uses this reflection theorem to show that the quotient map is surjective on
-every finite general linear group. Together with the congruence-subgroup
-layer, this gives the three injective, exact, and surjective assertions of the
-corresponding short exact sequence. It works over arbitrary, possibly
-noncommutative rings and includes the empty-index case.
-
-The local-quotient layer proves that a proper two-sided ideal whose complement
-consists of units is maximal after being viewed as a left ideal. It then reuses
-mathlib's standard quotient construction to provide a division-ring structure,
-without commutativity or a uniqueness hypothesis for maximal ideals.
-
-The additive-commutator layer defines `Ring.additiveCommutators R` as the native
-additive subgroup generated by `a * b - b * a` in any unital ring `R`. It does
-not claim that this subgroup is an ideal or that its quotient is a ring. The
-matrix-trace layer proves that the trace of a rectangular cyclic difference
-is a sum of scalar commutators, and descends trace to the additive quotients
-for all finite square matrices, including empty index types. For a chosen
-`p : n`, its inverse maps a scalar class to the class of `Matrix.single p p r`:
-
-```lean
-Matrix.traceQuotientEquiv p :
-  (Matrix n n R ⧸ Ring.additiveCommutators (Matrix n n R)) ≃+
-    (R ⧸ Ring.additiveCommutators R)
-```
-
-This works for noncommutative and zero rings; the inverse requires a specified
-index, whereas the forward map does not. The library also gives matrix-unit
-decomposition, a trace criterion for commutator-subgroup membership, and
-independence of the corner chosen. The standalone `tests/MatrixTraceClient.lean`
-imports only the library root and exercises these public APIs. Coefficient
-naturality, conjugation, stabilization and projective-module trace are not
-asserted here.
-
-This repository is organized around source-independent algebra. Interpretation,
-provenance, correspondence, and coverage for motivating sources remain in their
-source-metadata repositories. Prism is responsible for the initial integration
-on behalf of the Source-maintainers team.
-
-Release status is revision-specific. Use an exact commit together with its
-independent acceptance and publication record; a checkout, version string or
-schema-valid metadata alone is not an official release. The root
-`formalization.yaml` records mathematical scope, expression origins and a dated
-author-time snapshot alongside revision-specific agent review status, not a live
-release registry. Internal research and discussion systems are not needed to use
-the public mathematical interface.
-
-At the **2026-09-27 20:44:01 UTC mixed-SL code-acceptance checkpoint**,
-Lattice accepted and protected-integrated PR68 as `main`
-`51f7a833740557de4eddeeebd4a802a9b43bb81a` (tree
-`967c0724e635fece9fad2754bf996af2f9db2e5e`). The repaired incubator
-PR124 source was accepted and integrated as
-`92e1b3523a7c6871c333351c5f42175602acf23a` (tree
-`da5fcf0b3c16f0b38e9f428d7614b59267172ddb`); source acceptance is
-distinct from this destination's code acceptance and from source-passage
-coverage. Fresh independent affected review
-`e4c1de0a90afde821b8982215adcb5333e956a22` applies to the accepted
-eight-path registration. Complete destination native593/UI31 evidence,
-preserved at nonshipping commit `41018c09565a75a06751dff285ea71a7cdc67389`,
-built both default targets and audited all 41 modules (including private
-declarations), 164 selected names and 855 module-origin rows to only
-`propext`, `Classical.choice` and `Quot.sound`. This prose/metadata-only
-readiness candidate does not change those checked Lean, dependency or checker
-inputs. The prior **GL-only** official release
-`8d243d20593baf025ffe0868fe6f88dabb4730c8` was verified on private
-GitHub at 20:12:07 UTC; it does not publish this SL addition. This combined
-readiness and its same-tree public candidate remain **unaccepted and
-unpublished**. Lattice retains independent final release review and acceptance,
-serial protected promotions and actual private GitHub publication readback;
-later incubator conversion requires the verified combined official release.
-
-At the **earlier 2026-09-27 conditional mixed-SL registration-author checkpoint**,
-this unaccepted candidate composes the frozen, unaccepted mixed-GL
-release-readiness revision `61790764d3278519b3a67e3bf420405b81399887`
-with the independently source-reviewed but unaccepted SL leaves at
-`f2a13476044baf1f1ced2cd507171249e0d495b3`. It registers 26 producer
-modules, fourteen default-built clients and the root (41 repository Lean
-modules), with 164 selected results. The inherited native CI562/audit covers
-only the prior 39-module mixed-GL graph; focused SL checks and leaf review do
-not certify this new registered graph. Its full destination build and
-private-inclusive transitive standard-axiom audit, fresh affected independent
-review, owner acceptance and protected integration, serial mixed-GL and SL
-reviewed releases and verified publications, and later reviewed incubator
-conversion were separate gates at that checkpoint. The incubator SL source
-was also unaccepted then; no source-passage correspondence or coverage is
-inferred. The following mixed-GL release-readiness paragraph retains its
-**earlier, unchanged-input** scope and is not an assertion about this 41-module
-successor or the later verified GL-only publication.
-
-At the **2026-09-27 18:57:26 UTC mixed-GL code-acceptance checkpoint**,
-Lattice accepted and protected-integrated PR64 as `main`
-`6d351f75aa81153bcb620005f77aaedd680b3e3b`, tree
-`5355ecaa2a72db81690b26b4977bae71b87108ff`. The source-only
-three-leaf transfer review `e5235d2fcc7007e0131c48de56bc39fa08962407`
-and fresh independent review of the exact registered assembly
-`73277a2e2bb6211754b06acd56c27cc6ea5270a8` precede that code
-acceptance. Applicable strict destination-mathlib
-`e37d88a26f3791ed5a93daa1f949af1021b8d103` native CI562/UI27 on
-the exact PR64 head successfully built both default targets and audited
-all 39 repository Lean modules, including private declarations and all 150
-selected results, with transitive dependencies restricted to `propext`,
-`Classical.choice` and `Quot.sound`. The complete artifact86559 and its
-intake report are preserved on the nonshipping evidence branch
-`evidence/pr64-native562-20260927` at commit
-`6748ecda94900887e959a2bec6a7fbe6237e54cd`. This documentation/metadata
-release-readiness candidate reuses that unchanged Lean, dependency and checker
-evidence; it is **unaccepted release preparation**, not an accepted release or
-verified private GitHub publication of PR64. Independent final release review,
-Lattice's main-readiness and release acceptance, protected promotion and
-verification of actual private GitHub `main` remain separate gates. Official
-public predecessor `1dc3a027009987185d8a2da0859767b2b892d25f` does not
-contain this mixed contribution. Code acceptance and reusable release do not
-decide source-passage correspondence or coverage; reviewed incubator conversion
-is likewise separate.
-
-At the **2026-09-27 mixed registration-author checkpoint**, the then-branch
-extends accepted GLG `main` `e89a42d8a6d2beb4ce6e050cbc1f29e9bcf6ee2c`
-with reviewed-but-not-code-accepted leaves from
-`4f32600a887f363780022a44824e7e9a5c4e045a`. The incumbent Steinberg
-official release `1dc3a027009987185d8a2da0859767b2b892d25f` was verified
-on private GitHub with the same accepted-base tree; older dated Steinberg
-release-pending paragraphs below are historical and do not describe its
-current status. This candidate has **25 producer modules, 13 default-built
-clients, 39 repository Lean modules including the root, and 150 selected
-metadata results** (133 unchanged and 17 appended). These are selected
-objects, not a public/private/generated declaration census. The three-leaf
-transfer has bounded independent review at `e5235d2fcc7007e0131c48de56bc39fa08962407`,
-not review of this registered graph. At that checkpoint the branch remained
-**unaccepted**: destination full-graph build and complete private-inclusive standard-three
-axiom audit, fresh affected independent review, Lattice's acceptance and
-protected integration, its own reviewed release and verified publication,
-then reviewed incubator conversion remain distinct gates. No source-passage
-correspondence or coverage follows from this registration.
-
-At the **2026-09-27 13:25:21 UTC Steinberg accepted-code checkpoint**,
-Prism accepted and protected-merged PR60 as `main`
-`5a55a99d5cae2a6c4cd3f7312549fd77b16d40c5`, tree
-`1e6dbe51c23295c3ae0c9664eb6597af5a669ca5`. Native CI484 built
-the root and twelve default clients and completed the private-inclusive
-transitive standard-three-axiom audit of all 37 Lean modules on that exact
-graph; fresh independent promotion review preceded code acceptance. The
-preceding native-kernel release `045ba3ac1e77a7b7f49e053792cb3fb122889ffa`
-was verified on private GitHub at 13:22:10 UTC. This Steinberg code acceptance
-does **not** accept or publish a Steinberg release: its separate reviewed
-internal/public release and verified publication remain outstanding. The
-registration status below is preserved as dated author-time history, not the
-current code status; no source-passage coverage decision follows.
-
-At the **2026-09-27 Steinberg registration checkpoint**, Prism composed three
-source-only destination leaves with the frozen, separately unaccepted
-native-kernel readiness revision `2aa7ba9a7f2ab5fb28e179618cf991e3ffe1b446`.
-This adds one producer, one default-built private client and twelve principal
-metadata results: 24 producers, twelve clients and 133 selected results.
-Accepted incubator PR109 `34c923b615722d4dd50980efa4ae55245a1a4b55`
-supplies the unchanged mathematical bodies, not proof of compatibility with
-destination mathlib `e37d88a26f3791ed5a93daa1f949af1021b8d103`.
-At this checkpoint the new registered graph is **unaccepted**: native full
-build/private-inclusive standard-axiom CI, fresh independent exact promotion
-review, predecessor readiness acceptance and Prism's integration remain open.
-Its separate reviewed release follows the native-kernel verified publication;
-no change is made to that frozen release candidate. The unchanged leaf guide's
-unregistered wording records its earlier leaf-transfer checkpoint, not this
-registration. No source-coverage or official publication decision is implied.
-The following native-kernel and earlier paragraphs retain their dated scopes.
-
-At the **2026-09-27 native-kernel registration-author checkpoint**, this
-eleven-path assembly was an **unaccepted** candidate. Its first parent, Prism's
-PR52 readiness revision `78409daf0c29fa8c775a7d1a2256e21241395208`,
-was frozen and unaccepted when assigned; Prism subsequently accepted and
-protected-merged that exact revision (11:58:41 UTC). The rectangular
-predecessor's distinct reviewed public release `2509e13448a0ee4229a22204c73fa20faa0f0ba3`
-was verified on GitHub by the owner at 12:04 UTC. Neither event then accepted or
-published this native assembly. Its second parent supplies the source-reviewed
-six leaves at `3858382e2ce4f9e832cc24d9b2413afed2af7b0e`;
-their source-only approval did not approve registration. At that checkpoint,
-the assembled destination still needed a full-graph build, complete
-private-inclusive transitive standard-axiom audit, fresh independent assembly
-review, Lattice's acceptance and protected integration. Earlier unaccepted
-rectangular notes below remain dated history.
-
-At the **2026-09-27 release-readiness author checkpoint**, Lattice has accepted
-and protected-integrated the native assembly as PR55/main
-`4a85ce8223c87d2bfa47659e702f89c5442e5f56`. Native CI462 successfully
-built the registered root and all eleven default clients and audited all 35
-repository Lean modules, including private declarations, against the standard
-three axioms. The audit covered 729 module-origin declarations, including
-generated and private origins; this is not a count of public API entries or the
-121 selected metadata results. A distinct worker-a independently approved the
-source/registration/API assembly. This documentation-only readiness candidate
-is **not yet independently accepted as a release or published**; the separate
-reviewed internal/public release and verified publication remain Lattice's
-decisions. No source-passage coverage is inferred from code acceptance.
-
-At the elementary-transfer author checkpoint (**2026-09-27 06:11 UTC**), the
-added modules were an **unaccepted promotion candidate**. This dated observation
-is not a live acceptance or release registry; later decisions bind their exact
-revision. Previously published content does not confer release status on additions.
-
-At this **2026-09-27 finite-relative transfer checkpoint**, the five new
-producer/client pairs and six previously private block helpers are a fresh,
-**unaccepted destination candidate** adapted from accepted incubator PR95
-`a7ef4703603c3002e964be6fb289aa9eeb903af9`. The existing GLG main
-`589094186158c7ddec5cac40fad08ac9ab42494f` matches previously published
-official release `fe3e506fe33635e057c4cc1d8fa40e33d9d1dbd0` by tree;
-that publication covers the previous elementary layer, **not** this finite
-relative addition. Destination-pin native CI, full private-inclusive axiom
-audit, fresh independent review, Prism's acceptance and a separate reviewed
-official release remain distinct gates at this dated author checkpoint.
-
-At the **2026-09-27 rectangular transfer-author checkpoint**, the accepted
-incubator PR #101 source revision
-`1b04c1d15c15b0f7adf7dcfec2861b451a4d1a79` was being promoted to an
-**unaccepted** GLG candidate on then-main
-`72861c49b8ed620096b4749e171e25405c3652d2`. That main had the same
-tree as official published release
-`51a4ca8e4a61eef09ce8164a53f4f37c3f520a00`, which did **not** contain
-this addition. Incubator source build/review does not establish destination
-e37 compatibility; new default-root nine-client build, complete private-inclusive
-axiom CI, fresh independent promotion review, Prism's acceptance and separate
-reviewed official release were separate outstanding gates at that checkpoint.
-This historical note is not live acceptance or release status; later decisions
-bind their exact revisions. It does not revise earlier author-time snapshots
-or assert source correspondence or coverage.
-
-## Public imports and examples
-
-The [generated API reference](docs/API.md) records a **pre-elementary snapshot**
-of 128 authored public declarations, with native signatures, docstrings and
-local source links. It does not list later elementary, relative or native
-dual-number declarations or clients; use the
-[current guide index](docs/README.md) and Lean sources for those. The
-[snapshot reproduction contract](docs/README.md) binds its
-original source/pins without requiring internal Git history. This historical
-reference is distinct from the complete private/generated proof census.
-
-Use `import GeneralLinearGroups` for the complete public interface, or a subject
-module such as `GeneralLinearGroups.MatrixTrace` for narrower dependencies.
-All library modules opt in to Lean's module system. The aggregate root publicly
-re-exports the subject modules. Consumer examples use ordinary imports, without
-access to private helpers through `import all`.
-
-For example, the doubled lift has a usable coefficient-map law:
+For example, a surjective ring map lifts the *doubled* matrix:
 
 ```lean
 module
@@ -383,332 +141,50 @@ example {R S n : Type*} [Ring R] [Ring S] [Fintype n] [DecidableEq n]
   mapRingHom_liftBlockDiagonal f hf g
 ```
 
-The same statement is retained as a named private stored-proof declaration in
-`tests/PublicAPIClient.lean`. All fourteen client modules are default build targets;
-test declarations are deliberately private and are not additional library API.
-
-| Subject module(s) | Representative public interface | Boundary |
-| --- | --- | --- |
-| `Whitehead`, `Reindex` | `mapRingHom_liftBlockDiagonal`, `reindexEquiv` | Doubled lift and equal-cardinality reindexing, not stable GL |
-| `Elementary`, `ElementaryWhitehead` | `elementaryUnit`, `elementarySubgroup`, `blockDiagonalUnit_mem_elementarySubgroup` | Ring-only elementary membership after doubling; no `SL = E` or normality assertion |
-| `ElementaryCommutator` | `elementaryUnit_commutator`, `elementarySubgroup_isPerfect_of_three_le_card` | Ordered products over any Ring; perfectness needs at least three indices |
-| `RelativeElementary` | `relativeElementarySubgroup`, `mapElementarySubgroup_relativeElementarySubgroup_le` | Ideal-coefficient normal closure inside E; compatible coefficient images give inclusions, not surjectivity |
-| `RelativeWhitehead` | `blockDiagonalUnit_eq_five`, `blockDiagonalUnit_mem_relativeElementarySubgroup` | Signed ordered five-factor identity; relative membership after doubling |
-| `ElementaryStabilization` | `stabilize`, `stabilize_relativeElementarySubgroup_le` | Monoid hom on semiring units, not matrix-ring hom; relative image inclusion |
-| `RelativeWhiteheadConsequences` | `stabilize_conj_mem_relativeElementarySubgroup`, `stabilize_commutator_mem_relativeElementarySubgroup` | Arbitrary GL conjugation and congruence commutators only after doubling |
-| `RectangularBlockUnits` | `diagonalPairUnit`, `rectangularUpperUnit_mem_elementarySubgroup`, `triangularUnit_inv_val` | Explicit diagonal units; ordered off-block factors; no arbitrary triangular-invertibility converse or stable K₁ |
-| `DualNumberKernels` | `glKerEquiv`, `slKerEquiv`, `unitsKerEquiv`, `detKer_glKerEquiv`, `slToGL`, `glKerMap` | Native GL/SL/units reduction kernels over any CommRing; trace-zero SL, determinant compatibility and coefficient naturality; no tangent-scheme claim |
-| `DualNumberKernelAdjoint` | `slAdjoint`, `glKerEquiv_conj`, `slReadback_conj`, `glKerMap_conj` | Left conjugation by native dual-number units and naturality; not the GL left-multiplication action or the bracket of first-order group commutators |
-| `DualNumberMixedCommutator` | `epsilon_eta_commutator`, `mixedKernel`, `mixedKernel_readback`, `mixedKernel_snd_snd` | Ordered full native GL commutator gives the mixed bracket in the actual outer kernel; no first-order kernel-bracket identification |
-| `Steinberg` | `Steinberg.Presented`, `Steinberg.lift`, `Steinberg.toElementary_surjective`, `Steinberg.toGL_range` | Generic presentation over any Ring; finite map onto E, no opposite-root or universal-central-extension claim |
-| `QuasiregularIdeal`, `NilIdeal`, `MatrixQuasiregular` | `IsQuasiregular`, `IsNil`, `IsQuasiregular.matrix` in `TwoSidedIdeal` | Global ideal predicates; pointwise nil is not uniform ideal nilpotence |
-| `LocalQuotient` | `TwoSidedIdeal.quotientDivisionRing` | Explicit local structure, not a global instance |
-| `CongruenceSubgroup`, `QuasiregularQuotient` | `idealGeneralLinearGroupEquivCongruence`, `isUnit_of_mapMatrix_quotient_isUnit` | Exactness for any ideal; unit reflection and quotient surjectivity require quasiregularity |
-| `NonUnitalNilpotent`, `NonUnitalQuasiregular` | `NonUnital.positivePow`, `nilpotentMatrixElement_inv`, `exists_nonUnitalGeneralLinearGroup_iff_isQuasiregular` | Positive powers count `k + 1` factors; no unit on the original ring is assumed |
-| `UnitalComparison` | `Unitization.ringEquivProd`, `nonUnitalGeneralLinearGroupEquiv` | Unital comparison with ordinary finite GL |
-| `AdditiveCommutator`, `MatrixTrace` | `Ring.additiveCommutators`, `Matrix.traceQuotientEquiv` | Additive quotient only; inverse needs a chosen index |
-
-Unless explicitly qualified above, GL interfaces are in
-`Matrix.GeneralLinearGroup`. Persistent clients include independent coefficient
-and index universes, noncommutative rings, empty matrices, singleton indices and
-trivial rings. The explicit nilpotent inverse client invokes its named theorem;
-it does not promise that bare `simp` normalizes every representation of the inverse.
-
-## Build and use as a dependency
-
-Install [elan](https://github.com/leanprover/elan) and the toolchain specified by
-`lean-toolchain` (`leanprover/lean4:v4.34.0-rc2`). The only direct library dependency
-is mathlib, pinned to `e37d88a26f3791ed5a93daa1f949af1021b8d103`; the manifest pins
-all nine transitive packages. Git and network access to those declared repositories
-are needed for dependency retrieval. No source-research checkout is required.
-
-The exact Lean toolchain is in `lean-toolchain`, and `lake-manifest.json` pins
-the complete dependency graph. Run:
+The existing [`PublicAPIClient`](tests/PublicAPIClient.lean) exercises this
+law using an ordinary import, and the other clients exercise the advertised
+interfaces and edge cases. Install [elan](https://github.com/leanprover/elan)
+and use this repository's `lean-toolchain` (`leanprover/lean4:v4.34.0-rc2`),
+`lakefile.toml` and `lake-manifest.json`. The nine-package dependency graph
+pins mathlib to `e37d88a26f3791ed5a93daa1f949af1021b8d103`. From a clean
+checkout with normal network access, **fetch the matching precompiled mathlib
+cache successfully before building**:
 
 ```sh
 lake exe cache get
-lake build
+lake --wfail build GeneralLinearGroups GeneralLinearGroupsTests
 ```
 
-The cache fetch must succeed before building. The literal default build includes
-all library modules and fourteen clients. For optional focused direct checks of
-the original three clients (the eleven later clients also build by default):
+The default `lake build` selects both of those maintained targets (the
+aggregate library and fourteen client roots). Do not replace the cache-fetch
+step with a full mathlib source rebuild. When using the library as a Lake
+dependency, pin an actual reviewed official revision under the same compatible
+Lean/mathlib dependency graph; a development commit or a source-repository
+experiment is not an official published dependency.
 
-```sh
-lake --wfail -KwarningAsError=true build GeneralLinearGroups GeneralLinearGroupsTests
-lake env lean -DwarningAsError=true tests/PublicAPIClient.lean
-lake env lean -DwarningAsError=true tests/MatrixTraceClient.lean
-lake env lean -DwarningAsError=true tests/ElementaryClient.lean
-```
+## License and credits
 
-An ordinary replay with `-T0` removes Lean's allocation timeout; it is not a
-trust-level-zero check or a separate stored-proof recheck. A build or a selected
-axiom listing does not by itself constitute the complete release proof audit.
+The library is released under [Apache-2.0](LICENSE); source files carry
+authentic license and `Authors: Formal Frontier Agents` notices. Formal
+Frontier Agents produced and revised the mathematical Lean code, clients and
+guides with compiler feedback and independent **agent** review. Prism
+contributed the general-linear/ideal and source-probe developments and
+adapted the API documentation; Lattice led native-kernel/adjoint integration;
+Anchor contributed the Markdown documentation adapter that informed the
+historical API reference. Distinct pooled contributors developed trace,
+elementary/relative/stabilization, Steinberg and native dual-number results;
+the collective author credit includes them without treating one agent as all
+authors. The pinned mathlib contributors retain credit and license notices in
+the dependency; in particular this repository does not claim mathlib's
+presented-group, trace-zero Lie algebra or matrix foundations as original.
 
-For another Lake project, declare this repository using the same toolchain and
-a chosen exact reviewed commit. The following is a configuration template:
-
-```toml
-[[require]]
-name = "general-linear-groups"
-git = "<actual-repository-clone-url>"
-rev = "<full-accepted-commit-id>"
-```
-
-Substitute the actual clone URL and full accepted commit from the relevant
-release record; private repositories require authorized access. This template
-does not assert a published destination or an official release. Official internal
-acceptance requires independent review, guarded preparation and a durable record
-binding the full commit and tree. Public-lineage review, promotion and publication
-are separate. Tags are deferred. No cross-mathlib-pin compatibility is claimed.
-
-Pre-elementary ordinary-readiness baseline (Linux, Lean4.34rc2, `LEAN_NUM_THREADS=2`, matching
-dependency cache already fetched): after `lake clean general-linear-groups`,
-the warning-fatal literal default build rebuilt all16 project modules, including
-both then-existing clients, in16.635 seconds wall time (29.111 seconds user,8.613 seconds system;
-1832 Lake jobs including cached dependencies). This is a warm-dependency,
-clean-project measurement, not an all-dependency source-build time or a speedup
-claim. Cache retrieval took approximately101 seconds in that run. Timings depend
-on the machine and network; use bounded parallelism on memory-limited systems.
-
-For the **historical native-kernel snapshot** (`4a85ce8223c87d2bfa47659e702f89c5442e5f56`
-and documentation-only successors), the Linux CI run on 2026-09-27 measured
-**37.948 seconds** for `lake --offline --no-cache build GeneralLinearGroups
-GeneralLinearGroupsTests`: 2814 Lake jobs, covering the registered 35 project
-modules and all eleven clients, after the matching mathlib `e37d88a2` cache
-was fetched and verified. The complete CI run, including setup and the separate
-private-inclusive axiom audit, took approximately **6 minutes 2 seconds**.
-These are observed timings for the pinned Lean4.34rc2 environment, not a
-from-source dependency build estimate or a comparison with the smaller
-pre-elementary workload. Cache-download time depends on network/cache state;
-peak CPU and RAM usage were not measured. Use bounded build parallelism on
-memory-limited hosts and audit modules in separate processes; these timings
-do not establish a minimum RAM requirement or a runtime guarantee. These
-35-module timings do **not** measure the later 39- or current 41-module graph.
-
-For the **accepted PR64 mixed-GL code snapshot**
-`6d351f75aa81153bcb620005f77aaedd680b3e3b`, strict native CI562/UI27
-on 2026-09-27 fetched the matching mathlib cache successfully (40.478 seconds),
-verified the cached Mathlib target without rebuilding it (5.842 seconds), and
-built `GeneralLinearGroups` plus `GeneralLinearGroupsTests` in **44.929 seconds**
-(2820 Lake jobs, 39 repository Lean modules and thirteen default clients).
-The 39 fresh private-inclusive transitive axiom-audit commands together took
-241.865 seconds. The full run spanned **18:45:00–18:51:24 UTC** (about 6 minutes
-24 seconds), including dependency setup and audit; that wall time is **not**
-project build time or a promise for another host. That 39-module readiness
-candidate changed no build input and did not rerun these checks. The preceding
-35-module timing remains a dated, smaller-workload measurement.
-
-For the **accepted PR68 mixed-SL code snapshot**
-`51f7a833740557de4eddeeebd4a802a9b43bb81a`, strict native CI593/UI31 on
-2026-09-27 (Linux, Lean4.34.0-rc2, pinned mathlib
-`e37d88a26f3791ed5a93daa1f949af1021b8d103`) fetched the matching
-precompiled mathlib cache (8892 files, 40.959221 seconds), verified cached
-Mathlib without rebuilding it (8907 Lake jobs, 6.035477 seconds), and built
-both default targets, `GeneralLinearGroups` and `GeneralLinearGroupsTests`, in
-**49.496248 seconds** (2822 Lake jobs, 41 repository Lean modules and fourteen
-default clients). The full **20:31:50–20:38:29 UTC** native run also included
-setup and the separate private-inclusive standard-axiom audit; it was not just
-project build time. These are observed host/cache/network-dependent timings,
-not from-source dependency costs, a speedup claim, a minimum RAM requirement
-or a guarantee for another host. Peak CPU and RAM were not measured.
-
-Headers intentionally give the license and author credit without inventing a
-copyright holder. The pinned mathlib header linter requires a copyright-holder
-line and therefore reports a format failure on the 13 subject headers. The
-independent PR35 review of `9cec4e1ccee427c7f2748524d194cd7c48ac4214`
-accepted this specific header-format convention departure, not a linter pass
-or copyright clearance. The root header probe passed; both private-only client
-modules failed the private-module linter by design, a separately accepted
-non-export convention departure. These findings are not blanket lint waivers;
-full release and public-history rights checks are separate.
-
-The pre-elementary full-readiness author run (same pinned environment and two Lean
-threads) fetched the matching cache before a clean default build: 1832 jobs,
-all 16 modules, 18.913 seconds wall time. It then added 58 docstrings without
-changing any mathematical/proof text or attributes; the rebuild passed and native
-analysis found no missing docstrings among the 128 authored public declarations.
-The subsequent explicit-`Nat.rec` implementation of `NonUnital.positivePow`
-retains its generic `[Mul A]` API and both definitional equations. Its original
-author bound renewed native documentation and proof evidence to source commit
-`907124e973dd20f3efdeb8de0cad42e331b9c6d8` and full PR35 commit
-`9cec4e1ccee427c7f2748524d194cd7c48ac4214`. A fresh worker-b review of
-that exact 28-file tree independently checked the 128 public axiom records, all
-276 stored project declaration bodies, native documentation and current-file origins;
-it identified no mathematical, proof or current-file rights defect. Its
-development-integration verdict was **REQUEST_CHANGES** and its whole-current-
-artifact internal-quality verdict was **NONPASS**, because the live lifecycle
-prose and active review metadata needed correction. The stock reviewer
-`leanchecker` rerun was interrupted and supplies no pass.
-
-Declaration lint still exits 1: the four exact `simpNF` findings and one unused
-`[Subsingleton S]` hypothesis in a private trace test received narrow,
-reasoned convention dispositions in that review, not a clean lint result or
-general release waiver. This documentation/metadata-only correction keeps the
-Lean sources, pins, checker and native adapter unchanged. Its new exact tree
-requires independent affected-scope review and Prism's owner disposition before
-any acceptance; the prior REQUEST_CHANGES/NONPASS do not approve this successor.
-No official internal release, public-lineage review, GitHub publication or
-source-coverage decision is asserted here.
-
-The preceding paragraph records the **pre-elementary author-time checkpoint**;
-its pending decisions and no-publication statement are not live status for the
-previously published base. They do not apply as a review or computation pass to
-the elementary addition: its exact-candidate CI, independent promotion review,
-Prism's acceptance and release decisions are separate revision-specific records.
-
-## License, authors and provenance
-
-Original project contributions are distributed under the
-[Apache License, Version 2.0](LICENSE).
-
-Authors: Formal Frontier Agents
-
-Prism developed the block/reindex, ideal, nilpotent, quotient and unitization
-layers, including adaptations of earlier internal source-repository diagnostics,
-and maintains the initial integration. The `formalization-worker-b`
-execution for issue30 developed the additive-commutator/trace layer, adapting
-Prism's earlier source-repository proof exposition and Lean research. Independent
-development reviews were contributed by the worker identities and Anchor,
-Atlas, Beacon and Lattice; exact authors, Task execution identifiers, revisions,
-review scopes and findings are retained in the repository history and issues.
-Collective author credit does not assert a copyright holder.
-
-The original Ring-only elementary proofs, client and guide were authored for
-the incubator by worker-b Task
-`hive-request-1d40c1435bdcf9b74e70656bc81b7b2a3179626f` (UID
-`8d3f955e-1034-4229-9ec1-6fc750e9771a`). The distinct worker-b Task
-`hive-request-d5b170c2c524d08ea237131ac1b634cbefb66165` (UID
-`66b8826e-5348-42d2-bf91-7494acf88159`) transfers that unchanged
-mathematics into this library, adapting imports, headers and destination
-documentation. At that transfer's **2026-09-27 06:11 UTC** checkpoint, the source
-review approved only the frozen mathematical/API/provenance content, conditional
-on computational acceptance; destination review and full checks were pending.
-This is provenance history, not the status of later exact-revision decisions.
-Prism authored the reused Whitehead layer and
-is the responsible maintainer for the destination decision. Mathlib contributors
-retain credit and licensing for the imported foundational APIs.
-
-The five new finite commutator/relative/stabilization producer/client pairs
-come from separate accepted incubator author Tasks: respectively
-`hive-request-35aa9748fd43bd94b3ec738f1ad463b088d4ae0b`
-(UID `2e849319-c5e4-4143-8824-4e604660c6c5`),
-`hive-request-fe47d83d9ec7ed0603df9afa59272f91b6c1d25b`
-(UID `aa475138-96f3-40c8-9d3e-a2ed8997d269`),
-`hive-request-474d5a18341359e66cfefad57a2fe7fce5fd95be`
-(UID `201cfd05-92f3-411c-9f16-9927145c58ca`),
-`hive-request-c6d28d96c8c6a1c3dc45b276cd199a8cee20e982`
-(UID `79046b95-69ff-4154-945a-95b1b410bc7c`) and
-`hive-request-f9c9518717f9190ac25e3ad72fc01ab6a8aadee6`
-(UID `956a92f7-088d-407d-9ec0-3110d03431c8`). Prism supplied the
-original relative proof exposition/planning and is the responsible maintainer.
-The separate GLG source-only transfer and six-helper visibility/docstring
-change are by worker-b Task
-`hive-request-5da2d3a64872f8d02f43a4373691317fea0453de`
-(UID `0c79d3fe-3ca4-433d-9f11-152854f183e2`). At that transfer-author
-checkpoint, the previous release `fe3e506fe33635e057c4cc1d8fa40e33d9d1dbd0`
-did not include those changes. The original authors' source checks alone
-do not establish destination e37 compatibility.
-
-The rectangular producer/client and mathematical guide originated with
-`formalization-worker-b`, Hive Task
-`hive-request-f05b4be9b9263abe877517328bf1ff2eb3ccbe6c` (UID
-`f689b30f-0a76-4727-8ec2-68907a224546`); independent original-leaf
-review was by worker-a Task
-`hive-request-d58bc9fb1f33c1ab04462845819fa599cfd02540` (UID
-`21cca7cb-eaa7-4145-89fc-d310aa764158`). The accepted incubator
-registration was by worker-b Task
-`hive-request-9f77f8c1f4015db6ddf102989bf1d24ae36a6048` (UID
-`63beac6e-e93f-4a54-8fb8-650114a41967`). This source-only destination
-transfer is by distinct worker-b Task
-`hive-request-cf565ac88c8dc0b5274168e7cb2dbfc1abfab323` (UID
-`d7ced547-d176-4d48-af8d-ad239d49cff9`); Prism retains mathematical
-planning and responsible-maintainer acceptance, integration and release.
-Source acceptance does not certify this destination graph or source coverage.
-
-The native dual-number kernel and adjoint producers, ordinary clients and guides
-originate in accepted incubator PR103 `e6f66b1e53a2108284b798ced2f9f6316e1ee140`.
-Original kernel producer credit belongs to worker-b Tasks
-`hive-request-fcd501500f0c5ec813d46a71e1ed0b0d7555a0fd` (research) and
-`hive-request-1df68ed8f5e4bab1a07522b5ee97f5a4e124e028` (implementation);
-adjoint research belongs to `hive-request-00bab16826ab0ca04714504bcb66c30d2fa5991a`
-and adjoint implementation to `hive-request-083e63349244c927c6fd7ddd1ceb7b01a722e06c`.
-The exact six-leaf transfer is by worker-b Task
-`hive-request-f1f0750c049a6341076625a8c7823dab83dad5d9` (UID
-`704cc043-3e91-4fd0-984a-4723758a7cc5`), with independent **source-only**
-review by worker-a Task `hive-request-833f90fa150bab66c02ad561e0dce96d03352a38`
-(UID `e364af5b-71d5-41a4-bd74-5219280b8e6c`). This static registration
-is by worker-b Task `hive-request-471fdfa639779d05821d587b5a8ed0979ed76939`
-(UID `2947eb0f-f276-4fb2-9865-ceb03bdd4d82`); Lattice is its responsible
-maintainer. This later release-readiness documentation/metadata correction is
-by worker-b Task `hive-request-3cc18624fcf476e243174522ce76cc986b32a067`
-(UID `57eea2de-3f79-4f78-afec-1e9172ed75fc`), without changes to Lean or
-build inputs. Original code and notices are Apache-2.0; native CI462 and the
-independent PR55 assembly review establish the accepted registered code, not
-independent release acceptance or publication.
-
-The Steinberg producer and client originate with worker-b Task
-`hive-request-6b39f9a4c79e5938a346f45309940f84d0b16772` (UID
-`f2682c03-c1b7-4de5-9a2e-1cd6a3da9c98`), accepted through incubator PR109.
-The distinct destination transfer is by worker-b Task
-`hive-request-c645ac24da6ddcd181e73c4627845063d58a40ad` (UID
-`57209be5-e440-4975-9dac-b74d068db5aa`), preserving mathematical bodies
-while adapting headers, the client import and standalone guide. Prism composed
-its root/client registration and metadata on the agreed frozen readiness base.
-Mathlib's native presentation and commutator API expression credits remain in
-the [Steinberg guide](docs/FiniteRankSteinberg.md); the elementary subgroup is
-this library's native API, not a construction claimed from mathlib. Source
-acceptance and older destination checks do not certify this changed graph.
-
-The mixed native GL commutator producer, client and guide originate in accepted
-incubator PR118 `a3edd083fcc410830d1e5e65703ad00bcc7fae00`, under the
-original credits recorded in the [mixed guide](docs/DualNumberMixedCommutator.md).
-The distinct three-leaf destination transfer is worker-b Task
-`hive-request-386bfaa3270c51ac2efc2c60e91e151144083a5e` (UID
-`222d73c7-5dbd-42a9-b96c-700943c4103e`), independently reviewed in its
-bounded source/API/client/docs/rights scope by worker-a Task
-`hive-request-596aa7e2022ef8080e220ed42317f21e2c97dcb8` (UID
-`a2b6fc22-41fb-4b3f-8a50-62aea71f20ac`). This static destination
-registration is worker-b Task
-`hive-request-a0042175907e7c4821053615250c697fbff8a018` (UID
-`c5157876-806e-4d40-88ef-91a3cbb6ef3f`); Lattice owns acceptance,
-integration and release. Source CI on mathlib 83abb does not certify the
-destination's pinned e37 graph, and the registered graph requires its own
-independent affected review.
-
-The distinct worker-a fixture Task
-`hive-request-301d13e69087461df1d9f6514c98f2515fe43c2f`
-(UID `61ae8cb2-3435-4837-a1eb-563145a5793b`) established bounded
-core-only recursor viability, not a GLG pass. Worker-a successor Task
-`hive-request-96bd881daa0958792df18fd4319ec9f7807ab021`
-(UID `124e5555-0f64-44a3-8fee-18fa5dbadb9c`) applied the bounded
-GLG source change and refreshed source-bound author evidence from Prism's
-unaccepted frozen assembly. Both Task credits remain distinct from Prism's
-original mathematical development and documentation adapter.
-This lifecycle prose and metadata correction was authored by worker-a Task
-`hive-request-c96601c24931622decfa5ba51d85ecc1377deddb`
-(UID `ea63f3e8-a310-41c8-89e4-84e9082ca10f`), not by the mathematical author.
-
-The documentation adapter, tests and recipe are adaptations of Anchor's native
-Markdown work and Prism's Group/Dedekind portability work; exact origins and AI
-credit are recorded in [the documentation recipe](docs/README.md). Generated
-output contains this library's docstrings and mathematical signatures, not the
-upstream tool's web assets.
-
-The mathematical motivation includes Charles A. Weibel, *The K-book: An
-Introduction to Algebraic K-theory*, August 29, 2013 complete-book build, especially
-the elementary block/ideal constructions and matrix trace modulo additive
-commutators. Native mathlib matrix, unitization, Jacobson radical, ideal quotient,
-quasiregularity and additive quotient APIs supply the formal foundations; their
-separate licenses and contributor notices remain with those dependencies.
-The trace implementation adapts the source research at
-`source-weibel-k-book` revision `5e52651fdf8fca2f27362917c1b693b4e4b8788e`,
-not an independently authored replacement of that code. Detailed source passage
-correspondence and incomplete coverage stay in the source metadata repository.
-No book PDF, scan or substantial source quotation is bundled here.
-
-AI agents produced and revised the formalization, tests and documentation, using
-Lean checks and independent agent review. That describes the process, not a
-guarantee of mathematical correctness or copyright clearance. Applicable
-third-party attribution and permissions must be preserved separately; internal
-access, citations and AI involvement are not redistribution licenses.
+Charles A. Weibel, *The K-book: An Introduction to Algebraic K-theory* (2013),
+motivates selected constructions, but this repository does **not** claim a
+complete formalization of that book or copy its PDF, scans or quotations.
+Original source-research expression informed some developments; the public
+metadata and guides distinguish that contribution from bibliographic
+motivation. Source-passage correspondence and incomplete coverage live in
+the source repository, not in this reusable library. No source-author
+endorsement, human mathematical review, copyright ownership beyond what
+can be established, or blanket third-party redistribution permission is
+asserted by the collective credit or by AI authorship.

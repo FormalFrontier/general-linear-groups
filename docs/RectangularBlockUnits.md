@@ -69,53 +69,23 @@ detects a reversal of `A⁻¹ * B`. The two concrete inverse coefficients
 in `-A⁻¹ B D⁻¹`. Empty left, empty right, both-empty and equal-index clients
 are included. No private client declaration extends the public API.
 
-## Dependencies and status
+## Dependencies and expression credit
 
-The native `stabilize` is reused from
-`GeneralLinearGroups.ElementaryStabilization`; elementary generators and the
-elementary subgroup, `reindexEquiv`, `upperUnit` and `blockDiagonalUnit`
-come from existing local general-linear-groups modules. Mathlib's
-`Matrix.fromBlocks_multiply` and `Matrix.induction_on'` are reused with their
-existing semantics and credit. This reusable module is independent of source
-research records. Its Lake inputs remain the repository's pinned Lean
-`v4.34.0-rc2` and mathlib `e37d88a26f3791ed5a93daa1f949af1021b8d103`;
-no incubator dependency is required. The prior general-linear-groups main
-`72861c49b8ed620096b4749e171e25405c3652d2` has the same tree as
-its official published release `51a4ca8e4a61eef09ce8164a53f4f37c3f520a00`.
-Neither prior artifact contains this rectangular addition.
+This module reuses the native `stabilize` from
+`GeneralLinearGroups.ElementaryStabilization` and the existing elementary
+units, reindexing and Whitehead block constructors. Its block arguments
+reuse mathlib's `Matrix.fromBlocks_multiply` and `Matrix.induction_on'` with
+their original semantics and credit. Formal Frontier Agents developed the
+rectangular producer, unequal-block client and guide, adapting earlier
+original project expression into this standalone library. The Apache-2.0
+collective-author notices remain. No incubator/source repository is a build
+dependency, and this module does not establish source passage coverage.
 
-Original incubator focused-check snapshot (2026-09-27): the two new Lean modules compiled
-with `lake --wfail build` after a successful matching `lake exe cache get` on
-PR #95 commit `a7ef4703603c3002e964be6fb289aa9eeb903af9`, using the
-then-pinned official general-linear-groups `706a257f35618c098573646653a319bd4f14f8e6`.
-The independent leaf review is `3e029bdab05ecad4425abc79c0ba59ff6361c10b`
-(`reviews/rectangular-block-units/REVIEW.md`), by worker-a Task
-`hive-request-d58bc9fb1f33c1ab04462845819fa599cfd02540` /
-`21cca7cb-eaa7-4145-89fc-d310aa764158`. At registration preparation on
-2026-09-27, PRs #95–#97 had integrated separately.
-At that historical registration checkpoint, PR #100
-`89987a964c706fcf92ad8ef6dd0623b68170d448` was **UNACCEPTED**, and
-PRs #98–#100 retained their separate owner gates. The original leaf review
-did not certify that changed registration graph. The completed source
-registration was subsequently accepted and integrated as incubator PR #101,
-commit `1b04c1d15c15b0f7adf7dcfec2861b451a4d1a79`, with its own native
-build/axiom CI. This is historical source evidence, not destination e37
-compatibility or source correspondence/coverage. Registrar: worker-b Task
-`hive-request-9f77f8c1f4015db6ddf102989bf1d24ae36a6048` /
-`63beac6e-e93f-4a54-8fb8-650114a41967`. Original author:
-`formalization-worker-b`, Hive Task
-`hive-request-f05b4be9b9263abe877517328bf1ff2eb3ccbe6c` /
-`f689b30f-0a76-4727-8ec2-68907a224546`.
+The repository pins Lean `v4.34.0-rc2` and mathlib
+`e37d88a26f3791ed5a93daa1f949af1021b8d103`. Fetch the matching
+mathlib cache before building the library and fourteen clients:
 
-At the **2026-09-27 destination transfer-author checkpoint**, this
-source-only promotion was **UNACCEPTED**. It carried the unchanged proof
-bodies into this library with only producer/client imports and truthful
-Apache-2.0/author headers adapted. Transfer author: worker-b Task
-`hive-request-cf565ac88c8dc0b5274168e7cb2dbfc1abfab323` /
-`d7ced547-d176-4d48-af8d-ad239d49cff9`; Prism is the responsible
-maintainer. The destination default-root nine-client build, complete
-private-inclusive transitive standard-axiom CI at e37, fresh independent
-promotion review, Prism's acceptance and reviewed official GitHub release
-were distinct outstanding gates at that checkpoint. This is provenance
-history, not a live acceptance or release registry; later decisions bind their
-exact revisions. No source coverage or stable K₁ claim follows.
+```sh
+lake exe cache get
+lake --wfail build GeneralLinearGroups GeneralLinearGroupsTests
+```

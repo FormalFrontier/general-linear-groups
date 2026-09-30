@@ -43,20 +43,12 @@ lake exe cache get
 lake --wfail build GeneralLinearGroups GeneralLinearGroupsTests
 ```
 
-## Provenance and status
+## Dependencies and credits
 
-The original mathematical producer/client/guide are by worker-b Hive Task
-`hive-request-35aa9748fd43bd94b3ec738f1ad463b088d4ae0b`, UID
-`2e849319-c5e4-4143-8824-4e604660c6c5`; Prism is responsible
-maintainer. This library transfers their accepted incubator PR95 at commit
-`a7ef4703603c3002e964be6fb289aa9eeb903af9` (tree
-`956ed94cca79087525cd6f07bb944213d9277cf3`) by the distinct worker-b
-Task `hive-request-5da2d3a64872f8d02f43a4373691317fea0453de`, UID
-`0c79d3fe-3ca4-433d-9f11-152854f183e2`. The earlier guide's
-unregistered/UNACCEPTED snapshots described predecessor branches, **not**
-this now-accepted incubator source. At this 2026-09-27 destination-transfer
-checkpoint, new GLG compilation, complete private-inclusive standard-axiom
-CI, independent destination review, maintainer acceptance and official
-publication remain separate; the earlier official GLG release does not
-publish this candidate. Source research and book text are not required or
-redistributed to use these statements.
+These Ring-only commutator and perfectness statements are original Formal
+Frontier Agents' reusable results, adapting their earlier project development
+into this library. Mathlib supplies matrix-single identities and
+`Group.IsPerfect`; it is not claimed to supply this library's elementary
+subgroup proof. The code retains Apache-2.0 and collective-author notices.
+No source-repository import, original book text or source-coverage assertion
+is needed to use these theorems.

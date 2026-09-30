@@ -55,50 +55,23 @@ claim here. Neither universal central extension nor source correspondence or
 source-level coverage follows from this module. In particular, no kernel
 centrality, direct-limit or formalized-source-milestone assertion is made.
 
-## Expression provenance and status
+## Dependencies and expression credit
 
-The generic `PresentedGroup` construction and its universal API are from
-mathlib (Michael Howes and Newell Jensen); mathlib's commutator-inverse API
-is by Jordan Brown, Thomas Browning and Patrick Lutz. The native
-elementary-unit and commutator API and this presentation are by Formal
-Frontier Agents under Apache 2.0. They are used by import rather than copied
-from other implementations or from copyrighted source text.
+Mathlib supplies `PresentedGroup` and its universal API (Michael Howes and
+Newell Jensen) and the commutator-inverse API (Jordan Brown, Thomas Browning
+and Patrick Lutz). The Ring-only elementary symbols, the three chosen
+relations, the representation into the native elementary subgroup and their
+clients are Formal Frontier Agents' original mathematical development, adapted
+from earlier original project expression. These constructions import mathlib,
+not copyrighted book passages or a source-repository implementation. The
+Apache-2.0/collective-author notices remain on the Lean files.
 
-The original incubator presentation was authored by worker-b Hive Task
-`hive-request-6b39f9a4c79e5938a346f45309940f84d0b16772` (UID
-`f2682c03-c1b7-4de5-9a2e-1cd6a3da9c98`), corrected at leaf
-`7e6de2fd563d627da0e6b5401f7d7011af26a59e` and bounded-reviewed by
-worker-a Task `hive-request-4044a0af00ae05d4ba94be2e4071b3ade07df6bf`
-(UID `2a654bf7-7c6d-4f4d-8874-11fe6f542159`). Registration was authored
-by worker-b Task `hive-request-d3ca9eb2ba97805844722619e16d8dbe47913c8c`
-(UID `df01e742-d861-475d-b350-2b1723c5c368`). The original guide's
-**2026-09-27** wording about an unregistered and unaccepted leaf on mathlib
-`83abb3e776bdefcbc447a1e44d0debe4010039e5` describes that earlier
-snapshot, **not** the subsequently accepted incubator PR109 at
-`34c923b615722d4dd50980efa4ae55245a1a4b55`.
+This module and its ordinary-import client belong to the current public root
+and default test target. Lean `v4.34.0-rc2` and mathlib
+`e37d88a26f3791ed5a93daa1f949af1021b8d103` are pinned; first fetch the
+matching mathlib cache:
 
-This distinct GLG source-only transfer was prepared by worker-b Hive Task
-`hive-request-c645ac24da6ddcd181e73c4627845063d58a40ad` (UID
-`57209be5-e440-4975-9dac-b74d068db5aa`), with Prism responsible for
-planning and later destination acceptance. Its frozen destination base is
-`4a85ce8223c87d2bfa47659e702f89c5442e5f56`, Lean is `v4.34.0-rc2`,
-and destination mathlib is `e37d88a26f3791ed5a93daa1f949af1021b8d103`.
-At this 2026-09-27 leaf-transfer checkpoint, this **new destination leaf**
-is not registered in the roots or metadata, built against destination mathlib,
-independently reviewed for promotion, accepted or officially released.
-The then-official GLG publication at that leaf-transfer checkpoint,
-`2509e13448a0ee4229a22204c73fa20faa0f0ba3`, did not contain it.
-Source correspondence and coverage decisions belong in
-the responsible source repository, not to users of this guide.
-
-At the **2026-09-27 13:25:21 UTC accepted-code checkpoint**, Prism accepted
-and protected-merged GLG PR60 at
-`5a55a99d5cae2a6c4cd3f7312549fd77b16d40c5`. Its native full build,
-private-inclusive transitive standard-three-axiom audit and fresh independent
-promotion review preceded code acceptance. The preceding native-kernel release
-`045ba3ac1e77a7b7f49e053792cb3fb122889ffa` was verified on private
-GitHub at 13:22:10 UTC; unlike the then-official `2509` publication above,
-it includes native kernels but not this presentation. Steinberg code acceptance
-does **not** accept or publish a Steinberg release. Its separately reviewed
-internal/public release and verified publication remain outstanding; this
-guide does not decide source correspondence or coverage.
+```sh
+lake exe cache get
+lake --wfail build GeneralLinearGroups GeneralLinearGroupsTests
+```

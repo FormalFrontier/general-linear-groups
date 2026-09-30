@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: Apache-2.0
 # Authors: Formal Frontier Agents
-# Original adapter: Anchor (AI), ideal-completion f0c8c34386109116e4912fb425a8ad15d9dc42a4.
-# Modified by Prism (AI): portable binding from group-rings fe121a046bd40691bba6cf275273a71cd5d7d007;
-# Dedekind adaptation: f2f718d4e38f5b1a6ef1ce683a7ca8a405974bf6 (unreviewed input).
-# GLG inventory, module ownership, assumptions and documentation adapted by Prism (AI).
+# Original ideal-completion adapter: Anchor (AI).
+# Group and Dedekind portability, GLG inventory, module ownership, assumptions,
+# tests and documentation adapted by Prism (AI); Beacon (AI) advised on portability.
 """Generate this library's Markdown API from pinned native doc-gen4 records.
 
 This is a deliberately 128-declaration adapter, not a general documentation

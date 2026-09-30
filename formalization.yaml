@@ -28,10 +28,9 @@ project:
     pure-inner trace-zero coefficient in the actual outer SL kernel.
   authors:
     - "Formal Frontier Agents"
-    - "Prism (AI agent; general-linear/ideal theory and source trace research)"
-    - "formalization-worker-b (AI agent; trace extraction and distinct elementary, relative, stabilization and destination transfer Tasks identified under automation)"
-    - "formalization-worker-a (AI agent; explicit positive-power recursor successor Task identified under automation)"
-    - "formalization-worker-b (AI agent; native dual-number kernel/adjoint producer and distinct transfer/registration/readiness Tasks identified under automation)"
+    - "Prism (AI agent; general-linear and ideal formalization, source-research expression and API documentation)"
+    - "Lattice (AI agent; native dual-number kernel and adjoint integration)"
+    - "Anchor (AI agent; upstream documentation-adapter expression)"
   responsible_maintainers:
     - "Prism (on behalf of the source-maintainer team)"
     - "Lattice (native dual-number kernel and adjoint promotion on behalf of the source-maintainer team)"
@@ -59,104 +58,6 @@ sources:
       established; access to the source is not permission to reproduce it.
 
 related_formalizations:
-  - id: "FormalFrontier/incubator@a3edd083fcc410830d1e5e65703ad00bcc7fae00"
-    relationship: "adapts"
-    note: >-
-      Accepted incubator PR118, tree 0c0325886940d9411a4495c2946d5ab0c8707e02,
-      supplies 17 selected mixed native GL results, one producer, a client and
-      a guide. The producer is byte-identical; the destination client adapts
-      only its producer import and enclosing test namespace. Distinct transfer
-      commit 4f32600a887f363780022a44824e7e9a5c4e045a has a bounded
-      independent source/API/client/docs/rights review at
-      e5235d2fcc7007e0131c48de56bc39fa08962407, not an accepted registered
-      graph. Incubator source CI532 on mathlib 83abb3e776bdefcbc447a1e44d0debe4010039e5
-      does not certify this destination's mathlib e37d88a26f3791ed5a93daa1f949af1021b8d103.
-      No incubator dependency, ancestry or source-coverage claim is transferred.
-  - id: "FormalFrontier/incubator@92e1b3523a7c6871c333351c5f42175602acf23a"
-    relationship: "adapts"
-    note: >-
-      Accepted and integrated repaired native mixed-SL source PR124, tree
-      da5fcf0b3c16f0b38e9f428d7614b59267172ddb, retains fourteen
-      selected complete results and the three producer/client/guide leaves
-      of original source c8287efd95b050c40cce87264259a20784f221f1,
-      tree 9e4667c5aa9ece1879fb102f2e7c87243277536c. Conditional destination
-      three-leaf transfer f2a13476044baf1f1ced2cd507171249e0d495b3
-      has bounded independent source/API/client/docs/rights review at
-      3d5d8fa3b780fc93181e0a72b7d1f1a938f49e32, not approval of the
-      later registered graph; that graph received distinct affected review
-      e4c1de0a90afde821b8982215adcb5333e956a22 and code acceptance.
-      This deliverable retains its own mathlib e37d88a26f3791ed5a93daa1f949af1021b8d103
-      pin; no incubator dependency, release or source-coverage claim follows.
-  - id: "FormalFrontier/incubator@34c923b615722d4dd50980efa4ae55245a1a4b55"
-    relationship: "adapts"
-    note: >-
-      Accepted incubator PR109, tree e34b12a73d38b55be9288f99d3c1d1e2a0c42589,
-      supplies the Steinberg producer, client and standalone guide. Producer
-      mathematics is unchanged after a license header; the client changes only
-      its import target and header. The guide adapts paths, pins and dated status.
-      Source mathlib83abb3e776bdefcbc447a1e44d0debe4010039e5 acceptance and
-      native460/artifact56812 are not destination e37 compatibility or a new
-      registered-graph pass. Native PresentedGroup belongs to mathlib; the
-      elementary subgroup belongs to this library. No incubator dependency,
-      ancestry, book text or source-coverage claim enters this deliverable.
-  - id: "FormalFrontier/incubator@e6f66b1e53a2108284b798ced2f9f6316e1ee140"
-    relationship: "adapts"
-    note: >-
-      Accepted incubator PR103, tree
-      01016a5af5cc129d426964e84613c17cc04646fc, supplies the two native
-      kernel/adjoint producers, two private clients and two mathematical guides.
-      The six destination leaf blobs and import adaptations received independent
-      SOURCE-ONLY review by worker-a Task
-      hive-request-833f90fa150bab66c02ad561e0dce96d03352a38,
-      UID e364af5b-71d5-41a4-bd74-5219280b8e6c, on
-      3858382e2ce4f9e832cc24d9b2413afed2af7b0e;
-      full GeneralLinearGroups issue51 comment 52274. This library keeps
-      mathlib e37d88a26f3791ed5a93daa1f949af1021b8d103, not the source
-      graph's mathlib 83abb3e776bdefcbc447a1e44d0debe4010039e5.
-      Earlier source CI, leaf review and focused checks are not registered
-      destination full-graph proof-integrity or release evidence. No incubator
-      dependency or commit ancestry enters this deliverable.
-  - id: "FormalFrontier/incubator@1b04c1d15c15b0f7adf7dcfec2861b451a4d1a79"
-    relationship: "adapts"
-    note: >-
-      Accepted incubator PR101, tree
-      6731b0eda517474973e500133bfa416d10ab1208, supplies the original
-      RectangularBlockUnits producer, private client and mathematical guide,
-      including 20 main_result declarations. This transfer preserves their
-      mathematical proof bodies and client examples, changing only imports,
-      license/author headers, paths and destination-facing documentation.
-      The source used mathlib 83abb3e776bdefcbc447a1e44d0debe4010039e5;
-      this library retains e37d88a26f3791ed5a93daa1f949af1021b8d103.
-      Prior incubator leaf review and native source CI are not destination
-      compatibility, full-root proof-integrity evidence or promotion approval.
-      No incubator dependency, ancestry or source-coverage claim is added.
-  - id: "FormalFrontier/incubator@a7ef4703603c3002e964be6fb289aa9eeb903af9"
-    relationship: "adapts"
-    note: >-
-      Prism accepted incubator PR95 at this exact commit, tree
-      956ed94cca79087525cd6f07bb944213d9277cf3, with original
-      ElementaryCommutator, RelativeElementary, RelativeWhitehead,
-      ElementaryStabilization and RelativeWhiteheadConsequences producers,
-      clients and guides plus the six public ElementaryWhitehead helpers.
-      Their original authors are named in automation and the five guides.
-      Only their Lean imports, destination module paths and headers differ;
-      the six existing destination helpers change visibility/docstrings, not
-      proofs. This source used mathlib 83abb3e776bdefcbc447a1e44d0debe4010039e5;
-      this destination retains e37d88a26f3791ed5a93daa1f949af1021b8d103.
-      Incubator acceptance and its CI are not destination-pin CI, promotion
-      review or an official GLG release. No incubator dependency or commit
-      ancestry enters this deliverable; research is not needed by consumers.
-  - id: "FormalFrontier/incubator@38bd4b3932409b6116cc999137b52f4fd49d2f14"
-    relationship: "adapts"
-    note: >-
-      The original elementary Ring-only proof modules, noncommutative/degenerate
-      client and standalone guide were transferred from this frozen incubator
-      candidate, unaccepted at the transfer-author checkpoint of
-      2026-09-27 06:11 UTC. Only imports, paths, license/author notices and
-      destination-facing documentation changed; no incubator dependency or
-      development ancestry enters this library. Its original author and
-      independent mathematical review are distinct from the destination
-      transfer and its separate computational and promotion decisions.
   - id: "https://github.com/leanprover-community/mathlib4/tree/e37d88a26f3791ed5a93daa1f949af1021b8d103"
     relationship: "builds-on"
     note: >-
@@ -165,263 +66,17 @@ related_formalizations:
       closure and additive quotients. Upstream authorship and license notices
       remain with mathlib; its sources are not vendored. The Lake manifest
       includes generated dependency records derived from mathlib's manifest.
-  - id: "FormalFrontier/source-weibel-k-book@51f3446a0bec5761579bad19fac7710fe2dfce4a"
-    relationship: "adapts"
-    note: >-
-      Prism's retained project research in WeibelKBook/Experiments includes
-      ExerciseI110iDiagnostic.lean, ExerciseI110iiDiagnostic.lean,
-      ExerciseI110iiiDiagnostic.lean, ExerciseI110ivDiagnostic.lean,
-      ExerciseI110ivStrictUpperDiagnostic.lean, ExerciseI111Diagnostic.lean,
-      ExerciseI111LiftingDiagnostic.lean and
-      ExerciseI112RadicalDefinitionDiagnostic.lean. The matrix projections,
-      quasi-inverse, ideal-unitization/kernel, product-comparison, positive-power,
-      geometric-inverse, triangular-induction and block-lifting arguments share
-      or adapt actual project expression, not only mathematical ideas. This
-      retention commit identifies recoverable research; it does not assert
-      cross-repository Git ancestry or that its commit date precedes every
-      production commit. Later source adapters importing this library are
-      downstream correspondence, not automatically its expression origins.
-  - id: "FormalFrontier/source-weibel-k-book@5e52651fdf8fca2f27362917c1b693b4e4b8788e"
-    relationship: "adapts"
-    note: >-
-      Prism's expositions/matrix-trace-additive-commutators.md and native Lean
-      probes WeibelKBook/Experiments/ChapterII2MatrixTraceClosureProbe.lean and
-      ChapterII2MatrixTraceInverseProbe.lean are inputs to the production
-      trace contribution. The probe creation commits are
-      bc31f1b2a589e93d73f00d282aba0e6dff53b63f and
-      057a0012bb0fe91fe277a26c123036b690005661. The worker-b extraction adapts
-      this expression into source-independent namespaces, independent universes
-      and representative laws. The source probes' mathlib revision is research
-      provenance, not this library's dependency pin or a cross-pin build claim.
-  - id: "FormalFrontier/ideal-completion@f0c8c34386109116e4912fb425a8ad15d9dc42a4"
-    relationship: "adapts"
-    note: >-
-      Anchor's AI-authored native Markdown adapter, tests and recipe are
-      expression inputs, through Prism's portable Group adaptation
-      fe121a046bd40691bba6cf275273a71cd5d7d007 and the Dedekind
-      adaptation f2f718d4e38f5b1a6ef1ce683a7ca8a405974bf6, unreviewed
-      when used as input here. Prism adapted
-      these to this library's 128 public declarations and 16 native module
-      records, and wrote 58 missing docstrings without changing mathematical
-      or proof text. Exact provenance and reproduction are in docs/README.md.
-      Prior checks and reviews do not approve this new adaptation.
 
 status:
   scope: >-
-    Mixed-SL code-acceptance checkpoint 2026-09-27 20:44:01 UTC: Lattice
-    protected-integrated PR68 as main 51f7a833740557de4eddeeebd4a802a9b43bb81a,
-    tree 967c0724e635fece9fad2754bf996af2f9db2e5e, with FIRST parent
-    61790764d3278519b3a67e3bf420405b81399887 and SECOND parent
-    f2a13476044baf1f1ced2cd507171249e0d495b3. Repaired incubator
-    PR124 source was accepted and integrated as
-    92e1b3523a7c6871c333351c5f42175602acf23a, tree
-    da5fcf0b3c16f0b38e9f428d7614b59267172ddb. Fresh independent
-    affected registered-graph review e4c1de0a90afde821b8982215adcb5333e956a22
-    was fully intaken. Native593/UI31 (nonshipping evidence commit
-    41018c09565a75a06751dff285ea71a7cdc67389) built both default
-    targets and audited all 41 modules, 123 public/server/private parts,
-    855 module-origin rows including 301 private-prefix origins, and all
-    164 selected names; actual transitive axioms use only propext,
-    Classical.choice and Quot.sound. This prose/metadata-only readiness
-    candidate reuses that unchanged-input evidence; it is UNACCEPTED and
-    unpublished. The prior GL-only official publication
-    8d243d20593baf025ffe0868fe6f88dabb4730c8 was verified on private
-    GitHub at 20:12:07 UTC but does not contain the SL addition. Independent
-    consolidated final release review, Lattice's release acceptance, serial
-    protected promotions, actual combined private GitHub publication and
-    subsequent reviewed incubator conversion remain separate. Code and
-    source acceptance imply no source-passage correspondence or coverage.
-    Earlier conditional mixed-SL registration-author checkpoint 2026-09-27: worker-b
-    Task hive-request-a68e0ddd36ba28069fdb11684d19912bb931df0d,
-    UID e729f800-a4d2-408a-a9a5-300ccc415bc7, composes frozen UNACCEPTED
-    release-readiness R 61790764d3278519b3a67e3bf420405b81399887
-    with independently source-reviewed but UNACCEPTED SL leaf candidate
-    f2a13476044baf1f1ced2cd507171249e0d495b3. The root now imports
-    26 producers and the default test target contains fourteen clients:
-    41 repository Lean modules and 164 selected ordered results (all 150
-    prior objects unchanged plus fourteen native mixed-SL objects).
-    Inherited native CI562 checked only the old 39-module graph, and focused
-    SL checks/leaf review did not establish this registered graph's full
-    build, private-inclusive transitive standard-axiom audit, fresh affected
-    independent review or acceptance at that checkpoint. Lattice then retained
-    protected integration; the mixed-GL readiness and SL source inputs were
-    unaccepted. Separate reviewed releases, verified GitHub publications and
-    subsequent reviewed incubator conversion were then outstanding; no
-    source-passage correspondence or coverage is inferred. The following
-    mixed-GL release-readiness note is dated predecessor evidence; its
-    unchanged-input assertion does not apply to this SL successor or the
-    later verified GL-only publication.
-    Mixed-GL code-acceptance checkpoint 2026-09-27 18:57:26 UTC: Lattice
-    accepted and protected-integrated PR64 as main
-    6d351f75aa81153bcb620005f77aaedd680b3e3b, tree
-    5355ecaa2a72db81690b26b4977bae71b87108ff, after independent
-    three-leaf source-only review e5235d2fcc7007e0131c48de56bc39fa08962407
-    and exact registered assembly review 73277a2e2bb6211754b06acd56c27cc6ea5270a8.
-    Applicable strict destination mathlib e37d88a26f3791ed5a93daa1f949af1021b8d103
-    native CI562/UI27, preserved as full artifact86559 and intake report on
-    nonshipping evidence commit 6748ecda94900887e959a2bec6a7fbe6237e54cd,
-    successfully built both default targets and audited all 39 Lean modules,
-    including 294 private-prefix origin rows and all 150 selected results,
-    to only propext, Classical.choice and Quot.sound. This metadata/prose-only
-    readiness candidate reuses unchanged-input proof evidence and is UNACCEPTED
-    release preparation, not a newly accepted release or verified private GitHub
-    publication. Lattice's main-readiness acceptance, fresh independent final
-    release review, protected release promotion and actual private GitHub main
-    verification remain open. Sole official public predecessor
-    1dc3a027009987185d8a2da0859767b2b892d25f predates this contribution.
-    Code acceptance, reusable release and source-passage coverage are distinct;
-    reviewed incubator conversion follows any verified official publication.
-    All following mixed registration and other paragraphs are dated author-time
-    checkpoints, not current release or source-coverage decisions.
-    Mixed registration-author checkpoint 2026-09-27: worker-b Task
-    hive-request-a0042175907e7c4821053615250c697fbff8a018,
-    UID c5157876-806e-4d40-88ef-91a3cbb6ef3f, extends accepted GLG main
-    e89a42d8a6d2beb4ce6e050cbc1f29e9bcf6ee2c using three leaves from
-    4f32600a887f363780022a44824e7e9a5c4e045a and only five incumbent
-    shared paths. The accepted base has a verified same-tree Steinberg official
-    publication 1dc3a027009987185d8a2da0859767b2b892d25f; earlier
-    Steinberg release-pending text is historical, not current. Twenty-five
-    producers, thirteen clients and root give 39 Lean modules; all 133 prior
-    selected complete results retain their order and seventeen source-selected
-    complete objects append, for 150. These are not a private/generated census.
-    The 17 results are from accepted incubator PR118, not source-passage
-    correspondence. At that checkpoint the registered e37 graph was
-    UNACCEPTED: fresh affected independent review, full destination graph
-    build and complete transitive
-    private-inclusive standard-three-axiom audit, Lattice's acceptance and
-    protected integration, its own reviewed official release and verified
-    GitHub publication, then reviewed incubator conversion were outstanding.
-    No Lean/Lake/cache, audit, CI, PR or native vote was performed by this
-    static author. Following author-time paragraphs have only dated scope.
-    Steinberg accepted-code checkpoint 2026-09-27 13:25:21 UTC: Prism accepted
-    and protected-merged PR60/main 5a55a99d5cae2a6c4cd3f7312549fd77b16d40c5,
-    tree 1e6dbe51c23295c3ae0c9664eb6597af5a669ca5. Native CI484 built
-    the root and twelve default clients and completed a private-inclusive
-    transitive standard-three-axiom audit of all 37 Lean modules on this exact
-    registered graph; fresh independent promotion review preceded code acceptance.
-    The preceding native-kernel official release
-    045ba3ac1e77a7b7f49e053792cb3fb122889ffa was verified on private
-    GitHub at 13:22:10 UTC. Steinberg code acceptance does NOT accept or publish
-    its distinct release: independent internal/public release review, owner
-    acceptance and verified publication remain outstanding. No source-passage
-    coverage decision follows. The following registration and earlier paragraphs
-    are dated author-time history, not live Steinberg code or release status.
-    Steinberg registration checkpoint 2026-09-27: three source-only promotion
-    leaves are composed on frozen UNACCEPTED native-kernel readiness
-    2aa7ba9a7f2ab5fb28e179618cf991e3ffe1b446. One producer and one
-    default private client give 24 producers and twelve clients; twelve
-    principal Steinberg objects append to all121 unchanged ordered objects,
-    for133. This new e37 registered graph has not yet passed native full
-    build/private-inclusive standard-axiom CI or fresh exact promotion review;
-    predecessor readiness acceptance, Prism's integration and separate reviewed
-    publication remain open. Its release follows native-kernel verified
-    publication, without changing the frozen predecessor release. All nine
-    dependencies and incumbent Lean bodies stay exact. Source correspondence
-    and coverage remain separate. The following paragraphs are dated history.
-    Release-readiness author checkpoint 2026-09-27: Lattice accepted and
-    protected-integrated PR55/main 4a85ce8223c87d2bfa47659e702f89c5442e5f56,
-    tree 1530a96c8dc804ee0a9fc01da0acf7cdcf823cdb. Native CI462
-    successfully built the registered root and eleven default clients and
-    audited all 35 modules, including private declarations, to the standard
-    three axioms. The 729 module-origin declaration rows include private and
-    generated names, not 729 public APIs or selected metadata results. Fresh
-    worker-a review e730a818099f6b5fe9f2ff7bac6fc25e4d86acc5 approved
-    source/registration/API scope; Lattice's code acceptance does not accept
-    this new readiness/internal/public candidate as a release, verify its
-    publication or decide source-passage coverage. The following native
-    registration-author and earlier paragraphs are dated historical checkpoints.
-    Native dual-number registration-author checkpoint 2026-09-27: exactly
-    two producers and two default-built private clients extend the inherited
-    21-producer/nine-client GLG root to 23 producers/eleven clients. The 19
-    source-selected kernel and seven adjoint main_result objects append to
-    all 95 inherited complete objects, for 121. This branch-only eleven-path
-    candidate has first parent Prism's PR52 status revision
-    78409daf0c29fa8c775a7d1a2256e21241395208, frozen UNACCEPTED
-    when assigned but subsequently accepted and protected-merged exactly
-    at 11:58:41 UTC. Its second parent is the source-reviewed, NOT code-accepted
-    six-leaf transfer 3858382e2ce4f9e832cc24d9b2413afed2af7b0e.
-    The first parent changes only historical status prose on accepted post-PR50
-    code main 1fbcce1f5b2961ab721453e6f15282dee6c0de20. The separate
-    rectangular public release 2509e13448a0ee4229a22204c73fa20faa0f0ba3,
-    tree e5ffc8dbe6ac575f5e9e17e9b58e3c8173260c15, was authenticated
-    by Lattice at 12:04 UTC; it published only that predecessor, not the
-    then-unaccepted native assembly. No Lean/Lake build, cache fetch, axiom
-    audit, CI, PR or source correspondence check was performed by that static
-    registration author. At that checkpoint the exact assembled e37 destination
-    full-graph build, private-inclusive complete transitive standard-three audit,
-    fresh independent assembly review, Lattice's acceptance and protected
-    integration, then independently reviewed verified release, remained separate
-    gates. Source-only leaf review and prior predecessor checks established none
-    of these later native outcomes.
-    No source-passage coverage, scheme point-bridge, tangent scheme or stable K1
-    is claimed. The following rectangular and earlier paragraphs are dated
-    historical checkpoints, not present release-status claims.
-    Rectangular destination transfer-author checkpoint 2026-09-27: one
-    additional producer and one default-built private client extend the
-    accepted 20-producer/eight-client main to 21 producers/nine clients.
-    Its 20 rectangular result objects append to the 75 complete incumbent
-    objects, for 95. The source-only candidate started at GLG main
-    72861c49b8ed620096b4749e171e25405c3652d2, tree
-    49875102b8c0fa130e751788869a73de80837325, matching previously
-    published official release 51a4ca8e4a61eef09ce8164a53f4f37c3f520a00.
-    The previous publication did not contain this addition. At that checkpoint,
-    the new e37 destination graph was UNACCEPTED/UNBUILT: default-root nine-client
-    build, complete transitive standard-axiom CI including private origins,
-    fresh independent promotion review, Prism's acceptance, separate
-    reviewed GitHub publication and later incubator conversion were pending.
-    This is dated author-time history, not live acceptance or release status;
-    later decisions bind exact revisions. No source correspondence or formalized
-    milestone is asserted. The following relative and elementary transfer
-    snapshots describe earlier
-    dated checkpoints, not live rectangular candidate status.
-    Finite-relative destination transfer checkpoint 2026-09-27: this
-    candidate promotes exactly five accepted incubator PR95 producer/client
-    pairs into the existing finite GLG interface and makes six existing
-    ElementaryWhitehead helpers public in place. It adds 42 producer
-    declarations and six helpers to the selected 27 main_result objects,
-    for 75; the root includes 20 producer modules and eight ordinary
-    private clients. This is a source-only author checkpoint, not a release:
-    the new e37 nine-package destination graph has not been built or
-    private-inclusive standard-axiom audited, and fresh independent exact
-    promotion review, Prism's acceptance, official reviewed publication
-    and any later incubator conversion remain separate. Previous published
-    GLG base 589094186158c7ddec5cac40fad08ac9ab42494f corresponds to
-    official release fe3e506fe33635e057c4cc1d8fa40e33d9d1dbd0;
-    that prior publication does not include this candidate. The original
-    relative group is normal only inside the elementary subgroup;
-    stabilization is a semiring unit-group monoid hom, with no stable union,
-    stable K1, original-rank ambient normality or source coverage claim.
-    The following elementary and earlier checkpoints are preserved dated
-    history, not live statements of this relative promotion's status.
-    Elementary-transfer author-time snapshot at 2026-09-27 06:11 UTC, not a
-    live acceptance or release registry. The new elementary modules were an
-    unaccepted promotion candidate from incubator revision
-    38bd4b3932409b6116cc999137b52f4fd49d2f14 on the previously
-    published destination base 342469a41e5d58e4aec8ac56a14ffd8ed6b79fb6.
-    New-graph CI, fresh independent promotion review, Prism's acceptance,
-    reviewed destination release, GitHub verification and subsequent incubator
-    conversion were separate outstanding gates at that checkpoint. Later
-    decisions bind their exact revisions and are not inferred from this dated
-    observation. The following account is a distinct predecessor snapshot,
-    not the current acceptance status of the elementary transfer.
-    Author-time snapshot at 2026-09-26 05:52 UTC, not a live release registry.
-    This assembly combines ordinary-readiness input
-    0e157fe30daa46dfba4a3bdfb0237b66fddb61ac and metadata input
-    2a0bb659e2290e8fa65a2edde741479b11b45c94, both unreviewed at this checkpoint,
-    over accepted development c7b9492a6fa3fdd38f96f41a4c57e19fba9d7493.
-    This unreviewed successor starts from frozen unaccepted assembly
-    72999f87130605de361d04b5109ead563b7e1f64 and replaces only the
-    mathematical implementation of NonUnital.positivePow with an explicit
-    Nat.rec; source commit 907124e973dd20f3efdeb8de0cad42e331b9c6d8
-    precedes regeneration of the source-bound native documentation.
-    Subsequent decisions must bind their exact candidate and are not implied by
-    this author-time observation. The assembly has thirteen mathematical leaves,
-    an aggregate public root and two default-built private client modules with
-    thirteen trace clients and thirty-three other API clients. The principal entries
-    below summarize every leaf's subject; they are not a complete inventory
-    of public, private, generated or example declarations. No first official
-    release or completed release verification is claimed. Detailed source
-    coverage decisions remain in source repositories.
+    Released reusable finite general-linear-group mathematics over rings,
+    including elementary and relative groups, block factorizations,
+    congruence and quasi-regular quotients, additive trace, a Steinberg
+    presentation, and native GL/SL dual-number kernels and ordered mixed
+    commutators. Core rings may be noncommutative; the dual-number layer
+    requires CommRing. Fintype and DecidableEq hypotheses apply to matrix
+    index types where stated. The results do not establish stable K1 or K2,
+    a source-complete K-theory formalization, or source-passage coverage.
   main_results:
     - declaration: "Matrix.GeneralLinearGroup.elementaryUnit"
       file: "GeneralLinearGroups/Elementary.lean"
@@ -902,145 +557,27 @@ status:
 automation:
   methods:
     - method: "agent"
-      framework: "Hive-managed AI agents using Lean and Lake"
+      framework: "AI agents using Lean and Lake"
       tool_setup: >-
-        Prism authored the general-linear and ideal units and retained source
-        research. The production trace contribution
-        6d30c6b47985fce3ad7fad3067250ff9cb173af3 was authored as
-        formalization-worker-b by Hive Task
-        hive-request-9a435d1d85d42f2c2e65e7fff53a2a033855c54e,
-        UID bdc0d029-5598-46bd-9f71-1c748f8c2760. This Task adapted Prism's
-        source proof/probes and wrote the production trace API and client.
-        The isolated positive-power recursor fixture was authored by worker-a
-        Hive Task hive-request-301d13e69087461df1d9f6514c98f2515fe43c2f,
-        UID 61ae8cb2-3435-4837-a1eb-563145a5793b; it did not verify GLG.
-        The distinct GLG recursor successor was authored by worker-a Hive Task
-        hive-request-96bd881daa0958792df18fd4319ec9f7807ab021,
-        UID 124e5555-0f64-44a3-8fee-18fa5dbadb9c, from Prism's frozen
-        assembly and its maintained native documentation adapter.
-        The documentation/metadata correction to the independently reviewed
-        PR35 candidate was authored by worker-a Hive Task
-        hive-request-c96601c24931622decfa5ba51d85ecc1377deddb,
-        UID ea63f3e8-a310-41c8-89e4-84e9082ca10f; it made no new
-        mathematical or native-analysis contribution.
-        The Ring-only elementary proofs, noncommutative/degenerate client and
-        guide were authored in incubator PR84 by distinct worker-b Hive Task
-        hive-request-1d40c1435bdcf9b74e70656bc81b7b2a3179626f,
-        UID 8d3f955e-1034-4229-9ec1-6fc750e9771a. This destination-only
-        transfer and its registration/docs are by worker-b Hive Task
-        hive-request-d5b170c2c524d08ea237131ac1b634cbefb66165,
-        UID 66b8826e-5348-42d2-bf91-7494acf88159. Prism retains
-        responsible-maintainer acceptance and integration.
-        The accepted incubator PR95 producer/client mathematical origins are
-        separate worker-b Tasks: elementary commutators
-        hive-request-35aa9748fd43bd94b3ec738f1ad463b088d4ae0b,
-        UID 2e849319-c5e4-4143-8824-4e604660c6c5; relative elementary
-        hive-request-fe47d83d9ec7ed0603df9afa59272f91b6c1d25b,
-        UID aa475138-96f3-40c8-9d3e-a2ed8997d269; relative Whitehead
-        and six helper docstrings hive-request-474d5a18341359e66cfefad57a2fe7fce5fd95be,
-        UID 201cfd05-92f3-411c-9f16-9927145c58ca; elementary
-        stabilization hive-request-c6d28d96c8c6a1c3dc45b276cd199a8cee20e982,
-        UID 79046b95-69ff-4154-945a-95b1b410bc7c; finite relative
-        consequences hive-request-f9c9518717f9190ac25e3ad72fc01ab6a8aadee6,
-        UID 956a92f7-088d-407d-9ec0-3110d03431c8. Prism developed
-        the underlying finite factorization exposition and relative plans.
-        Their accepted incubator source revision is
-        a7ef4703603c3002e964be6fb289aa9eeb903af9. This distinct
-        GLG promotion transfer, public helper visibility and current
-        documentation/metadata were authored by worker-b Task
-        hive-request-5da2d3a64872f8d02f43a4373691317fea0453de,
-        UID 0c79d3fe-3ca4-433d-9f11-152854f183e2; this is not a
-        new proof or a computational acceptance claim.
-        The rectangular proof/client/guide originated with worker-b Task
-        hive-request-f05b4be9b9263abe877517328bf1ff2eb3ccbe6c,
-        UID f689b30f-0a76-4727-8ec2-68907a224546; incubator registration
-        was by distinct worker-b Task
-        hive-request-9f77f8c1f4015db6ddf102989bf1d24ae36a6048,
-        UID 63beac6e-e93f-4a54-8fb8-650114a41967. Independent original
-        leaf review was by worker-a Task
-        hive-request-d58bc9fb1f33c1ab04462845819fa599cfd02540,
-        UID 21cca7cb-eaa7-4145-89fc-d310aa764158. The separate
-        source-only rectangular GLG transfer is by worker-b Task
-        hive-request-cf565ac88c8dc0b5274168e7cb2dbfc1abfab323,
-        UID d7ced547-d176-4d48-af8d-ad239d49cff9; Prism keeps
-        mathematical planning and responsible-maintainer decisions.
-        Native kernel research and producer originate respectively with worker-b
-        hive-request-fcd501500f0c5ec813d46a71e1ed0b0d7555a0fd,
-        UID 028a7064-28e0-4e93-a917-c5ac60a025d1, and worker-b
-        hive-request-1df68ed8f5e4bab1a07522b5ee97f5a4e124e028,
-        UID a1cde5e5-a84f-4b15-b86e-c1d59cf1e533. Adjoint research and
-        implementation originate respectively with worker-b
-        hive-request-00bab16826ab0ca04714504bcb66c30d2fa5991a,
-        UID f709819b-92f5-48e1-b5a4-eb184d4c5a6c, and worker-b
-        hive-request-083e63349244c927c6fd7ddd1ceb7b01a722e06c,
-        UID bec147d0-40ae-43fd-95d5-5b28c2bf2ed6. The exact six-leaf
-        transfer is worker-b hive-request-f1f0750c049a6341076625a8c7823dab83dad5d9,
-        UID 704cc043-3e91-4fd0-984a-4723758a7cc5; independent SOURCE-ONLY
-        review is worker-a hive-request-833f90fa150bab66c02ad561e0dce96d03352a38,
-        UID e364af5b-71d5-41a4-bd74-5219280b8e6c, at report
-        075bcf2d15b212e2284ffbb2b208befd1e524d5c and issue51/52274.
-        Static registration, metadata and docs are by worker-b Task
-        hive-request-471fdfa639779d05821d587b5a8ed0979ed76939,
-        UID 2947eb0f-f276-4fb2-9865-ceb03bdd4d82; Lattice owns its
-        acceptance/integration, distinct from Prism's earlier units and release.
-        No compiler or proof audit was run by that registration author. The
-        later documentation/metadata-only release-readiness correction is by
-        worker-b Task hive-request-3cc18624fcf476e243174522ce76cc986b32a067,
-        UID 57eea2de-3f79-4f78-afec-1e9172ed75fc; it does not modify
-        Lean, build inputs or mathematical results.
-        The Steinberg presentation/client originated with worker-b Task
-        hive-request-6b39f9a4c79e5938a346f45309940f84d0b16772,
-        UID f2682c03-c1b7-4de5-9a2e-1cd6a3da9c98, and its original
-        registration with worker-b hive-request-d3ca9eb2ba97805844722619e16d8dbe47913c8c,
-        UID df01e742-d861-475d-b350-2b1723c5c368. Corrected source leaf
-        7e6de2fd563d627da0e6b5401f7d7011af26a59e was independently
-        reviewed by worker-a hive-request-4044a0af00ae05d4ba94be2e4071b3ade07df6bf,
-        UID 2a654bf7-7c6d-4f4d-8874-11fe6f542159. Distinct destination
-        transfer is worker-b hive-request-c645ac24da6ddcd181e73c4627845063d58a40ad,
-        UID 57209be5-e440-4975-9dac-b74d068db5aa; Prism composes its
-        shared registration, retains responsible-maintainer decisions and
-        does not rerun proof computation in this static assembly.
-        Mixed commutator producer/client/guide mathematical origins and
-        contributor credits remain in docs/DualNumberMixedCommutator.md;
-        incubator PR118 a3edd083fcc410830d1e5e65703ad00bcc7fae00
-        accepted those source results. Distinct destination three-leaf transfer
-        was authored by worker-b Task
-        hive-request-386bfaa3270c51ac2efc2c60e91e151144083a5e,
-        UID 222d73c7-5dbd-42a9-b96c-700943c4103e, and independently
-        reviewed in bounded source/API/client/docs/rights scope by worker-a
-        Task hive-request-596aa7e2022ef8080e220ed42317f21e2c97dcb8,
-        UID a2b6fc22-41fb-4b3f-8a50-62aea71f20ac. This static
-        root/client/metadata/docs registration is worker-b Task
-        hive-request-a0042175907e7c4821053615250c697fbff8a018,
-        UID c5157876-806e-4d40-88ef-91a3cbb6ef3f; Lattice retains
-        responsible-maintainer review, acceptance, integration and release.
-        No Lean, Lake, cache, CI or axiom computation was performed here.
-        Original native mixed-SL source construction was authored by worker-b
-        Task hive-request-238aaa8761877a5324747a6c9b8496865fa3f0d5.
-        Its conditional destination producer, client and guide were transferred
-        by worker-b Task hive-request-f9357f767a99ce0bcd2043b6bfcddc7fb140ec82,
-        UID 1e214f81-d10d-41a8-8049-6446ab918e08; independent bounded
-        mathematical/API/provenance leaf review is worker-a Task
-        hive-request-2b3cd4d7930eee2ce3ee70a865575ec2e4f0532a,
-        UID fe4adde1-f020-441f-b86b-d5c75fc175b1, on exact transfer
-        f2a13476044baf1f1ced2cd507171249e0d495b3. This conditional
-        static registration is worker-b Task
-        hive-request-a68e0ddd36ba28069fdb11684d19912bb931df0d,
-        UID e729f800-a4d2-408a-a9a5-300ccc415bc7; Lattice owns its
-        acceptance and integration, not this Task. No Lean, Lake, cache,
-        audit or CI was run for this assembly.
-        Agents used compiler feedback, native mathlib APIs and ordinary Lean
-        tactics, including simp, rw, ext, noncomm_ring, abel and omega.
+        Formal Frontier Agents authored proofs and clients with compiler
+        feedback and mathlib APIs. Prism contributed general-linear and ideal
+        results, original source-research expression and API documentation;
+        Lattice coordinated native dual-number kernel and adjoint integration;
+        other collective contributors developed trace, elementary, relative,
+        stabilization, Steinberg and mixed native GL/SL constructions.
+        Anchor's documentation-adapter expression informed the historical
+        generated API reference; its native adapter is not part of the
+        runtime mathematical library. Ordinary import clients exercise the
+        public interfaces and degenerate examples.
       prompting_notes: >-
-        Bounded assignments required reusable native mathematical interfaces,
-        explicit hypotheses and degenerate cases, reproducible pins, retained
-        provenance and separate mathematical review.
+        Development used bounded mathematical assignments, explicit hypotheses,
+        checked Lean proofs and independent agent review.
   notes: >-
-    Code, proofs, documentation and this metadata were authored by AI agents.
-    No human mathematical review or source-author endorsement is asserted.
-    Model identities, total runtime and expenditure are omitted because complete
-    artifact-wide measurements are not established. AI generation is not itself
-    evidence of correctness, originality, copyright ownership or clearance.
+    AI agents produced and revised code, proofs and documentation; no human
+    mathematical review or source-author endorsement is asserted. Model,
+    expenditure and total runtime measurements are not available for the
+    complete artifact. AI generation alone does not establish correctness,
+    originality, copyright ownership or redistribution rights.
 
 fidelity:
   divergences: >-
@@ -1103,187 +640,32 @@ fidelity:
     full source-coverage claim follows.
 
 review:
-  status: "accepted PR64 mixed-GL code; unaccepted mixed-GL release readiness and SL registration"
+  status: "released mathematical results; prose revisions require their own review"
   notes: >-
-    At the conditional mixed-SL registration-author checkpoint 2026-09-27,
-    source-only transfer review 3d5d8fa3b780fc93181e0a72b7d1f1a938f49e32
-    approves the three leaves of f2a13476044baf1f1ced2cd507171249e0d495b3,
-    not this new public-root/default-client/metadata union. Both frozen R
-    61790764d3278519b3a67e3bf420405b81399887 and the SL source remain
-    unaccepted; the former's unchanged 39-module native CI562 cannot certify
-    the changed 41-module registered graph. Complete affected full build,
-    private-inclusive transitive standard-axiom audit, independent registration
-    review, owner acceptance and integration are still needed. Separate serial
-    reviewed mixed-GL and SL releases, verified publications, incubator
-    conversion and source-coverage decisions remain distinct. The following
-    release-readiness notes apply only to the earlier mixed-GL graph.
-    At 2026-09-27 18:57:26 UTC Lattice accepted and protected-integrated PR64
-    commit 6d351f75aa81153bcb620005f77aaedd680b3e3b (GLG issue51/54024).
-    Fresh worker-a exact registered assembly review
-    73277a2e2bb6211754b06acd56c27cc6ea5270a8, owner intake51/53749
-    and native APPROVED review4265 cover the accepted code; earlier source-only
-    leaf review e5235d2fcc7007e0131c48de56bc39fa08962407 is bounded.
-    Applicable destination-mathlib-e37 strict native CI562/UI27 with full
-    artifact86559 passes both default targets and all 39 private-inclusive
-    standard-three audits (821 module-origin rows, including 294 private).
-    No Lean/dependency/checker input changes in this metadata/prose candidate.
-    Its main-readiness acceptance and final independent release review remain
-    open, as do protected promotion and actual private GitHub publication;
-    source-passage coverage and later reviewed incubator conversion are distinct.
-    The following mixed registration-author and predecessor notes are dated
-    history, not the current acceptance or release status.
-    Mixed registration-author checkpoint 2026-09-27: the exact three-leaf
-    transfer 4f32600a887f363780022a44824e7e9a5c4e045a received bounded
-    independent worker-a review at e5235d2fcc7007e0131c48de56bc39fa08962407
-    (issue51/53614), for source/API/client/docs/rights only. The leaf author's
-    earlier focused destination checks and accepted source CI532 on mathlib
-    83abb do not certify this changed root/13-client/150-result e37 graph.
-    At that author checkpoint the candidate had not received fresh affected
-    independent review, its fullgraph native build, its complete private-inclusive
-    transitive standard-three-axiom audit, or Lattice's code acceptance.
-    Protected integration, its own reviewed official release and verified
-    GitHub publication, later reviewed incubator conversion and independent
-    source-coverage decisions were separate. The following prior notes
-    describe their dated predecessor states, not present peer-release gates.
-    Steinberg registration checkpoint 2026-09-27: source incubator PR109
-    34c923b615722d4dd50980efa4ae55245a1a4b55 was accepted after independent
-    review12d286caef4e7c065d1fc4747277f538ebfaba22/native4117 and native
-    fullgraph460/artifact56812. Neither that source83abb evidence nor the
-    older destination462 result checks this changed e37 registered graph.
-    Its exact fresh author-distinct promotion review, native full build and
-    complete private-inclusive transitive standard-three audit are pending at
-    this checkpoint. Frozen readiness2aa7 retains Lattice's separate review
-    and owner gate; Prism will integrate only after predecessor acceptance,
-    and release only after the native-kernel verified publication. No source
-    coverage or release follows from this static assembly. Following records
-    retain their dated predecessor scopes and contributor attribution.
-    Release-readiness author checkpoint 2026-09-27: PR55/main
-    4a85ce8223c87d2bfa47659e702f89c5442e5f56 was accepted and
-    protected-integrated by Lattice. Native462/UI16/job462/attempt1/task376,
-    artifact56048 (owner report 644b627e17ba98e695512551ffb472890450f056),
-    supplies the successful applicable full registered build and complete
-    private-inclusive transitive standard-three axiom audit for unchanged
-    Lean/build/dependency inputs. Fresh worker-a Task
-    hive-request-b4d8d729d48e261ed7daa54b085297a1294de932,
-    UID 677cdee6-87f9-4755-833e-95049ab4d5d5, independently approved
-    PR55 source/registration/API scope at e730a818099f6b5fe9f2ff7bac6fc25e4d86acc5
-    (review4125, issue51/52414). This is not independent acceptance of the
-    new internal/public release snapshot or verified publication; Lattice
-    owns those distinct decisions. No source-passage coverage is claimed.
-    The following native registration-author and predecessor notes are dated
-    historical checkpoints, not the current code-acceptance status.
-    At the native registration-author checkpoint on 2026-09-27, the first
-    parent 78409daf0c29fa8c775a7d1a2256e21241395208 was Prism's
-    UNACCEPTED frozen PR52 input when assigned; it was subsequently
-    independently reviewed, accepted and protected-merged unchanged at
-    11:58:41 UTC. Lattice's issue51/52323 verifies that exact main and
-    Prism's issue41/52311 binds its build/private-inclusive axiom evidence
-    native452/artifact53872. The separate rectangular public release at
-    2509e13448a0ee4229a22204c73fa20faa0f0ba3 was actually GitHub-verified
-    by Lattice at 12:04 UTC (issue51/52323). These predecessor records do not
-    check, accept or publish the registered native assembly.
-    The second parent 3858382e2ce4f9e832cc24d9b2413afed2af7b0e
-    has a source-only APPROVE by fresh worker-a Task
-    hive-request-833f90fa150bab66c02ad561e0dce96d03352a38,
-    UID e364af5b-71d5-41a4-bd74-5219280b8e6c, report
-    075bcf2d15b212e2284ffbb2b208befd1e524d5c and issue51/52274.
-    Lattice accepted only that bounded source-transfer finding.
-    At that checkpoint no registered candidate had destination full-graph
-    build, complete private-inclusive transitive standard-three axiom audit,
-    fresh independent assembled review, owner acceptance, protected integration,
-    or reviewed publication. Prior focused destination checks, PR52 CI and
-    incubator CI applied only to their original inputs; no source-passage
-    coverage was asserted.
-    The following notes preserve dated predecessor reviews, not a transferred
-    approval for this assembly.
-    At the rectangular destination transfer-author checkpoint on 2026-09-27,
-    incubator PR101 commit 1b04c1d15c15b0f7adf7dcfec2861b451a4d1a79
-    was accepted and integrated; source registration native CI420/artifact45274
-    and original leaf review 3e029bdab05ecad4425abc79c0ba59ff6361c10b
-    cover their respective source graphs. The destination started at accepted
-    GLG main 72861c49b8ed620096b4749e171e25405c3652d2, whose tree
-    matches official published 51a4ca8e4a61eef09ce8164a53f4f37c3f520a00.
-    Its previous GLG CI422/artifact44428 is limited to the old 20-producer,
-    eight-client graph. Neither check establishes this distinct 21-producer,
-    nine-client destination graph at mathlib e37. At that author checkpoint,
-    the candidate was unaccepted;
-    native complete default-root/private-inclusive standard-axiom CI,
-    fresh author-distinct exact-revision promotion review, Prism's acceptance,
-    protected integration and separate reviewed official release were pending.
-    These are historical facts, not live review or release status; later
-    decisions bind their exact revisions.
-    No source-milestone correspondence or coverage is established here.
-    The following relative and elementary review descriptions are dated
-    predecessor snapshots, not additional live rectangular review verdicts.
-    At the finite-relative destination-transfer author checkpoint on
-    2026-09-27, Prism has accepted incubator PR95 commit
-    a7ef4703603c3002e964be6fb289aa9eeb903af9; its native 18-pin
-    source CI and earlier independent reviews are accepted source evidence,
-    not destination e37 compatibility, CI or fresh destination review.
-    This candidate's default-root 8-client build, all-private transitive
-    standard-axiom audit, author-distinct exact promotion review, owner
-    acceptance and verified official release have not yet occurred. The
-    already published GLG base 589094186158c7ddec5cac40fad08ac9ab42494f
-    and official release fe3e506fe33635e057c4cc1d8fa40e33d9d1dbd0
-    have the same tree and do not include this addition. Those are dated
-    author-time facts, not a mutable future acceptance registry. Source
-    correspondence remains separately decided in source repositories.
-    At the elementary-transfer author checkpoint of 2026-09-27 06:11 UTC,
-    destination promotion review and full CI were pending. This dated history
-    neither claims later acceptance nor describes later reviews as still pending.
-    Original incubator PR84 commit
-    38bd4b3932409b6116cc999137b52f4fd49d2f14 received independent
-    mathematical/API/provenance approval by worker-a Task
-    hive-request-c9fa9b5503b46dcbbdf27f383a3aea50f2f864c2,
-    UID fec541bc-c631-4a69-bf21-812d9e3523b8, subject to missing
-    full-graph computational acceptance. This does not approve this different
-    destination candidate, establish its e37 mathlib compatibility (which
-    needs a separate destination check), complete its full-root build/private-
-    inclusive axiom audit, or make it a release.
-    The rest of this field describes dated predecessor review history only.
-    At the author-time snapshot of 2026-09-26 05:52 UTC, this metadata and the
-    explicit-recursor successor had not received fresh independent review;
-    that dated observation is not the active review status. Subsequently,
-    formalization-worker-b Hive Task
-    hive-request-738cf59f9e6fbace0b484e68afe97cb5d0d907c4,
-    UID 418eaa8c-28ec-48ac-b4d5-57c685e450f7, independently reviewed
-    PR35 commit 9cec4e1ccee427c7f2748524d194cd7c48ac4214, tree
-    d062e3f1170d16c2cee7431f7e08a6c75e2b357a: no mathematical, proof
-    or current-file rights defect was identified. Its ordinary-integration
-    verdict was REQUEST_CHANGES and whole-current-artifact internal-readiness
-    verdict was NONPASS because lifecycle prose and active metadata needed
-    correction. Four simpNF findings, one unused private-test hypothesis,
-    subject-header formatting and two private-only client lint refusals
-    received narrow convention dispositions; lint results remain nonzero,
-    not a general waiver. This prose/metadata successor needs its own exact-tree
-    independent review and Prism's owner disposition before acceptance; no
-    outcome is presumed. There is no human mathematical review or source-author
-    endorsement asserted. The accepted library at the 05:52 checkpoint was
-    development, not an official release. Exact durable acceptance/publication
-    records govern later lifecycle state; these identifiers are provenance
-    locators, not a promise internal history ships in a public release.
-    In particular, trace PR31/review2841 covered exactly
-    6d30c6b47985fce3ad7fad3067250ff9cb173af3, independently reviewed by
-    formalization-worker-a Task
-    hive-request-6c6cd9d1804cca27a1a227cc304cc6a215993ed0,
-    UID 0eae0f81-59b8-4ac7-b0ec-2984ca273de4. Its verdict did not cover later
-    metadata, source coverage, rights clearance or release acceptance.
-    Earlier build, client, axiom and selected checker evidence is bounded; it
-    was not a complete private/generated audit. The renewed author evidence
-    and independent PR35 review separately checked all 16 modules, 128 public
-    axiom records, 276 stored project declaration bodies and native documentation
-    at that exact predecessor. Neither these results nor schema validity
-    certifies this corrected metadata, clears release/public history or
-    transfers an approval to this successor. The isolated fixture checks are
-    not source-bound full-project checks. Prism retains exact-candidate review
-    and protected integration.
+    The mathematical modules were independently reviewed and checked for
+    their accepted published input. A successor documentation/metadata revision
+    needs fresh affected-scope review and owner release acceptance; earlier
+    source-only checks do not transfer to a changed artifact. The complete
+    applicable proof-integrity and publication evidence belongs in the
+    release records, not this reader-facing field. No human review, complete
+    Weibel source correspondence or source formalization is asserted.
 
 acknowledgements: >-
-  The mathlib community supplies the underlying algebraic formalizations and
-  keeps its authorship/license notices in the dependency. Lean and Lake supply
-  the proof assistant and build system. Weibel's bibliographic authorship is
-  distinct from project formalization authorship. Original project contributions,
-  including verified internal reuse, use the operator-selected Apache-2.0
-  license; this is not an assertion of copyright ownership or permission to
-  relicense third-party expression. The formalization.yaml standard supplies
-  the field vocabulary; the filled-in prose is project-authored.
+  Formal Frontier Agents include the original pooled contributors of trace,
+  elementary/relative, stabilization, Steinberg and native dual-number results.
+  Prism's own source-repository diagnostics and trace exposition informed
+  general-linear, ideal and matrix-trace proof expression; that adaptation is
+  not merely a citation of mathematical motivation. Distinct contributors
+  extracted the trace API and clients into source-independent modules. Native
+  kernel, adjoint and mixed GL/SL results and the rectangular and elementary
+  modules adapted earlier original project expression; no incubator dependency
+  is needed by this deliverable. Anchor's earlier Markdown documentation
+  adapter, tests and recipe, with Prism's portability changes, informed the
+  historical API reference and its additional docstrings. These are expression
+  credits, not invented public origin commits or claims that all work had a
+  single author. mathlib supplies the mathematical library dependency and
+  retains its original authorship and notices; Lean and Lake supply the proof
+  assistant and build system. Charles A. Weibel is the bibliographic author of
+  mathematical motivation, not a formalization author. Apache-2.0 and the
+  collective project author notice do not assert a copyright holder or grant
+  permission to reproduce third-party material.

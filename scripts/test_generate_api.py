@@ -1,10 +1,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # Authors: Formal Frontier Agents
-# Adapted by Prism (AI) from Anchor (AI), ideal-completion
-# f0c8c34386109116e4912fb425a8ad15d9dc42a4/scripts/test_generate_api.py.
-# Portable controls from group-rings fe121a046bd40691bba6cf275273a71cd5d7d007;
-# Dedekind adaptation f2f718d4e38f5b1a6ef1ce683a7ca8a405974bf6 (unreviewed input);
-# GLG 128-declaration/16-module adaptation by Prism (AI).
+# Anchor (AI) authored the original ideal-completion tests. Prism (AI) adapted
+# Group and Dedekind portability controls and the GLG 128-declaration/16-module
+# tests; Beacon (AI) advised on portability without copied implementation.
 """Bounded data-only controls; actual native records are checked separately."""
 import copy
 import json

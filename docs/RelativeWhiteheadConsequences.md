@@ -46,28 +46,19 @@ normality, excision, stable K₁ or source-coverage decision.
 Pinned Lean `v4.34.0-rc2` and mathlib
 `e37d88a26f3791ed5a93daa1f949af1021b8d103` occur in this repository's
 unchanged nine-package manifest. Fetch the matching cache before building
-the public root and all eight ordinary client roots:
+the public root and all fourteen ordinary client roots:
 
 ```sh
 lake exe cache get
 lake --wfail build GeneralLinearGroups GeneralLinearGroupsTests
 ```
 
-## Provenance and status
+## Dependencies and expression credit
 
-Prism's finite proof and plan are preserved in
-`source-weibel-k-book@8f633bbd2797ec45e03213b3e932776a475d2ba0`
-and `source-weibel-k-book@a200e6c19e5678e75ec836e6e5adc9158b400d7f`.
-The original reusable producer/client and guide are by worker-b Task
-`hive-request-f9c9518717f9190ac25e3ad72fc01ab6a8aadee6`, UID
-`956a92f7-088d-407d-9ec0-3110d03431c8`. Prism accepted the
-incubator source PR95 `a7ef4703603c3002e964be6fb289aa9eeb903af9`
-(tree `956ed94cca79087525cd6f07bb944213d9277cf3`); PR93's
-code-unaccepted state in the earlier source guide is a historical snapshot.
-Distinct transfer: worker-b Task
-`hive-request-5da2d3a64872f8d02f43a4373691317fea0453de`, UID
-`0c79d3fe-3ca4-433d-9f11-152854f183e2`. At the 2026-09-27
-destination-author checkpoint, native e37 CI, full private-inclusive axiom
-audit, fresh independent promotion review, Prism's acceptance and reviewed
-official release remain open. Source repositories and original book text
-are not runtime dependencies or shipped assets.
+Prism's finite proof and plan informed these ordered, doubled relative
+identities; Formal Frontier Agents developed the reusable Lean producer,
+client and guide. They adapt actual earlier project expression, not book
+text, and import only the local Whitehead/stabilization APIs and mathlib.
+The source files retain Apache-2.0/collective-author notices. Neither the
+arbitrary-GL doubled conjugation nor the congruence commutator gives
+same-rank ambient relative normality, stable `K₁` or source coverage.

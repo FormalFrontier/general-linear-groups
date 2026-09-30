@@ -54,87 +54,22 @@ conflict. The client checks full units and actual outer readback at ranks
 order gives `-1` at `(0,0)`, and the coefficient stays nonzero modulo two.
 These examples make no determinant-surjectivity claim.
 
-## Provenance and limits
+## Dependencies and credits
 
-The producer's sole public import is the already delivered
-`GeneralLinearGroups.DualNumberKernelAdjoint` module. The original local
-producer import was `Incubator.LinearAlgebra.Matrix.DualNumberKernelAdjoint`;
-the accepted incubator source instead imported its published official GLG
-dependency at commit `045ba3ac1e77a7b7f49e053792cb3fb122889ffa`.
-This producer is copied byte-for-byte from accepted incubator commit
-`a3edd083fcc410830d1e5e65703ad00bcc7fae00` into a new destination leaf;
-the ordinary client changes only the producer import and its enclosing test
-namespace. The original three leaves at commit
-`9fc8e66507274967dbce6393e64986f61b62383b` received source-only
-independent approval from worker-a Task
-`hive-request-81825e08a73a2e0544866d1268c8e32c03b103c2` (UID
-`b0f5ab33-efc3-471c-8615-6810a18300bd`; incubator issue 5/52908,
-owner intake 5/52921). Incubator registration was by worker-b Task
-`hive-request-91c8d549f60ba8e73fe0aecdeb942a3d44907d79` (UID
-`4e794ff8-c534-4a22-a2a6-1dc160be1ffc`) on then-unaccepted Atlas
-PR116 commit `7bac6793387ebaa2d8913c7470ef3830d90bd3d6`. That source
-was subsequently reviewed with its full registered graph, private-inclusive
-standard-three axiom CI, accepted by Lattice (incubator issue 5/53478), and
-protected-integrated (PR 118/53490). Those incubator checks are not
-destination Lean evidence. At the 2026-09-27 registration-author checkpoint,
-the destination candidate imports this producer from its public root, includes
-the client in its 13 default test roots, and registers 17 selected results in
-`formalization.yaml`. Independent worker-a Task
-`hive-request-596aa7e2022ef8080e220ed42317f21e2c97dcb8` (UID
-`a2b6fc22-41fb-4b3f-8a50-62aea71f20ac`) approved the bounded three-leaf
-source/API/client/docs/rights transfer at review commit
-`e5235d2fcc7007e0131c48de56bc39fa08962407`; it did not approve this
-registered graph. This static assembly is by worker-b Task
-`hive-request-a0042175907e7c4821053615250c697fbff8a018` (UID
-`c5157876-806e-4d40-88ef-91a3cbb6ef3f`). At that checkpoint, the registered
-candidate was unaccepted pending affected independent review, destination
-full-graph build and private-inclusive standard-axiom audit, Lattice's acceptance
-and protected integration, its own reviewed official release and verified
-publication, then reviewed incubator conversion. Neither focused checks nor
-source CI then certified the destination graph or source coverage.
+The producer publicly imports `GeneralLinearGroups.DualNumberKernelAdjoint`,
+reusing this library's native `liftGL` and kernel equivalences together with
+mathlib's associative matrix bracket. Formal Frontier Agents developed the
+native-kernel, adjoint and mixed-GL modules and adapted their original project
+expression into this released library; no incubator or source repository is a
+runtime dependency. The source notices give Apache-2.0/SPDX and collective
+authorship. These results do not imply an arbitrary-GL determinant-one
+refinement, a scheme tangent theorem, or source-passage correspondence.
 
-At the subsequent **2026-09-27 18:57:26 UTC code-acceptance checkpoint**,
-Lattice accepted and protected-integrated PR64 as `main`
-`6d351f75aa81153bcb620005f77aaedd680b3e3b`, tree
-`5355ecaa2a72db81690b26b4977bae71b87108ff`. The independent
-source-only leaf review `e5235d2fcc7007e0131c48de56bc39fa08962407`
-and exact registered assembly review
-`73277a2e2bb6211754b06acd56c27cc6ea5270a8` remain separately
-identified. Strict native CI562/UI27, full artifact86559 preserved at
-`6748ecda94900887e959a2bec6a7fbe6237e54cd`, built the default root
-and all thirteen clients on pinned destination mathlib
-`e37d88a26f3791ed5a93daa1f949af1021b8d103`. Its complete fresh
-39-module transitive audit includes private origins and all 150 selected results;
-only `propext`, `Classical.choice` and `Quot.sound` occur. The subsequent
-prose/metadata-only release-readiness candidate reuses this unchanged-input
-evidence. It is **not** an accepted release or verified private GitHub
-publication: independent final release review, Lattice's main-readiness and
-release acceptance, protected promotion and verification of actual private
-GitHub `main` are still required. This guide's dated author snapshot is not a
-live release registry. No source-passage coverage or mixed-SL result follows.
+The project pins Lean `v4.34.0-rc2` and mathlib
+`e37d88a26f3791ed5a93daa1f949af1021b8d103`. From its root, fetch the
+matching precompiled cache before checking both maintained targets:
 
-The code notices retain `SPDX-License-Identifier: Apache-2.0` and collective
-Formal Frontier authorship. The reused dual-number algebra, native GL
-definitions, and associative matrix Lie bracket are mathlib results. The
-native kernel producer was authored by worker-b Task
-`hive-request-1df68ed8f5e4bab1a07522b5ee97f5a4e124e028` (UID
-`a1cde5e5-a84f-4b15-b86e-c1d59cf1e533`), and the adjoint producer by
-worker-b Task `hive-request-083e63349244c927c6fd7ddd1ceb7b01a722e06c`
-(UID `bec147d0-40ae-43fd-95d5-5b28c2bf2ed6`). The independent
-source-only API investigation was produced by worker-b Task
-`hive-request-0cba64c3b6e70835dd27f719e7d96682a55936d1` (UID
-`6bee2d00-ea33-47da-8b8e-3dc8563c69df`) at `d8423e4b0c6d1388c3deb323e58022dd5b68b300`;
-its conjectural signatures were not Lean evidence. This bounded Lean
-implementation is by worker-b Task
-`hive-request-88a39f40cd23a7135b5d8a4f56e4abd33c6d9c61` (UID
-`29343994-029c-40be-9acb-a5927caa38b6`) from accepted/incorporated
-incubator commit `e6f66b1e53a2108284b798ced2f9f6316e1ee140`. The
-independent affected source review is report
-`1eade9625e1ed34089a3a4cdc4c3165c6498651d`. This three-leaf GLG
-transfer is by worker-b Task
-`hive-request-386bfaa3270c51ac2efc2c60e91e151144083a5e` (UID
-`222d73c7-5dbd-42a9-b96c-700943c4103e`) against destination commit
-`e89a42d8a6d2beb4ce6e050cbc1f29e9bcf6ee2c`, pinned to Lean
-`v4.34.0-rc2` and mathlib `e37d88a26f3791ed5a93daa1f949af1021b8d103`.
-It makes no source-specific correspondence, SL extension, scheme-point
-construction, or global Lie structure.
+```sh
+lake exe cache get
+lake --wfail build GeneralLinearGroups GeneralLinearGroupsTests
+```
