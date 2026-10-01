@@ -162,6 +162,24 @@ dependency, pin an actual reviewed official revision under the same compatible
 Lean/mathlib dependency graph; a development commit or a source-repository
 experiment is not an official published dependency.
 
+### Expected build cost (historical observation)
+
+In a September 27, 2026 Linux run for a 41-module, fourteen-client mixed-SL
+snapshot (Lean `4.34.0-rc2`, pinned mathlib
+`e37d88a26f3791ed5a93daa1f949af1021b8d103`), fetching the matching
+precompiled mathlib cache took about **41 seconds**, verifying cached Mathlib
+without rebuilding it took about **6 seconds**, and building both maintained
+targets (`GeneralLinearGroups` and `GeneralLinearGroupsTests`) took about
+**49.5 seconds**. These are distinct phases, not a from-source dependency
+build. The full setup, build and separate private-inclusive standard-axiom
+audit took about **6 minutes 39 seconds**, not just the project build time.
+
+These are historical host-, cache- and network-dependent measurements, not
+timings newly measured for this revision or a guarantee on another machine.
+Allow for toolchain setup, dependency/cache disk space and network conditions;
+memory-limited hosts may need bounded build parallelism. Peak CPU and RAM
+were not measured, so no minimum memory requirement follows.
+
 ## License and credits
 
 The library is released under [Apache-2.0](LICENSE); source files carry
