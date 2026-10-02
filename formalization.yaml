@@ -1,6 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
 # Authors: Formal Frontier Agents
-# Metadata prepared by Prism (AI agent); formal contributors identified below.
 # yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/99c678e569c7c4c0772db297c5ddd5e4c9b6322e/schema/v0.4.schema.json
 version: "v0.4"
 
@@ -26,14 +25,15 @@ project:
     For trace-zero inputs, the native SL refinement uses actual special-linear
     factors, identifies the ordered mixed commutator and reads back its
     pure-inner trace-zero coefficient in the actual outer SL kernel.
+    Elementary unit-pivot diagonalization, product-one diagonal membership,
+    continuous elementary paths and finite special-linear elementary
+    neighborhoods add algebraic and topological interfaces with their
+    respective unit-minor, path-connectedness and open-scalar-unit hypotheses.
   authors:
     - "Formal Frontier Agents"
-    - "Prism (AI agent; general-linear and ideal formalization, source-research expression and API documentation)"
-    - "Lattice (AI agent; native dual-number kernel and adjoint integration)"
-    - "Anchor (AI agent; upstream documentation-adapter expression)"
   responsible_maintainers:
-    - "Prism (on behalf of the source-maintainer team)"
-    - "Lattice (native dual-number kernel and adjoint promotion on behalf of the source-maintainer team)"
+    - "Prism (source-maintainer team)"
+    - "Lattice (source-maintainer team)"
   license: "Apache-2.0"
 
 sources:
@@ -43,7 +43,7 @@ sources:
     id: "https://sites.math.rutgers.edu/~weibel/Kbook/Kbook.pdf"
     type: "book"
     location: >-
-      Complete-book build dated 2013-08-29: Exercises I.1.10-I.1.12;
+      Complete-book edition (August 29, 2013): Exercises I.1.10-I.1.12;
       Chapter II, section 2, trace discussion on displayed page 73
       (physical PDF page 81).
     relationship: "adapts"
@@ -52,8 +52,8 @@ sources:
       Reusable versions of selected algebraic constructions, not a complete
       formalization of these exercises, chapters or the book. The formal
       statements expose finite-index, ring, ideal and nonemptiness hypotheses
-      individually. Mathematical motivation is distinct from proof-expression
-      origins recorded below. No book PDF, scan or quoted passage is shipped.
+      individually. Mathematical motivation is distinct from authorship of
+      the Lean proofs. No book PDF, scan or quoted passage is shipped.
       No explicit license or broader redistribution grant for the book was
       established; access to the source is not permission to reproduce it.
 
@@ -69,12 +69,15 @@ related_formalizations:
 
 status:
   scope: >-
-    Released reusable finite general-linear-group mathematics over rings,
+    Reusable finite general-linear-group mathematics over rings,
     including elementary and relative groups, block factorizations,
     congruence and quasi-regular quotients, additive trace, a Steinberg
     presentation, and native GL/SL dual-number kernels and ordered mixed
     commutators. Core rings may be noncommutative; the dual-number layer
-    requires CommRing. Fintype and DecidableEq hypotheses apply to matrix
+    requires CommRing. The additional elementary algebra/topology layer covers
+    unit-pivot diagonalization, product-one diagonals, elementary paths and
+    native SL neighborhoods, each with its stated hypotheses.
+    Fintype and DecidableEq hypotheses apply to matrix
     index types where stated. The results do not establish stable K1 or K2,
     a source-complete K-theory formalization, or source-passage coverage.
   main_results:
@@ -553,31 +556,54 @@ status:
       file: GeneralLinearGroups/DualNumberMixedSLCommutator.lean
     - declaration: Matrix.DualNumberMixedSLCommutator.mixedSLKernel_snd_snd
       file: GeneralLinearGroups/DualNumberMixedSLCommutator.lean
+    - declaration: Matrix.GeneralLinearGroup.reindexEquiv_mem_elementarySubgroup
+      file: GeneralLinearGroups/UnitPivotDiagonalization.lean
+      note: "Ring-level reindexing of the existing elementary subgroup."
+    - declaration: Matrix.leadingPrincipalMinor
+      file: GeneralLinearGroups/UnitPivotDiagonalization.lean
+      note: "Ordered Fin.castLE minor, including the empty minor."
+    - declaration: Matrix.exists_elementary_diagonalization_of_unit_leadingPrincipalMinors
+      file: GeneralLinearGroups/UnitPivotDiagonalization.lean
+      note: "Two-sided elementary reduction under all positive unit leading minors over a CommRing."
+    - declaration: Matrix.GeneralLinearGroup.elementaryUnitPathSubtype
+      file: GeneralLinearGroups/ElementaryPaths.lean
+      note: "Path within the actual elementary subgroup over a topological Ring."
+    - declaration: Matrix.GeneralLinearGroup.elementarySubgroup_pathConnectedSpace
+      file: GeneralLinearGroups/ElementaryPaths.lean
+      note: "Subgroup path-connectedness additionally requiring PathConnectedSpace R."
+    - declaration: Matrix.GeneralLinearGroup.diagonalUnit_mem_elementarySubgroup
+      file: GeneralLinearGroups/ElementaryDiagonal.lean
+      note: "Product-one unit diagonal membership over a CommRing, including empty indices."
+    - declaration: Matrix.GeneralLinearGroup.mem_elementarySubgroup_of_det_one_of_unit_leadingPrincipalMinors
+      file: GeneralLinearGroups/ElementaryDiagonal.lean
+      note: "Determinant-one membership requiring separately all positive unit leading minors."
+    - declaration: Matrix.SpecialLinearGroup.elementarySubgroup
+      file: GeneralLinearGroups/ElementaryNeighborhood.lean
+      note: "SL comap of the existing GL elementary subgroup, not the GL subgroup itself."
+    - declaration: Matrix.SpecialLinearGroup.isOpen_elementarySubgroup
+      file: GeneralLinearGroups/ElementaryNeighborhood.lean
+      note: "Openness requiring an open scalar unit locus, not coefficient path-connectedness."
+    - declaration: Matrix.SpecialLinearGroup.elementarySubgroup_eq_pathComponentOne
+      file: GeneralLinearGroups/ElementaryNeighborhood.lean
+      note: "Identity path-component equality requiring both open scalar units and PathConnectedSpace R."
 
 automation:
   methods:
     - method: "agent"
       framework: "AI agents using Lean and Lake"
       tool_setup: >-
-        Formal Frontier Agents authored proofs and clients with compiler
-        feedback and mathlib APIs. Prism contributed general-linear and ideal
-        results, original source-research expression and API documentation;
-        Lattice coordinated native dual-number kernel and adjoint integration;
-        other collective contributors developed trace, elementary, relative,
-        stabilization, Steinberg and mixed native GL/SL constructions.
-        Anchor's documentation-adapter expression informed the historical
-        generated API reference; its native adapter is not part of the
-        runtime mathematical library. Ordinary import clients exercise the
-        public interfaces and degenerate examples.
+        Formal Frontier Agents developed Lean proofs and ordinary-import
+        clients using mathlib APIs, compiler feedback and Lake. The clients
+        exercise the public interfaces and degenerate examples; the historical
+        API reference does not enumerate all present results.
       prompting_notes: >-
-        Development used bounded mathematical assignments, explicit hypotheses,
-        checked Lean proofs and independent agent review.
+        AI-assisted formalization states hypotheses explicitly and uses
+        kernel-checked Lean proofs.
   notes: >-
-    AI agents produced and revised code, proofs and documentation; no human
-    mathematical review or source-author endorsement is asserted. Model,
-    expenditure and total runtime measurements are not available for the
-    complete artifact. AI generation alone does not establish correctness,
-    originality, copyright ownership or redistribution rights.
+    AI agents produced code, proofs and documentation with compiler feedback;
+    no human mathematical review or source-author endorsement is asserted.
+    AI generation alone does not establish originality, copyright ownership
+    or third-party redistribution rights.
 
 fidelity:
   divergences: >-
@@ -624,8 +650,19 @@ fidelity:
     triangular factorizations preserve the B * D⁻¹ and A⁻¹ * B orders;
     the inverse off-block is -(A⁻¹ * B * D⁻¹). A hom killing E needs no
     abelian target or ambient normality assumption.
+    The leading minors use ordered Fin.castLE submatrices, not arbitrary
+    principal minors; diagonalization needs every positive-order minor to be a
+    unit over CommRing, not merely nonzero, and determinant one is a separate
+    hypothesis for the elementary membership corollary. Product-one unit
+    diagonals are elementary even at empty rank and over a zero ring. Paths
+    use Ring and a topological-ring structure, including noncommutative
+    coefficients; connectedness of E additionally needs PathConnectedSpace R
+    and gives no connectedness of ambient GL. In finite native SL the comap E
+    is open/closed when scalar units form an open locus; equality with the
+    identity path component additionally needs PathConnectedSpace R. Neither
+    continuous factor selection, a quantitative neighborhood nor SL=E follows.
     Native dual-number reduction uses actual multiplicative GL/SL/unit kernels,
-    not additive ideal kernels. The new modules require CommRing, independent
+    not additive ideal kernels. The native dual-number modules require CommRing, independent
     coefficient/index universes and finite decidable indices, allowing empty
     ranks, zero rings and characteristic two. SL kernel coefficients use
     mathlib's trace-zero Lie subalgebra; determinant has a first-order trace
@@ -634,38 +671,26 @@ fidelity:
     including nonconstant native units; it is not GL left multiplication.
     Abelian first-order kernel group commutators do not implement the
     nonzero matrix Lie bracket. No tangent scheme, arbitrary scheme base
-    change or incubator-side point bridge is promoted.
+    change or point bridge is established.
     No SL=E, same-rank ambient elementary normality, original-rank
     commutator containment, stable K1, excision, stable/direct-limit GL or
     full source-coverage claim follows.
 
 review:
-  status: "released mathematical results; prose revisions require their own review"
+  status: "independent agent review; no human mathematical review claimed"
   notes: >-
-    The mathematical modules were independently reviewed and checked for
-    their accepted published input. A successor documentation/metadata revision
-    needs fresh affected-scope review and owner release acceptance; earlier
-    source-only checks do not transfer to a changed artifact. The complete
-    applicable proof-integrity and publication evidence belongs in the
-    release records, not this reader-facing field. No human review, complete
-    Weibel source correspondence or source formalization is asserted.
+    Reviews and build evidence concern specific revisions. No complete Weibel
+    source correspondence or source formalization is asserted.
 
 acknowledgements: >-
-  Formal Frontier Agents include the original pooled contributors of trace,
-  elementary/relative, stabilization, Steinberg and native dual-number results.
-  Prism's own source-repository diagnostics and trace exposition informed
-  general-linear, ideal and matrix-trace proof expression; that adaptation is
-  not merely a citation of mathematical motivation. Distinct contributors
-  extracted the trace API and clients into source-independent modules. Native
-  kernel, adjoint and mixed GL/SL results and the rectangular and elementary
-  modules adapted earlier original project expression; no incubator dependency
-  is needed by this deliverable. Anchor's earlier Markdown documentation
-  adapter, tests and recipe, with Prism's portability changes, informed the
-  historical API reference and its additional docstrings. These are expression
-  credits, not invented public origin commits or claims that all work had a
-  single author. mathlib supplies the mathematical library dependency and
-  retains its original authorship and notices; Lean and Lake supply the proof
-  assistant and build system. Charles A. Weibel is the bibliographic author of
-  mathematical motivation, not a formalization author. Apache-2.0 and the
-  collective project author notice do not assert a copyright holder or grant
-  permission to reproduce third-party material.
+  Formal Frontier Agents contributed original proof expression and subsequent
+  library adaptation. Prism developed general-linear, ideal and trace-related
+  proofs and API documentation; Lattice contributed native dual-number kernel
+  and adjoint integration; Anchor's Markdown documentation adapter informed the
+  historical API reference. Other Formal Frontier Agents authored trace,
+  elementary, relative, stabilization, Steinberg, dual-number, unit-pivot,
+  elementary-path, diagonal and neighborhood proofs and clients; further agents
+  adapted examples and mathematical guides. mathlib retains its own authorship
+  and notices for third-party foundations. Charles A. Weibel's book supplies
+  mathematical motivation, not proof authorship. The collective author credit
+  does not assert a copyright holder or third-party redistribution rights.

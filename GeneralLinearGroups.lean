@@ -30,6 +30,10 @@ public import GeneralLinearGroups.DualNumberKernelAdjoint
 public import GeneralLinearGroups.Steinberg
 public import GeneralLinearGroups.DualNumberMixedCommutator
 public import GeneralLinearGroups.DualNumberMixedSLCommutator
+public import GeneralLinearGroups.UnitPivotDiagonalization
+public import GeneralLinearGroups.ElementaryPaths
+public import GeneralLinearGroups.ElementaryDiagonal
+public import GeneralLinearGroups.ElementaryNeighborhood
 
 /-!
 # General linear groups
@@ -64,6 +68,13 @@ in the augmentation-kernel general linear group.
 The rectangular-block layer assembles explicit diagonal units and ordered
 upper triangular units for independent finite index types, including empty
 blocks, over arbitrary rings. Its upper off-block factor is elementary.
+
+The elementary diagonalization layer uses unit ordered leading principal
+minors over commutative rings to reduce finite matrices to diagonals by
+elementary factors. Product-one diagonals are elementary. Elementary units
+depend continuously on coefficients over topological rings; under separately
+stated path-connectedness and open-unit assumptions, the elementary subgroup
+of the native finite special linear group equals its identity path component.
 
 The native dual-number layer identifies the actual GL, SL and scalar-unit
 reduction kernels over commutative rings with additive first-order coefficients,

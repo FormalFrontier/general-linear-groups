@@ -17,6 +17,10 @@ For current mathematics beyond this partial reference, see the guides to
 [finite stabilization](ElementaryStabilization.md),
 [relative consequences](RelativeWhiteheadConsequences.md),
 [rectangular upper block units](RectangularBlockUnits.md),
+[unit-pivot diagonalization](UnitPivotDiagonalization.md),
+[elementary paths](ElementaryPaths.md),
+[elementary product-one diagonals](ElementaryDiagonal.md),
+[finite special-linear elementary neighborhoods](ElementaryNeighborhood.md),
 [native dual-number kernels](DualNumberKernels.md),
 [their adjoint action](DualNumberKernelAdjoint.md),
 [the finite-rank Steinberg presentation](FiniteRankSteinberg.md),
@@ -26,7 +30,7 @@ The combined native GL/SL results are part of the privately published release;
 these guides describe the relevant current modules. The 128-entry reference does
 not inventory their later APIs.
 
-This page and [the manifest](api-manifest.json) are **not** a current 41-module
+This page and [the manifest](api-manifest.json) are **not** a current 49-module
 declaration inventory, a census of private or generated declarations, or proof
 certification. In particular, `proof_certification: false` in the manifest is
 intentional. The 128 displayed signatures were generated from 16 native module

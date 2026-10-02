@@ -1,14 +1,13 @@
 # General linear groups
 
-A reusable Lean library for finite general linear groups over rings: elementary
-matrices, ordered block factorizations, congruence and quasi-regular ideals,
-additive matrix trace, finite stabilization, a Steinberg presentation, and
-native dual-number GL/SL kernels and commutators. The core ring results allow
-noncommutative coefficients; dual-number and determinant results use
-commutative rings. Matrix indices are finite with decidable equality where
-required. The [module guide index](docs/README.md) leads to detailed statements,
-worked examples and limitations; [mathlib](https://github.com/leanprover-community/mathlib4)
-supplies the underlying matrix, group, ideal and dual-number APIs.
+A Lean library for finite general linear groups: elementary and relative
+matrices, unit-pivot diagonalization, paths and SL neighborhoods, block
+factorizations, ideal quotients, trace, stabilization, Steinberg groups and
+dual-number GL/SL kernels. Core ring results allow noncommutative coefficients;
+dual-number and determinant results use commutative rings. Indices are finite
+and decidable where required. The [module guides](docs/README.md) detail the
+statements, examples and limitations; [mathlib](https://github.com/leanprover-community/mathlib4)
+supplies foundational APIs.
 
 ## Headline results
 
@@ -22,6 +21,23 @@ supplies the underlying matrix, group, ideal and dual-number APIs.
   [doubled lift](GeneralLinearGroups/Whitehead.lean#L164),
   [elementary membership](GeneralLinearGroups/ElementaryWhitehead.lean#L117),
   [rectangular guide](docs/RectangularBlockUnits.md).
+
+- **Unit-pivot reduction and elementary diagonals.** Over any `CommRing`,
+  unit ordered leading minors permit two-sided elementary diagonalization;
+  a product-one diagonal is elementary, and the unit-pivot, determinant-one
+  criterion puts a finite GL unit in `E`. These are not a general `SL = E`
+  theorem; the minor hypothesis is stronger than nonvanishing.
+  [Unit-pivot guide](docs/UnitPivotDiagonalization.md),
+  [diagonal guide](docs/ElementaryDiagonal.md).
+
+- **Elementary paths and SL neighborhoods.** Over a topological ring,
+  elementary GL units vary continuously with coefficients, even when the
+  coefficient ring is noncommutative. Path-connected coefficients make the
+  elementary subgroup path connected. For commutative coefficients, an open
+  scalar-unit locus makes its native SL comap open and closed; additionally
+  path-connected coefficients identify it with the identity path component.
+  [Paths guide](docs/ElementaryPaths.md),
+  [neighborhood guide](docs/ElementaryNeighborhood.md).
 
 - **Lifting modulo quasi-regular ideals.** For a two-sided ideal, its
   unitization general linear group identifies with the congruence kernel;
@@ -88,44 +104,16 @@ supplies the underlying matrix, group, ideal and dual-number APIs.
   [GL guide](docs/DualNumberMixedCommutator.md),
   [SL guide](docs/DualNumberMixedSLCommutator.md).
 
-## Modules and scope
+## Using the library
 
-Import the [aggregate root](GeneralLinearGroups.lean) to publicly access its
-26 subject modules, or import a [specific subject module](GeneralLinearGroups/)
-to keep a narrower dependency surface. Its `public import` declarations expose
-the corresponding module APIs to downstream ordinary imports. The default
-build also checks fourteen client roots under `tests/`, including examples at
-empty and singleton index types, over noncommutative rings and the zero ring;
-client-only helpers are not promises of the library API.
+Pin a compatible commit published on GitHub `main` in your `lakefile.toml`:
 
-| Subject | Start here | Important boundary |
-| --- | --- | --- |
-| Elementary blocks and reindexing | [Elementary matrices](docs/ElementaryMatrices.md), [commutators](docs/ElementaryCommutators.md) | Ring-only units; no `SL = E` |
-| Relative groups and doubled identities | [Relative elementary](docs/RelativeElementary.md), [Whitehead](docs/RelativeWhitehead.md), [consequences](docs/RelativeWhiteheadConsequences.md) | Normal closure inside `E`; arbitrary-GL conjugation only after doubling |
-| Finite stabilization and rectangular blocks | [Stabilization](docs/ElementaryStabilization.md), [rectangular blocks](docs/RectangularBlockUnits.md) | Semiring stabilization is a *monoid hom on units*, not a matrix-ring hom or a surjectivity theorem |
-| Presented elementary group | [Steinberg](docs/FiniteRankSteinberg.md) | Finite rank does not imply finite presentation over an arbitrary ring |
-| Nil and quasi-regular ideal quotients | [QuasiregularIdeal](GeneralLinearGroups/QuasiregularIdeal.lean), [QuasiregularQuotient](GeneralLinearGroups/QuasiregularQuotient.lean), [NonUnitalQuasiregular](GeneralLinearGroups/NonUnitalQuasiregular.lean) | Extra ideal hypothesis is needed to lift arbitrary quotient units |
-| Additive trace quotient | [MatrixTrace](GeneralLinearGroups/MatrixTrace.lean), [AdditiveCommutator](GeneralLinearGroups/AdditiveCommutator.lean) | An inverse needs a chosen index; no ring quotient or `K₀` theorem |
-| Native first-order and mixed dual numbers | [Kernel guide](docs/DualNumberKernels.md), [adjoint guide](docs/DualNumberKernelAdjoint.md), [mixed GL guide](docs/DualNumberMixedCommutator.md), [mixed SL guide](docs/DualNumberMixedSLCommutator.md) | `CommRing`, finite decidable indices; SL requires individual trace-zero factors |
-
-Additional [nonunital](GeneralLinearGroups/NonUnitalNilpotent.lean),
-[local quotient](GeneralLinearGroups/LocalQuotient.lean) and
-[unital comparison](GeneralLinearGroups/UnitalComparison.lean) modules retain
-their own docstrings and statements. Matrix index and coefficient types may
-live in independent universes. Empty indices, singleton indices and zero
-rings are not silently excluded; theorems requiring a chosen index state it.
-There is **no** claimed stable/direct-limit `GL`, stable `K₁`, excision,
-`K₂`, source-complete K-theory, ambient relative normality or universal
-triangular-invertibility converse.
-
-The [historical API snapshot](docs/API.md) covers only 128 authored public
-entries and 16 module records from an earlier library stage, with source links
-on thirteen unchanged producer modules. It is **not** an exhaustive reference
-for the present 41-module default graph or subsequent results. The current
-Lean sources, subject guides and ordinary-import clients describe those
-results; the snapshot has not been regenerated for this revision.
-
-## Use and build
+```toml
+[[require]]
+name = "general-linear-groups"
+git = "https://github.com/FormalFrontier/general-linear-groups.git"
+rev = "<commit at GitHub main>"
+```
 
 For example, a surjective ring map lifts the *doubled* matrix:
 
@@ -141,68 +129,92 @@ example {R S n : Type*} [Ring R] [Ring S] [Fintype n] [DecidableEq n]
   mapRingHom_liftBlockDiagonal f hf g
 ```
 
-The existing [`PublicAPIClient`](tests/PublicAPIClient.lean) exercises this
-law using an ordinary import, and the other clients exercise the advertised
-interfaces and edge cases. Install [elan](https://github.com/leanprover/elan)
-and use this repository's `lean-toolchain` (`leanprover/lean4:v4.34.0-rc2`),
-`lakefile.toml` and `lake-manifest.json`. The nine-package dependency graph
-pins mathlib to `e37d88a26f3791ed5a93daa1f949af1021b8d103`. From a clean
-checkout with normal network access, **fetch the matching precompiled mathlib
-cache successfully before building**:
+The [`PublicAPIClient`](tests/PublicAPIClient.lean) exercises this law using
+an ordinary import; other clients exercise the interfaces and edge cases.
+
+## Building
+
+Install [elan](https://github.com/leanprover/elan) and use this repository's
+`lean-toolchain` (`leanprover/lean4:v4.34.0-rc2`), `lakefile.toml` and
+`lake-manifest.json`. The dependency graph pins mathlib to
+`e37d88a26f3791ed5a93daa1f949af1021b8d103`. From a clean checkout,
+fetch the matching precompiled mathlib cache before building:
 
 ```sh
 lake exe cache get
 lake --wfail build GeneralLinearGroups GeneralLinearGroupsTests
 ```
 
-The default `lake build` selects both of those maintained targets (the
-aggregate library and fourteen client roots). Do not replace the cache-fetch
-step with a full mathlib source rebuild. When using the library as a Lake
-dependency, pin an actual reviewed official revision under the same compatible
-Lean/mathlib dependency graph; a development commit or a source-repository
-experiment is not an official published dependency.
+The default `lake build` selects both the aggregate library and eighteen
+client roots. Do not replace the cache fetch with a full mathlib source build.
 
-### Expected build cost (historical observation)
+## Contents
 
-In a September 27, 2026 Linux run for a 41-module, fourteen-client mixed-SL
-snapshot (Lean `4.34.0-rc2`, pinned mathlib
-`e37d88a26f3791ed5a93daa1f949af1021b8d103`), fetching the matching
-precompiled mathlib cache took about **41 seconds**, verifying cached Mathlib
-without rebuilding it took about **6 seconds**, and building both maintained
-targets (`GeneralLinearGroups` and `GeneralLinearGroupsTests`) took about
-**49.5 seconds**. These are distinct phases, not a from-source dependency
-build. The full setup, build and separate private-inclusive standard-axiom
-audit took about **6 minutes 39 seconds**, not just the project build time.
+Import the [aggregate root](GeneralLinearGroups.lean) to publicly access its
+30 subject modules, or import a [specific subject module](GeneralLinearGroups/)
+to keep a narrower dependency surface. Its `public import` declarations expose
+the corresponding module APIs to downstream ordinary imports. The default
+build also checks eighteen client roots under `tests/`, including examples at
+empty and singleton index types, over noncommutative rings and the zero ring;
+client-only helpers are not promises of the library API.
 
-These are historical host-, cache- and network-dependent measurements, not
-timings newly measured for this revision or a guarantee on another machine.
-Allow for toolchain setup, dependency/cache disk space and network conditions;
-memory-limited hosts may need bounded build parallelism. Peak CPU and RAM
-were not measured, so no minimum memory requirement follows.
+| Subject | Start here | Important boundary |
+| --- | --- | --- |
+| Elementary blocks and reindexing | [Elementary matrices](docs/ElementaryMatrices.md), [commutators](docs/ElementaryCommutators.md) | Ring-only units; no `SL = E` |
+| Unit pivots and diagonal units | [Unit-pivot diagonalization](docs/UnitPivotDiagonalization.md), [product-one diagonals](docs/ElementaryDiagonal.md) | `CommRing`; all positive-order leading minors must be units for reduction |
+| Paths and SL neighborhoods | [Elementary paths](docs/ElementaryPaths.md), [finite SL neighborhoods](docs/ElementaryNeighborhood.md) | Path-connected coefficients and open scalar units are distinct hypotheses |
+| Relative groups and doubled identities | [Relative elementary](docs/RelativeElementary.md), [Whitehead](docs/RelativeWhitehead.md), [consequences](docs/RelativeWhiteheadConsequences.md) | Normal closure inside `E`; arbitrary-GL conjugation only after doubling |
+| Finite stabilization and rectangular blocks | [Stabilization](docs/ElementaryStabilization.md), [rectangular blocks](docs/RectangularBlockUnits.md) | Semiring stabilization is a *monoid hom on units*, not a matrix-ring hom or a surjectivity theorem |
+| Presented elementary group | [Steinberg](docs/FiniteRankSteinberg.md) | Finite rank does not imply finite presentation over an arbitrary ring |
+| Nil and quasi-regular ideal quotients | [QuasiregularIdeal](GeneralLinearGroups/QuasiregularIdeal.lean), [QuasiregularQuotient](GeneralLinearGroups/QuasiregularQuotient.lean), [NonUnitalQuasiregular](GeneralLinearGroups/NonUnitalQuasiregular.lean) | Extra ideal hypothesis is needed to lift arbitrary quotient units |
+| Additive trace quotient | [MatrixTrace](GeneralLinearGroups/MatrixTrace.lean), [AdditiveCommutator](GeneralLinearGroups/AdditiveCommutator.lean) | An inverse needs a chosen index; no ring quotient or `K₀` theorem |
+| Native first-order and mixed dual numbers | [Kernel guide](docs/DualNumberKernels.md), [adjoint guide](docs/DualNumberKernelAdjoint.md), [mixed GL guide](docs/DualNumberMixedCommutator.md), [mixed SL guide](docs/DualNumberMixedSLCommutator.md) | `CommRing`, finite decidable indices; SL requires individual trace-zero factors |
 
-## License and credits
+Additional [nonunital](GeneralLinearGroups/NonUnitalNilpotent.lean),
+[local quotient](GeneralLinearGroups/LocalQuotient.lean) and
+[unital comparison](GeneralLinearGroups/UnitalComparison.lean) modules have
+their own docstrings and statements.
 
-The library is released under [Apache-2.0](LICENSE); source files carry
-authentic license and `Authors: Formal Frontier Agents` notices. Formal
-Frontier Agents produced and revised the mathematical Lean code, clients and
-guides with compiler feedback and independent **agent** review. Prism
-contributed the general-linear/ideal and source-probe developments and
-adapted the API documentation; Lattice led native-kernel/adjoint integration;
-Anchor contributed the Markdown documentation adapter that informed the
-historical API reference. Distinct pooled contributors developed trace,
-elementary/relative/stabilization, Steinberg and native dual-number results;
-the collective author credit includes them without treating one agent as all
-authors. The pinned mathlib contributors retain credit and license notices in
-the dependency; in particular this repository does not claim mathlib's
-presented-group, trace-zero Lie algebra or matrix foundations as original.
+## Conventions and limitations
 
-Charles A. Weibel, *The K-book: An Introduction to Algebraic K-theory* (2013),
-motivates selected constructions, but this repository does **not** claim a
-complete formalization of that book or copy its PDF, scans or quotations.
-Original source-research expression informed some developments; the public
-metadata and guides distinguish that contribution from bibliographic
-motivation. Source-passage correspondence and incomplete coverage live in
-the source repository, not in this reusable library. No source-author
-endorsement, human mathematical review, copyright ownership beyond what
-can be established, or blanket third-party redistribution permission is
-asserted by the collective credit or by AI authorship.
+Matrix index and coefficient types may live in independent universes. Empty
+indices, singleton indices and zero rings are not silently excluded; theorems
+requiring a chosen index state it. A unit leading minor is stronger than a
+nonzero minor, even over `ZMod 6`. Ring-level elementary paths allow
+noncommutative coefficients; subgroup path connectedness separately needs
+path-connected coefficients. The finite SL comap is open and closed when
+scalar units form an open locus; identifying its identity path component also
+needs path-connected coefficients. There is no continuous factor selection,
+general `SL = E`, global `GL` connectivity or quantitative neighborhood.
+There is **no** claimed stable/direct-limit `GL`, stable `K₁`, excision,
+`K₂`, source-complete K-theory, ambient relative normality or universal
+triangular-invertibility converse.
+
+The [historical API snapshot](docs/API.md) covers only 128 authored public
+entries and 16 module records, with source links on thirteen unchanged
+producers. It is **not** an exhaustive reference for the present 49-module
+default graph. Use the Lean sources, guides and import clients for other results.
+
+## References
+
+- Charles A. Weibel, *The K-book: An Introduction to Algebraic K-theory*
+  (2013), Exercises I.1.10–I.1.12 and Chapter II, §2. Selected constructions
+  draw on its mathematics, not a complete formalization of the book.
+- [mathlib](https://github.com/leanprover-community/mathlib4) provides the
+  foundational matrix, group, ideal, topology and dual-number interfaces.
+
+## Credits and license
+
+Authors: Formal Frontier Agents. Prism contributed original general-linear,
+ideal and trace-related proof expression and API documentation; Lattice
+contributed native dual-number kernel and adjoint integration; Anchor's
+Markdown documentation adapter informed the historical API reference.
+Other Formal Frontier Agents authored the trace, elementary, relative,
+stabilization, Steinberg, dual-number, unit-pivot, elementary-path, diagonal
+and neighborhood proofs and clients; additional agents adapted their
+examples and mathematical guides. These original project contributions
+are distinct from Weibel's mathematical motivation and mathlib's third-party
+work, whose authorship and notices remain with mathlib. AI agents developed
+the Lean code and documentation with compiler feedback and independent agent
+review; no human mathematical review is claimed. Licensed under
+[Apache-2.0](LICENSE); no copyright holder is inferred from the author credit.
