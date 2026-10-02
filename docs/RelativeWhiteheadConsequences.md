@@ -43,10 +43,10 @@ congruence units with unequal ordered products and a nonidentity commutator.
 Empty indices and `ZMod 1` remain valid; there is no stable union, ambient
 normality, excision, stable K₁ or source-coverage decision.
 
-Pinned Lean `v4.34.0-rc2` and mathlib
-`e37d88a26f3791ed5a93daa1f949af1021b8d103` occur in this repository's
-unchanged nine-package manifest. Fetch the matching cache before building
-the public root and all fourteen ordinary client roots:
+Lean `v4.34.0-rc2` and mathlib are pinned in this repository's
+[`lean-toolchain`](../lean-toolchain), [`lakefile.toml`](../lakefile.toml) and
+nine-package [`lake-manifest.json`](../lake-manifest.json). Fetch the matching
+cache before building the public root and all eighteen ordinary client roots:
 
 ```sh
 lake exe cache get

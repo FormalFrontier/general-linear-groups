@@ -81,9 +81,10 @@ original project expression into this standalone library. The Apache-2.0
 collective-author notices remain. No incubator/source repository is a build
 dependency, and this module does not establish source passage coverage.
 
-The repository pins Lean `v4.34.0-rc2` and mathlib
-`e37d88a26f3791ed5a93daa1f949af1021b8d103`. Fetch the matching
-mathlib cache before building the library and fourteen clients:
+The repository pins Lean `v4.34.0-rc2` and mathlib in its
+[`lean-toolchain`](../lean-toolchain), [`lakefile.toml`](../lakefile.toml) and
+[`lake-manifest.json`](../lake-manifest.json). Fetch the matching mathlib
+cache before building the library and eighteen clients:
 
 ```sh
 lake exe cache get

@@ -58,7 +58,7 @@ sources:
       established; access to the source is not permission to reproduce it.
 
 related_formalizations:
-  - id: "https://github.com/leanprover-community/mathlib4/tree/e37d88a26f3791ed5a93daa1f949af1021b8d103"
+  - id: "https://github.com/leanprover-community/mathlib4/tree/83abb3e776bdefcbc447a1e44d0debe4010039e5"
     relationship: "builds-on"
     note: >-
       Reuses native matrices, units, ring homomorphisms, two-sided ideals,

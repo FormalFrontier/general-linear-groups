@@ -67,9 +67,10 @@ not copyrighted book passages or a source-repository implementation. The
 Apache-2.0/collective-author notices remain on the Lean files.
 
 This module and its ordinary-import client belong to the current public root
-and default test target. Lean `v4.34.0-rc2` and mathlib
-`e37d88a26f3791ed5a93daa1f949af1021b8d103` are pinned; first fetch the
-matching mathlib cache:
+and default test target. Lean `v4.34.0-rc2` and mathlib are pinned in
+[`lean-toolchain`](../lean-toolchain), [`lakefile.toml`](../lakefile.toml) and
+[`lake-manifest.json`](../lake-manifest.json); first fetch the matching
+mathlib cache:
 
 ```sh
 lake exe cache get

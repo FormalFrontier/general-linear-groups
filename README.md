@@ -137,7 +137,7 @@ an ordinary import; other clients exercise the interfaces and edge cases.
 Install [elan](https://github.com/leanprover/elan) and use this repository's
 `lean-toolchain` (`leanprover/lean4:v4.34.0-rc2`), `lakefile.toml` and
 `lake-manifest.json`. The dependency graph pins mathlib to
-`e37d88a26f3791ed5a93daa1f949af1021b8d103`. From a clean checkout,
+`83abb3e776bdefcbc447a1e44d0debe4010039e5`. From a clean checkout,
 fetch the matching precompiled mathlib cache before building:
 
 ```sh

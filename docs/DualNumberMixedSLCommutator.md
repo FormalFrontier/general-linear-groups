@@ -68,9 +68,10 @@ reversing their order yields `diag(-1, 1)`. The characteristic-two diagonal
 coefficient remains nonzero although the two signs coincide. These checks
 use the actual native factors, SL kernel and readback.
 
-Use this repository's `lean-toolchain`, `lakefile.toml` and
-`lake-manifest.json` (Lean `v4.34.0-rc2`, mathlib
-`e37d88a26f3791ed5a93daa1f949af1021b8d103`). From the repository root:
+Use this repository's [`lean-toolchain`](../lean-toolchain),
+[`lakefile.toml`](../lakefile.toml) and
+[`lake-manifest.json`](../lake-manifest.json) for Lean `v4.34.0-rc2` and the
+resolved mathlib revision. From the repository root:
 
 ```sh
 lake exe cache get

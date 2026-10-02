@@ -32,11 +32,11 @@ perfectness for `Fin 3` over `ℤ`, matrix coefficients and `ZMod 1`, plus
 empty/singleton index types. No rank-two perfectness, `SL = E`, ambient
 normality, stable `K₁` or source correspondence follows.
 
-Use repository `lean-toolchain` (Lean `v4.34.0-rc2`) and the unchanged
-nine-package `lake-manifest.json`, including mathlib
-`e37d88a26f3791ed5a93daa1f949af1021b8d103`. Before any build,
-fetch the matching mathlib cache; the ordinary default target includes this
-module and client:
+Use repository [`lean-toolchain`](../lean-toolchain) (Lean `v4.34.0-rc2`),
+[`lakefile.toml`](../lakefile.toml) and the nine-package
+[`lake-manifest.json`](../lake-manifest.json) for the pinned mathlib revision.
+Before any build, fetch the matching mathlib cache; the ordinary default
+target includes this module and client:
 
 ```sh
 lake exe cache get

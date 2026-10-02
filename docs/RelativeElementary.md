@@ -38,10 +38,11 @@ noncommuting elementary conjugation, empty indices and the zero ring.
 No same-rank ambient normality, relative perfectness, quotient GL
 surjectivity, excision, stable `K₁` or source-coverage decision follows.
 
-The exact environment is Lean `v4.34.0-rc2`, mathlib
-`e37d88a26f3791ed5a93daa1f949af1021b8d103`, and the unchanged
-nine-package `lake-manifest.json`. To build the root and all fourteen clients
-from this repository, first fetch its matching mathlib cache:
+The exact environment uses Lean `v4.34.0-rc2` from
+[`lean-toolchain`](../lean-toolchain), with mathlib pinned in
+[`lakefile.toml`](../lakefile.toml) and resolved in the nine-package
+[`lake-manifest.json`](../lake-manifest.json). To build the root and all
+eighteen clients from this repository, first fetch its matching mathlib cache:
 
 ```sh
 lake exe cache get

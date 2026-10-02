@@ -56,8 +56,9 @@ Apache-2.0/SPDX and collective-author notices are retained, and no source
 repository is a build dependency. This guide makes no source-coverage or
 scheme-tangent assertion.
 
-The project pins Lean `v4.34.0-rc2` and mathlib
-`e37d88a26f3791ed5a93daa1f949af1021b8d103`. The public root imports this
+The project pins Lean `v4.34.0-rc2` and mathlib in its
+[`lean-toolchain`](../lean-toolchain), [`lakefile.toml`](../lakefile.toml) and
+[`lake-manifest.json`](../lake-manifest.json). The public root imports this
 producer and the default test target includes its ordinary-import client.
 Fetch the matching mathlib cache before a build:
 

@@ -70,9 +70,10 @@ their integration into this library. These are original project formalizations
 with Apache-2.0/SPDX and collective-author notices. They do not import source
 research, promote a scheme-point equivalence, or claim source coverage.
 
-The library pins Lean `v4.34.0-rc2` and mathlib
-`e37d88a26f3791ed5a93daa1f949af1021b8d103`. For a clean build including
-the native-kernel client, first fetch the matching cache:
+The library pins Lean `v4.34.0-rc2` and mathlib in its
+[`lean-toolchain`](../lean-toolchain), [`lakefile.toml`](../lakefile.toml) and
+[`lake-manifest.json`](../lake-manifest.json). For a clean build including the
+native-kernel client, first fetch the matching cache:
 
 ```sh
 lake exe cache get

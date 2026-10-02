@@ -65,9 +65,10 @@ runtime dependency. The source notices give Apache-2.0/SPDX and collective
 authorship. These results do not imply an arbitrary-GL determinant-one
 refinement, a scheme tangent theorem, or source-passage correspondence.
 
-The project pins Lean `v4.34.0-rc2` and mathlib
-`e37d88a26f3791ed5a93daa1f949af1021b8d103`. From its root, fetch the
-matching precompiled cache before checking both maintained targets:
+The project pins Lean `v4.34.0-rc2` and mathlib in its
+[`lean-toolchain`](../lean-toolchain), [`lakefile.toml`](../lakefile.toml) and
+[`lake-manifest.json`](../lake-manifest.json). From its root, fetch the matching
+precompiled cache before checking both maintained targets:
 
 ```sh
 lake exe cache get

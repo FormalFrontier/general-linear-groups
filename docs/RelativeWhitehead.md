@@ -47,9 +47,10 @@ noncommutative matrix coefficient ring. It also covers ideal-valued blocks,
 empty indices and `ZMod 1`. No original-rank normality, stable `K₁`,
 perfectness, excision or full source correspondence is asserted.
 
-The repository pins Lean `v4.34.0-rc2` and mathlib
-`e37d88a26f3791ed5a93daa1f949af1021b8d103` in its unchanged
-nine-package manifest. From the destination root:
+The repository pins Lean `v4.34.0-rc2` in
+[`lean-toolchain`](../lean-toolchain) and mathlib in
+[`lakefile.toml`](../lakefile.toml) and its nine-package
+[`lake-manifest.json`](../lake-manifest.json). From the destination root:
 
 ```sh
 lake exe cache get

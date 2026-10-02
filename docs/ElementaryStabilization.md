@@ -36,10 +36,11 @@ proper reduction-mod-2 kernel. It also uses different index universes,
 empty added/source blocks and the zero ring. There is no colimit, original-
 rank GL-normality, image equality, stable `K₁` or source correspondence.
 
-The destination environment is Lean `v4.34.0-rc2` and mathlib
-`e37d88a26f3791ed5a93daa1f949af1021b8d103` with the unchanged
-nine-package `lake-manifest.json`. The ordinary build includes this module
-and client; fetch the matching mathlib cache first:
+The destination environment uses Lean `v4.34.0-rc2` from
+[`lean-toolchain`](../lean-toolchain) and mathlib as recorded in
+[`lakefile.toml`](../lakefile.toml) and the nine-package
+[`lake-manifest.json`](../lake-manifest.json). The ordinary build includes
+this module and client; fetch the matching mathlib cache first:
 
 ```sh
 lake exe cache get
