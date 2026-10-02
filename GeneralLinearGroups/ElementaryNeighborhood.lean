@@ -13,10 +13,13 @@ public import Mathlib.Topology.Connected.Clopen
 /-!
 # Elementary neighborhoods in finite special linear groups
 
-The elementary subgroup of the native special linear group is the inverse image
-of the existing algebraic elementary subgroup under the native map to the general
-linear group. Unit leading principal minors give an open neighborhood of one
-inside it. Path-connected coefficients identify it with the path component of one.
+The elementary subgroup of the finite special linear group is the inverse image
+of the existing general-linear elementary subgroup under `toGL`. When
+`{r : R | IsUnit r}` is open, unit leading principal minors give an open
+neighborhood of one inside it, making the subgroup open and closed.
+Path-connected coefficients lift elementary paths to the special linear group
+without this openness assumption. With both hypotheses, the elementary subgroup
+is the path component of one.
 -/
 
 set_option warningAsError true
@@ -30,7 +33,7 @@ universe u
 variable {R : Type u} [CommRing R] [TopologicalSpace R] [IsTopologicalRing R]
   {n : ℕ}
 
-/-- The existing general-linear elementary subgroup, pulled back along native `toGL`. -/
+/-- The existing general-linear elementary subgroup, pulled back along `toGL`. -/
 def elementarySubgroup : Subgroup (SpecialLinearGroup (Fin n) R) :=
   (GeneralLinearGroup.elementarySubgroup (Fin n) R).comap
     (toGL : SpecialLinearGroup (Fin n) R →* GeneralLinearGroup (Fin n) R)
@@ -80,7 +83,7 @@ theorem unitLeadingPrincipalMinors_subset_elementarySubgroup :
   · intro k hk hkpos
     simpa only [coe_GL_coe_matrix] using hg ⟨k, Nat.lt_succ_of_le hk⟩
 
-/-- Open scalar units make the elementary subgroup open in native finite `SL`. -/
+/-- Open scalar units make the elementary subgroup open in finite `SL`. -/
 theorem isOpen_elementarySubgroup (hunits : IsOpen {r : R | IsUnit r}) :
     IsOpen (elementarySubgroup (n := n) (R := R) : Set (SpecialLinearGroup (Fin n) R)) := by
   apply (elementarySubgroup (n := n) (R := R)).isOpen_of_mem_nhds
@@ -89,13 +92,15 @@ theorem isOpen_elementarySubgroup (hunits : IsOpen {r : R | IsUnit r}) :
       (one_mem_unitLeadingPrincipalMinors (n := n) (R := R)))
     (unitLeadingPrincipalMinors_subset_elementarySubgroup (n := n) (R := R))
 
-/-- Open elementary subgroups are also closed; no separation axiom is required. -/
+/-- With open scalar units, the elementary subgroup is closed; no separation axiom
+is required. -/
 theorem isClosed_elementarySubgroup (hunits : IsOpen {r : R | IsUnit r}) :
     IsClosed (elementarySubgroup (n := n) (R := R) : Set (SpecialLinearGroup (Fin n) R)) :=
   (elementarySubgroup (n := n) (R := R)).isClosed_of_isOpen
     (isOpen_elementarySubgroup (n := n) hunits)
 
-/-- Intrinsic paths in the algebraic elementary subgroup lift to native `SL`. -/
+/-- For path-connected coefficients, elementary subgroup paths lift to `SL`
+without open scalar units. -/
 theorem elementarySubgroup_joined_one [PathConnectedSpace R]
     (g : SpecialLinearGroup (Fin n) R)
     (hg : g ∈ elementarySubgroup (n := n) (R := R)) :
@@ -112,8 +117,8 @@ theorem elementarySubgroup_joined_one [PathConnectedSpace R]
   have hpath := (PathConnectedSpace.joined (1 : E) ⟨toGL g, hg⟩).map hcont
   exact hpath
 
-/-- Under both open units and path-connected coefficients, the elementary subgroup
-is exactly the native path component of the identity. -/
+/-- With open scalar units and path-connected coefficients, the elementary subgroup
+is the path component of the identity in finite `SL`. -/
 theorem elementarySubgroup_eq_pathComponentOne [PathConnectedSpace R]
     (hunits : IsOpen {r : R | IsUnit r}) :
     elementarySubgroup (n := n) (R := R) =

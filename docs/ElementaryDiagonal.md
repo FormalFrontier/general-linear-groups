@@ -2,7 +2,7 @@
 
 Import [`GeneralLinearGroups.ElementaryDiagonal`](../GeneralLinearGroups/ElementaryDiagonal.lean)
 for elementary diagonal units over an arbitrary commutative ring. If
-`d : Fin n → Rˣ` has product one, the native unit `diagonalUnit d` belongs to
+`d : Fin n → Rˣ` has product one, the GL unit `diagonalUnit d` belongs to
 `Matrix.GeneralLinearGroup.elementarySubgroup (Fin n) R`, including empty
 matrices and zero rings. No field, domain or nontriviality is required.
 

@@ -14,7 +14,7 @@ public import Mathlib.Topology.Instances.Matrix
 
 An off-diagonal elementary unit depends continuously on its coefficient, including
 its inverse matrix. Paths of coefficients lift both to the ambient general linear
-group and to its actual algebraic elementary subgroup. When the ring is path
+group and to its algebraic elementary subgroup. When the ring is path
 connected, closure under multiplication and inverse makes this subgroup path
 connected, without assuming that the ambient general linear group is so.
 -/
@@ -55,7 +55,7 @@ theorem continuous_elementaryUnit (i j : ι) (hij : i ≠ j) :
     exact (continuous_const : Continuous (fun _ : R => (1 : Matrix ι ι R))).add
       (hsingle.comp continuous_neg)
 
-/-- The elementary generator is continuous as a map into the actual elementary subgroup. -/
+/-- The elementary generator is continuous as a map into the elementary subgroup. -/
 theorem continuous_elementaryUnit_subtype (i j : ι) (hij : i ≠ j) :
     Continuous (fun c : R =>
       (⟨elementaryUnit i j hij c, elementaryUnit_mem i j hij c⟩ :

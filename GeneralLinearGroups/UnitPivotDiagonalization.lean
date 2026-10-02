@@ -113,7 +113,7 @@ universe uR
 
 variable {R : Type uR} [CommRing R]
 
-/-- The northwest `k × k` principal determinant, with its native ordered `Fin` inclusion. -/
+/-- The northwest `k × k` principal determinant, with its ordered `Fin` inclusion. -/
 def leadingPrincipalMinor {n : ℕ} (M : Matrix (Fin n) (Fin n) R)
     (k : ℕ) (hk : k ≤ n) : R :=
   (M.submatrix (Fin.castLE hk) (Fin.castLE hk)).det

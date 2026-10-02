@@ -1,16 +1,16 @@
 # Elementary paths over topological rings
 
 Import [`GeneralLinearGroups.ElementaryPaths`](../GeneralLinearGroups/ElementaryPaths.lean)
-to use the native `Matrix.GeneralLinearGroup.elementaryUnit` and its algebraic
+to use `Matrix.GeneralLinearGroup.elementaryUnit` and its algebraic
 `elementarySubgroup`. The original elementary definitions come from
 [`GeneralLinearGroups.Elementary`](../GeneralLinearGroups/Elementary.lean).
 
 For independent universes of finite index type `ι` and coefficient type `R`,
 with `[DecidableEq ι] [Ring R] [TopologicalSpace R] [IsTopologicalRing R]`,
 `Matrix.GeneralLinearGroup.continuous_elementaryUnit i j hij` proves continuity
-of `c ↦ Eᵢⱼ(c)` in the native matrix-unit topology. Its inverse has value
+of `c ↦ Eᵢⱼ(c)` in the matrix-unit topology. Its inverse has value
 `1 + Matrix.single i j (-c)`; no continuous inversion on coefficients is
-needed. `continuous_elementaryUnit_subtype` maps continuously into the actual
+needed. `continuous_elementaryUnit_subtype` maps continuously into the
 elementary subgroup with its subtype topology.
 
 For `γ : Path (0 : R) c`, `elementaryUnitPath i j hij γ` joins `1 : GL ι R`

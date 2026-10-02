@@ -180,7 +180,7 @@ private theorem diagonalUnit_firstTwo_mem (n : ℕ) (a : Rˣ) :
           simp only [Fin.cases_succ, Fin.cases_zero]
       | succ i => simp [firstTwoRestEquiv_succ_succ, pair]
 
-/-- A diagonal of units with product one belongs to the native algebraic elementary
+/-- A diagonal of units with product one belongs to the algebraic elementary
 subgroup, for every size and every commutative ring. -/
 theorem diagonalUnit_mem_elementarySubgroup :
     ∀ (n : ℕ) (d : Fin n → Rˣ), (∏ i, d i) = 1 →
