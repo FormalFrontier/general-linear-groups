@@ -38,7 +38,10 @@ supplies foundational APIs.
   homomorphisms on stable general linear groups, their elementary quotient and
   their abelianization. Rank-one units provide determinant sections; the
   elementary subgroup lies in the determinant kernel, without a claimed
-  equality. The rank-one map itself is defined over any semiring.
+  equality. The abelian elementary quotient splits as the product of its
+  determinant kernel and the units, naturally under coefficient maps; this
+  does not assert a product splitting of stable general linear groups.
+  The rank-one map itself is defined over any semiring.
   [Determinant and rank-one maps](GeneralLinearGroups/StableDeterminant.lean),
   [integer and boundary examples](tests/GeneralLinearGroupsTests/StableDeterminantClient.lean).
 
@@ -219,7 +222,7 @@ client-only helpers are not promises of the library API.
 | Paths and SL neighborhoods | [Elementary paths](docs/ElementaryPaths.md), [finite SL neighborhoods](docs/ElementaryNeighborhood.md) | Path-connected coefficients and open scalar units are distinct hypotheses |
 | Relative groups and doubled identities | [Relative elementary](docs/RelativeElementary.md), [Whitehead](docs/RelativeWhitehead.md), [consequences](docs/RelativeWhiteheadConsequences.md) | Normal closure inside `E`; arbitrary-GL conjugation only after doubling |
 | Stable general linear and elementary groups | [Stable GL](GeneralLinearGroups/StableGeneralLinear.lean), [stable elementary](GeneralLinearGroups/StableElementary.lean) | Semiring-direct-limit `GL`; over rings, elementary equals the stable commutator, with an abelian quotient but no public `K₁` construction |
-| Stable determinant and rank-one units | [Stable determinant](GeneralLinearGroups/StableDeterminant.lean), [clients](tests/GeneralLinearGroupsTests/StableDeterminantClient.lean) | Rank-one maps over semirings; determinant and its quotient and abelianization factorizations over commutative rings |
+| Stable determinant and rank-one units | [Stable determinant](GeneralLinearGroups/StableDeterminant.lean), [clients](tests/GeneralLinearGroupsTests/StableDeterminantClient.lean) | Rank-one maps over semirings; over commutative rings, the abelian elementary quotient is its determinant kernel times units, with no kernel-vanishing claim |
 | Finite stabilization and rectangular blocks | [Stabilization](docs/ElementaryStabilization.md), [rectangular blocks](docs/RectangularBlockUnits.md), [rectangular unit switch](GeneralLinearGroups/RectangularUnitSwitch.lean), [zero-product units](GeneralLinearGroups/ZeroProductStabilization.lean) | Semiring stabilization is a *monoid hom on units*; the unit switch requires a `Ring` and `g = 1 + A * B`, but not `B * A = 0` |
 | Presented elementary group | [Steinberg](docs/FiniteRankSteinberg.md) | Finite rank does not imply finite presentation over an arbitrary ring |
 | Nil and quasi-regular ideal quotients | [QuasiregularIdeal](GeneralLinearGroups/QuasiregularIdeal.lean), [QuasiregularQuotient](GeneralLinearGroups/QuasiregularQuotient.lean), [NonUnitalQuasiregular](GeneralLinearGroups/NonUnitalQuasiregular.lean) | Extra ideal hypothesis is needed to lift arbitrary quotient units |

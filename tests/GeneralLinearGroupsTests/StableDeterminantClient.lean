@@ -12,8 +12,8 @@ public import Mathlib.Data.ZMod.Basic
 
 The rank-one image of `-1` survives over the integers and modulo three, while
 an elementary matrix is nonidentity but disappears in the elementary quotient.
-The empty rank, zero ring and a noncommutative coefficient ring exercise the
-boundary cases of the API.
+The determinant-kernel/unit coordinates retain this distinction. The empty
+rank, zero ring and a noncommutative coefficient ring exercise the boundaries.
 -/
 
 set_option warningAsError true
@@ -46,6 +46,68 @@ example : StableGL.quotientRankOneUnits ℤ (-1) ≠ 1 := by
   apply integerNegOne_ne_one
   have detEquality := congrArg (StableGL.quotientDet ℤ) equality
   simpa only [map_one, StableGL.quotientDet_quotientRankOneUnits] using detEquality
+
+example : StableGL.quotientDetKernelMulEquiv ℤ (1, (-1 : ℤˣ)) ≠ 1 := by
+  intro equality
+  apply integerNegOne_ne_one
+  have detEquality := congrArg (StableGL.quotientDet ℤ) equality
+  simpa only [map_one, StableGL.quotientDet_quotientDetKernelMulEquiv] using detEquality
+
+example : ((StableGL.quotientDetKernelMulEquiv (ZMod 3)).symm
+    (QuotientGroup.map (stableElementarySubgroup ℤ)
+      (stableElementarySubgroup (ZMod 3)) (StableGL.map reduceThree)
+      ((Subgroup.map_le_iff_le_comap).mp
+        (StableGL.map_elementarySubgroup_le reduceThree))
+        (StableGL.quotientDetKernelMulEquiv ℤ (1, (-1 : ℤˣ))))).2 =
+      (-1 : (ZMod 3)ˣ) := by
+  rw [StableGL.quotientDetKernelMulEquiv_symm_map_snd,
+    StableGL.quotientDetKernelMulEquiv_units,
+    StableGL.quotientDetKernelMulEquiv_symm_apply_snd,
+    StableGL.quotientDet_quotientRankOneUnits]
+  apply Units.ext
+  norm_num [reduceThree]
+
+example (q : StableGL ℤ ⧸ stableElementarySubgroup ℤ) :
+    StableGL.quotientDet ℤ
+      (q * (StableGL.quotientRankOneUnits ℤ (StableGL.quotientDet ℤ q))⁻¹) = 1 := by
+  rw [← StableGL.quotientDetKernelMulEquiv_symm_apply_fst]
+  exact MonoidHom.mem_ker.mp ((StableGL.quotientDetKernelMulEquiv ℤ).symm q).1.property
+
+example : (StableGL.quotientDetKernelMulEquiv ℤ).symm
+      (StableGL.quotientRankOneUnits ℤ (-1)) = (1, (-1 : ℤˣ)) := by
+  apply Prod.ext
+  · apply Subtype.ext
+    simp only [StableGL.quotientDetKernelMulEquiv_symm_apply_fst,
+      StableGL.quotientDet_quotientRankOneUnits, mul_inv_cancel,
+      OneMemClass.coe_one]
+  · simp only [StableGL.quotientDetKernelMulEquiv_symm_apply_snd,
+      StableGL.quotientDet_quotientRankOneUnits]
+
+example (q : StableGL (ZMod 1) ⧸ stableElementarySubgroup (ZMod 1)) :
+    ((StableGL.quotientDetKernelMulEquiv (ZMod 1)).symm q).2 = 1 := by
+  rw [StableGL.quotientDetKernelMulEquiv_symm_apply_snd]
+  exact Subsingleton.elim _ _
+
+example : ¬ ∀ g : StableGL ℤ,
+    StableGL.rankOneUnits ℤ (-1) * g = g * StableGL.rankOneUnits ℤ (-1) := by
+  intro commutes
+  let diagonal : GL (Fin 2) ℤ :=
+    finStabilize ℤ (by decide)
+      (Matrix.GeneralLinearGroup.scalar (Fin 1) (-1))
+  let elementary : GL (Fin 2) ℤ := elementaryUnit 0 1 (by decide) 1
+  have diagonal_stage : StableGL.stage ℤ 2 diagonal = StableGL.rankOneUnits ℤ (-1) :=
+    StableGL.stage_finStabilize ℤ (by decide : 1 ≤ 2)
+      (Matrix.GeneralLinearGroup.scalar (Fin 1) (-1))
+  have finite_commutes : diagonal * elementary = elementary * diagonal := by
+    apply StableGL.stage_injective ℤ 2
+    simpa only [map_mul, diagonal_stage] using commutes (StableGL.stage ℤ 2 elementary)
+  have entry_equality := congrArg
+    (fun matrix : GL (Fin 2) ℤ => (matrix : Matrix (Fin 2) (Fin 2) ℤ) 0 1)
+    finite_commutes
+  norm_num [diagonal, elementary, Matrix.mul_apply, Fin.sum_univ_two,
+    finStabilize_apply, Matrix.GeneralLinearGroup.coe_scalar,
+    Matrix.scalar_apply, Matrix.diagonal_apply, elementaryUnit_val,
+    Matrix.single_apply, Matrix.one_apply] at entry_equality
 
 example : StableGL.abelianizationRankOneUnits ℤ (-1) ≠ 1 := by
   intro equality

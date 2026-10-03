@@ -14,7 +14,8 @@ commutative ring, the determinants of finite representatives define a map from
 stable general linear groups to units. It factors through the stable elementary
 quotient and through the abelianization. The rank-one maps give sections of
 these determinant maps without asserting that the stable elementary subgroup
-is the whole determinant kernel.
+is the whole determinant kernel. Since the elementary quotient is abelian, it
+splits as the product of the quotient determinant kernel and the unit group.
 -/
 
 set_option warningAsError true
@@ -266,6 +267,144 @@ theorem abelianizationRankOneUnits_map {R : Type u} {S : Type v}
     Abelianization.map (map f) (abelianizationRankOneUnits R unit) =
       abelianizationRankOneUnits S (Units.map f unit) := by
   simp only [abelianizationRankOneUnits_apply, Abelianization.map_of, map_rankOneUnits]
+
+/-- Split the abelian stable elementary quotient into its determinant kernel and
+rank-one units. The kernel factor is retained without any vanishing assumption. -/
+noncomputable def quotientDetKernelMulEquiv (R : Type u) [CommRing R] :
+    (quotientDet R).ker × Rˣ ≃* (StableGL R ⧸ stableElementarySubgroup R) where
+  toFun pair := pair.1.1 * quotientRankOneUnits R pair.2
+  invFun q :=
+    (⟨q * (quotientRankOneUnits R (quotientDet R q))⁻¹,
+      by
+        apply MonoidHom.mem_ker.mpr
+        simp only [map_mul, map_inv, quotientDet_quotientRankOneUnits, mul_inv_cancel]⟩,
+      quotientDet R q)
+  left_inv := by
+    intro pair
+    apply Prod.ext
+    · apply Subtype.ext
+      simp only [map_mul, MonoidHom.mem_ker.mp pair.1.property,
+        quotientDet_quotientRankOneUnits, one_mul, mul_assoc, mul_inv_cancel, mul_one]
+    · simp only [map_mul, MonoidHom.mem_ker.mp pair.1.property,
+        quotientDet_quotientRankOneUnits, one_mul]
+  right_inv := by
+    intro q
+    change (q * (quotientRankOneUnits R (quotientDet R q))⁻¹) *
+      quotientRankOneUnits R (quotientDet R q) = q
+    simp only [mul_assoc, inv_mul_cancel, mul_one]
+  map_mul' := by
+    intro first second
+    change ((first.1 : StableGL R ⧸ stableElementarySubgroup R) * second.1) *
+        quotientRankOneUnits R (first.2 * second.2) =
+      ((first.1 : StableGL R ⧸ stableElementarySubgroup R) *
+          quotientRankOneUnits R first.2) *
+        ((second.1 : StableGL R ⧸ stableElementarySubgroup R) *
+          quotientRankOneUnits R second.2)
+    rw [map_mul]
+    ac_rfl
+
+/-- Forward coordinates of the determinant-kernel/unit decomposition. -/
+@[simp]
+theorem quotientDetKernelMulEquiv_apply (R : Type u) [CommRing R]
+    (pair : (quotientDet R).ker × Rˣ) :
+    quotientDetKernelMulEquiv R pair =
+      (pair.1 : StableGL R ⧸ stableElementarySubgroup R) *
+        quotientRankOneUnits R pair.2 := by rfl
+
+/-- The kernel coordinate removes the rank-one image of the determinant. -/
+@[simp]
+theorem quotientDetKernelMulEquiv_symm_apply_fst (R : Type u) [CommRing R]
+    (q : StableGL R ⧸ stableElementarySubgroup R) :
+    (((quotientDetKernelMulEquiv R).symm q).1 :
+      StableGL R ⧸ stableElementarySubgroup R) =
+      q * (quotientRankOneUnits R (quotientDet R q))⁻¹ := by rfl
+
+/-- The unit coordinate of a quotient class is its determinant. -/
+@[simp]
+theorem quotientDetKernelMulEquiv_symm_apply_snd (R : Type u) [CommRing R]
+    (q : StableGL R ⧸ stableElementarySubgroup R) :
+    ((quotientDetKernelMulEquiv R).symm q).2 = quotientDet R q := by rfl
+
+/-- The determinant of a product-coordinate class is its unit coordinate. -/
+@[simp]
+theorem quotientDet_quotientDetKernelMulEquiv (R : Type u) [CommRing R]
+    (pair : (quotientDet R).ker × Rˣ) :
+    quotientDet R (quotientDetKernelMulEquiv R pair) = pair.2 := by
+  rw [quotientDetKernelMulEquiv_apply, map_mul,
+    MonoidHom.mem_ker.mp pair.1.property, quotientDet_quotientRankOneUnits, one_mul]
+
+/-- The kernel factor is included without altering its quotient class. -/
+@[simp]
+theorem quotientDetKernelMulEquiv_ker (R : Type u) [CommRing R]
+    (kernel : (quotientDet R).ker) :
+    quotientDetKernelMulEquiv R (kernel, 1) =
+      (kernel : StableGL R ⧸ stableElementarySubgroup R) := by
+  simp only [quotientDetKernelMulEquiv_apply, map_one, mul_one]
+
+/-- The unit factor is the existing rank-one section. -/
+@[simp]
+theorem quotientDetKernelMulEquiv_units (R : Type u) [CommRing R]
+    (unit : Rˣ) :
+    quotientDetKernelMulEquiv R (1, unit) = quotientRankOneUnits R unit := by
+  simp only [quotientDetKernelMulEquiv_apply, OneMemClass.coe_one, one_mul]
+
+/-- The kernel and unit factors of a quotient class are unique. -/
+theorem quotientDetKernelMulEquiv_unique (R : Type u) [CommRing R]
+    (first second : (quotientDet R).ker) (firstUnit secondUnit : Rˣ) :
+    ((first : StableGL R ⧸ stableElementarySubgroup R) *
+        quotientRankOneUnits R firstUnit =
+      (second : StableGL R ⧸ stableElementarySubgroup R) *
+        quotientRankOneUnits R secondUnit) ↔
+      first = second ∧ firstUnit = secondUnit := by
+  constructor
+  · intro equality
+    have coordinates : (first, firstUnit) = (second, secondUnit) :=
+      (quotientDetKernelMulEquiv R).injective
+        (by simpa only [quotientDetKernelMulEquiv_apply] using equality)
+    exact ⟨congrArg Prod.fst coordinates, congrArg Prod.snd coordinates⟩
+  · rintro ⟨rfl, rfl⟩
+    rfl
+
+/-- Coefficient maps preserve the determinant-normalized kernel coordinate. -/
+theorem quotientDetKernelMulEquiv_symm_map_fst {R : Type u} {S : Type v}
+    [CommRing R] [CommRing S] (f : R →+* S)
+    (q : StableGL R ⧸ stableElementarySubgroup R) :
+    (((quotientDetKernelMulEquiv S).symm
+        (QuotientGroup.map (stableElementarySubgroup R)
+          (stableElementarySubgroup S) (map f)
+          ((Subgroup.map_le_iff_le_comap).mp (map_elementarySubgroup_le f)) q)).1 :
+      StableGL S ⧸ stableElementarySubgroup S) =
+      QuotientGroup.map (stableElementarySubgroup R)
+        (stableElementarySubgroup S) (map f)
+        ((Subgroup.map_le_iff_le_comap).mp (map_elementarySubgroup_le f))
+          (((quotientDetKernelMulEquiv R).symm q).1 :
+            StableGL R ⧸ stableElementarySubgroup R) := by
+  rw [quotientDetKernelMulEquiv_symm_apply_fst,
+    quotientDetKernelMulEquiv_symm_apply_fst, map_mul, map_inv,
+    quotientDet_map, quotientRankOneUnits_map]
+
+/-- The unit coordinate changes coefficients by the usual map on units. -/
+theorem quotientDetKernelMulEquiv_symm_map_snd {R : Type u} {S : Type v}
+    [CommRing R] [CommRing S] (f : R →+* S)
+    (q : StableGL R ⧸ stableElementarySubgroup R) :
+    ((quotientDetKernelMulEquiv S).symm
+      (QuotientGroup.map (stableElementarySubgroup R)
+        (stableElementarySubgroup S) (map f)
+        ((Subgroup.map_le_iff_le_comap).mp (map_elementarySubgroup_le f)) q)).2 =
+      Units.map f ((quotientDetKernelMulEquiv R).symm q).2 := by
+  rw [quotientDetKernelMulEquiv_symm_apply_snd,
+    quotientDetKernelMulEquiv_symm_apply_snd, quotientDet_map]
+
+/-- The canonical abelianization map carries the product factors to the kernel
+class and the existing rank-one class, respectively. -/
+theorem abelianizationEquiv_quotientDetKernelMulEquiv (R : Type u) [CommRing R]
+    (pair : (quotientDet R).ker × Rˣ) :
+    stableElementaryAbelianizationEquiv R (quotientDetKernelMulEquiv R pair) =
+      stableElementaryAbelianizationEquiv R
+        (pair.1 : StableGL R ⧸ stableElementarySubgroup R) *
+          abelianizationRankOneUnits R pair.2 := by
+  rw [quotientDetKernelMulEquiv_apply, map_mul,
+    abelianizationEquiv_quotientRankOneUnits]
 
 end StableGL
 end Matrix.GeneralLinearGroup

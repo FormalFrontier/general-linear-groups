@@ -91,7 +91,9 @@ status:
     is intrinsically perfect, and has abelian quotient canonically equivalent
     to the abelianization. Over commutative rings the stable determinant and
     its quotient and abelianization factorizations have rank-one sections;
-    elementary matrices are contained in the determinant kernel.
+    elementary matrices are contained in the determinant kernel. The abelian
+    stable elementary quotient is the product of its determinant kernel and
+    the unit group, compatibly with coefficient maps.
     Fintype and DecidableEq hypotheses apply to matrix
     index types where stated. The results do not establish stable K1 or K2,
     a source-complete K-theory formalization, or source-passage coverage.
@@ -166,6 +168,13 @@ status:
       note: >-
         Over any CommRing, the ring-level quotient rank-one map is a section
         of the determinant induced on the stable elementary quotient.
+    - declaration: "Matrix.GeneralLinearGroup.StableGL.quotientDetKernelMulEquiv"
+      file: "GeneralLinearGroups/StableDeterminant.lean"
+      note: >-
+        Over any CommRing, including the zero ring, the abelian stable
+        elementary quotient splits as its quotient determinant kernel times
+        the units via the rank-one section. Its coordinate and coefficient-map
+        laws do not identify or trivialize the kernel.
     - declaration: "Matrix.GeneralLinearGroup.StableGL.abelianizationDet_abelianizationRankOneUnits"
       file: "GeneralLinearGroups/StableDeterminant.lean"
       note: >-
@@ -792,7 +801,9 @@ fidelity:
     their quotient and abelianization factorizations, retractions and naturality
     use CommRing;
     stable elementary lies in the determinant kernel without an equality.
-    No kernel centrality, product splitting or SK1 vanishing is asserted.
+    Only the abelian elementary quotient splits as its determinant kernel
+    times units, with natural coordinates. No prequotient kernel centrality,
+    prequotient product splitting or SK1 vanishing is asserted.
     No SL=E, same-rank ambient elementary normality, original-rank
     commutator containment, stable K1 identification, excision or full
     source-coverage claim follows.
