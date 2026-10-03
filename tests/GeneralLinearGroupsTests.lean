@@ -27,5 +27,6 @@ import GeneralLinearGroupsTests.ElementaryDiagonalClient
 import GeneralLinearGroupsTests.ElementaryNeighborhoodClient
 import GeneralLinearGroupsTests.StableGeneralLinearClient
 import GeneralLinearGroupsTests.StableElementaryClient
+import GeneralLinearGroupsTests.StableDeterminantClient
 
 /-! Aggregate client checks for general linear groups and their boundary cases. -/

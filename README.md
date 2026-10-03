@@ -34,6 +34,14 @@ supplies foundational APIs.
   [stable elementary group](GeneralLinearGroups/StableElementary.lean),
   [boundary and quotient clients](tests/GeneralLinearGroupsTests/StableElementaryClient.lean).
 
+- **Stable determinant.** Over a commutative ring, finite determinants induce
+  homomorphisms on stable general linear groups, their elementary quotient and
+  their abelianization. Rank-one units provide determinant sections; the
+  elementary subgroup lies in the determinant kernel, without a claimed
+  equality. The rank-one map itself is defined over any semiring.
+  [Determinant and rank-one maps](GeneralLinearGroups/StableDeterminant.lean),
+  [integer and boundary examples](tests/GeneralLinearGroupsTests/StableDeterminantClient.lean).
+
 - **Zero-product elementary stabilization.** For rectangular `A`, `B` over any
   `Ring` with `B * A = 0`, the unit `1 + A * B` has inverse `1 - A * B`.
   Stabilizing by the identity on the other block gives exactly the ordered
@@ -191,16 +199,16 @@ lake --wfail build GeneralLinearGroups GeneralLinearGroupsTests
 ```
 
 The default `lake build` selects the aggregate library and the test root, which
-imports all 23 client modules. Do not replace the cache fetch with a full
+imports all 24 client modules. Do not replace the cache fetch with a full
 mathlib source build.
 
 ## Contents
 
 Import the [aggregate root](GeneralLinearGroups.lean) to publicly access its
-34 subject modules, or import a [specific subject module](GeneralLinearGroups/)
+35 subject modules, or import a [specific subject module](GeneralLinearGroups/)
 to keep a narrower dependency surface. Its `public import` declarations expose
 the corresponding module APIs to downstream ordinary imports. The default
-build also checks 23 clients under `tests/GeneralLinearGroupsTests/`, including examples at
+build also checks 24 clients under `tests/GeneralLinearGroupsTests/`, including examples at
 empty and singleton index types, over noncommutative rings and the zero ring;
 client-only helpers are not promises of the library API.
 
@@ -211,6 +219,7 @@ client-only helpers are not promises of the library API.
 | Paths and SL neighborhoods | [Elementary paths](docs/ElementaryPaths.md), [finite SL neighborhoods](docs/ElementaryNeighborhood.md) | Path-connected coefficients and open scalar units are distinct hypotheses |
 | Relative groups and doubled identities | [Relative elementary](docs/RelativeElementary.md), [Whitehead](docs/RelativeWhitehead.md), [consequences](docs/RelativeWhiteheadConsequences.md) | Normal closure inside `E`; arbitrary-GL conjugation only after doubling |
 | Stable general linear and elementary groups | [Stable GL](GeneralLinearGroups/StableGeneralLinear.lean), [stable elementary](GeneralLinearGroups/StableElementary.lean) | Semiring-direct-limit `GL`; over rings, elementary equals the stable commutator, with an abelian quotient but no public `K₁` construction |
+| Stable determinant and rank-one units | [Stable determinant](GeneralLinearGroups/StableDeterminant.lean), [clients](tests/GeneralLinearGroupsTests/StableDeterminantClient.lean) | Rank-one maps over semirings; determinant and its quotient and abelianization factorizations over commutative rings |
 | Finite stabilization and rectangular blocks | [Stabilization](docs/ElementaryStabilization.md), [rectangular blocks](docs/RectangularBlockUnits.md), [rectangular unit switch](GeneralLinearGroups/RectangularUnitSwitch.lean), [zero-product units](GeneralLinearGroups/ZeroProductStabilization.lean) | Semiring stabilization is a *monoid hom on units*; the unit switch requires a `Ring` and `g = 1 + A * B`, but not `B * A = 0` |
 | Presented elementary group | [Steinberg](docs/FiniteRankSteinberg.md) | Finite rank does not imply finite presentation over an arbitrary ring |
 | Nil and quasi-regular ideal quotients | [QuasiregularIdeal](GeneralLinearGroups/QuasiregularIdeal.lean), [QuasiregularQuotient](GeneralLinearGroups/QuasiregularQuotient.lean), [NonUnitalQuasiregular](GeneralLinearGroups/NonUnitalQuasiregular.lean) | Extra ideal hypothesis is needed to lift arbitrary quotient units |

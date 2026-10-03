@@ -31,6 +31,12 @@ project:
     respective unit-minor, path-connectedness and open-scalar-unit hypotheses.
     Zero-product rectangular blocks over any ring yield a unit 1 + AB whose
     stabilization is an elementary ordered commutator of block shears.
+    Stable general linear groups form a direct limit over semirings; over rings
+    their stable elementary subgroup is perfect and equals the commutator
+    subgroup, with quotient canonically the abelianization. Over commutative
+    rings the stable determinant and its quotient and abelianization
+    factorizations admit rank-one sections; the elementary subgroup lies in
+    the determinant kernel.
   authors:
     - "Formal Frontier Agents"
   responsible_maintainers:
@@ -71,18 +77,100 @@ related_formalizations:
 
 status:
   scope: >-
-    Reusable finite general-linear-group mathematics over rings,
-    including elementary and relative groups, block factorizations,
+    Reusable finite general-linear-group mathematics over rings, including
+    elementary and relative groups, block factorizations,
     congruence and quasi-regular quotients, additive trace, a Steinberg
     presentation, and native GL/SL dual-number kernels and ordered mixed
     commutators. Core rings may be noncommutative; the dual-number layer
     requires CommRing. The additional elementary algebra/topology layer covers
     unit-pivot diagonalization, product-one diagonals, elementary paths and
     native SL neighborhoods, each with its stated hypotheses.
+    Stable general linear groups over semirings have finite representatives,
+    injective stages, compatible lifts and coefficient maps.
+    Over rings the stable elementary subgroup is the commutator subgroup,
+    is intrinsically perfect, and has abelian quotient canonically equivalent
+    to the abelianization. Over commutative rings the stable determinant and
+    its quotient and abelianization factorizations have rank-one sections;
+    elementary matrices are contained in the determinant kernel.
     Fintype and DecidableEq hypotheses apply to matrix
     index types where stated. The results do not establish stable K1 or K2,
     a source-complete K-theory formalization, or source-passage coverage.
   main_results:
+    - declaration: "Matrix.GeneralLinearGroup.StableGL"
+      file: "GeneralLinearGroups/StableGeneralLinear.lean"
+      note: >-
+        Direct limit of finite GL groups under injective initial-segment
+        stabilization over any Semiring, including the zero semiring and empty
+        rank; finite representatives have an eventual equality criterion.
+    - declaration: "Matrix.GeneralLinearGroup.StableGL.map"
+      file: "GeneralLinearGroups/StableGeneralLinear.lean"
+      note: >-
+        Semiring-hom coefficient maps on stable GL commute with finite stages
+        and respect identities and composition; compatible finite maps lift.
+    - declaration: "Matrix.GeneralLinearGroup.stableElementarySubgroup_eq_commutator"
+      file: "GeneralLinearGroups/StableElementary.lean"
+      note: >-
+        Over any Ring, the directed union of finite elementary images equals
+        the commutator subgroup of stable GL. This does not assert same-rank
+        ambient normality or commutator containment for finite GL.
+    - declaration: "Matrix.GeneralLinearGroup.stableElementarySubgroup_isPerfect"
+      file: "GeneralLinearGroups/StableElementary.lean"
+      note: >-
+        The stable elementary subgroup is perfect as a group in its own
+        right over any Ring, without a lower-rank restriction on stable GL.
+    - declaration: "Matrix.GeneralLinearGroup.stableElementaryAbelianizationEquiv"
+      file: "GeneralLinearGroups/StableElementary.lean"
+      note: >-
+        Over any Ring, the stable elementary quotient is an abelian group
+        canonically equivalent to the abelianization; this equivalence is
+        natural under ring-hom coefficient maps.
+    - declaration: "Matrix.GeneralLinearGroup.StableGL.rankOneUnits_injective"
+      file: "GeneralLinearGroups/StableDeterminant.lean"
+      note: >-
+        Rank-one units inject into stable GL over any Semiring, including
+        noncommutative coefficients; their map is natural under semiring homs.
+    - declaration: "Matrix.GeneralLinearGroup.StableGL.quotientRankOneUnits_map"
+      file: "GeneralLinearGroups/StableDeterminant.lean"
+      note: >-
+        The rank-one map into the stable elementary quotient is natural
+        over Rings; commutativity is needed only for its determinant retraction.
+    - declaration: "Matrix.GeneralLinearGroup.StableGL.abelianizationRankOneUnits_map"
+      file: "GeneralLinearGroups/StableDeterminant.lean"
+      note: >-
+        The rank-one map into the stable abelianization is natural over
+        Semirings; commutativity is needed only for its determinant retraction.
+    - declaration: "Matrix.GeneralLinearGroup.StableGL.det"
+      file: "GeneralLinearGroups/StableDeterminant.lean"
+      note: >-
+        Compatible finite determinants define the stable determinant to
+        units over any CommRing, including empty rank and the zero ring;
+        it is natural under commutative-ring coefficient maps.
+    - declaration: "Matrix.GeneralLinearGroup.StableGL.det_comp_rankOneUnits"
+      file: "GeneralLinearGroups/StableDeterminant.lean"
+      note: >-
+        Over any CommRing, rank-one units give a right inverse to the stable
+        determinant, hence the determinant is surjective.
+    - declaration: "Matrix.GeneralLinearGroup.StableGL.elementary_le_ker_det"
+      file: "GeneralLinearGroups/StableDeterminant.lean"
+      note: >-
+        Over any CommRing, stable elementary matrices lie in the determinant
+        kernel; this is only an inclusion, not an equality.
+    - declaration: "Matrix.GeneralLinearGroup.StableGL.quotientDet_eq_abelianizationDet"
+      file: "GeneralLinearGroups/StableDeterminant.lean"
+      note: >-
+        Over any CommRing, determinant factorizations through the stable
+        elementary quotient and the abelianization agree under their
+        canonical equivalence; neither factorization identifies the kernel.
+    - declaration: "Matrix.GeneralLinearGroup.StableGL.quotientDet_quotientRankOneUnits"
+      file: "GeneralLinearGroups/StableDeterminant.lean"
+      note: >-
+        Over any CommRing, the ring-level quotient rank-one map is a section
+        of the determinant induced on the stable elementary quotient.
+    - declaration: "Matrix.GeneralLinearGroup.StableGL.abelianizationDet_abelianizationRankOneUnits"
+      file: "GeneralLinearGroups/StableDeterminant.lean"
+      note: >-
+        Over any CommRing, the semiring-level abelianization rank-one map is
+        a section of the determinant induced on the abelianization.
     - declaration: "Matrix.GeneralLinearGroup.elementaryUnit"
       file: "GeneralLinearGroups/Elementary.lean"
       note: >-
@@ -640,8 +728,8 @@ fidelity:
     asserts no SL, scheme-point or global Lie theorem. Its native SL refinement
     requires trace-zero inputs for both actual factors, identifies their
     ordered XY-YX commutator and reads back the pure-inner trace-zero SL
-    reduction-kernel element. No determinant theorem for arbitrary GL
-    commutators or source-passage correspondence is claimed.
+    reduction-kernel element. No source-passage correspondence for these mixed
+    identities is claimed.
     Steinberg.Presented uses exactly additive, disjoint and ordered-composable
     relations over arbitrary Ring and independent universes, without finite
     indices for the presentation or an opposite-root relation. Reversed
@@ -650,7 +738,8 @@ fidelity:
     Rank at least three is the usual Steinberg interpretation; low ranks assert
     only the stated laws and surjection. Finite rank does not imply finite
     presentation. No kernel centrality, universal central extension, K2 or
-    direct-limit theorem is claimed.
+    direct-limit theorem for this Steinberg presentation or its comparison
+    with stable GL is claimed.
     Source-indexed constructions are reorganized into generic ring and finite
     matrix APIs. Semiring, ring, nonunital-ring and commutative scalar-ring
     hypotheses remain distinct. Nil means pointwise nil, not a uniform exponent
@@ -695,9 +784,18 @@ fidelity:
     Abelian first-order kernel group commutators do not implement the
     nonzero matrix Lie bracket. No tangent scheme, arbitrary scheme base
     change or point bridge is established.
+    Stable GL is a direct limit over Semirings, with injective and natural
+    rank-one units. Over Rings the stable elementary subgroup is the
+    commutator subgroup and is intrinsically perfect; its quotient is
+    canonically equivalent to the abelianization. Quotient rank-one maps use
+    Ring; abelianization rank-one maps use Semiring. Stable determinants,
+    their quotient and abelianization factorizations, retractions and naturality
+    use CommRing;
+    stable elementary lies in the determinant kernel without an equality.
+    No kernel centrality, product splitting or SK1 vanishing is asserted.
     No SL=E, same-rank ambient elementary normality, original-rank
-    commutator containment, stable K1, excision, stable/direct-limit GL or
-    full source-coverage claim follows.
+    commutator containment, stable K1 identification, excision or full
+    source-coverage claim follows.
 
 review:
   status: "independent agent review; no human mathematical review claimed"

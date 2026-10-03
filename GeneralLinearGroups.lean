@@ -38,6 +38,7 @@ public import GeneralLinearGroups.ElementaryPaths
 public import GeneralLinearGroups.ElementaryDiagonal
 public import GeneralLinearGroups.ElementaryNeighborhood
 public import GeneralLinearGroups.StableElementary
+public import GeneralLinearGroups.StableDeterminant
 
 /-!
 # General linear groups

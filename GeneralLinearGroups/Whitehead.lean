@@ -40,6 +40,24 @@ lemma mapRingHom_apply {ι : Type uι} [Fintype ι] [DecidableEq ι]
     (f : R →+* S) (g : GL ι R) (i j : ι) :
     mapRingHom f g i j = f (g i j) := rfl
 
+/-- Coefficient maps take scalar general linear matrices to scalar matrices. -/
+@[simp]
+lemma mapRingHom_scalar {ι : Type uι} [Fintype ι] [DecidableEq ι]
+    {R : Type uR} {S : Type uS} [Semiring R] [Semiring S]
+    (f : R →+* S) (unit : Rˣ) :
+    mapRingHom f (scalar ι unit) = scalar ι (Units.map f unit) := by
+  apply Units.ext
+  ext i j
+  simp [mapRingHom_apply, Matrix.GeneralLinearGroup.coe_scalar,
+    Matrix.scalar_apply, Matrix.diagonal_apply]
+  split_ifs <;> simp
+
+/-- Over commutative rings, the semiring coefficient map is Mathlib's general linear map. -/
+theorem mapRingHom_eq_map {ι : Type uι} [Fintype ι] [DecidableEq ι]
+    {R : Type uR} {S : Type uS} [CommRing R] [CommRing S]
+    (f : R →+* S) :
+    mapRingHom (ι := ι) f = Matrix.GeneralLinearGroup.map f := rfl
+
 /-- The identity coefficient homomorphism induces the identity on the general linear group. -/
 @[simp]
 lemma mapRingHom_id {ι : Type uι} [Fintype ι] [DecidableEq ι]
