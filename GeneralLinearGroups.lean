@@ -31,6 +31,7 @@ public import GeneralLinearGroups.Steinberg
 public import GeneralLinearGroups.DualNumberMixedCommutator
 public import GeneralLinearGroups.DualNumberMixedSLCommutator
 public import GeneralLinearGroups.UnitPivotDiagonalization
+public import GeneralLinearGroups.SchurReduction
 public import GeneralLinearGroups.ZeroProductStabilization
 public import GeneralLinearGroups.RectangularUnitSwitch
 public import GeneralLinearGroups.ElementaryPaths

@@ -40,6 +40,16 @@ supplies foundational APIs.
   [Construction and factorization](GeneralLinearGroups/RectangularUnitSwitch.lean),
   [integer and boundary examples](tests/GeneralLinearGroupsTests/RectangularUnitSwitchClient.lean).
 
+- **Ring Schur reduction.** For independently finite, decidable block indices
+  over any `Ring`, an invertible northwest block `A` makes
+  `[[A, B], [C, D]]` a unit exactly when the ordered residual
+  `D - C * ⅟A * B` is a unit. Given a unit residual, the corresponding block
+  unit has an explicit ordered inverse; homomorphisms killing the elementary
+  subgroup see only the diagonal pivot and residual, with no condition on
+  the target group. Empty blocks and the zero ring are included.
+  [Construction and criterion](GeneralLinearGroups/SchurReduction.lean),
+  [noncommutative and boundary clients](tests/GeneralLinearGroupsTests/SchurReductionClient.lean).
+
 - **Unit-pivot reduction and elementary diagonals.** Over any `CommRing`,
   unit ordered leading minors permit two-sided elementary diagonalization;
   a product-one diagonal is elementary, and the unit-pivot, determinant-one
