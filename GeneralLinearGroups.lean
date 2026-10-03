@@ -32,6 +32,7 @@ public import GeneralLinearGroups.DualNumberMixedCommutator
 public import GeneralLinearGroups.DualNumberMixedSLCommutator
 public import GeneralLinearGroups.UnitPivotDiagonalization
 public import GeneralLinearGroups.ZeroProductStabilization
+public import GeneralLinearGroups.RectangularUnitSwitch
 public import GeneralLinearGroups.ElementaryPaths
 public import GeneralLinearGroups.ElementaryDiagonal
 public import GeneralLinearGroups.ElementaryNeighborhood

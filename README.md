@@ -30,6 +30,16 @@ supplies foundational APIs.
   [Construction and factorization](GeneralLinearGroups/ZeroProductStabilization.lean),
   [integer and boundary examples](tests/GeneralLinearGroupsTests/ZeroProductStabilizationClient.lean).
 
+- **Rectangular unit switch.** Over any `Ring`, for independently finite,
+  decidable index types, a unit `g = 1 + A * B` determines a unit
+  `h = 1 + B * A` with inverse `1 - B * g⁻¹ * A`. Its diagonal pair
+  `diag(g, h⁻¹)` is the ordered product
+  `U(A) L(B) U(-(g⁻¹ * A)) L(-(B * g))`, hence elementary.
+  Empty blocks and the zero ring are allowed; `B * A = 0` recovers the
+  zero-product stabilization commutator above.
+  [Construction and factorization](GeneralLinearGroups/RectangularUnitSwitch.lean),
+  [integer and boundary examples](tests/GeneralLinearGroupsTests/RectangularUnitSwitchClient.lean).
+
 - **Unit-pivot reduction and elementary diagonals.** Over any `CommRing`,
   unit ordered leading minors permit two-sided elementary diagonalization;
   a product-one diagonal is elementary, and the unit-pivot, determinant-one
@@ -159,16 +169,16 @@ lake --wfail build GeneralLinearGroups GeneralLinearGroupsTests
 ```
 
 The default `lake build` selects the aggregate library and the test root, which
-imports all nineteen client modules. Do not replace the cache fetch with a full
+imports all twenty client modules. Do not replace the cache fetch with a full
 mathlib source build.
 
 ## Contents
 
 Import the [aggregate root](GeneralLinearGroups.lean) to publicly access its
-31 subject modules, or import a [specific subject module](GeneralLinearGroups/)
+32 subject modules, or import a [specific subject module](GeneralLinearGroups/)
 to keep a narrower dependency surface. Its `public import` declarations expose
 the corresponding module APIs to downstream ordinary imports. The default
-build also checks nineteen clients under `tests/GeneralLinearGroupsTests/`, including examples at
+build also checks twenty clients under `tests/GeneralLinearGroupsTests/`, including examples at
 empty and singleton index types, over noncommutative rings and the zero ring;
 client-only helpers are not promises of the library API.
 
@@ -178,7 +188,7 @@ client-only helpers are not promises of the library API.
 | Unit pivots and diagonal units | [Unit-pivot diagonalization](docs/UnitPivotDiagonalization.md), [product-one diagonals](docs/ElementaryDiagonal.md) | `CommRing`; all positive-order leading minors must be units for reduction |
 | Paths and SL neighborhoods | [Elementary paths](docs/ElementaryPaths.md), [finite SL neighborhoods](docs/ElementaryNeighborhood.md) | Path-connected coefficients and open scalar units are distinct hypotheses |
 | Relative groups and doubled identities | [Relative elementary](docs/RelativeElementary.md), [Whitehead](docs/RelativeWhitehead.md), [consequences](docs/RelativeWhiteheadConsequences.md) | Normal closure inside `E`; arbitrary-GL conjugation only after doubling |
-| Finite stabilization and rectangular blocks | [Stabilization](docs/ElementaryStabilization.md), [rectangular blocks](docs/RectangularBlockUnits.md), [zero-product units](GeneralLinearGroups/ZeroProductStabilization.lean) | Semiring stabilization is a *monoid hom on units*; the zero-product commutator requires a `Ring` and `B * A = 0` |
+| Finite stabilization and rectangular blocks | [Stabilization](docs/ElementaryStabilization.md), [rectangular blocks](docs/RectangularBlockUnits.md), [rectangular unit switch](GeneralLinearGroups/RectangularUnitSwitch.lean), [zero-product units](GeneralLinearGroups/ZeroProductStabilization.lean) | Semiring stabilization is a *monoid hom on units*; the unit switch requires a `Ring` and `g = 1 + A * B`, but not `B * A = 0` |
 | Presented elementary group | [Steinberg](docs/FiniteRankSteinberg.md) | Finite rank does not imply finite presentation over an arbitrary ring |
 | Nil and quasi-regular ideal quotients | [QuasiregularIdeal](GeneralLinearGroups/QuasiregularIdeal.lean), [QuasiregularQuotient](GeneralLinearGroups/QuasiregularQuotient.lean), [NonUnitalQuasiregular](GeneralLinearGroups/NonUnitalQuasiregular.lean) | Extra ideal hypothesis is needed to lift arbitrary quotient units |
 | Additive trace quotient | [MatrixTrace](GeneralLinearGroups/MatrixTrace.lean), [AdditiveCommutator](GeneralLinearGroups/AdditiveCommutator.lean) | An inverse needs a chosen index; no ring quotient or `K₀` theorem |
