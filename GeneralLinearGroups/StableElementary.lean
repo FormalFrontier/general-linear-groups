@@ -9,6 +9,8 @@ public import GeneralLinearGroups.ElementaryCommutator
 public import GeneralLinearGroups.UnitPivotDiagonalization
 public import GeneralLinearGroups.RelativeWhiteheadConsequences
 public import Mathlib.GroupTheory.Commutator.Basic
+public import Mathlib.GroupTheory.QuotientGroup.Basic
+public import Mathlib.GroupTheory.Abelianization.Defs
 
 /-!
 # The stable elementary subgroup
@@ -16,6 +18,9 @@ public import Mathlib.GroupTheory.Commutator.Basic
 The stable elementary subgroup of general linear matrices over a ring is the
 directed supremum of the images of finite elementary subgroups. It is defined
 without imposing normality on any finite or stable elementary group.
+It is perfect in its own right over every ring. As a subgroup of stable general
+linear matrices, it is the commutator subgroup; hence the existing quotient
+is canonically the abelianization, compatibly with coefficient maps.
 -/
 
 set_option warningAsError true
@@ -245,6 +250,34 @@ theorem stableElementarySubgroup_eq_commutator (R : Type u) [Ring R] :
     simpa only [StableGL.stage_finStabilize, map_commutatorElement, x', y']
       using hmem
 
+/-- The stable elementary subgroup is perfect as a group in its own right. -/
+instance stableElementarySubgroup_isPerfect (R : Type u) [Ring R] :
+    Group.IsPerfect (stableElementarySubgroup R) := by
+  apply Subgroup.isPerfect_iff.mpr
+  apply le_antisymm
+  · exact Subgroup.commutator_le_of_le le_rfl le_rfl
+  · change (⨆ n : ℕ, (elementarySubgroup (Fin n) R).map (StableGL.stage R n)) ≤
+      ⁅stableElementarySubgroup R, stableElementarySubgroup R⁆
+    refine iSup_le fun n => ?_
+    let rank := max n 3
+    have hthree : 3 ≤ Fintype.card (Fin rank) := by
+      simp [rank]
+    let : Group.IsPerfect (elementarySubgroup (Fin rank) R) :=
+      elementarySubgroup_isPerfect_of_three_le_card hthree
+    have hperfect : Group.IsPerfect
+        ((elementarySubgroup (Fin rank) R).map (StableGL.stage R rank)) :=
+      Group.IsPerfect.map (StableGL.stage R rank)
+    calc
+      (elementarySubgroup (Fin n) R).map (StableGL.stage R n) ≤
+          (elementarySubgroup (Fin rank) R).map (StableGL.stage R rank) :=
+        elementary_stage_mono R (le_max_left n 3)
+      _ = ⁅(elementarySubgroup (Fin rank) R).map (StableGL.stage R rank),
+          (elementarySubgroup (Fin rank) R).map (StableGL.stage R rank)⁆ :=
+        (Subgroup.isPerfect_iff.mp hperfect).symm
+      _ ≤ ⁅stableElementarySubgroup R, stableElementarySubgroup R⁆ :=
+        Subgroup.commutator_mono (elementary_stage_le R rank)
+          (elementary_stage_le R rank)
+
 /-- Stable elementary GL is normal as a consequence of the commutator equality. -/
 instance stableElementarySubgroup_normal (R : Type u) [Ring R] :
     (stableElementarySubgroup R).Normal := by
@@ -259,5 +292,70 @@ theorem stableElementary_quotient_mul_comm (R : Type u) [Ring R]
   have hcomm : IsMulCommutative (StableGL R ⧸ stableElementarySubgroup R) :=
     (Subgroup.Normal.quotient_commutative_iff_commutator_le).2 hle
   exact hcomm.is_comm.comm g h
+
+/-- The existing quotient group by stable elementary matrices is commutative. -/
+noncomputable instance stableElementaryQuotientCommGroup (R : Type u) [Ring R] :
+    CommGroup (StableGL R ⧸ stableElementarySubgroup R) where
+  __ := QuotientGroup.Quotient.group _
+  mul_comm := stableElementary_quotient_mul_comm R
+
+/-- The quotient by stable elementary matrices is canonically the abelianization
+of stable general linear matrices. -/
+noncomputable def stableElementaryAbelianizationEquiv (R : Type u) [Ring R] :
+    (StableGL R ⧸ stableElementarySubgroup R) ≃* Abelianization (StableGL R) :=
+  QuotientGroup.quotientMulEquivOfEq (stableElementarySubgroup_eq_commutator R)
+
+@[simp]
+theorem stableElementaryAbelianizationEquiv_mk (R : Type u) [Ring R] (g : StableGL R) :
+    stableElementaryAbelianizationEquiv R
+      (QuotientGroup.mk' (stableElementarySubgroup R) g) = Abelianization.of g := by
+  exact QuotientGroup.quotientMulEquivOfEq_mk
+    (stableElementarySubgroup_eq_commutator R) g
+
+@[simp]
+theorem stableElementaryAbelianizationEquiv_symm_of (R : Type u) [Ring R]
+    (g : StableGL R) :
+    (stableElementaryAbelianizationEquiv R).symm (Abelianization.of g) =
+      QuotientGroup.mk' (stableElementarySubgroup R) g := by
+  apply (stableElementaryAbelianizationEquiv R).injective
+  change Abelianization.of g =
+    stableElementaryAbelianizationEquiv R
+      (QuotientGroup.mk' (stableElementarySubgroup R) g)
+  exact (stableElementaryAbelianizationEquiv_mk R g).symm
+
+/-- The abelianization lift agrees with the original map on representatives
+of the stable elementary quotient. -/
+theorem stableElementaryAbelianizationEquiv_lift_comp_mk (R : Type u) [Ring R]
+    {A : Type w} [CommGroup A] (f : StableGL R →* A) :
+    ((Abelianization.lift f).comp
+      (stableElementaryAbelianizationEquiv R).toMonoidHom).comp
+        (QuotientGroup.mk' (stableElementarySubgroup R)) = f := by
+  apply MonoidHom.ext
+  intro g
+  change (Abelianization.lift f)
+    (stableElementaryAbelianizationEquiv R
+      (QuotientGroup.mk' (stableElementarySubgroup R) g)) = f g
+  rw [stableElementaryAbelianizationEquiv_mk, Abelianization.lift_apply_of]
+
+/-- The canonical equivalence commutes with change of coefficient rings. -/
+theorem stableElementaryAbelianizationEquiv_map {R : Type u} {S : Type v}
+    [Ring R] [Ring S] (f : R →+* S)
+    (q : StableGL R ⧸ stableElementarySubgroup R) :
+    stableElementaryAbelianizationEquiv S
+      (QuotientGroup.map (stableElementarySubgroup R)
+        (stableElementarySubgroup S) (StableGL.map f)
+        ((Subgroup.map_le_iff_le_comap).mp (StableGL.map_elementarySubgroup_le f)) q) =
+      Abelianization.map (StableGL.map f)
+        (stableElementaryAbelianizationEquiv R q) := by
+  refine QuotientGroup.induction_on q ?_
+  intro g
+  rw [QuotientGroup.map_mk]
+  change stableElementaryAbelianizationEquiv S
+      (QuotientGroup.mk' (stableElementarySubgroup S) (StableGL.map f g)) =
+    Abelianization.map (StableGL.map f)
+      (stableElementaryAbelianizationEquiv R
+        (QuotientGroup.mk' (stableElementarySubgroup R) g))
+  rw [stableElementaryAbelianizationEquiv_mk,
+    stableElementaryAbelianizationEquiv_mk, Abelianization.map_of]
 
 end Matrix.GeneralLinearGroup

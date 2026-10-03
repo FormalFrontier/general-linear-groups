@@ -27,8 +27,9 @@ supplies foundational APIs.
   whose noncommutative direct limit has finite representatives, an eventual
   equality criterion, compatible lifts and coefficient maps. Over any `Ring`, the
   directed union of finite elementary images is the stable commutator subgroup;
-  it is therefore normal and has an abelian quotient. No finite ambient
-  elementary normality or commutativity hypothesis is needed.
+  it is perfect in its own right and normal in stable general linear groups.
+  Its quotient is canonically the abelianization, naturally under coefficient
+  maps. No finite ambient elementary normality or commutativity hypothesis is needed.
   [Stable general linear group](GeneralLinearGroups/StableGeneralLinear.lean),
   [stable elementary group](GeneralLinearGroups/StableElementary.lean),
   [boundary and quotient clients](tests/GeneralLinearGroupsTests/StableElementaryClient.lean).
