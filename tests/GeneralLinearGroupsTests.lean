@@ -25,5 +25,7 @@ import GeneralLinearGroupsTests.RectangularUnitSwitchClient
 import GeneralLinearGroupsTests.ElementaryPathsClient
 import GeneralLinearGroupsTests.ElementaryDiagonalClient
 import GeneralLinearGroupsTests.ElementaryNeighborhoodClient
+import GeneralLinearGroupsTests.StableGeneralLinearClient
+import GeneralLinearGroupsTests.StableElementaryClient
 
 /-! Aggregate client checks for general linear groups and their boundary cases. -/

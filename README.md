@@ -1,6 +1,6 @@
 # General linear groups
 
-A Lean library for finite general linear groups: elementary and relative
+A Lean library for finite and stable general linear groups: elementary and relative
 matrices, unit-pivot diagonalization, paths and SL neighborhoods, block
 factorizations, ideal quotients, trace, stabilization, Steinberg groups and
 dual-number GL/SL kernels. Core ring results allow noncommutative coefficients;
@@ -21,6 +21,17 @@ supplies foundational APIs.
   [doubled lift](GeneralLinearGroups/Whitehead.lean#L164),
   [elementary membership](GeneralLinearGroups/ElementaryWhitehead.lean#L117),
   [rectangular guide](docs/RectangularBlockUnits.md).
+
+- **Stable general linear and elementary groups.** Initial-segment stabilization
+  defines a coherent system of finite general linear groups over any `Semiring`,
+  whose noncommutative direct limit has finite representatives, an eventual
+  equality criterion, compatible lifts and coefficient maps. Over any `Ring`, the
+  directed union of finite elementary images is the stable commutator subgroup;
+  it is therefore normal and has an abelian quotient. No finite ambient
+  elementary normality or commutativity hypothesis is needed.
+  [Stable general linear group](GeneralLinearGroups/StableGeneralLinear.lean),
+  [stable elementary group](GeneralLinearGroups/StableElementary.lean),
+  [boundary and quotient clients](tests/GeneralLinearGroupsTests/StableElementaryClient.lean).
 
 - **Zero-product elementary stabilization.** For rectangular `A`, `B` over any
   `Ring` with `B * A = 0`, the unit `1 + A * B` has inverse `1 - A * B`.
@@ -179,16 +190,16 @@ lake --wfail build GeneralLinearGroups GeneralLinearGroupsTests
 ```
 
 The default `lake build` selects the aggregate library and the test root, which
-imports all twenty client modules. Do not replace the cache fetch with a full
+imports all 23 client modules. Do not replace the cache fetch with a full
 mathlib source build.
 
 ## Contents
 
 Import the [aggregate root](GeneralLinearGroups.lean) to publicly access its
-32 subject modules, or import a [specific subject module](GeneralLinearGroups/)
+34 subject modules, or import a [specific subject module](GeneralLinearGroups/)
 to keep a narrower dependency surface. Its `public import` declarations expose
 the corresponding module APIs to downstream ordinary imports. The default
-build also checks twenty clients under `tests/GeneralLinearGroupsTests/`, including examples at
+build also checks 23 clients under `tests/GeneralLinearGroupsTests/`, including examples at
 empty and singleton index types, over noncommutative rings and the zero ring;
 client-only helpers are not promises of the library API.
 
@@ -198,6 +209,7 @@ client-only helpers are not promises of the library API.
 | Unit pivots and diagonal units | [Unit-pivot diagonalization](docs/UnitPivotDiagonalization.md), [product-one diagonals](docs/ElementaryDiagonal.md) | `CommRing`; all positive-order leading minors must be units for reduction |
 | Paths and SL neighborhoods | [Elementary paths](docs/ElementaryPaths.md), [finite SL neighborhoods](docs/ElementaryNeighborhood.md) | Path-connected coefficients and open scalar units are distinct hypotheses |
 | Relative groups and doubled identities | [Relative elementary](docs/RelativeElementary.md), [Whitehead](docs/RelativeWhitehead.md), [consequences](docs/RelativeWhiteheadConsequences.md) | Normal closure inside `E`; arbitrary-GL conjugation only after doubling |
+| Stable general linear and elementary groups | [Stable GL](GeneralLinearGroups/StableGeneralLinear.lean), [stable elementary](GeneralLinearGroups/StableElementary.lean) | Semiring-direct-limit `GL`; over rings, elementary equals the stable commutator, with an abelian quotient but no public `K₁` construction |
 | Finite stabilization and rectangular blocks | [Stabilization](docs/ElementaryStabilization.md), [rectangular blocks](docs/RectangularBlockUnits.md), [rectangular unit switch](GeneralLinearGroups/RectangularUnitSwitch.lean), [zero-product units](GeneralLinearGroups/ZeroProductStabilization.lean) | Semiring stabilization is a *monoid hom on units*; the unit switch requires a `Ring` and `g = 1 + A * B`, but not `B * A = 0` |
 | Presented elementary group | [Steinberg](docs/FiniteRankSteinberg.md) | Finite rank does not imply finite presentation over an arbitrary ring |
 | Nil and quasi-regular ideal quotients | [QuasiregularIdeal](GeneralLinearGroups/QuasiregularIdeal.lean), [QuasiregularQuotient](GeneralLinearGroups/QuasiregularQuotient.lean), [NonUnitalQuasiregular](GeneralLinearGroups/NonUnitalQuasiregular.lean) | Extra ideal hypothesis is needed to lift arbitrary quotient units |
@@ -220,7 +232,7 @@ path-connected coefficients. The finite SL comap is open and closed when
 scalar units form an open locus; identifying its identity path component also
 needs path-connected coefficients. There is no continuous factor selection,
 general `SL = E`, global `GL` connectivity or quantitative neighborhood.
-There is **no** claimed stable/direct-limit `GL`, stable `K₁`, excision,
+There is **no** claimed stable `K₁` identification, excision,
 `K₂`, source-complete K-theory, ambient relative normality or universal
 triangular-invertibility converse.
 
