@@ -106,14 +106,19 @@ supplies foundational APIs.
 
 ## Using the library
 
-Pin a compatible commit published on GitHub `main` in your `lakefile.toml`:
+Add the library in your `lakefile.toml`:
 
 ```toml
 [[require]]
 name = "general-linear-groups"
 git = "https://github.com/FormalFrontier/general-linear-groups.git"
-rev = "<commit at GitHub main>"
+rev = "main"
 ```
+
+GitHub `main` contains only reviewed releases, so Lake resolves the latest release when
+you first add or update the dependency. `lake-manifest.json` locks that resolved commit
+until you update again. To pin a specific release, replace `main` with a commit from
+its history.
 
 For example, a surjective ring map lifts the *doubled* matrix:
 
@@ -129,7 +134,7 @@ example {R S n : Type*} [Ring R] [Ring S] [Fintype n] [DecidableEq n]
   mapRingHom_liftBlockDiagonal f hf g
 ```
 
-The [`PublicAPIClient`](tests/PublicAPIClient.lean) exercises this law using
+The [`PublicAPIClient`](tests/GeneralLinearGroupsTests/PublicAPIClient.lean) exercises this law using
 an ordinary import; other clients exercise the interfaces and edge cases.
 
 ## Building
@@ -145,8 +150,9 @@ lake exe cache get
 lake --wfail build GeneralLinearGroups GeneralLinearGroupsTests
 ```
 
-The default `lake build` selects both the aggregate library and eighteen
-client roots. Do not replace the cache fetch with a full mathlib source build.
+The default `lake build` selects the aggregate library and the test root, which
+imports all eighteen client modules. Do not replace the cache fetch with a full
+mathlib source build.
 
 ## Contents
 
@@ -154,7 +160,7 @@ Import the [aggregate root](GeneralLinearGroups.lean) to publicly access its
 30 subject modules, or import a [specific subject module](GeneralLinearGroups/)
 to keep a narrower dependency surface. Its `public import` declarations expose
 the corresponding module APIs to downstream ordinary imports. The default
-build also checks eighteen client roots under `tests/`, including examples at
+build also checks eighteen clients under `tests/GeneralLinearGroupsTests/`, including examples at
 empty and singleton index types, over noncommutative rings and the zero ring;
 client-only helpers are not promises of the library API.
 

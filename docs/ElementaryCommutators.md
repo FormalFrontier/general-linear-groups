@@ -26,7 +26,7 @@ required.
 
 The proofs use mathlib's matrix-single multiplication rules and subgroup
 closure; they never commute noncommuting coefficients. The private client
-`tests/ElementaryCommutatorClient.lean` checks genuinely noncommuting
+`tests/GeneralLinearGroupsTests/ElementaryCommutatorClient.lean` checks genuinely noncommuting
 `Matrix (Fin 2) (Fin 2) ℤ` coefficients, unequal reversed commutators,
 perfectness for `Fin 3` over `ℤ`, matrix coefficients and `ZMod 1`, plus
 empty/singleton index types. No rank-two perfectness, `SL = E`, ambient

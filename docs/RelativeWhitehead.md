@@ -40,7 +40,7 @@ the entries of `A` ideal-valued; two-sided absorption handles `q*A` and
 `g*A`; normality inside the elementary group handles the conjugated first
 three factors. `upperUnit 1` alone is **not** asserted to be relative.
 
-`tests/RelativeWhiteheadClient.lean` exercises the proper even-integer ideal,
+`tests/GeneralLinearGroupsTests/RelativeWhiteheadClient.lean` exercises the proper even-integer ideal,
 including a rank-one congruence unit not in the rank-one elementary group
 but whose doubled diagonal is relative, and a proper two-sided ideal of a
 noncommutative matrix coefficient ring. It also covers ideal-valued blocks,

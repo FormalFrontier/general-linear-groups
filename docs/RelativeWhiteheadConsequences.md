@@ -37,7 +37,7 @@ and conjugation uses normality *inside* the doubled elementary group.
 and `(h * g)⁻¹` are relative, so their ordered product is relative after
 doubling. Neither theorem asserts original-rank commutator containment.
 
-`tests/RelativeWhiteheadConsequencesClient.lean` uses the proper even ideal,
+`tests/GeneralLinearGroupsTests/RelativeWhiteheadConsequencesClient.lean` uses the proper even ideal,
 an arbitrary conjugator provably outside its congruence subgroup, and two
 congruence units with unequal ordered products and a nonidentity commutator.
 Empty indices and `ZMod 1` remain valid; there is no stable union, ambient

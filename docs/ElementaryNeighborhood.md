@@ -26,6 +26,6 @@ does not imply path-connectedness: the discrete ring `ℤ` separates these
 hypotheses. No continuous factor selection, continuous inversion assumption,
 quantitative neighborhood or assertion `SL = E` is supplied. Dimensions
 `0` and `1`, zero rings and arbitrary coefficient universes are permitted.
-The [ordinary-import client](../tests/ElementaryNeighborhoodClient.lean)
+The [ordinary-import client](../tests/GeneralLinearGroupsTests/ElementaryNeighborhoodClient.lean)
 checks open and closed cases, the path-component result, integer coefficients,
 and an empty zero-ring example.

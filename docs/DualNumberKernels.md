@@ -48,7 +48,7 @@ the commuting diagrams. The determinant/trace maps use mathlib's native
 coefficient naturality. An arbitrary ring hom `f` is **not** claimed to be
 `R`-linear.
 
-Compile `tests/DualNumberKernelsClient.lean` directly for clients at
+Compile `tests/GeneralLinearGroupsTests/DualNumberKernelsClient.lean` directly for clients at
 `Fin 0`, `Fin 1`, `ZMod 1` (the zero ring), and `Fin 2` over both
 `ℤ` and `ZMod 2`, including the `ℤ → ZMod 2` naturality square. The off-diagonal
 `E₀₁` yields a nonidentity native SL-kernel element; over `ZMod 2`, the nonzero

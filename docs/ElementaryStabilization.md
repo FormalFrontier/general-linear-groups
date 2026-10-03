@@ -29,7 +29,7 @@ relative subgroup, without an equality or surjectivity claim.
 `stabilize_congruenceSubgroup_le I` includes the stabilized existing
 congruence kernel in the enlarged congruence kernel.
 
-`tests/ElementaryStabilizationClient.lean` checks genuinely noncommuting
+`tests/GeneralLinearGroupsTests/ElementaryStabilizationClient.lean` checks genuinely noncommuting
 matrix coefficients, a nontrivial elementary conjugate of an ideal-valued
 generator, and preservation of relative membership and congruence for the
 proper reduction-mod-2 kernel. It also uses different index universes,

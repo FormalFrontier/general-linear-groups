@@ -31,7 +31,7 @@ example : PathConnectedSpace (elementarySubgroup (Fin 2) ℝ) :=
   elementarySubgroup_pathConnectedSpace
 ```
 
-The [ordinary-import client](../tests/ElementaryPathsClient.lean) also uses
+The [ordinary-import client](../tests/GeneralLinearGroupsTests/ElementaryPathsClient.lean) also uses
 empty and singleton index types, a noncommutative topological matrix
 coefficient ring, and a nonconstant real elementary path. This does not make
 ambient `GL ι R` path connected, make an arbitrary coefficient ring path

@@ -1,7 +1,7 @@
 # Unit-pivot elementary diagonalization
 
 Import [`GeneralLinearGroups.UnitPivotDiagonalization`](../GeneralLinearGroups/UnitPivotDiagonalization.lean);
-see the [ordinary-import client](../tests/UnitPivotDiagonalizationClient.lean).
+see the [ordinary-import client](../tests/GeneralLinearGroupsTests/UnitPivotDiagonalizationClient.lean).
 For `M : Matrix (Fin n) (Fin n) R` over a `CommRing R`, including rings with
 zero divisors and the zero ring, `Matrix.leadingPrincipalMinor M k hk` is the
 determinant of the submatrix indexed in both coordinates by the ordered

@@ -59,7 +59,7 @@ subgroup; it constructs no quotient or stable K₁. It does not claim that
 invertibility of an upper triangular matrix *forces* invertibility of its
 individual diagonal blocks for every ring. Supply `A` and `D` as units.
 
-The default-built private client `tests/RectangularBlockUnitsClient.lean`
+The default-built private client `tests/GeneralLinearGroupsTests/RectangularBlockUnitsClient.lean`
 checks unequal block sizes (`Fin 1` versus `Fin 1 ⊕ Fin 1`) with nonzero `B`
 over `Matrix (Fin 2) (Fin 2) ℤ`, a noncommutative coefficient ring. Its
 `right_inverse_order_detected` coefficient `(1,0) = -1` detects a reversal

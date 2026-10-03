@@ -33,7 +33,7 @@ pre-existing left-multiplication action of `GL n R` on matrices. In particular:
   naturality remain the corresponding base API.
 
 The ordinary-import client
-`tests/DualNumberKernelAdjointClient.lean` checks `Fin 0`,
+`tests/GeneralLinearGroupsTests/DualNumberKernelAdjointClient.lean` checks `Fin 0`,
 `Fin 1` and the zero ring `ZMod 1`; it also fixes the nonzero, trace-zero
 identity at `Fin 2` over `ZMod 2`. Over `ℤ`, conjugating `E₁₀` by the
 upper-right shear yields entry `(0,0) = 1` (and so detects conjugation order).

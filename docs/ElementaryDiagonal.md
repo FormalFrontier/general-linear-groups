@@ -31,7 +31,7 @@ diagonals. The determinant-one corollary also uses
 elementary factors, and requires *every positive-order leading minor* to be
 a unit, not merely nonzero. This is not `SL = E` over an arbitrary ring.
 
-The [ordinary-import client](../tests/ElementaryDiagonalClient.lean) covers
+The [ordinary-import client](../tests/GeneralLinearGroupsTests/ElementaryDiagonalClient.lean) covers
 empty/singleton dimensions, integer product-one diagonals, and unit entries
 over `ZMod 6`. Only the established algebraic elementary subgroup is used;
 the result imposes no topology or source-specific hypotheses.

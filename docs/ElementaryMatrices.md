@@ -59,7 +59,7 @@ Finally GLG's existing Whitehead factorization expresses
 The four corresponding membership lemmas place these units in
 `elementarySubgroup (ι ⊕ ι) R` for arbitrary rings.
 
-The client `tests/ElementaryClient.lean` exercises a
+The client `tests/GeneralLinearGroupsTests/ElementaryClient.lean` exercises a
 genuinely noncommutative coefficient ring `Matrix (Fin 2) (Fin 2) ℤ`,
 commutative comparison, empty and singleton indices, and `ZMod 1`.
 No normality, determinant generation, quotient or stable `K₁` result is claimed.

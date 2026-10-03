@@ -60,7 +60,7 @@ GL commutators.
 
 ## Examples and reproducibility
 
-The direct-import client `tests/DualNumberMixedSLCommutatorClient.lean`
+The direct-import client `tests/GeneralLinearGroupsTests/DualNumberMixedSLCommutatorClient.lean`
 checks the generic identity and reductions, `Fin 0`, `Fin 1`, the zero ring
 `ZMod 1`, and characteristic two over `ZMod 2`. Over `ℤ`, the trace-zero
 elementary matrices `E₀₁`, `E₁₀` yield mixed diagonal `diag(1, -1)`;
@@ -76,7 +76,7 @@ resolved mathlib revision. From the repository root:
 ```sh
 lake exe cache get
 lake --wfail build GeneralLinearGroups.DualNumberMixedSLCommutator
-lake env lean -DwarningAsError=true tests/DualNumberMixedSLCommutatorClient.lean
+lake env lean -DwarningAsError=true tests/GeneralLinearGroupsTests/DualNumberMixedSLCommutatorClient.lean
 ```
 
 ## Dependencies and credits

@@ -1,10 +1,10 @@
 # Mixed native GL commutators over iterated dual numbers
 
 Import `GeneralLinearGroups.DualNumberMixedCommutator`; the ordinary
-public-import client is `tests/DualNumberMixedCommutatorClient.lean`.
+public-import client is `tests/GeneralLinearGroupsTests/DualNumberMixedCommutatorClient.lean`.
 From this repository root, after fetching the matching pinned mathlib cache,
 check the leaves with `lake build GeneralLinearGroups.DualNumberMixedCommutator`
-and `lake env lean tests/DualNumberMixedCommutatorClient.lean`.
+and `lake env lean tests/GeneralLinearGroupsTests/DualNumberMixedCommutatorClient.lean`.
 The producer
 uses independent coefficient and index universes, a commutative ring `R`, a
 finite index type `n` with decidable equality, and no nontriviality,

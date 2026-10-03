@@ -1,0 +1,26 @@
+/-
+SPDX-License-Identifier: Apache-2.0
+Authors: Formal Frontier Agents
+-/
+module
+
+import GeneralLinearGroupsTests.MatrixTraceClient
+import GeneralLinearGroupsTests.PublicAPIClient
+import GeneralLinearGroupsTests.ElementaryClient
+import GeneralLinearGroupsTests.ElementaryCommutatorClient
+import GeneralLinearGroupsTests.RelativeElementaryClient
+import GeneralLinearGroupsTests.RelativeWhiteheadClient
+import GeneralLinearGroupsTests.ElementaryStabilizationClient
+import GeneralLinearGroupsTests.RelativeWhiteheadConsequencesClient
+import GeneralLinearGroupsTests.RectangularBlockUnitsClient
+import GeneralLinearGroupsTests.DualNumberKernelsClient
+import GeneralLinearGroupsTests.DualNumberKernelAdjointClient
+import GeneralLinearGroupsTests.SteinbergClient
+import GeneralLinearGroupsTests.DualNumberMixedCommutatorClient
+import GeneralLinearGroupsTests.DualNumberMixedSLCommutatorClient
+import GeneralLinearGroupsTests.UnitPivotDiagonalizationClient
+import GeneralLinearGroupsTests.ElementaryPathsClient
+import GeneralLinearGroupsTests.ElementaryDiagonalClient
+import GeneralLinearGroupsTests.ElementaryNeighborhoodClient
+
+/-! Aggregate client checks for general linear groups and their boundary cases. -/

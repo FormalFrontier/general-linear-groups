@@ -31,7 +31,7 @@ For `f : R →+* S`, `mapRingHom_elementaryUnit` and
 compatibility `I ≤ J.comap f` for two-sided `I`, `J` and gives an image
 inclusion; it asserts neither equality nor surjectivity on GL.
 
-The client `tests/RelativeElementaryClient.lean` checks the proper ideal
+The client `tests/GeneralLinearGroupsTests/RelativeElementaryClient.lean` checks the proper ideal
 `ker(ℤ → ZMod 2)`, nonzero `2` reducing to zero, compatible-image inclusion,
 the proper kernel for entrywise reduction of noncommutative matrix coefficients,
 noncommuting elementary conjugation, empty indices and the zero ring.
