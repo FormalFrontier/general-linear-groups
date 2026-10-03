@@ -146,7 +146,9 @@ theorem triangularUnit_eq_upper_mul_diagonal (A : GL X R)
 theorem triangularUnit_val (A : GL X R) (B : Matrix X Y R) (D : GL Y R) :
     (triangularUnit A B D : Matrix (X ⊕ Y) (X ⊕ Y) R) =
       Matrix.fromBlocks (A : Matrix X X R) B 0 (D : Matrix Y Y R) := by
-  simp [triangularUnit, Matrix.fromBlocks_multiply]
+  simp only [triangularUnit, Units.val_mul, rectangularUpperUnit_val, diagonalPairUnit_val,
+    Matrix.fromBlocks_multiply, one_mul, Matrix.mul_zero, add_zero, zero_add,
+    Matrix.zero_mul, Matrix.fromBlocks_inj, and_self, and_true, true_and]
   rw [Matrix.mul_assoc, ← Units.val_mul]
   simp
 
@@ -157,7 +159,10 @@ theorem triangularUnit_eq_diagonal_mul_upper (A : GL X R)
       diagonalPairUnit A D *
         rectangularUpperUnit (((A⁻¹ : GL X R) : Matrix X X R) * B) := by
   apply Units.ext
-  simp [Matrix.fromBlocks_multiply]
+  simp only [triangularUnit_val, Units.val_mul, diagonalPairUnit_val,
+    rectangularUpperUnit_val, Matrix.fromBlocks_multiply, mul_one, Matrix.mul_zero,
+    add_zero, Matrix.mul_one, Matrix.zero_mul, zero_add, Matrix.fromBlocks_inj,
+    and_self, and_true, true_and]
   rw [← Matrix.mul_assoc, ← Units.val_mul]
   simp
 
@@ -171,7 +176,8 @@ theorem triangularUnit_inv_val (A : GL X R) (B : Matrix X Y R) (D : GL Y R) :
         ((D⁻¹ : GL Y R) : Matrix Y Y R) := by
   apply Units.inv_eq_of_mul_eq_one_right
   rw [triangularUnit_val, Matrix.fromBlocks_multiply]
-  simp [Matrix.mul_assoc, Matrix.mul_neg]
+  simp only [Units.mul_inv, Matrix.mul_zero, add_zero, Matrix.mul_assoc,
+    Matrix.mul_neg, Matrix.zero_mul, neg_zero, zero_add]
   rw [← Matrix.mul_assoc, ← Units.val_mul, mul_inv_cancel]
   simp
 

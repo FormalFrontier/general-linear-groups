@@ -174,7 +174,8 @@ private theorem diagonalUnit_firstTwo_mem (n : ℕ) (a : Rˣ) :
       cases i using Fin.cases with
       | zero =>
           rw [Fin.succ_zero_eq_one' (n := n + 1)]
-          simp [firstTwoRestEquiv_one, pair]
+          simp only [Nat.reduceAdd, Equiv.symm_symm, Function.comp_apply,
+            firstTwoRestEquiv_one, Fin.isValue, Sum.elim_inl, pair]
           rw [← Fin.succ_zero_eq_one' (n := n + 1),
             ← Fin.succ_zero_eq_one' (n := 1)]
           simp only [Fin.cases_succ, Fin.cases_zero]
@@ -237,7 +238,7 @@ theorem diagonalUnit_mem_elementarySubgroup :
             cases i using Fin.cases with
             | zero =>
                 rw [Fin.succ_zero_eq_one' (n := n + 1)]
-                simp [pair, tail, rest, a]
+                simp only [pair, a, tail, rest]
                 rw [← Fin.succ_zero_eq_one' (n := n + 1)]
                 simp only [Fin.cases_succ, Fin.cases_zero]
                 group

@@ -15,7 +15,6 @@ is the outer lift of the pure inner coefficient of the associative matrix Lie br
 
 @[expose] public section
 set_option warningAsError true
-set_option maxHeartbeats 1000000
 
 universe u v
 

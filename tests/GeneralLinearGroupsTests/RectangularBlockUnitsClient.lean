@@ -4,7 +4,7 @@ Authors: Formal Frontier Agents
 -/
 module
 
-import GeneralLinearGroups.RectangularBlockUnits
+public import GeneralLinearGroups.RectangularBlockUnits
 
 /-! Unequal-rank, noncommutative and empty-block clients for rectangular units. -/
 
@@ -103,9 +103,14 @@ example (C E : Matrix (Fin 1) (Fin 0) ℤ) :
     rectangularUpperUnit (C + E) = rectangularUpperUnit C * rectangularUpperUnit E :=
   rectangularUpperUnit_add C E
 
-example (A : GL (Fin 1) ℤ) :
+namespace GeneralLinearGroupsTests.RectangularBlockUnits
+
+/-- An identity block on the empty summand leaves stabilization unchanged. -/
+theorem diagonalPairUnit_empty_right (A : GL (Fin 1) ℤ) :
     diagonalPairUnit A (1 : GL (Fin 0) ℤ) = stabilize A := by
   simp
+
+end GeneralLinearGroupsTests.RectangularBlockUnits
 
 example (D : GL (Fin 1) ℤ) :
     diagonalPairUnit (1 : GL (Fin 0) ℤ) D =

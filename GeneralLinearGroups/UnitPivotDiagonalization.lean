@@ -81,6 +81,17 @@ theorem rectangularLowerUnit_val {X : Type uι} {Y : Type uκ}
   rcases row with row | row <;> rcases col with col | col <;>
     simp [rectangularLowerUnit, rectangularUpperUnit_val, Matrix.one_apply]
 
+/-- The inverse lower block shear has lower block `-C`. -/
+@[simp]
+theorem rectangularLowerUnit_inv {X : Type uι} {Y : Type uκ}
+    [Fintype X] [DecidableEq X] [Fintype Y] [DecidableEq Y]
+    (C : Matrix Y X R) :
+    (rectangularLowerUnit C)⁻¹ = rectangularLowerUnit (-C) := by
+  change (reindexEquiv R (Equiv.sumComm Y X) (rectangularUpperUnit C))⁻¹ =
+    reindexEquiv R (Equiv.sumComm Y X) (rectangularUpperUnit (-C))
+  rw [← (reindexEquiv R (Equiv.sumComm Y X)).map_inv (rectangularUpperUnit C),
+    rectangularUpperUnit_inv]
+
 theorem rectangularLowerUnit_mem_elementarySubgroup {X : Type uι} {Y : Type uκ}
     [Fintype X] [DecidableEq X] [Fintype Y] [DecidableEq Y]
     (C : Matrix Y X R) :

@@ -4,7 +4,7 @@ Authors: Formal Frontier Agents
 -/
 module
 
-import GeneralLinearGroups
+public import GeneralLinearGroups
 public import Mathlib.Data.ZMod.Basic
 
 /-! Clients for disjoint positions, ordered commutators, and finite-rank perfectness. -/
@@ -64,8 +64,14 @@ example : Group.IsPerfect (elementarySubgroup (Fin 3) ℤ) :=
 example : Group.IsPerfect (elementarySubgroup (Fin 3) Coeff) :=
   elementarySubgroup_isPerfect_of_three_le_card (by decide)
 
-example : Group.IsPerfect (elementarySubgroup (Fin 3) (ZMod 1)) :=
+namespace GeneralLinearGroupsTests.ElementaryCommutator
+
+/-- The rank-three elementary subgroup over the zero ring is perfect. -/
+theorem zero_ring_elementarySubgroup_isPerfect :
+    Group.IsPerfect (elementarySubgroup (Fin 3) (ZMod 1)) :=
   elementarySubgroup_isPerfect_of_three_le_card (by decide)
+
+end GeneralLinearGroupsTests.ElementaryCommutator
 
 example (a b : ZMod 1) :
     ⁅elementaryUnit (ι := Fin 3) 0 1 (by decide) a,

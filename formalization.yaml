@@ -29,6 +29,8 @@ project:
     continuous elementary paths and finite special-linear elementary
     neighborhoods add algebraic and topological interfaces with their
     respective unit-minor, path-connectedness and open-scalar-unit hypotheses.
+    Zero-product rectangular blocks over any ring yield a unit 1 + AB whose
+    stabilization is an elementary ordered commutator of block shears.
   authors:
     - "Formal Frontier Agents"
   responsible_maintainers:
@@ -107,6 +109,27 @@ status:
       note: >-
         Doubled diag(g, g⁻¹) lies in the elementary subgroup using the signed
         swap membership and the existing ordered Whitehead factorization.
+    - declaration: "Matrix.GeneralLinearGroup.zeroProductUnit"
+      file: "GeneralLinearGroups/ZeroProductStabilization.lean"
+      note: >-
+        For independent finite index types and B * A = 0 over any Ring,
+        constructs the unit 1 + A * B with inverse 1 - A * B.
+    - declaration: "Matrix.GeneralLinearGroup.zeroProductUnit_val"
+      file: "GeneralLinearGroups/ZeroProductStabilization.lean"
+      note: "Reads back the underlying matrix as 1 + A * B."
+    - declaration: "Matrix.GeneralLinearGroup.zeroProductUnit_inv_val"
+      file: "GeneralLinearGroups/ZeroProductStabilization.lean"
+      note: "Reads back the inverse matrix as 1 - A * B."
+    - declaration: "Matrix.GeneralLinearGroup.stabilize_zeroProductUnit_eq"
+      file: "GeneralLinearGroups/ZeroProductStabilization.lean"
+      note: >-
+        Stabilization of the zero-product unit equals the ordered commutator of
+        rectangular upper and lower block shears, including empty blocks.
+    - declaration: "Matrix.GeneralLinearGroup.stabilize_zeroProductUnit_mem_elementarySubgroup"
+      file: "GeneralLinearGroups/ZeroProductStabilization.lean"
+      note: >-
+        The stabilized unit lies in the existing elementary subgroup over any
+        Ring, including noncommutative and zero rings.
     - declaration: "Matrix.GeneralLinearGroup.mapRingHom"
       file: "GeneralLinearGroups/Whitehead.lean"
       note: "Coefficient maps on finite general linear groups over arbitrary semirings."

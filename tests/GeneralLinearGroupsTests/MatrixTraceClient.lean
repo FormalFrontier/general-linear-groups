@@ -4,7 +4,7 @@ Authors: Formal Frontier Agents
 -/
 module
 
-import GeneralLinearGroups
+public import GeneralLinearGroups
 
 /-! Public-root client for the native matrix trace and additive-commutator quotient. -/
 
@@ -77,7 +77,8 @@ private theorem zero_ring (A : Matrix (Fin 1) (Fin 1) (ZMod 1)) :
       QuotientAddGroup.mk (Matrix.trace A) := by
   simp
 
-private theorem noncommutative_ring
+/-- The trace quotient equivalence evaluates on matrices over a noncommutative ring. -/
+public theorem noncommutative_ring
     (A : Matrix (Fin 2) (Fin 2) (Matrix (Fin 2) (Fin 2) ℤ)) :
     (Matrix.traceQuotientEquiv (0 : Fin 2)) (QuotientAddGroup.mk A) =
       QuotientAddGroup.mk (Matrix.trace A) := by

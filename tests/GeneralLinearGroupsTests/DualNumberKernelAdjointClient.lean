@@ -18,7 +18,8 @@ namespace GeneralLinearGroupsTests.DualNumberKernelAdjoint
 
 open Matrix.DualNumberKernels
 
-example (h : Matrix.GeneralLinearGroup (Fin 0) (DualNumber ℤ))
+/-- Inner conjugation on the reduction kernel has the expected formula in rank zero. -/
+theorem empty_glKerEquiv_conj (h : Matrix.GeneralLinearGroup (Fin 0) (DualNumber ℤ))
     (X : Multiplicative (Matrix (Fin 0) (Fin 0) ℤ)) :
     MulAut.conjNormal h (glKerEquiv X) =
       glKerEquiv (Multiplicative.ofAdd

@@ -4,7 +4,7 @@ Authors: Formal Frontier Agents
 -/
 module
 
-import GeneralLinearGroups
+public import GeneralLinearGroups
 public import Mathlib.Data.ZMod.Basic
 
 /-! Clients for stabilization, relative transport, quotient reduction, and degenerate blocks. -/
@@ -112,10 +112,16 @@ example : (elementarySubgroup PEmpty ℤ).map (stabilize (Y := Fin 2)) ≤
     elementarySubgroup (PEmpty ⊕ Fin 2) ℤ :=
   stabilize_elementarySubgroup_le
 
-example : (relativeElementarySubgroup (ι := PEmpty) (⊥ : TwoSidedIdeal ℤ)).map
+namespace GeneralLinearGroupsTests.ElementaryStabilization
+
+/-- Stabilization of the relative elementary subgroup from empty indices. -/
+theorem empty_relativeElementarySubgroup_stabilize :
+    (relativeElementarySubgroup (ι := PEmpty) (⊥ : TwoSidedIdeal ℤ)).map
     (stabilizeElementarySubgroup (Y := Fin 2)) ≤
       relativeElementarySubgroup (ι := PEmpty ⊕ Fin 2) ⊥ :=
   stabilize_relativeElementarySubgroup_le ⊥
+
+end GeneralLinearGroupsTests.ElementaryStabilization
 
 example : (relativeElementarySubgroup (ι := Fin 1) (⊥ : TwoSidedIdeal (ZMod 1))).map
     (stabilizeElementarySubgroup (Y := PEmpty)) ≤

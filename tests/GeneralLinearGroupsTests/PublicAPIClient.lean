@@ -4,15 +4,13 @@ Authors: Formal Frontier Agents
 -/
 module
 
-import GeneralLinearGroups
+public import GeneralLinearGroups
 
 /-!
 # Ordinary public-root clients
 
-These named private declarations retain proof terms for representative uses of
-every non-trace layer. They intentionally use neither leaf imports nor `import all`.
-The trace quotient and its empty/singleton/zero/noncommutative cases have their
-own client. These examples are not additional exported library API.
+Representative uses of the non-trace layers, including empty-index and
+noncommutative examples. Matrix trace and its boundary cases are tested separately.
 -/
 
 set_option warningAsError true
@@ -153,8 +151,9 @@ private theorem nilpotent_value (A : Matrix n n I) (k : ℕ)
     ((nilpotentMatrixElement A k hk).1 : Matrix n n (Unitization ℤ I)) =
       1 + unitizationMatrix A := rfl
 
--- Regression: use the explicit inverse law, not the historically failing bare `simp`.
-private theorem nilpotent_inverse (A : Matrix n n I) (k : ℕ)
+/-- The inverse of a nilpotent matrix element is the finite geometric sum of powers
+of the negative unitization matrix. -/
+public theorem nilpotent_inverse (A : Matrix n n I) (k : ℕ)
     (hk : unitizationMatrix A ^ k = 0) :
     (nilpotentMatrixElement A k hk).1.inv =
       ∑ i ∈ Finset.range k, (-unitizationMatrix A) ^ i :=

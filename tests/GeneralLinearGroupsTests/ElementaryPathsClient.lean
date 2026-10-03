@@ -4,9 +4,10 @@ Authors: Formal Frontier Agents
 -/
 module
 
-import GeneralLinearGroups.ElementaryPaths
+public import GeneralLinearGroups.ElementaryPaths
 
-/-! Public-import clients for elementary paths, including degenerate indices and real coefficients. -/
+/-! Public-import clients for elementary paths, including degenerate indices
+and real coefficients. -/
 
 set_option warningAsError true
 
@@ -22,8 +23,14 @@ example {ι : Type u} [Fintype ι] [DecidableEq ι]
     Continuous (elementaryUnit (R := R) i j hij) :=
   continuous_elementaryUnit i j hij
 
-example : PathConnectedSpace (elementarySubgroup PEmpty ℝ) :=
+namespace GeneralLinearGroupsTests.ElementaryPaths
+
+/-- The elementary subgroup on an empty index type is path connected. -/
+theorem empty_elementarySubgroup_pathConnected :
+    PathConnectedSpace (elementarySubgroup PEmpty ℝ) :=
   elementarySubgroup_pathConnectedSpace
+
+end GeneralLinearGroupsTests.ElementaryPaths
 
 example : PathConnectedSpace (elementarySubgroup (Fin 1) ℝ) :=
   elementarySubgroup_pathConnectedSpace

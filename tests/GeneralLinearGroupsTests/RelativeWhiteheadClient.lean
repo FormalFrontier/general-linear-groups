@@ -4,7 +4,7 @@ Authors: Formal Frontier Agents
 -/
 module
 
-import GeneralLinearGroups
+public import GeneralLinearGroups
 public import Mathlib.Data.ZMod.Basic
 
 /-! Clients for finite relative Whitehead block units over proper ideals. -/
@@ -142,10 +142,16 @@ example (a : Matrix (Fin 2) (Fin 2) Coeff)
         relativeElementarySubgroup matrixEvenIdeal :=
   lowerUnit_mem_relativeElementarySubgroup matrixEvenIdeal a ha
 
-example (I : TwoSidedIdeal ℤ) (g : congruenceSubgroup (n := PEmpty) I) :
+namespace GeneralLinearGroupsTests.RelativeWhitehead
+
+/-- The doubled diagonal of an empty-index congruence unit is relatively elementary. -/
+theorem empty_blockDiagonalUnit_relative
+    (I : TwoSidedIdeal ℤ) (g : congruenceSubgroup (n := PEmpty) I) :
     (⟨blockDiagonalUnit g.1, blockDiagonalUnit_mem_elementarySubgroup g.1⟩ :
       elementarySubgroup (PEmpty ⊕ PEmpty) ℤ) ∈ relativeElementarySubgroup I :=
   blockDiagonalUnit_mem_relativeElementarySubgroup I g
+
+end GeneralLinearGroupsTests.RelativeWhitehead
 
 example (I : TwoSidedIdeal (ZMod 1))
     (g : congruenceSubgroup (n := Fin 1) I) :

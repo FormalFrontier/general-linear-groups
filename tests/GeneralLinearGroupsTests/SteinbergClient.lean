@@ -62,7 +62,8 @@ example (p : Steinberg.Root I) (a : R) :
     Steinberg.toGL (Steinberg.generator p a) =
       Matrix.GeneralLinearGroup.elementaryUnit p.1.1 p.1.2 p.2 a := by simp
 
-example (a b : R) :
+/-- The rank-three Steinberg commutator composes consecutive roots. -/
+theorem rankThree_commutator (a b : R) :
     ⁅Steinberg.generator (Steinberg.root (0 : Fin 3) 1 (by decide)) a,
       Steinberg.generator (Steinberg.root (1 : Fin 3) 2 (by decide)) b⁆ =
     Steinberg.generator (Steinberg.root (0 : Fin 3) 2 (by decide)) (a * b) :=

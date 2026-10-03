@@ -116,8 +116,11 @@ theorem blockDiagonalUnit_eq_five (g : GL ι R) :
               ((g : Matrix ι ι R) - 1))) *
               lowerUnit ((g : Matrix ι ι R) * ((g : Matrix ι ι R) - 1)) := by
   apply Units.ext
-  simp [blockDiagonalUnit, upperUnit, lowerUnit, Matrix.fromBlocks_multiply,
-    Matrix.mul_sub, Matrix.sub_mul]
+  simp only [blockDiagonalUnit, upperUnit, lowerUnit, neg_sub, neg_neg, Matrix.mul_sub,
+    Units.inv_mul, mul_one, Units.val_mul, Matrix.fromBlocks_multiply, one_mul,
+    add_sub_cancel, mul_zero, zero_add, add_zero, mul_neg, Units.mul_inv,
+    sub_add_add_cancel, add_neg_cancel, Matrix.sub_mul, zero_mul,
+    Matrix.fromBlocks_inj, true_and]
   constructor
   · have hq : (g : Matrix ι ι R) - 1 -
         (1 - ((g⁻¹ : GL ι R) : Matrix ι ι R)) + (1 - (g : Matrix ι ι R) + 1) =

@@ -4,7 +4,7 @@ Authors: Formal Frontier Agents
 -/
 module
 
-import GeneralLinearGroups
+public import GeneralLinearGroups
 public import Mathlib.Data.ZMod.Basic
 
 /-! Client checks for native elementary units over noncommutative and degenerate rings. -/
@@ -69,8 +69,13 @@ example (c : ℤ) :
       Matrix.GeneralLinearGroup.transvection 0 1 (by decide) c :=
   elementaryUnit_eq_transvection 0 1 (by decide) c
 
-example : elementarySubgroup PEmpty ℤ = ⊥ :=
+namespace GeneralLinearGroupsTests.Elementary
+
+/-- On empty indices the elementary subgroup is trivial. -/
+theorem empty_elementarySubgroup_bot : elementarySubgroup PEmpty ℤ = ⊥ :=
   elementarySubgroup_eq_bot_of_subsingleton
+
+end GeneralLinearGroupsTests.Elementary
 
 example : elementarySubgroup (Fin 1) ℤ = ⊥ :=
   elementarySubgroup_eq_bot_of_subsingleton

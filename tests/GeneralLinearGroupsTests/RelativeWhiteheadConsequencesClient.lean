@@ -4,7 +4,7 @@ Authors: Formal Frontier Agents
 -/
 module
 
-import GeneralLinearGroups
+public import GeneralLinearGroups
 public import Mathlib.Data.ZMod.Basic
 
 /-! Finite clients, including an ordered noncommuting example and degenerate index/ring types. -/
@@ -136,12 +136,18 @@ example (g h : GL PEmpty ℤ) :
       blockDiagonalUnit g * stabilize (Y := PEmpty) h * (blockDiagonalUnit g)⁻¹ :=
   stabilize_conj_eq_blockDiagonalUnit_conj g h
 
-example (g h : congruenceSubgroup (n := PEmpty.{1}) (⊥ : TwoSidedIdeal ℤ)) :
+namespace GeneralLinearGroupsTests.RelativeWhiteheadConsequences
+
+/-- Stabilized commutators on empty indices lie in the relative elementary subgroup. -/
+theorem empty_stabilized_commutator_relative
+    (g h : congruenceSubgroup (n := PEmpty.{1}) (⊥ : TwoSidedIdeal ℤ)) :
     stabilize (Y := PEmpty.{1}) (g.1 * h.1 * g.1⁻¹ * h.1⁻¹) ∈
       (relativeElementarySubgroup (ι := PEmpty.{1} ⊕ PEmpty.{1})
         (⊥ : TwoSidedIdeal ℤ)).map
         (elementarySubgroup (PEmpty.{1} ⊕ PEmpty.{1}) ℤ).subtype :=
   stabilize_commutator_mem_relativeElementarySubgroup ⊥ g h
+
+end GeneralLinearGroupsTests.RelativeWhiteheadConsequences
 
 example (g : GL (Fin 1) (ZMod 1))
     (h : elementarySubgroup (Fin 1) (ZMod 1))

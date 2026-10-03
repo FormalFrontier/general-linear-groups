@@ -4,7 +4,7 @@ Authors: Formal Frontier Agents
 -/
 module
 
-import GeneralLinearGroups
+public import GeneralLinearGroups
 public import Mathlib.Data.ZMod.Basic
 
 /-! Clients for proper-ideal reduction, compatible transport and noncommutative conjugation. -/
@@ -110,8 +110,14 @@ example : relativeElementarySubgroup (ι := PEmpty) evenIdeal = ⊥ := by
   intro x _
   exact Subgroup.mem_bot.mpr (Subsingleton.elim x 1)
 
-example : relativeElementarySubgroup (ι := Fin 1) (⊥ : TwoSidedIdeal (ZMod 1)) = ⊥ :=
+namespace GeneralLinearGroupsTests.RelativeElementary
+
+/-- In the zero ring, the relative elementary subgroup at the zero ideal is trivial. -/
+theorem zero_ring_relativeElementarySubgroup_bot :
+    relativeElementarySubgroup (ι := Fin 1) (⊥ : TwoSidedIdeal (ZMod 1)) = ⊥ :=
   relativeElementarySubgroup_bot
+
+end GeneralLinearGroupsTests.RelativeElementary
 
 example : mapElementarySubgroup (ι := Fin 2) (RingHom.id (ZMod 1)) =
     MonoidHom.id (elementarySubgroup (Fin 2) (ZMod 1)) :=
