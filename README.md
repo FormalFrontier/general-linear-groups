@@ -198,7 +198,7 @@ triangular-invertibility converse.
 
 The [historical API snapshot](docs/API.md) covers only 128 authored public
 entries and 16 module records, with source links on thirteen unchanged
-producers. It is **not** an exhaustive reference for the present 49-module
+producers. It is **not** an exhaustive reference for the current
 default graph. Use the Lean sources, guides and import clients for other results.
 
 ## References

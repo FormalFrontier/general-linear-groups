@@ -30,19 +30,23 @@ The combined native GL/SL results are part of the privately published release;
 these guides describe the relevant current modules. The 128-entry reference does
 not inventory their later APIs.
 
-This page and [the manifest](api-manifest.json) are **not** a current 49-module
-declaration inventory, a census of private or generated declarations, or proof
+This page and [the manifest](api-manifest.json) are **not** an inventory of the
+current module graph, a census of private or generated declarations, or proof
 certification. In particular, `proof_certification: false` in the manifest is
 intentional. The 128 displayed signatures were generated from 16 native module
 records (the original 13 producers, aggregate root and two private clients)
 against the earlier private development revision
 `907124e973dd20f3efdeb8de0cad42e331b9c6d8`, not against the whole current
-checkout. The current aggregate `GeneralLinearGroups.lean` and `lakefile.toml`
-bytes differ from those bound by the manifest; the other 17 of 19 bound input
-files still match. Consequently an ordinary `--check` with this checkout's
-current inputs is expected to refuse **source/pin drift**, not diagnose a
-mathematical or proof failure. Do not replace old hashes with current ones:
-that would falsely imply a fresh native run.
+checkout. Of the 19 manifest-bound source and pin paths, 14 still match their
+recorded hashes: all 13 producer modules and `lean-toolchain`. The aggregate
+`GeneralLinearGroups.lean`, `lake-manifest.json` and `lakefile.toml` have changed
+bytes; the historical private-client paths `tests/MatrixTraceClient.lean` and
+`tests/PublicAPIClient.lean` are absent (the current clients live under
+`tests/GeneralLinearGroupsTests/`). An ordinary `--check` with this checkout's
+inputs cannot validate the historical binding: the missing paths prevent input
+loading, and the changed bytes would also violate the binding. This drift does
+not diagnose a mathematical or proof failure. Do not replace old hashes with
+current ones: that would falsely imply a fresh native run.
 
 ## Reproducing the historical reference
 
