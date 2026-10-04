@@ -13,6 +13,8 @@ import GeneralLinearGroupsTests.RelativeWhiteheadClient
 import GeneralLinearGroupsTests.ElementaryStabilizationClient
 import GeneralLinearGroupsTests.RelativeWhiteheadConsequencesClient
 import GeneralLinearGroupsTests.RectangularBlockUnitsClient
+import GeneralLinearGroupsTests.RectangularUpperActionClient
+import GeneralLinearGroupsTests.UnitPivotPremiseClient
 import GeneralLinearGroupsTests.DualNumberKernelsClient
 import GeneralLinearGroupsTests.DualNumberKernelAdjointClient
 import GeneralLinearGroupsTests.SteinbergClient
@@ -29,6 +31,7 @@ import GeneralLinearGroupsTests.StableGeneralLinearClient
 import GeneralLinearGroupsTests.StableElementaryClient
 import GeneralLinearGroupsTests.StableDeterminantClient
 import GeneralLinearGroupsTests.LocalElementaryGenerationClient
+import GeneralLinearGroupsTests.UnitPivotInductionClient
 import GeneralLinearGroupsTests.LocalElementaryGenerationExamples
 
 /-! Aggregate client checks for general linear groups and their boundary cases. -/

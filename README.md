@@ -79,8 +79,14 @@ supplies foundational APIs.
   unit ordered leading minors permit two-sided elementary diagonalization;
   a product-one diagonal is elementary, and the unit-pivot, determinant-one
   criterion puts a finite GL unit in `E`. This is not a general `SL = E`
-  theorem; the minor hypothesis is stronger than nonvanishing.
+  theorem; the minor hypothesis is stronger than nonvanishing. More generally,
+  if an elementary left factor can produce a unit leading
+  entry for every invertible matrix at every successor rank, the same
+  two-sided reduction exists at every finite rank. The latter theorem is
+  conditional on that all-rank pivot property; it does not assert an
+  unconditional elementary generation theorem.
   [Unit-pivot guide](docs/UnitPivotDiagonalization.md),
+  [conditional pivot induction](GeneralLinearGroups/UnitPivotInduction.lean),
   [diagonal guide](docs/ElementaryDiagonal.md).
 
 - **Elementary generation over local rings.** Every invertible finite matrix
@@ -214,24 +220,23 @@ lake exe cache get
 lake --wfail build GeneralLinearGroups GeneralLinearGroupsTests
 ```
 
-The default `lake build` selects the aggregate library and the test root, which
-imports all 24 client modules. Do not replace the cache fetch with a full
-mathlib source build.
+The default `lake build` selects the aggregate library and the test root.
+Do not replace the cache fetch with a full mathlib source build.
 
 ## Contents
 
-Import the [aggregate root](GeneralLinearGroups.lean) to publicly access its
-35 subject modules, or import a [specific subject module](GeneralLinearGroups/)
+Import the [aggregate root](GeneralLinearGroups.lean) for the public library API,
+or import a [specific subject module](GeneralLinearGroups/)
 to keep a narrower dependency surface. Its `public import` declarations expose
 the corresponding module APIs to downstream ordinary imports. The default
-build also checks 24 clients under `tests/GeneralLinearGroupsTests/`, including examples at
+build also checks the clients under `tests/GeneralLinearGroupsTests/`, including examples at
 empty and singleton index types, over noncommutative rings and the zero ring;
 client-only helpers are not promises of the library API.
 
 | Subject | Start here | Important boundary |
 | --- | --- | --- |
 | Elementary blocks and reindexing | [Elementary matrices](docs/ElementaryMatrices.md), [commutators](docs/ElementaryCommutators.md) | Ring-only units; no arbitrary-ring `SL = E` |
-| Unit pivots and diagonal units | [Unit-pivot diagonalization](docs/UnitPivotDiagonalization.md), [product-one diagonals](docs/ElementaryDiagonal.md) | `CommRing`; all positive-order leading minors must be units for reduction |
+| Unit pivots and diagonal units | [Unit-pivot diagonalization](docs/UnitPivotDiagonalization.md), [conditional pivot induction](GeneralLinearGroups/UnitPivotInduction.lean), [product-one diagonals](docs/ElementaryDiagonal.md) | `CommRing`; either unit ordered leading minors or an elementary pivot producer at every successor rank for the respective reduction |
 | Local elementary generation | [Local generation](GeneralLinearGroups/LocalElementaryGeneration.lean), [clients](tests/GeneralLinearGroupsTests/LocalElementaryGenerationClient.lean) | `CommRing` and `IsLocalRing`; no ordered leading-minor condition; finite and stable determinant kernels |
 | Paths and SL neighborhoods | [Elementary paths](docs/ElementaryPaths.md), [finite SL neighborhoods](docs/ElementaryNeighborhood.md) | Path-connected coefficients and open scalar units are distinct hypotheses |
 | Relative groups and doubled identities | [Relative elementary](docs/RelativeElementary.md), [Whitehead](docs/RelativeWhitehead.md), [consequences](docs/RelativeWhiteheadConsequences.md) | Normal closure inside `E`; arbitrary-GL conjugation only after doubling |

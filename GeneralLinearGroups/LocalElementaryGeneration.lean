@@ -5,6 +5,7 @@ Authors: Formal Frontier Agents
 module
 
 public import GeneralLinearGroups.ElementaryDiagonal
+public import GeneralLinearGroups.UnitPivotInduction
 public import GeneralLinearGroups.StableDeterminant
 public import Mathlib.Algebra.Group.Pi.Units
 public import Mathlib.RingTheory.LocalRing.Basic
@@ -78,55 +79,21 @@ private theorem exists_elementary_unit_pivot {n : ℕ} (g : GL (Fin (n + 1)) R) 
   rw [hpivot]
   exact isUnit_add_of_not_isUnit_of_isUnit hfirst hrow
 
+/-- Over a commutative local ring, an elementary left factor makes the
+leading entry of every invertible successor-rank matrix a unit. -/
+theorem exists_elementary_unit_pivot_local {n : ℕ} (g : GL (Fin (n + 1)) R) :
+    ∃ e : elementarySubgroup (Fin (n + 1)) R,
+      IsUnit ((((e : GL (Fin (n + 1)) R) * g : GL (Fin (n + 1)) R) :
+        Matrix (Fin (n + 1)) (Fin (n + 1)) R) 0 0) :=
+  exists_elementary_unit_pivot g
+
 /-- Elementary factors reduce any invertible matrix over a commutative local ring
 to an invertible diagonal, including in rank zero. -/
 theorem exists_elementary_diagonalization_local {n : ℕ} (g : GL (Fin n) R) :
     ∃ (left right : elementarySubgroup (Fin n) R) (diagonal : Fin n → Rˣ),
       (left : GL (Fin n) R) * g * (right : GL (Fin n) R) = diagonalUnit diagonal := by
-  induction n with
-  | zero =>
-      refine ⟨1, 1, (fun i => i.elim0), ?_⟩
-      apply Units.ext
-      ext i
-      exact i.elim0
-  | succ n ih =>
-      obtain ⟨e, hpivot⟩ := exists_elementary_unit_pivot g
-      let corrected : GL (Fin (n + 1)) R := (e : GL (Fin (n + 1)) R) * g
-      let M : Matrix (Fin (n + 1)) (Fin (n + 1)) R := corrected
-      let T := Matrix.firstRestBlock M
-      let A := T.toBlocks₁₁
-      let B := T.toBlocks₁₂
-      let C := T.toBlocks₂₁
-      let D := T.toBlocks₂₂
-      have hA : IsUnit A.det := by
-        change IsUnit (Matrix.firstRestBlock M).toBlocks₁₁.det
-        rw [Matrix.firstRestBlock_pivot]
-        simpa [Matrix.leadingPrincipalMinor, Matrix.det_fin_one, M, corrected] using hpivot
-      let inverseA : Invertible A := Matrix.invertibleOfIsUnitDet A hA
-      let S := D - C * A⁻¹ * B
-      have hM : IsUnit M := Units.isUnit corrected
-      have hT : IsUnit T := by
-        apply (Matrix.isUnit_iff_isUnit_det T).mpr
-        have hMdet : IsUnit M.det := (Matrix.isUnit_iff_isUnit_det M).mp hM
-        simpa only [T, Matrix.firstRestBlock, Matrix.det_submatrix_equiv_self] using hMdet
-      have hS : IsUnit S := by
-        have hblock : IsUnit (Matrix.fromBlocks A B C D) := by
-          simpa only [A, B, C, D, Matrix.fromBlocks_toBlocks] using hT
-        simpa only [S, Matrix.invOf_eq_nonsing_inv] using
-          (Matrix.isUnit_fromBlocks_iff_of_invertible₁₁.mp hblock)
-      let residual : GL (Fin n) R := hS.unit
-      obtain ⟨l, q, d, hd⟩ := ih residual
-      have hdS : ((l : GL (Fin n) R) : Matrix (Fin n) (Fin n) R) * S *
-          ((q : GL (Fin n) R) : Matrix (Fin n) (Fin n) R) =
-            Matrix.diagonal (fun i => (d i : R)) := by
-        simpa only [Units.val_mul, diagonalUnit_val, residual, hS.unit_spec] using congrArg
-          (fun x : GL (Fin n) R => (x : Matrix (Fin n) (Fin n) R)) hd
-      obtain ⟨L, Q, diagonal, hfactor⟩ :=
-        Matrix.exists_elementary_diagonalization_of_unit_pivot M hA l q d hdS
-      refine ⟨L * e, Q, diagonal, ?_⟩
-      apply Units.ext
-      simpa only [Subgroup.coe_mul, Units.val_mul, corrected, M,
-        Matrix.mul_assoc, diagonalUnit_val] using hfactor
+  exact exists_elementary_diagonalization_of_unit_pivots
+    (fun _ matrix => exists_elementary_unit_pivot_local matrix) g
 
 private theorem mem_elementarySubgroup_iff_det_eq_one_fin {n : ℕ}
     (g : GL (Fin n) R) :

@@ -36,6 +36,7 @@ public import GeneralLinearGroups.ZeroProductStabilization
 public import GeneralLinearGroups.RectangularUnitSwitch
 public import GeneralLinearGroups.ElementaryPaths
 public import GeneralLinearGroups.ElementaryDiagonal
+public import GeneralLinearGroups.UnitPivotInduction
 public import GeneralLinearGroups.ElementaryNeighborhood
 public import GeneralLinearGroups.StableElementary
 public import GeneralLinearGroups.StableDeterminant

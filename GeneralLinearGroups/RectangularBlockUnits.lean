@@ -90,6 +90,27 @@ theorem rectangularUpperUnit_val (C : Matrix X Y R) :
     (rectangularUpperUnit C : Matrix (X ⊕ Y) (X ⊕ Y) R) =
       Matrix.fromBlocks 1 C 0 1 := rfl
 
+/-- Left multiplication by an upper block unit adds the ordered off-block
+linear combination to each upper row of a matrix with arbitrary columns. -/
+@[simp]
+theorem rectangularUpperUnit_mul_apply_inl {columns : Type*}
+    (C : Matrix X Y R) (matrix : Matrix (X ⊕ Y) columns R)
+    (row : X) (column : columns) :
+    (((rectangularUpperUnit C : Matrix (X ⊕ Y) (X ⊕ Y) R) * matrix)
+      (Sum.inl row) column) =
+      matrix (Sum.inl row) column +
+        ∑ index : Y, C row index * matrix (Sum.inr index) column := by
+  simp [Matrix.mul_apply, Fintype.sum_sum_type, Matrix.one_apply]
+
+/-- Left multiplication by an upper block unit does not change lower rows. -/
+@[simp]
+theorem rectangularUpperUnit_mul_apply_inr {columns : Type*}
+    (C : Matrix X Y R) (matrix : Matrix (X ⊕ Y) columns R)
+    (row : Y) (column : columns) :
+    (((rectangularUpperUnit C : Matrix (X ⊕ Y) (X ⊕ Y) R) * matrix)
+      (Sum.inr row) column) = matrix (Sum.inr row) column := by
+  simp [Matrix.mul_apply, Fintype.sum_sum_type, Matrix.one_apply]
+
 @[simp]
 theorem rectangularUpperUnit_inv (C : Matrix X Y R) :
     (rectangularUpperUnit C)⁻¹ = rectangularUpperUnit (-C) := by

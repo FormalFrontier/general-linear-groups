@@ -35,6 +35,16 @@ theorem nonfieldMatrix_mem_elementarySubgroup :
     nonfieldMatrix ∈ elementarySubgroup (Fin 2) ℤ_[2] :=
   (mem_elementarySubgroup_iff_det_eq_one_local _).2 nonfieldMatrix_det
 
+example : ∃ e : elementarySubgroup (Fin 2) ℤ_[2],
+    ¬ IsUnit (((nonfieldMatrix : GL (Fin 2) ℤ_[2]) :
+      Matrix (Fin 2) (Fin 2) ℤ_[2]) 0 0) ∧
+    IsUnit (((((e : GL (Fin 2) ℤ_[2]) * nonfieldMatrix) :
+      GL (Fin 2) ℤ_[2]) : Matrix (Fin 2) (Fin 2) ℤ_[2]) 0 0) := by
+  obtain ⟨e, hpivot⟩ := exists_elementary_unit_pivot_local nonfieldMatrix
+  refine ⟨e, ?_, hpivot⟩
+  simpa [nonfieldMatrix, Matrix.of_apply, nonunits] using
+    (PadicInt.p_nonunit (p := 2))
+
 example : ∃ (left right : elementarySubgroup (Fin 2) ℤ_[2])
     (diagonal : Fin 2 → ℤ_[2]ˣ),
     (left : GL (Fin 2) ℤ_[2]) * nonfieldMatrix * (right : GL (Fin 2) ℤ_[2]) =
