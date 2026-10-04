@@ -19,6 +19,7 @@ public import GeneralLinearGroups.UnitalComparison
 public import GeneralLinearGroups.NonUnitalQuasiregular
 public import GeneralLinearGroups.AdditiveCommutator
 public import GeneralLinearGroups.MatrixTrace
+public import GeneralLinearGroups.MatrixCorner
 public import GeneralLinearGroups.ElementaryCommutator
 public import GeneralLinearGroups.RelativeElementary
 public import GeneralLinearGroups.RelativeWhitehead

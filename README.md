@@ -2,14 +2,23 @@
 
 A Lean library for finite and stable general linear groups: elementary and relative
 matrices, unit-pivot diagonalization, paths and SL neighborhoods, block
-factorizations, ideal quotients, trace, stabilization, Steinberg groups and
-dual-number GL/SL kernels. Core ring results allow noncommutative coefficients;
+factorizations, matrix corners, ideal quotients, trace, stabilization, Steinberg
+groups and dual-number GL/SL kernels. Core ring results allow noncommutative coefficients;
 dual-number and determinant results use commutative rings. Indices are finite
 and decidable where required. The [module guides](docs/README.md) detail the
 statements, examples and limitations; [mathlib](https://github.com/leanprover-community/mathlib4)
 supplies foundational APIs.
 
 ## Headline results
+
+- **Single-entry matrix corners.** For a `Semiring R`, finite decidable indices
+  and a chosen index `i`, the corner of `Matrix ι ι R` at the diagonal matrix
+  unit `single i i 1` is ring-equivalent to `R` by extracting the `(i,i)` entry;
+  its inverse inserts a coefficient there. The corner identity is the matrix
+  unit, which need not be the ambient matrix identity. The equivalence also
+  covers noncommutative and zero semirings.
+  [Corner equivalence](GeneralLinearGroups/MatrixCorner.lean),
+  [concrete clients](tests/GeneralLinearGroupsTests/MatrixCornerClient.lean).
 
 - **Whitehead factorization and doubled lifting.** Over any `Ring`, the
   block diagonal `diag(g, g⁻¹)` of a unit is elementary. A surjective ring
@@ -245,6 +254,7 @@ client-only helpers are not promises of the library API.
 | Finite stabilization and rectangular blocks | [Stabilization](docs/ElementaryStabilization.md), [rectangular blocks](docs/RectangularBlockUnits.md), [rectangular unit switch](GeneralLinearGroups/RectangularUnitSwitch.lean), [zero-product units](GeneralLinearGroups/ZeroProductStabilization.lean) | Semiring stabilization is a *monoid hom on units*; the unit switch requires a `Ring` and `g = 1 + A * B`, but not `B * A = 0` |
 | Presented elementary group | [Steinberg](docs/FiniteRankSteinberg.md) | Finite rank does not imply finite presentation over an arbitrary ring |
 | Nil and quasi-regular ideal quotients | [QuasiregularIdeal](GeneralLinearGroups/QuasiregularIdeal.lean), [QuasiregularQuotient](GeneralLinearGroups/QuasiregularQuotient.lean), [NonUnitalQuasiregular](GeneralLinearGroups/NonUnitalQuasiregular.lean) | Extra ideal hypothesis is needed to lift arbitrary quotient units |
+| Single-entry matrix corners | [MatrixCorner](GeneralLinearGroups/MatrixCorner.lean), [clients](tests/GeneralLinearGroupsTests/MatrixCornerClient.lean) | A chosen index gives a corner identity that may differ from the ambient identity; no commutativity assumption |
 | Additive trace quotient | [MatrixTrace](GeneralLinearGroups/MatrixTrace.lean), [AdditiveCommutator](GeneralLinearGroups/AdditiveCommutator.lean) | An inverse needs a chosen index; no ring quotient or `K₀` theorem |
 | Native first-order and mixed dual numbers | [Kernel guide](docs/DualNumberKernels.md), [adjoint guide](docs/DualNumberKernelAdjoint.md), [mixed GL guide](docs/DualNumberMixedCommutator.md), [mixed SL guide](docs/DualNumberMixedSLCommutator.md) | `CommRing`, finite decidable indices; SL requires individual trace-zero factors |
 

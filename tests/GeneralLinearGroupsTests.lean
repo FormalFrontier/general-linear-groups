@@ -5,6 +5,7 @@ Authors: Formal Frontier Agents
 module
 
 import GeneralLinearGroupsTests.MatrixTraceClient
+import GeneralLinearGroupsTests.MatrixCornerClient
 import GeneralLinearGroupsTests.PublicAPIClient
 import GeneralLinearGroupsTests.ElementaryClient
 import GeneralLinearGroupsTests.ElementaryCommutatorClient
