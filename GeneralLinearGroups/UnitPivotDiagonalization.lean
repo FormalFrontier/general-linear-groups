@@ -292,6 +292,117 @@ theorem leadingPrincipalMinor_schur {n : ℕ}
       rw [Matrix.invOf_eq_nonsing_inv]
       rfl
 
+/-- A unit first pivot and an elementary diagonalization of its Schur residual
+give an elementary diagonalization of the full matrix. -/
+theorem exists_elementary_diagonalization_of_unit_pivot {n : ℕ}
+    (M : Matrix (Fin (n + 1)) (Fin (n + 1)) R)
+    (hA : IsUnit (firstRestBlock M).toBlocks₁₁.det)
+    (l q : GeneralLinearGroup.elementarySubgroup (Fin n) R) (d : Fin n → Rˣ)
+    (hd : ((l : GL (Fin n) R) : Matrix (Fin n) (Fin n) R) *
+      ((firstRestBlock M).toBlocks₂₂ -
+        (firstRestBlock M).toBlocks₂₁ *
+          (firstRestBlock M).toBlocks₁₁⁻¹ * (firstRestBlock M).toBlocks₁₂) *
+      ((q : GL (Fin n) R) : Matrix (Fin n) (Fin n) R) =
+        Matrix.diagonal (fun i => (d i : R))) :
+    ∃ L Q : GeneralLinearGroup.elementarySubgroup (Fin (n + 1)) R,
+      ∃ diagonal : Fin (n + 1) → Rˣ,
+        ((L : GL (Fin (n + 1)) R) : Matrix (Fin (n + 1)) (Fin (n + 1)) R) * M *
+          ((Q : GL (Fin (n + 1)) R) : Matrix (Fin (n + 1)) (Fin (n + 1)) R) =
+            Matrix.diagonal (fun i => (diagonal i : R)) := by
+  let T := firstRestBlock M
+  let A := T.toBlocks₁₁
+  let B := T.toBlocks₁₂
+  let C := T.toBlocks₂₁
+  let D := T.toBlocks₂₂
+  let inverseA : Invertible A := Matrix.invertibleOfIsUnitDet A hA
+  let S := D - C * A⁻¹ * B
+  have hdS : ((l : GL (Fin n) R) : Matrix (Fin n) (Fin n) R) * S *
+      ((q : GL (Fin n) R) : Matrix (Fin n) (Fin n) R) =
+        Matrix.diagonal (fun i => (d i : R)) := hd
+  obtain ⟨l₀, q₀, hreduce⟩ := fromBlocks_elementary_reduce A B C D
+  have hreduceT : ((l₀ : GL (Fin 1 ⊕ Fin n) R) :
+      Matrix (Fin 1 ⊕ Fin n) (Fin 1 ⊕ Fin n) R) * T *
+      ((q₀ : GL (Fin 1 ⊕ Fin n) R) : Matrix (Fin 1 ⊕ Fin n) (Fin 1 ⊕ Fin n) R) =
+        Matrix.fromBlocks A 0 0 S := by
+    simpa only [A, B, C, D, Matrix.fromBlocks_toBlocks,
+      Matrix.invOf_eq_nonsing_inv] using hreduce
+  let lSum := GeneralLinearGroup.trailingElementary (X := Fin 1) l * l₀
+  let qSum := q₀ * GeneralLinearGroup.trailingElementary (X := Fin 1) q
+  have hSum : ((lSum : GL (Fin 1 ⊕ Fin n) R) :
+      Matrix (Fin 1 ⊕ Fin n) (Fin 1 ⊕ Fin n) R) * T *
+      ((qSum : GL (Fin 1 ⊕ Fin n) R) : Matrix (Fin 1 ⊕ Fin n) (Fin 1 ⊕ Fin n) R) =
+        Matrix.fromBlocks A 0 0 (Matrix.diagonal (fun i => (d i : R))) := by
+    calc
+      ((lSum : GL (Fin 1 ⊕ Fin n) R) :
+          Matrix (Fin 1 ⊕ Fin n) (Fin 1 ⊕ Fin n) R) * T *
+          ((qSum : GL (Fin 1 ⊕ Fin n) R) :
+            Matrix (Fin 1 ⊕ Fin n) (Fin 1 ⊕ Fin n) R) =
+            ((GeneralLinearGroup.trailingElementary (X := Fin 1) l :
+                GL (Fin 1 ⊕ Fin n) R) : Matrix (Fin 1 ⊕ Fin n) (Fin 1 ⊕ Fin n) R) *
+              (((l₀ : GL (Fin 1 ⊕ Fin n) R) :
+                  Matrix (Fin 1 ⊕ Fin n) (Fin 1 ⊕ Fin n) R) * T *
+                ((q₀ : GL (Fin 1 ⊕ Fin n) R) :
+                  Matrix (Fin 1 ⊕ Fin n) (Fin 1 ⊕ Fin n) R)) *
+                ((GeneralLinearGroup.trailingElementary (X := Fin 1) q :
+                    GL (Fin 1 ⊕ Fin n) R) :
+                      Matrix (Fin 1 ⊕ Fin n) (Fin 1 ⊕ Fin n) R) := by
+              simp [lSum, qSum, Matrix.mul_assoc]
+      _ = _ := by rw [hreduceT]
+      _ = Matrix.fromBlocks A 0 0 (Matrix.diagonal (fun i => (d i : R))) := by
+            simp [GeneralLinearGroup.trailingElementary_val,
+              Matrix.fromBlocks_multiply, hdS]
+  let L := GeneralLinearGroup.reindexElementarySubgroup (firstRestEquiv n).symm lSum
+  let Q := GeneralLinearGroup.reindexElementarySubgroup (firstRestEquiv n).symm qSum
+  let pivot : Rˣ := hA.unit
+  let diagonalUnits : Fin (n + 1) → Rˣ := Fin.cases pivot d
+  have hpivot : A 0 0 = (pivot : R) := by
+    simpa only [Matrix.det_fin_one, pivot] using hA.unit_spec.symm
+  have hdiag :
+      (Matrix.fromBlocks A 0 0 (Matrix.diagonal (fun i => (d i : R)))).submatrix
+          (firstRestEquiv n) (firstRestEquiv n) =
+            Matrix.diagonal (fun i => (diagonalUnits i : R)) := by
+    ext i j
+    cases i using Fin.cases with
+    | zero =>
+        cases j using Fin.cases with
+        | zero => simpa [diagonalUnits] using hpivot
+        | succ j =>
+            have hne : (0 : Fin (n + 1)) ≠ j.succ := (Fin.succ_ne_zero j).symm
+            simp [diagonalUnits, hne]
+    | succ i =>
+        cases j using Fin.cases with
+        | zero => simp [diagonalUnits]
+        | succ j => simp [diagonalUnits, Matrix.diagonal_apply]
+  have hM : T.submatrix (firstRestEquiv n) (firstRestEquiv n) = M := by
+    ext i j
+    simp [T, firstRestBlock]
+  have hcoe (g : GeneralLinearGroup.elementarySubgroup (Fin 1 ⊕ Fin n) R) :
+      ((GeneralLinearGroup.reindexElementarySubgroup
+          (firstRestEquiv n).symm g : GL (Fin (n + 1)) R) :
+            Matrix (Fin (n + 1)) (Fin (n + 1)) R) =
+        ((g : GL (Fin 1 ⊕ Fin n) R) :
+          Matrix (Fin 1 ⊕ Fin n) (Fin 1 ⊕ Fin n) R).submatrix
+            (firstRestEquiv n) (firstRestEquiv n) := by
+    ext i j
+    simp only [GeneralLinearGroup.reindexElementarySubgroup_coe,
+      GeneralLinearGroup.reindexEquiv_apply, Matrix.submatrix_apply,
+      Equiv.symm_symm]
+  have h' := congrArg
+    (fun P : Matrix (Fin 1 ⊕ Fin n) (Fin 1 ⊕ Fin n) R =>
+      P.submatrix (firstRestEquiv n) (firstRestEquiv n)) hSum
+  have hfact : ((L : GL (Fin (n + 1)) R) :
+      Matrix (Fin (n + 1)) (Fin (n + 1)) R) * M *
+        ((Q : GL (Fin (n + 1)) R) :
+          Matrix (Fin (n + 1)) (Fin (n + 1)) R) =
+        (((lSum : GL (Fin 1 ⊕ Fin n) R) :
+            Matrix (Fin 1 ⊕ Fin n) (Fin 1 ⊕ Fin n) R) * T *
+          ((qSum : GL (Fin 1 ⊕ Fin n) R) :
+            Matrix (Fin 1 ⊕ Fin n) (Fin 1 ⊕ Fin n) R)).submatrix
+              (firstRestEquiv n) (firstRestEquiv n) := by
+    rw [hcoe lSum, hcoe qSum, ← hM]
+    simp only [Matrix.submatrix_mul_equiv]
+  exact ⟨L, Q, diagonalUnits, hfact.trans (h'.trans hdiag)⟩
+
 set_option linter.style.haveILetI false in
 /-- Unit leading principal minors permit two-sided diagonalization using only
 the existing elementary subgroup. No domain, field or determinant-one hypothesis
@@ -332,89 +443,7 @@ theorem exists_elementary_diagonalization_of_unit_leadingPrincipalMinors :
         rw [leadingPrincipalMinor_schur M hp k hk] at hmk
         exact (IsUnit.mul_iff.mp hmk).2
       obtain ⟨l, q, d, hd⟩ := ih S hS
-      obtain ⟨l₀, q₀, hreduce⟩ := fromBlocks_elementary_reduce A B C D
-      have hreduceT : ((l₀ : GL (Fin 1 ⊕ Fin n) R) :
-          Matrix (Fin 1 ⊕ Fin n) (Fin 1 ⊕ Fin n) R) * T *
-          ((q₀ : GL (Fin 1 ⊕ Fin n) R) : Matrix (Fin 1 ⊕ Fin n) (Fin 1 ⊕ Fin n) R) =
-            Matrix.fromBlocks A 0 0 S := by
-        simpa only [A, B, C, D, Matrix.fromBlocks_toBlocks,
-          Matrix.invOf_eq_nonsing_inv] using hreduce
-      let lSum := GeneralLinearGroup.trailingElementary (X := Fin 1) l * l₀
-      let qSum := q₀ * GeneralLinearGroup.trailingElementary (X := Fin 1) q
-      have hSum : ((lSum : GL (Fin 1 ⊕ Fin n) R) :
-          Matrix (Fin 1 ⊕ Fin n) (Fin 1 ⊕ Fin n) R) * T *
-          ((qSum : GL (Fin 1 ⊕ Fin n) R) : Matrix (Fin 1 ⊕ Fin n) (Fin 1 ⊕ Fin n) R) =
-            Matrix.fromBlocks A 0 0 (Matrix.diagonal (fun i => (d i : R))) := by
-        calc
-          ((lSum : GL (Fin 1 ⊕ Fin n) R) :
-              Matrix (Fin 1 ⊕ Fin n) (Fin 1 ⊕ Fin n) R) * T *
-              ((qSum : GL (Fin 1 ⊕ Fin n) R) :
-                Matrix (Fin 1 ⊕ Fin n) (Fin 1 ⊕ Fin n) R) =
-                ((GeneralLinearGroup.trailingElementary (X := Fin 1) l :
-                    GL (Fin 1 ⊕ Fin n) R) : Matrix (Fin 1 ⊕ Fin n) (Fin 1 ⊕ Fin n) R) *
-                  (((l₀ : GL (Fin 1 ⊕ Fin n) R) :
-                      Matrix (Fin 1 ⊕ Fin n) (Fin 1 ⊕ Fin n) R) * T *
-                    ((q₀ : GL (Fin 1 ⊕ Fin n) R) :
-                      Matrix (Fin 1 ⊕ Fin n) (Fin 1 ⊕ Fin n) R)) *
-                    ((GeneralLinearGroup.trailingElementary (X := Fin 1) q :
-                      GL (Fin 1 ⊕ Fin n) R) :
-                        Matrix (Fin 1 ⊕ Fin n) (Fin 1 ⊕ Fin n) R) := by
-                  simp [lSum, qSum, Matrix.mul_assoc]
-          _ = _ := by rw [hreduceT]
-          _ = Matrix.fromBlocks A 0 0 (Matrix.diagonal (fun i => (d i : R))) := by
-                simp [GeneralLinearGroup.trailingElementary_val,
-                  Matrix.fromBlocks_multiply, hd]
-      let L := GeneralLinearGroup.reindexElementarySubgroup (firstRestEquiv n).symm lSum
-      let Q := GeneralLinearGroup.reindexElementarySubgroup (firstRestEquiv n).symm qSum
-      let pivot : Rˣ := hA.unit
-      let diagonalUnits : Fin (n + 1) → Rˣ := Fin.cases pivot d
-      have hpivot : A 0 0 = (pivot : R) := by
-        simpa only [Matrix.det_fin_one, pivot] using hA.unit_spec.symm
-      have hdiag :
-          (Matrix.fromBlocks A 0 0 (Matrix.diagonal (fun i => (d i : R)))).submatrix
-              (firstRestEquiv n) (firstRestEquiv n) =
-                Matrix.diagonal (fun i => (diagonalUnits i : R)) := by
-        ext i j
-        cases i using Fin.cases with
-        | zero =>
-            cases j using Fin.cases with
-            | zero => simpa [diagonalUnits] using hpivot
-            | succ j =>
-                have hne : (0 : Fin (n + 1)) ≠ j.succ := (Fin.succ_ne_zero j).symm
-                simp [diagonalUnits, hne]
-        | succ i =>
-            cases j using Fin.cases with
-            | zero => simp [diagonalUnits]
-            | succ j => simp [diagonalUnits, Matrix.diagonal_apply]
-      have hM : T.submatrix (firstRestEquiv n) (firstRestEquiv n) = M := by
-        ext i j
-        simp [T, firstRestBlock]
-      have hcoe (g : GeneralLinearGroup.elementarySubgroup (Fin 1 ⊕ Fin n) R) :
-          ((GeneralLinearGroup.reindexElementarySubgroup
-              (firstRestEquiv n).symm g : GL (Fin (n + 1)) R) :
-                Matrix (Fin (n + 1)) (Fin (n + 1)) R) =
-            ((g : GL (Fin 1 ⊕ Fin n) R) :
-              Matrix (Fin 1 ⊕ Fin n) (Fin 1 ⊕ Fin n) R).submatrix
-                (firstRestEquiv n) (firstRestEquiv n) := by
-        ext i j
-        simp only [GeneralLinearGroup.reindexElementarySubgroup_coe,
-          GeneralLinearGroup.reindexEquiv_apply, Matrix.submatrix_apply,
-          Equiv.symm_symm]
-      have h' := congrArg
-        (fun P : Matrix (Fin 1 ⊕ Fin n) (Fin 1 ⊕ Fin n) R =>
-          P.submatrix (firstRestEquiv n) (firstRestEquiv n)) hSum
-      have hfact : ((L : GL (Fin (n + 1)) R) :
-          Matrix (Fin (n + 1)) (Fin (n + 1)) R) * M *
-            ((Q : GL (Fin (n + 1)) R) :
-              Matrix (Fin (n + 1)) (Fin (n + 1)) R) =
-            (((lSum : GL (Fin 1 ⊕ Fin n) R) :
-                Matrix (Fin 1 ⊕ Fin n) (Fin 1 ⊕ Fin n) R) * T *
-              ((qSum : GL (Fin 1 ⊕ Fin n) R) :
-                Matrix (Fin 1 ⊕ Fin n) (Fin 1 ⊕ Fin n) R)).submatrix
-                  (firstRestEquiv n) (firstRestEquiv n) := by
-        rw [hcoe lSum, hcoe qSum, ← hM]
-        simp only [Matrix.submatrix_mul_equiv]
-      exact ⟨L, Q, diagonalUnits, hfact.trans (h'.trans hdiag)⟩
+      exact exists_elementary_diagonalization_of_unit_pivot M hA l q d hd
 
 /-- Read the diagonal entries as a determinant product without an SL assumption. -/
 theorem det_eq_prod_of_elementary_diagonalization {n : ℕ}

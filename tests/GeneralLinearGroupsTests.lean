@@ -28,5 +28,7 @@ import GeneralLinearGroupsTests.ElementaryNeighborhoodClient
 import GeneralLinearGroupsTests.StableGeneralLinearClient
 import GeneralLinearGroupsTests.StableElementaryClient
 import GeneralLinearGroupsTests.StableDeterminantClient
+import GeneralLinearGroupsTests.LocalElementaryGenerationClient
+import GeneralLinearGroupsTests.LocalElementaryGenerationExamples
 
 /-! Aggregate client checks for general linear groups and their boundary cases. -/

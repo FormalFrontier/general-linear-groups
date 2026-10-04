@@ -39,6 +39,7 @@ public import GeneralLinearGroups.ElementaryDiagonal
 public import GeneralLinearGroups.ElementaryNeighborhood
 public import GeneralLinearGroups.StableElementary
 public import GeneralLinearGroups.StableDeterminant
+public import GeneralLinearGroups.LocalElementaryGeneration
 
 /-!
 # General linear groups

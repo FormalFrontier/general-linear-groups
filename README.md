@@ -37,10 +37,12 @@ supplies foundational APIs.
 - **Stable determinant.** Over a commutative ring, finite determinants induce
   homomorphisms on stable general linear groups, their elementary quotient and
   their abelianization. Rank-one units provide determinant sections; the
-  elementary subgroup lies in the determinant kernel, without a claimed
-  equality. The abelian elementary quotient splits as the product of its
+  elementary subgroup lies in the determinant kernel. The abelian elementary quotient
+  splits as the product of its
   determinant kernel and the units, naturally under coefficient maps; this
   does not assert a product splitting of stable general linear groups.
+  For commutative local rings, elementary matrices equal the determinant kernel,
+  and the existing quotient determinant is an equivalence with the units.
   The rank-one map itself is defined over any semiring.
   [Determinant and rank-one maps](GeneralLinearGroups/StableDeterminant.lean),
   [integer and boundary examples](tests/GeneralLinearGroupsTests/StableDeterminantClient.lean).
@@ -76,10 +78,21 @@ supplies foundational APIs.
 - **Unit-pivot reduction and elementary diagonals.** Over any `CommRing`,
   unit ordered leading minors permit two-sided elementary diagonalization;
   a product-one diagonal is elementary, and the unit-pivot, determinant-one
-  criterion puts a finite GL unit in `E`. These are not a general `SL = E`
+  criterion puts a finite GL unit in `E`. This is not a general `SL = E`
   theorem; the minor hypothesis is stronger than nonvanishing.
   [Unit-pivot guide](docs/UnitPivotDiagonalization.md),
   [diagonal guide](docs/ElementaryDiagonal.md).
+
+- **Elementary generation over local rings.** Every invertible finite matrix
+  over a commutative local ring has elementary left and right factors reducing
+  it to a diagonal of units, without a leading-minor hypothesis. At every
+  finite rank, determinant one characterizes the elementary subgroup. The
+  stable elementary subgroup is the determinant kernel, and the elementary
+  quotient is canonically the coefficient units via the existing determinant
+  and rank-one section. Over a field, Mathlib transvection lists give an
+  invertible diagonal factorization.
+  [Local generation](GeneralLinearGroups/LocalElementaryGeneration.lean),
+  [nonfield and rank-boundary clients](tests/GeneralLinearGroupsTests/LocalElementaryGenerationClient.lean).
 
 - **Elementary paths and SL neighborhoods.** Over a topological ring,
   elementary GL units vary continuously with coefficients, even when the
@@ -217,12 +230,13 @@ client-only helpers are not promises of the library API.
 
 | Subject | Start here | Important boundary |
 | --- | --- | --- |
-| Elementary blocks and reindexing | [Elementary matrices](docs/ElementaryMatrices.md), [commutators](docs/ElementaryCommutators.md) | Ring-only units; no `SL = E` |
+| Elementary blocks and reindexing | [Elementary matrices](docs/ElementaryMatrices.md), [commutators](docs/ElementaryCommutators.md) | Ring-only units; no arbitrary-ring `SL = E` |
 | Unit pivots and diagonal units | [Unit-pivot diagonalization](docs/UnitPivotDiagonalization.md), [product-one diagonals](docs/ElementaryDiagonal.md) | `CommRing`; all positive-order leading minors must be units for reduction |
+| Local elementary generation | [Local generation](GeneralLinearGroups/LocalElementaryGeneration.lean), [clients](tests/GeneralLinearGroupsTests/LocalElementaryGenerationClient.lean) | `CommRing` and `IsLocalRing`; no ordered leading-minor condition; finite and stable determinant kernels |
 | Paths and SL neighborhoods | [Elementary paths](docs/ElementaryPaths.md), [finite SL neighborhoods](docs/ElementaryNeighborhood.md) | Path-connected coefficients and open scalar units are distinct hypotheses |
 | Relative groups and doubled identities | [Relative elementary](docs/RelativeElementary.md), [Whitehead](docs/RelativeWhitehead.md), [consequences](docs/RelativeWhiteheadConsequences.md) | Normal closure inside `E`; arbitrary-GL conjugation only after doubling |
 | Stable general linear and elementary groups | [Stable GL](GeneralLinearGroups/StableGeneralLinear.lean), [stable elementary](GeneralLinearGroups/StableElementary.lean) | Semiring-direct-limit `GL`; over rings, elementary equals the stable commutator, with an abelian quotient but no public `K₁` construction |
-| Stable determinant and rank-one units | [Stable determinant](GeneralLinearGroups/StableDeterminant.lean), [clients](tests/GeneralLinearGroupsTests/StableDeterminantClient.lean) | Rank-one maps over semirings; over commutative rings, the abelian elementary quotient is its determinant kernel times units, with no kernel-vanishing claim |
+| Stable determinant and rank-one units | [Stable determinant](GeneralLinearGroups/StableDeterminant.lean), [clients](tests/GeneralLinearGroupsTests/StableDeterminantClient.lean) | Rank-one maps over semirings; the elementary quotient determinant has trivial kernel over commutative local rings, not arbitrary rings |
 | Finite stabilization and rectangular blocks | [Stabilization](docs/ElementaryStabilization.md), [rectangular blocks](docs/RectangularBlockUnits.md), [rectangular unit switch](GeneralLinearGroups/RectangularUnitSwitch.lean), [zero-product units](GeneralLinearGroups/ZeroProductStabilization.lean) | Semiring stabilization is a *monoid hom on units*; the unit switch requires a `Ring` and `g = 1 + A * B`, but not `B * A = 0` |
 | Presented elementary group | [Steinberg](docs/FiniteRankSteinberg.md) | Finite rank does not imply finite presentation over an arbitrary ring |
 | Nil and quasi-regular ideal quotients | [QuasiregularIdeal](GeneralLinearGroups/QuasiregularIdeal.lean), [QuasiregularQuotient](GeneralLinearGroups/QuasiregularQuotient.lean), [NonUnitalQuasiregular](GeneralLinearGroups/NonUnitalQuasiregular.lean) | Extra ideal hypothesis is needed to lift arbitrary quotient units |
@@ -244,7 +258,7 @@ noncommutative coefficients; subgroup path connectedness separately needs
 path-connected coefficients. The finite SL comap is open and closed when
 scalar units form an open locus; identifying its identity path component also
 needs path-connected coefficients. There is no continuous factor selection,
-general `SL = E`, global `GL` connectivity or quantitative neighborhood.
+arbitrary-ring `SL = E`, global `GL` connectivity or quantitative neighborhood.
 There is **no** claimed stable `K₁` identification, excision,
 `K₂`, source-complete K-theory, ambient relative normality or universal
 triangular-invertibility converse.

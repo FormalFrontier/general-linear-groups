@@ -83,8 +83,9 @@ status:
     presentation, and native GL/SL dual-number kernels and ordered mixed
     commutators. Core rings may be noncommutative; the dual-number layer
     requires CommRing. The additional elementary algebra/topology layer covers
-    unit-pivot diagonalization, product-one diagonals, elementary paths and
-    native SL neighborhoods, each with its stated hypotheses.
+    unit-pivot diagonalization, product-one diagonals, local-ring elementary
+    generation, elementary paths and native SL neighborhoods, each with its
+    stated hypotheses.
     Stable general linear groups over semirings have finite representatives,
     injective stages, compatible lifts and coefficient maps.
     Over rings the stable elementary subgroup is the commutator subgroup,
@@ -94,6 +95,11 @@ status:
     elementary matrices are contained in the determinant kernel. The abelian
     stable elementary quotient is the product of its determinant kernel and
     the unit group, compatibly with coefficient maps.
+    Over commutative local rings, invertible matrices admit two-sided
+    elementary diagonalization, finite elementary membership is equivalent
+    to determinant one in every rank, stable elementary equals the stable
+    determinant kernel, and the quotient determinant identifies the elementary
+    quotient with the coefficient units via the rank-one section.
     Fintype and DecidableEq hypotheses apply to matrix
     index types where stated. The results do not establish stable K1 or K2,
     a source-complete K-theory formalization, or source-passage coverage.
@@ -685,6 +691,27 @@ status:
     - declaration: Matrix.exists_elementary_diagonalization_of_unit_leadingPrincipalMinors
       file: GeneralLinearGroups/UnitPivotDiagonalization.lean
       note: "Two-sided elementary reduction under all positive unit leading minors over a CommRing."
+    - declaration: Matrix.exists_elementary_diagonalization_of_unit_pivot
+      file: GeneralLinearGroups/UnitPivotDiagonalization.lean
+      note: "A unit first pivot lifts an elementary factorization of its Schur residual."
+    - declaration: Matrix.GeneralLinearGroup.exists_elementary_diagonalization_local
+      file: GeneralLinearGroups/LocalElementaryGeneration.lean
+      note: "Invertible matrices over commutative local rings reduce to a unit diagonal without a minor condition, including in rank zero."
+    - declaration: Matrix.GeneralLinearGroup.mem_elementarySubgroup_iff_det_eq_one_local
+      file: GeneralLinearGroups/LocalElementaryGeneration.lean
+      note: "Finite elementary membership is equivalent to determinant one on any finite decidable index type."
+    - declaration: Matrix.GeneralLinearGroup.StableGL.elementary_eq_ker_det_local
+      file: GeneralLinearGroups/LocalElementaryGeneration.lean
+      note: "The stable elementary subgroup is the stable determinant kernel over commutative local rings."
+    - declaration: Matrix.GeneralLinearGroup.StableGL.quotientDet_ker_eq_bot_local
+      file: GeneralLinearGroups/LocalElementaryGeneration.lean
+      note: "The existing quotient determinant has trivial kernel under the local-ring hypothesis."
+    - declaration: Matrix.GeneralLinearGroup.StableGL.quotientDetMulEquiv
+      file: GeneralLinearGroups/LocalElementaryGeneration.lean
+      note: "The existing quotient determinant and rank-one section form a natural multiplicative equivalence with coefficient units over local rings."
+    - declaration: Matrix.GeneralLinearGroup.exists_elementary_transvection_diagonalization_field
+      file: GeneralLinearGroups/LocalElementaryGeneration.lean
+      note: "Mathlib transvection lists yield elementary GL factors and a unit diagonal for invertible field matrices."
     - declaration: Matrix.GeneralLinearGroup.elementaryUnitPathSubtype
       file: GeneralLinearGroups/ElementaryPaths.lean
       note: "Path within the actual elementary subgroup over a topological Ring."
@@ -800,11 +827,13 @@ fidelity:
     Ring; abelianization rank-one maps use Semiring. Stable determinants,
     their quotient and abelianization factorizations, retractions and naturality
     use CommRing;
-    stable elementary lies in the determinant kernel without an equality.
-    Only the abelian elementary quotient splits as its determinant kernel
-    times units, with natural coordinates. No prequotient kernel centrality,
-    prequotient product splitting or SK1 vanishing is asserted.
-    No SL=E, same-rank ambient elementary normality, original-rank
+    stable elementary lies in the determinant kernel, with equality only asserted
+    here for commutative local rings. The elementary quotient determinant has
+    trivial kernel over local rings; the abelian elementary quotient splits as
+    its determinant kernel times units over arbitrary commutative rings, with
+    natural coordinates. No prequotient kernel centrality or product splitting,
+    or arbitrary-ring kernel vanishing is asserted.
+    No arbitrary-ring SL=E, same-rank ambient elementary normality, original-rank
     commutator containment, stable K1 identification, excision or full
     source-coverage claim follows.
 
