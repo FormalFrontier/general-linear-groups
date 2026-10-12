@@ -26,9 +26,23 @@ For current mathematics beyond this partial reference, see the guides to
 [the finite-rank Steinberg presentation](FiniteRankSteinberg.md),
 [mixed native GL commutators](DualNumberMixedCommutator.md), and
 [mixed native SL commutators](DualNumberMixedSLCommutator.md).
-The combined native GL/SL results are part of the privately published release;
-these guides describe the relevant current modules. The 128-entry reference does
-not inventory their later APIs.
+These guides describe the corresponding current modules; the 128-entry reference
+does not inventory their later APIs.
+
+Further current topics are available directly from the subject modules:
+
+- [Single-entry matrix corners](../GeneralLinearGroups/MatrixCorner.lean).
+- [Zero-product elementary stabilization](../GeneralLinearGroups/ZeroProductStabilization.lean)
+  and [rectangular unit switching](../GeneralLinearGroups/RectangularUnitSwitch.lean).
+- [Ring Schur reduction](../GeneralLinearGroups/SchurReduction.lean).
+- [Conditional unit-pivot induction](../GeneralLinearGroups/UnitPivotInduction.lean)
+  and [local elementary generation](../GeneralLinearGroups/LocalElementaryGeneration.lean).
+- [Stable general linear groups](../GeneralLinearGroups/StableGeneralLinear.lean),
+  [stable elementary groups](../GeneralLinearGroups/StableElementary.lean) and
+  [stable determinants](../GeneralLinearGroups/StableDeterminant.lean).
+
+For the hypotheses and boundaries of these results, see the
+[headline results](../README.md#headline-results) and the linked declarations.
 
 This page and [the manifest](api-manifest.json) are **not** an inventory of the
 current module graph, a census of private or generated declarations, or proof
