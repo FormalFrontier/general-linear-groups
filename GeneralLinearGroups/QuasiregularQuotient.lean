@@ -7,6 +7,7 @@ module
 public import GeneralLinearGroups.CongruenceSubgroup
 public import GeneralLinearGroups.MatrixQuasiregular
 public import Mathlib.RingTheory.Ideal.Quotient.Basic
+public import Mathlib.RingTheory.TwoSidedIdeal.Kernel
 import Mathlib.Tactic.NoncommRing
 
 /-!
@@ -16,6 +17,11 @@ This file proves that quotienting an arbitrary ring by a quasi-regular
 two-sided ideal induces a surjection on finite general linear groups. The proof
 lifts a matrix and its inverse entrywise, then uses quasi-regularity of the
 corresponding matrix ideal to show that both ordered products are units.
+The scalar interface gives unit reflection as Mathlib's `IsLocalHom` for a
+surjective ring homomorphism with quasi-regular two-sided kernel. It lifts the
+inverse of a unit image and applies the same ordered-product argument, using
+Mathlib's kernel congruence API to keep subtraction in the source ring. The
+target need only be a semiring.
 -/
 
 set_option warningAsError true
@@ -151,3 +157,41 @@ theorem idealGeneralLinearGroupToRing_shortExact
     mapRingHom_quotient_surjective I hI⟩
 
 end Matrix.GeneralLinearGroup
+
+namespace RingHom
+
+universe u v
+
+private theorem isUnit_of_map_eq_one_of_isQuasiregular_ker
+    {R : Type u} {S : Type v} [Ring R] [Semiring S]
+    (f : R →+* S) (hker : (TwoSidedIdeal.ker f).IsQuasiregular)
+    {x : R} (hx : f x = 1) : IsUnit x := by
+  have hxker : x - 1 ∈ TwoSidedIdeal.ker f := by
+    rw [← (TwoSidedIdeal.ker f).rel_iff, TwoSidedIdeal.ker_ringCon f, map_one]
+    exact hx
+  have hunit := (TwoSidedIdeal.ker f).isQuasiregular_iff_forall_isUnit_one_add.mp
+    hker (x - 1) hxker
+  have heq : 1 + (x - 1) = x := by noncomm_ring
+  rwa [heq] at hunit
+
+/-- A surjective ring homomorphism with quasi-regular two-sided kernel reflects
+units. The source may be noncommutative and the target need only be a semiring. -/
+theorem isLocalHom_of_surjective_of_isQuasiregular_ker
+    {R : Type u} {S : Type v} [Ring R] [Semiring S]
+    (f : R →+* S) (hf : Function.Surjective f)
+    (hker : (TwoSidedIdeal.ker f).IsQuasiregular) : IsLocalHom f := by
+  refine ⟨fun a ha => ?_⟩
+  let g : Sˣ := ha.unit
+  have hg : (g : S) = f a := ha.unit_spec
+  obtain ⟨b, hb⟩ := hf (↑(g⁻¹) : S)
+  have hab : f (a * b) = 1 := by
+    rw [map_mul, hb, ← hg]
+    exact Units.val_inv g
+  have hba : f (b * a) = 1 := by
+    rw [map_mul, hb, ← hg]
+    exact Units.inv_val g
+  exact Matrix.GeneralLinearGroup.isUnit_of_mul_isUnit_and_isUnit_mul
+    (isUnit_of_map_eq_one_of_isQuasiregular_ker f hker hab)
+    (isUnit_of_map_eq_one_of_isQuasiregular_ker f hker hba)
+
+end RingHom

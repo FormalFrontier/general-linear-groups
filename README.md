@@ -118,6 +118,16 @@ supplies foundational APIs.
   [Paths guide](docs/ElementaryPaths.md),
   [neighborhood guide](docs/ElementaryNeighborhood.md).
 
+- **Scalar unit reflection.** A surjective `f : R →+* S` from a possibly
+  noncommutative ring to a semiring with quasi-regular `TwoSidedIdeal.ker f`
+  gives Mathlib's `IsLocalHom f` through
+  [`RingHom.isLocalHom_of_surjective_of_isQuasiregular_ker`](GeneralLinearGroups/QuasiregularQuotient.lean).
+  Existing Mathlib APIs then give `IsUnit (f a) ↔ IsUnit a` via
+  `isUnit_map_iff` and surjectivity of the induced map on units. Source and
+  target universes are independent; no commutativity, locality or
+  nontriviality is assumed. Nil kernels specialize through the existing
+  `TwoSidedIdeal.IsNil.isQuasiregular`.
+
 - **Lifting modulo quasi-regular ideals.** For a two-sided ideal, its
   unitization general linear group identifies with the congruence kernel;
   quasi-regularity of *every* ideal element additionally makes the quotient
@@ -253,7 +263,7 @@ client-only helpers are not promises of the library API.
 | Stable determinant and rank-one units | [Stable determinant](GeneralLinearGroups/StableDeterminant.lean), [clients](tests/GeneralLinearGroupsTests/StableDeterminantClient.lean) | Rank-one maps over semirings; the elementary quotient determinant has trivial kernel over commutative local rings, not arbitrary rings |
 | Finite stabilization and rectangular blocks | [Stabilization](docs/ElementaryStabilization.md), [rectangular blocks](docs/RectangularBlockUnits.md), [rectangular unit switch](GeneralLinearGroups/RectangularUnitSwitch.lean), [zero-product units](GeneralLinearGroups/ZeroProductStabilization.lean) | Semiring stabilization is a *monoid hom on units*; the unit switch requires a `Ring` and `g = 1 + A * B`, but not `B * A = 0` |
 | Presented elementary group | [Steinberg](docs/FiniteRankSteinberg.md) | Finite rank does not imply finite presentation over an arbitrary ring |
-| Nil and quasi-regular ideal quotients | [QuasiregularIdeal](GeneralLinearGroups/QuasiregularIdeal.lean), [QuasiregularQuotient](GeneralLinearGroups/QuasiregularQuotient.lean), [NonUnitalQuasiregular](GeneralLinearGroups/NonUnitalQuasiregular.lean) | Extra ideal hypothesis is needed to lift arbitrary quotient units |
+| Nil and quasi-regular ideal quotients; scalar unit reflection | [QuasiregularIdeal](GeneralLinearGroups/QuasiregularIdeal.lean), [QuasiregularQuotient](GeneralLinearGroups/QuasiregularQuotient.lean), [NonUnitalQuasiregular](GeneralLinearGroups/NonUnitalQuasiregular.lean) | Extra ideal hypothesis is needed to lift arbitrary quotient units; scalar reflection assumes a surjective `Ring` → `Semiring` homomorphism with quasi-regular kernel |
 | Single-entry matrix corners | [MatrixCorner](GeneralLinearGroups/MatrixCorner.lean), [clients](tests/GeneralLinearGroupsTests/MatrixCornerClient.lean) | A chosen index gives a corner identity that may differ from the ambient identity; no commutativity assumption |
 | Additive trace quotient | [MatrixTrace](GeneralLinearGroups/MatrixTrace.lean), [AdditiveCommutator](GeneralLinearGroups/AdditiveCommutator.lean) | An inverse needs a chosen index; no ring quotient or `K₀` theorem |
 | Native first-order and mixed dual numbers | [Kernel guide](docs/DualNumberKernels.md), [adjoint guide](docs/DualNumberKernelAdjoint.md), [mixed GL guide](docs/DualNumberMixedCommutator.md), [mixed SL guide](docs/DualNumberMixedSLCommutator.md) | `CommRing`, finite decidable indices; SL requires individual trace-zero factors |

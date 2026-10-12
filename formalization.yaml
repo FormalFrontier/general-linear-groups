@@ -279,6 +279,15 @@ status:
         The ideal-unitization augmentation kernel is equivalent to the ambient
         congruence subgroup. Ambient injectivity and multiplicative exactness
         hold for every two-sided ideal, independently of quotient surjectivity.
+    - declaration: "RingHom.isLocalHom_of_surjective_of_isQuasiregular_ker"
+      file: "GeneralLinearGroups/QuasiregularQuotient.lean"
+      note: >-
+        A surjective homomorphism from a possibly noncommutative Ring to a
+        Semiring with quasi-regular canonical two-sided kernel gives Mathlib's
+        IsLocalHom, with independent source and target universes and no
+        commutativity, locality or nontriviality assumption. Existing APIs give
+        unit reflection and surjectivity of the induced units map; nil kernels
+        specialize through TwoSidedIdeal.IsNil.isQuasiregular.
     - declaration: "Matrix.GeneralLinearGroup.isUnit_of_mapMatrix_quotient_isUnit"
       file: "GeneralLinearGroups/QuasiregularQuotient.lean"
       note: >-
