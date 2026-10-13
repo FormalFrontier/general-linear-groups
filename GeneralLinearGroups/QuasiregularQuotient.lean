@@ -21,7 +21,9 @@ The scalar interface gives unit reflection as Mathlib's `IsLocalHom` for a
 surjective ring homomorphism with quasi-regular two-sided kernel. It lifts the
 inverse of a unit image and applies the same ordered-product argument, using
 Mathlib's kernel congruence API to keep subtraction in the source ring. The
-target need only be a semiring.
+target need only be a semiring. The complementary scalar statements assert that
+unit reflection implies quasi-regularity of the kernel, with equivalence for
+surjective homomorphisms.
 -/
 
 set_option warningAsError true
@@ -193,5 +195,30 @@ theorem isLocalHom_of_surjective_of_isQuasiregular_ker
   exact Matrix.GeneralLinearGroup.isUnit_of_mul_isUnit_and_isUnit_mul
     (isUnit_of_map_eq_one_of_isQuasiregular_ker f hker hab)
     (isUnit_of_map_eq_one_of_isQuasiregular_ker f hker hba)
+
+/-- The two-sided kernel of a unit-reflecting ring homomorphism is quasi-regular.
+Surjectivity is not required. The source may be noncommutative and the target
+need only be a semiring. -/
+theorem isQuasiregular_ker
+    {R : Type u} {S : Type v} [Ring R] [Semiring S]
+    (f : R →+* S) [IsLocalHom f] : (TwoSidedIdeal.ker f).IsQuasiregular := by
+  apply (TwoSidedIdeal.ker f).isQuasiregular_iff_forall_isUnit_one_add.mpr
+  intro x hx
+  apply IsUnit.of_map f (1 + x)
+  rw [map_add, map_one, (TwoSidedIdeal.mem_ker f).mp hx, add_zero]
+  exact isUnit_one
+
+/-- A surjective ring homomorphism reflects units if and only if its two-sided
+kernel is quasi-regular. The source may be noncommutative and the target need
+only be a semiring. -/
+theorem isLocalHom_iff_isQuasiregular_ker
+    {R : Type u} {S : Type v} [Ring R] [Semiring S]
+    (f : R →+* S) (hf : Function.Surjective f) :
+    IsLocalHom f ↔ (TwoSidedIdeal.ker f).IsQuasiregular := by
+  constructor
+  · intro h
+    let : IsLocalHom f := h
+    exact isQuasiregular_ker f
+  · exact isLocalHom_of_surjective_of_isQuasiregular_ker f hf
 
 end RingHom

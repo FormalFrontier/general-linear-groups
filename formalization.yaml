@@ -12,9 +12,13 @@ project:
     relative membership and lifting; rectangular block units for independent
     finite indices with explicit diagonal units; reindexing, nil and quasiregular
     ideals, congruence subgroups and quotient lifting, nonunital unitization,
-    and matrix trace modulo additive commutators; native dual-number GL, SL
+    and matrix trace modulo additive commutators. Scalar unit reflection for
+    Ring-to-Semiring homomorphisms forces quasi-regularity of the canonical
+    two-sided kernel without surjectivity; for surjective maps it is equivalent
+    to this kernel condition. Source and target universes are independent,
+    with no commutativity or local-ring hypothesis. Dual-number GL, SL
     and scalar-unit reduction kernels, determinant/trace, coefficient maps
-    and the left-conjugation adjoint action over commutative rings. The trace
+    and the left-conjugation adjoint action use commutative rings. The trace
     quotient is an additive group, not a quotient ring; its corner inverse
     requires a chosen matrix index. A native Steinberg presentation adds
     elementary-symbol relations, universal lifts and a finite map onto the
@@ -86,6 +90,11 @@ status:
     unit-pivot diagonalization, product-one diagonals, local-ring elementary
     generation, elementary paths and native SL neighborhoods, each with its
     stated hypotheses.
+    Scalar unit-reflecting Ring-to-Semiring homomorphisms have quasi-regular
+    canonical two-sided kernels without surjectivity; for surjective maps,
+    this kernel condition is also sufficient for unit reflection. Source and
+    target universes are independent, with no commutativity, local-ring,
+    nontriviality or nil-kernel assumption.
     Stable general linear groups over semirings have finite representatives,
     injective stages, compatible lifts and coefficient maps.
     Over rings the stable elementary subgroup is the commutator subgroup,
@@ -279,6 +288,24 @@ status:
         The ideal-unitization augmentation kernel is equivalent to the ambient
         congruence subgroup. Ambient injectivity and multiplicative exactness
         hold for every two-sided ideal, independently of quotient surjectivity.
+    - declaration: "RingHom.isQuasiregular_ker"
+      file: "GeneralLinearGroups/QuasiregularQuotient.lean"
+      note: >-
+        For R : Type u and S : Type v with Ring R and Semiring S, a map
+        f : R →+* S with IsLocalHom f has quasi-regular canonical two-sided
+        kernel TwoSidedIdeal.ker f, without surjectivity. The universes are
+        independent; no commutativity, local-ring, nontriviality or nilness
+        assumption is needed.
+    - declaration: "RingHom.isLocalHom_iff_isQuasiregular_ker"
+      file: "GeneralLinearGroups/QuasiregularQuotient.lean"
+      note: >-
+        For a surjective f : R →+* S from a possibly noncommutative Ring to
+        a Semiring, IsLocalHom f is equivalent to quasi-regularity of the
+        canonical two-sided kernel TwoSidedIdeal.ker f. Source and target
+        universes are independent; no local-ring or nontriviality hypothesis
+        is imposed. Surjectivity is essential for this equivalence: the
+        inclusion of integers into rationals has zero kernel but fails to
+        reflect units.
     - declaration: "RingHom.isLocalHom_of_surjective_of_isQuasiregular_ker"
       file: "GeneralLinearGroups/QuasiregularQuotient.lean"
       note: >-
@@ -789,8 +816,16 @@ fidelity:
     matrix APIs. Semiring, ring, nonunital-ring and commutative scalar-ring
     hypotheses remain distinct. Nil means pointwise nil, not a uniform exponent
     for an ideal. Quasiregularity supplies the additional quotient lifting
-    hypothesis. The trace inverse needs a chosen index although the forward
-    map includes empty indices. Neither trace coefficient naturality,
+    hypothesis. For scalar Ring-to-Semiring homomorphisms, IsLocalHom implies
+    quasi-regularity of the canonical two-sided kernel without surjectivity;
+    the equivalence and reverse constructor assume surjectivity. Kernels
+    need not be nil, only a Semiring structure is required on the target,
+    and no commutativity, local-ring, nontriviality or finiteness hypothesis
+    is imposed. Source and target universes may differ. The inclusion of
+    integers into rationals has zero kernel but fails unit reflection, so
+    kernel quasi-regularity alone does not imply IsLocalHom. The trace inverse
+    needs a chosen index although the forward map includes empty indices.
+    Neither trace coefficient naturality,
     conjugation, stabilization, projective-module trace nor K0 descent is
     provided. Elementary generators and block membership need Ring only;
     singleton-index elementary closure is bottom without trivializing GL.

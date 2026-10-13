@@ -118,15 +118,21 @@ supplies foundational APIs.
   [Paths guide](docs/ElementaryPaths.md),
   [neighborhood guide](docs/ElementaryNeighborhood.md).
 
-- **Scalar unit reflection.** A surjective `f : R →+* S` from a possibly
-  noncommutative ring to a semiring with quasi-regular `TwoSidedIdeal.ker f`
-  gives Mathlib's `IsLocalHom f` through
+- **Scalar unit reflection and canonical quasi-regular kernels.** For
+  `f : R →+* S` from a possibly noncommutative ring to a semiring,
+  `IsLocalHom f` (reflection of units) makes the canonical two-sided kernel
+  `TwoSidedIdeal.ker f` quasi-regular, **without surjectivity**, by
+  [`RingHom.isQuasiregular_ker`](GeneralLinearGroups/QuasiregularQuotient.lean).
+  For a **surjective** such map, unit reflection is equivalent to kernel
+  quasi-regularity by
+  [`RingHom.isLocalHom_iff_isQuasiregular_ker`](GeneralLinearGroups/QuasiregularQuotient.lean);
+  its reverse direction is also available through
   [`RingHom.isLocalHom_of_surjective_of_isQuasiregular_ker`](GeneralLinearGroups/QuasiregularQuotient.lean).
-  Existing Mathlib APIs then give `IsUnit (f a) ↔ IsUnit a` via
-  `isUnit_map_iff` and surjectivity of the induced map on units. Source and
-  target universes are independent; no commutativity, locality or
-  nontriviality is assumed. Nil kernels specialize through the existing
-  `TwoSidedIdeal.IsNil.isQuasiregular`.
+  Mathlib supplies `IsUnit (f a) ↔ IsUnit a` via `isUnit_map_iff`; under
+  surjectivity it also gives a surjective induced map on units. Source and
+  target universes are independent; neither commutativity, local-ring
+  structure, nontriviality nor nilness of the kernel is assumed. Nil kernels
+  specialize through `TwoSidedIdeal.IsNil.isQuasiregular`.
 
 - **Lifting modulo quasi-regular ideals.** For a two-sided ideal, its
   unitization general linear group identifies with the congruence kernel;
@@ -263,7 +269,7 @@ client-only helpers are not promises of the library API.
 | Stable determinant and rank-one units | [Stable determinant](GeneralLinearGroups/StableDeterminant.lean), [clients](tests/GeneralLinearGroupsTests/StableDeterminantClient.lean) | Rank-one maps over semirings; the elementary quotient determinant has trivial kernel over commutative local rings, not arbitrary rings |
 | Finite stabilization and rectangular blocks | [Stabilization](docs/ElementaryStabilization.md), [rectangular blocks](docs/RectangularBlockUnits.md), [rectangular unit switch](GeneralLinearGroups/RectangularUnitSwitch.lean), [zero-product units](GeneralLinearGroups/ZeroProductStabilization.lean) | Semiring stabilization is a *monoid hom on units*; the unit switch requires a `Ring` and `g = 1 + A * B`, but not `B * A = 0` |
 | Presented elementary group | [Steinberg](docs/FiniteRankSteinberg.md) | Finite rank does not imply finite presentation over an arbitrary ring |
-| Nil and quasi-regular ideal quotients; scalar unit reflection | [QuasiregularIdeal](GeneralLinearGroups/QuasiregularIdeal.lean), [QuasiregularQuotient](GeneralLinearGroups/QuasiregularQuotient.lean), [NonUnitalQuasiregular](GeneralLinearGroups/NonUnitalQuasiregular.lean) | Extra ideal hypothesis is needed to lift arbitrary quotient units; scalar reflection assumes a surjective `Ring` → `Semiring` homomorphism with quasi-regular kernel |
+| Quasi-regular kernels, scalar unit reflection and ideal quotients | [QuasiregularIdeal](GeneralLinearGroups/QuasiregularIdeal.lean), [QuasiregularQuotient](GeneralLinearGroups/QuasiregularQuotient.lean), [NonUnitalQuasiregular](GeneralLinearGroups/NonUnitalQuasiregular.lean) | For `Ring` → `Semiring`, unit reflection forces a quasi-regular canonical kernel without surjectivity; the converse and iff require surjectivity. Arbitrary quotient-unit lifting still needs quasi-regularity |
 | Single-entry matrix corners | [MatrixCorner](GeneralLinearGroups/MatrixCorner.lean), [clients](tests/GeneralLinearGroupsTests/MatrixCornerClient.lean) | A chosen index gives a corner identity that may differ from the ambient identity; no commutativity assumption |
 | Additive trace quotient | [MatrixTrace](GeneralLinearGroups/MatrixTrace.lean), [AdditiveCommutator](GeneralLinearGroups/AdditiveCommutator.lean) | An inverse needs a chosen index; no ring quotient or `K₀` theorem |
 | Native first-order and mixed dual numbers | [Kernel guide](docs/DualNumberKernels.md), [adjoint guide](docs/DualNumberKernelAdjoint.md), [mixed GL guide](docs/DualNumberMixedCommutator.md), [mixed SL guide](docs/DualNumberMixedSLCommutator.md) | `CommRing`, finite decidable indices; SL requires individual trace-zero factors |
@@ -287,6 +293,18 @@ arbitrary-ring `SL = E`, global `GL` connectivity or quantitative neighborhood.
 There is **no** claimed stable `K₁` identification, excision,
 `K₂`, source-complete K-theory, ambient relative normality or universal
 triangular-invertibility converse.
+
+Scalar unit reflection means `IsLocalHom f`, not a local-ring assumption
+on source or target.
+Its kernel consequence has no surjectivity, nilness, finiteness or rank
+hypothesis. The converse needs surjectivity: the inclusion `ℤ → ℚ` has
+zero (hence quasi-regular) kernel but does not reflect units, since `2`
+becomes a unit. Nonsurjective maps can nevertheless reflect units: rational
+constants `PowerSeries.C (R := ℚ) : ℚ →+* PowerSeries ℚ` do so via the
+ring-homomorphic retraction `PowerSeries.constantCoeff`, while `X` is not
+constant. Quasi-regular kernels need not be nil: the constant-coefficient
+map on rational formal power series has a quasi-regular kernel containing
+the nonnilpotent series `X`.
 
 The [historical API snapshot](docs/API.md) covers only 128 authored public
 entries and 16 module records, with source links on thirteen unchanged

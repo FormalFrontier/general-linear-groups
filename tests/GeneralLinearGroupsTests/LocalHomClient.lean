@@ -17,7 +17,11 @@ The reduction of two-by-two matrices from `ZMod 4` to `ZMod 2` has a nonzero
 square-zero kernel, and both matrix rings contain noncommuting elements and
 explicit units and nonunits. These kernel and surjectivity facts are proved
 independently of unit reflection. The scalar class is consumed through
-Mathlib's unit equivalence and surjectivity of the induced units map.
+Mathlib's unit equivalence and surjectivity of the induced units map. The
+necessity consumer places the canonical kernel in the Jacobson radical without
+surjectivity or a ring structure on the target. For matrix reduction, locality
+is derived from kernel quasi-regularity before consuming the converse and the
+characteristic equivalence.
 
 ## References
 
@@ -54,6 +58,10 @@ example (f : R →+* S) (hf : Function.Surjective f)
     Function.Surjective (Units.map f.toMonoidHom) :=
   IsLocalRing.surjective_units_map_of_local_ringHom f hf
     (f.isLocalHom_of_surjective_of_isQuasiregular_ker hf hker)
+
+example (f : R →+* S) [IsLocalHom f] :
+    TwoSidedIdeal.ker f ≤ (Ring.jacobson R).toTwoSided :=
+  f.isQuasiregular_ker.le_ringJacobson
 
 end Consumers
 
@@ -189,13 +197,26 @@ example : IsUnit (1 + Matrix.single (0 : Fin 2) (1 : Fin 2) (1 : ZMod 4)) ∧
   exact ⟨matrix_one_add_single_isUnit, matrix_single_not_isUnit,
     matrix_one_add_single_isUnit, matrix_single_not_isUnit⟩
 
+-- Locality is obtained from kernel quasi-regularity; the nonzero square-zero
+-- kernel witnesses do not use unit reflection.
 example : IsLocalHom reductionMatrix ∧
+    (TwoSidedIdeal.ker reductionMatrix).IsQuasiregular ∧
+    (IsLocalHom reductionMatrix ↔ (TwoSidedIdeal.ker reductionMatrix).IsQuasiregular) ∧
+    Matrix.single (0 : Fin 2) (0 : Fin 2) (2 : ZMod 4) ≠ 0 ∧
+    Matrix.single (0 : Fin 2) (0 : Fin 2) (2 : ZMod 4) ∈
+      TwoSidedIdeal.ker reductionMatrix ∧
+    (∀ A B : Matrix (Fin 2) (Fin 2) (ZMod 4),
+      A ∈ TwoSidedIdeal.ker reductionMatrix →
+      B ∈ TwoSidedIdeal.ker reductionMatrix → A * B = 0) ∧
     (∀ A : Matrix (Fin 2) (Fin 2) (ZMod 4), IsUnit (reductionMatrix A) ↔ IsUnit A) ∧
     Function.Surjective (Units.map reductionMatrix.toMonoidHom) := by
   let : IsLocalHom reductionMatrix :=
     reductionMatrix.isLocalHom_of_surjective_of_isQuasiregular_ker
       reductionMatrix_surjective reductionMatrix_kernel_isQuasiregular
-  exact ⟨inferInstance, isUnit_map_iff reductionMatrix,
+  exact ⟨inferInstance, reductionMatrix.isQuasiregular_ker,
+    reductionMatrix.isLocalHom_iff_isQuasiregular_ker reductionMatrix_surjective,
+    two_single_ne_zero, two_single_mem_kernel, reductionMatrix_kernel_mul_zero,
+    isUnit_map_iff reductionMatrix,
     IsLocalRing.surjective_units_map_of_local_ringHom reductionMatrix
       reductionMatrix_surjective inferInstance⟩
 

@@ -11,7 +11,7 @@ import Mathlib.RingTheory.PowerSeries.Inverse
 import Mathlib.RingTheory.TwoSidedIdeal.Kernel
 
 /-!
-# A quasi-regular kernel that is not nil
+# Local power-series maps and a quasi-regular kernel that is not nil
 
 The constant-coefficient map on power series over `ℚ` is surjective, and its
 canonical two-sided kernel is quasi-regular but not nil. A series in the kernel
@@ -20,7 +20,14 @@ in the kernel, but the coefficient of degree `n` in `X ^ n` is `1` for every `n`
 
 These examples use Mathlib's power-series coefficient and invertibility APIs.
 The independently established kernel and surjectivity facts also supply the
-scalar local-homomorphism interface and its standard unit equivalence.
+scalar local-homomorphism interface, its standard unit equivalence, and the
+kernel necessity/iff APIs. Here locality is obtained from the quasi-regular
+kernel, rather than established independently of that kernel property.
+
+The inclusion of rational constants is local by its constant-coefficient
+retraction, but is not surjective: `X` has nonzero coefficient in degree one.
+This local input does not use kernel quasi-regularity. Its canonical kernel is
+zero, and necessity places it in the Jacobson radical.
 -/
 
 set_option warningAsError true
@@ -67,10 +74,42 @@ example :
       ∀ n : ℕ, (X : PowerSeries ℚ) ^ n ≠ 0 :=
   ⟨X_ne_zero, X_mem_constantCoeff_ker, X_pow_ne_zero⟩
 
-example (φ : PowerSeries ℚ) : IsUnit (constantCoeff φ) ↔ IsUnit φ := by
+-- Locality comes from the quasi-regular kernel; nonnilness is supplied by the
+-- existing powers-of-X witnesses, independently of unit reflection.
+example (φ : PowerSeries ℚ) :
+    (IsUnit (constantCoeff φ) ↔ IsUnit φ) ∧
+      (TwoSidedIdeal.ker (constantCoeff (R := ℚ))).IsQuasiregular ∧
+      (IsLocalHom (constantCoeff (R := ℚ)) ↔
+        (TwoSidedIdeal.ker (constantCoeff (R := ℚ))).IsQuasiregular) ∧
+      ¬ (TwoSidedIdeal.ker (constantCoeff (R := ℚ))).IsNil := by
   let : IsLocalHom (constantCoeff (R := ℚ)) :=
     (constantCoeff (R := ℚ)).isLocalHom_of_surjective_of_isQuasiregular_ker
       constantCoeff_surj constantCoeff_ker_isQuasiregular
-  exact isUnit_map_iff (constantCoeff (R := ℚ)) φ
+  exact ⟨isUnit_map_iff (constantCoeff (R := ℚ)) φ,
+    (constantCoeff (R := ℚ)).isQuasiregular_ker,
+    (constantCoeff (R := ℚ)).isLocalHom_iff_isQuasiregular_ker constantCoeff_surj,
+    constantCoeff_rat_surjective_ker_isQuasiregular_not_isNil.2.2⟩
+
+-- The retraction proves locality without a quasi-regular-kernel constructor.
+example : IsLocalHom (C (R := ℚ)) ∧
+    ¬ Function.Surjective (C (R := ℚ)) ∧
+    TwoSidedIdeal.ker (C (R := ℚ)) = ⊥ ∧
+    (TwoSidedIdeal.ker (C (R := ℚ))).IsQuasiregular ∧
+    TwoSidedIdeal.ker (C (R := ℚ)) ≤ (Ring.jacobson ℚ).toTwoSided := by
+  have hlocal : IsLocalHom (C (R := ℚ)) :=
+    isLocalHom_of_leftInverse (f := C (R := ℚ)) (constantCoeff (R := ℚ))
+      (fun a => constantCoeff_C a)
+  have hnotSurj : ¬ Function.Surjective (C (R := ℚ)) := by
+    intro hsurj
+    obtain ⟨a, ha⟩ := hsurj (X : PowerSeries ℚ)
+    have hcoeff : (0 : ℚ) = 1 := by
+      simpa only [coeff_succ_C, coeff_one_X] using
+        congrArg (coeff (R := ℚ) 1) ha
+    exact zero_ne_one hcoeff
+  have hker : TwoSidedIdeal.ker (C (R := ℚ)) = ⊥ :=
+    (TwoSidedIdeal.ker_eq_bot (C (R := ℚ))).mpr C_injective
+  let : IsLocalHom (C (R := ℚ)) := hlocal
+  exact ⟨hlocal, hnotSurj, hker, (C (R := ℚ)).isQuasiregular_ker,
+    (C (R := ℚ)).isQuasiregular_ker.le_ringJacobson⟩
 
 end PowerSeries
