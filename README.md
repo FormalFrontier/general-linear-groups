@@ -11,6 +11,19 @@ supplies foundational APIs.
 
 ## Headline results
 
+- **Kronecker products of matrix units.** Over any `Semiring`, the Kronecker
+  product of two unit matrices is a unit, for independently-universed finite
+  decidable square indices, including empty indices and zero semirings. The
+  ordered factorization `(A ⊗ₖ 1) * (1 ⊗ₖ B)`, for chosen input units with
+  stored inverse values `A'` and `B'`, supplies the reversed inverse witness
+  `(1 ⊗ₖ B') * (A' ⊗ₖ 1)`; tensoring input inverses is not valid in general
+  over noncommutative coefficients. The rectangular mixed identity
+  needs only a `NonAssocSemiring` and finite, decidable middle indices. Over
+  commutative coefficients, the extracted unit agrees with mathlib's general
+  linear Kronecker construction.
+  [Unit preservation](GeneralLinearGroups/KroneckerUnits.lean),
+  [operational examples](tests/GeneralLinearGroupsTests/KroneckerUnits.lean).
+
 - **Single-entry matrix corners.** For a `Semiring R`, finite decidable indices
   and a chosen index `i`, the corner of `Matrix ι ι R` at the diagonal matrix
   unit `single i i 1` is ring-equivalent to `R` by extracting the `(i,i)` entry;
@@ -270,6 +283,7 @@ client-only helpers are not promises of the library API.
 | Finite stabilization and rectangular blocks | [Stabilization](docs/ElementaryStabilization.md), [rectangular blocks](docs/RectangularBlockUnits.md), [rectangular unit switch](GeneralLinearGroups/RectangularUnitSwitch.lean), [zero-product units](GeneralLinearGroups/ZeroProductStabilization.lean) | Semiring stabilization is a *monoid hom on units*; the unit switch requires a `Ring` and `g = 1 + A * B`, but not `B * A = 0` |
 | Presented elementary group | [Steinberg](docs/FiniteRankSteinberg.md) | Finite rank does not imply finite presentation over an arbitrary ring |
 | Quasi-regular kernels, scalar unit reflection and ideal quotients | [QuasiregularIdeal](GeneralLinearGroups/QuasiregularIdeal.lean), [QuasiregularQuotient](GeneralLinearGroups/QuasiregularQuotient.lean), [NonUnitalQuasiregular](GeneralLinearGroups/NonUnitalQuasiregular.lean) | For `Ring` → `Semiring`, unit reflection forces a quasi-regular canonical kernel without surjectivity; the converse and iff require surjectivity. Arbitrary quotient-unit lifting still needs quasi-regularity |
+| Kronecker products of units | [KroneckerUnits](GeneralLinearGroups/KroneckerUnits.lean), [clients](tests/GeneralLinearGroupsTests/KroneckerUnits.lean) | Semiring coefficients; the inverse witness reverses the identity-factor order, without a generic product-group homomorphism |
 | Single-entry matrix corners | [MatrixCorner](GeneralLinearGroups/MatrixCorner.lean), [clients](tests/GeneralLinearGroupsTests/MatrixCornerClient.lean) | A chosen index gives a corner identity that may differ from the ambient identity; no commutativity assumption |
 | Additive trace quotient | [MatrixTrace](GeneralLinearGroups/MatrixTrace.lean), [AdditiveCommutator](GeneralLinearGroups/AdditiveCommutator.lean) | An inverse needs a chosen index; no ring quotient or `K₀` theorem |
 | Native first-order and mixed dual numbers | [Kernel guide](docs/DualNumberKernels.md), [adjoint guide](docs/DualNumberKernelAdjoint.md), [mixed GL guide](docs/DualNumberMixedCommutator.md), [mixed SL guide](docs/DualNumberMixedSLCommutator.md) | `CommRing`, finite decidable indices; SL requires individual trace-zero factors |
@@ -330,7 +344,10 @@ stabilization, Steinberg, dual-number, unit-pivot, elementary-path, diagonal
 and neighborhood proofs and clients; additional agents adapted their
 examples and mathematical guides. These original project contributions
 are distinct from Weibel's mathematical motivation and mathlib's third-party
-work, whose authorship and notices remain with mathlib. AI agents developed
+work, whose authorship and notices remain with mathlib. Kronecker unit
+preservation generalizes mathlib's commutative-coefficient theorem and follows
+its constant-family, block-diagonal, reindexing and `Units` formalizations.
+AI agents developed
 the Lean code and documentation with compiler feedback and independent agent
 review; no human mathematical review is claimed. Licensed under
 [Apache-2.0](LICENSE); no copyright holder is inferred from the author credit.

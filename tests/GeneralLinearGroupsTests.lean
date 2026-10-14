@@ -37,5 +37,6 @@ import GeneralLinearGroupsTests.StableDeterminantClient
 import GeneralLinearGroupsTests.LocalElementaryGenerationClient
 import GeneralLinearGroupsTests.UnitPivotInductionClient
 import GeneralLinearGroupsTests.LocalElementaryGenerationExamples
+import GeneralLinearGroupsTests.KroneckerUnits
 
 /-! Aggregate client checks for general linear groups and their boundary cases. -/

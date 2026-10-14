@@ -26,6 +26,7 @@ public import GeneralLinearGroups.RelativeWhitehead
 public import GeneralLinearGroups.ElementaryStabilization
 public import GeneralLinearGroups.RelativeWhiteheadConsequences
 public import GeneralLinearGroups.RectangularBlockUnits
+public import GeneralLinearGroups.KroneckerUnits
 public import GeneralLinearGroups.DualNumberKernels
 public import GeneralLinearGroups.DualNumberKernelAdjoint
 public import GeneralLinearGroups.Steinberg

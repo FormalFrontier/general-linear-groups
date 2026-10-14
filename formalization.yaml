@@ -6,8 +6,9 @@ version: "v0.4"
 project:
   name: "general-linear-groups"
   description: >-
-    Finite general linear groups over possibly noncommutative rings: elementary
-    units, ordered commutators, relative normal closures inside elementary
+    Finite general linear groups over possibly noncommutative semirings and
+    rings: Kronecker products of matrix units with reversed identity-factor
+    inverse witnesses, elementary units, ordered commutators, relative normal closures inside elementary
     groups, finite stabilization, Whitehead block factorization and doubled
     relative membership and lifting; rectangular block units for independent
     finite indices with explicit diagonal units; reindexing, nil and quasiregular
