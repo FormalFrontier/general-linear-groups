@@ -5,6 +5,7 @@ Authors: Formal Frontier Agents
 module
 
 public import Mathlib.Algebra.Group.Subgroup.Lattice
+public import Mathlib.Algebra.Group.Units.Defs
 public import Mathlib.Algebra.Ring.Defs
 public import Mathlib.Algebra.Ring.Equiv
 public import Mathlib.GroupTheory.QuotientGroup.Defs
@@ -20,6 +21,17 @@ For an additive commutative group with multiplication, the opposite equivalence
 on additive-commutator quotients is induced by Mathlib's
 `MulOpposite.opAddEquiv` using `QuotientAddGroup.congr`. Double application is
 compared with Mathlib's `RingEquiv.opOp`, not with an identity across carriers.
+
+The cyclic representative law needs only an additive commutative group and
+multiplication; invariance under conjugation by a unit additionally needs a
+monoid, but no distributive laws.
+
+## References
+
+* Charles A. Weibel, *The K-book*, Chapter II, §2, for the trace construction
+  modulo additive commutators.
+* Mathlib's additive subgroup and quotient-group APIs.
+* The Projective Modules formalization of cyclicity modulo additive commutators.
 -/
 
 set_option warningAsError true
@@ -76,6 +88,22 @@ theorem additiveCommutators_map_opOp :
   rw [← AddSubgroup.map_map, additiveCommutators_map_op, additiveCommutators_map_op]
 
 end AddGroup
+
+/-- Products in either order represent the same additive-commutator class. -/
+theorem additiveCommutatorQuotient_mk_mul_comm
+    {A : Type u} [AddCommGroup A] [Mul A] (a b : A) :
+    QuotientAddGroup.mk' (additiveCommutators A) (a * b) =
+      QuotientAddGroup.mk' (additiveCommutators A) (b * a) := by
+  exact QuotientAddGroup.eq_iff_sub_mem.mpr
+    (commutator_mem_additiveCommutators a b)
+
+/-- Conjugation by a unit preserves the additive-commutator class of a representative. -/
+theorem additiveCommutatorQuotient_mk_units_conj
+    {A : Type u} [AddCommGroup A] [Monoid A] (u : Aˣ) (a : A) :
+    QuotientAddGroup.mk' (additiveCommutators A) ((u : A) * a * (↑(u⁻¹) : A)) =
+      QuotientAddGroup.mk' (additiveCommutators A) a := by
+  rw [additiveCommutatorQuotient_mk_mul_comm ((u : A) * a),
+    Units.inv_mul_cancel_left]
 
 section AddCommGroup
 

@@ -174,8 +174,14 @@ supplies foundational APIs.
   commutators to the coefficient ring modulo additive commutators; its inverse
   inserts a scalar in the `p,p` corner. The forward map also works at empty
   rank. These are *additive groups*, not quotient rings or a `K₀` descent.
-  [Equivalence](GeneralLinearGroups/MatrixTrace.lean#L166),
-  [forward map](GeneralLinearGroups/MatrixTrace.lean#L63).
+  [Equivalence and forward map](GeneralLinearGroups/MatrixTrace.lean).
+  The following characteristic laws use weaker hypotheses:
+  [cyclic representatives and unit conjugation](GeneralLinearGroups/AdditiveCommutator.lean)
+  require `AddCommGroup` with `Mul`, respectively `Monoid`, without distributivity;
+  [raw block trace](GeneralLinearGroups/MatrixTrace.lean) requires only
+  `AddCommMonoid` and two independently-universed finite index types, without
+  decidable equality or nonemptiness. The raw `Sum`-indexed block shape
+  complements mathlib's dependent `trace_blockDiagonal'` formula.
 
 - **Finite elementary and relative structure.** Off-diagonal elementary
   units generate `E`; ordered commutator laws prove that `E` is perfect at

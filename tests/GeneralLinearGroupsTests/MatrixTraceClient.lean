@@ -6,8 +6,19 @@ module
 
 public import GeneralLinearGroups
 import Mathlib.Algebra.Ring.PUnit
+import Mathlib.Algebra.Group.Units.Hom
+import Mathlib.LinearAlgebra.Matrix.Permutation
+import Mathlib.Logic.Equiv.Fin.Basic
 
-/-! Public-root client for the native matrix trace and additive-commutator quotient. -/
+/-!
+# Matrix trace and additive-commutator quotient clients
+
+The integer matrix units and the permutation-matrix unit give concrete inputs
+for cyclicity, unit conjugation and block trace. The compound contract records
+their values, nonzero quotient detection and empty-index boundaries.
+The unit is constructed by Mathlib's
+`Matrix.permMatrixHom` and `MonoidHom.toHomUnits`, including both inverse laws.
+-/
 
 set_option warningAsError true
 
@@ -173,5 +184,172 @@ private theorem opposite_zero_ring_contract :
   trans QuotientAddGroup.mk 0
   · exact congrArg QuotientAddGroup.mk (Subsingleton.elim _ _)
   · exact QuotientAddGroup.mk_zero _
+
+private abbrev IntegerMatrix := Matrix (Fin 2) (Fin 2) ℤ
+
+private def e00 : IntegerMatrix := Matrix.single 0 0 1
+private def e01 : IntegerMatrix := Matrix.single 0 1 1
+private def e10 : IntegerMatrix := Matrix.single 1 0 1
+private def e11 : IntegerMatrix := Matrix.single 1 1 1
+
+/-- The transposition matrix, with inverse fields supplied by the group-to-units map. -/
+private def swapUnit : IntegerMatrixˣ :=
+  (Matrix.permMatrixHom (n := Fin 2) (R := ℤ)).toHomUnits (Equiv.swap 0 1)
+
+private def singletonBlock : Matrix (Fin 1) (Fin 1) IntegerMatrix :=
+  fun _ _ => e00
+
+private def blockSum : Matrix (Fin 1 ⊕ Fin 1) (Fin 1 ⊕ Fin 1) IntegerMatrix :=
+  Matrix.fromBlocks singletonBlock 0 0 0
+
+private def emptyBlockBoundary : Matrix (Empty ⊕ Fin 1) (Empty ⊕ Fin 1) IntegerMatrix :=
+  Matrix.fromBlocks (0 : Matrix Empty Empty IntegerMatrix) 0 0 singletonBlock
+
+/-- Append a zero last row and column; this construction is not a unital ring map.
+The equivalence sends `inl i` to `Fin.castAdd 1 i` and `inr j` to `Fin.natAdd n j`. -/
+private def zeroBlockStabilization {n : ℕ} (A : Matrix (Fin n) (Fin n) IntegerMatrix) :
+    Matrix (Fin (n + 1)) (Fin (n + 1)) IntegerMatrix :=
+  Matrix.reindex
+    (finSumFinEquiv : Fin n ⊕ Fin 1 ≃ Fin (n + 1))
+    (finSumFinEquiv : Fin n ⊕ Fin 1 ≃ Fin (n + 1))
+    (Matrix.fromBlocks A 0 0 (0 : Matrix (Fin 1) (Fin 1) IntegerMatrix))
+
+/-- Distinct cyclic products and a noncentral unit yield the same nonzero
+commutator class, while a nonzero off-diagonal matrix is killed. Raw blocks,
+the empty boundary and last-coordinate stabilization preserve the indicated
+trace. The quotient detector is the existing induced integer trace map. -/
+private theorem cyclic_conjugation_block_contract :
+    let q := QuotientAddGroup.mk' (Ring.additiveCommutators IntegerMatrix)
+    let qZ := QuotientAddGroup.mk' (Ring.additiveCommutators ℤ)
+    let t := Matrix.traceOnCommutatorQuotient (R := ℤ) (n := Fin 2)
+    let s := (swapUnit : IntegerMatrix)
+    let si := (↑(swapUnit⁻¹) : IntegerMatrix)
+    e01 * e10 = e00 ∧ e10 * e01 = e11 ∧ e00 ≠ e11 ∧
+    s = !![0, 1; 1, 0] ∧ si = !![0, 1; 1, 0] ∧
+    swapUnit ≠ 1 ∧ s * e00 ≠ e00 * s ∧ s * e00 * si = e11 ∧
+    -- Instances of the cyclic and unit-conjugation characteristic statements.
+    q (e01 * e10) = q (e10 * e01) ∧ q (s * e00 * si) = q e00 ∧
+    q e00 = q e11 ∧ e01 ≠ 0 ∧ q e01 = 0 ∧
+    Matrix.trace e00 = 1 ∧ Matrix.trace e11 = 1 ∧
+    t (q e00) = qZ 1 ∧ t (q e11) = qZ 1 ∧
+    qZ 1 ≠ 0 ∧ q e00 ≠ 0 ∧ q e11 ≠ 0 ∧
+    -- A nonzero instance of the raw block trace statement and its boundaries.
+    Matrix.trace blockSum =
+      Matrix.trace singletonBlock + Matrix.trace (0 : Matrix (Fin 1) (Fin 1) IntegerMatrix) ∧
+    Matrix.trace blockSum = e00 ∧
+    q (Matrix.trace blockSum) = q e00 ∧
+    emptyBlockBoundary (Sum.inr 0) (Sum.inr 0) = e00 ∧
+    Matrix.trace emptyBlockBoundary = e00 ∧
+    zeroBlockStabilization singletonBlock 0 0 = e00 ∧
+    (∀ i : Fin 2,
+      zeroBlockStabilization singletonBlock (Fin.last 1) i = 0 ∧
+      zeroBlockStabilization singletonBlock i (Fin.last 1) = 0) ∧
+    Matrix.trace (zeroBlockStabilization singletonBlock) = e00 ∧
+    zeroBlockStabilization (0 : Matrix (Fin 0) (Fin 0) IntegerMatrix) = 0 := by
+  dsimp only
+  let q := QuotientAddGroup.mk' (Ring.additiveCommutators IntegerMatrix)
+  let qZ := QuotientAddGroup.mk' (Ring.additiveCommutators ℤ)
+  let t := Matrix.traceOnCommutatorQuotient (R := ℤ) (n := Fin 2)
+  let s := (swapUnit : IntegerMatrix)
+  let si := (↑(swapUnit⁻¹) : IntegerMatrix)
+  have h01 : e01 * e10 = e00 := by
+    simp [e01, e10, e00]
+  have h10 : e10 * e01 = e11 := by
+    simp [e10, e01, e11]
+  have hdistinct : e00 ≠ e11 := by
+    intro h
+    have hentry := congrArg (fun A : IntegerMatrix => A 0 0) h
+    simp [e00, e11] at hentry
+  have hs : s = !![0, 1; 1, 0] := by
+    decide
+  have hself : s * s = 1 := by
+    rw [hs]
+    decide
+  have hsi : si = !![0, 1; 1, 0] := by
+    calc
+      si = si * (s * s) := by rw [hself, mul_one]
+      _ = s := by simp [si, s, ← mul_assoc]
+      _ = !![0, 1; 1, 0] := hs
+  have hunit : swapUnit ≠ 1 := by
+    intro h
+    have hentry := congrArg (fun u : IntegerMatrixˣ => (u : IntegerMatrix) 0 0) h
+    have hzero : (swapUnit : IntegerMatrix) 0 0 = 0 := by
+      simpa [s] using congrArg (fun A : IntegerMatrix => A 0 0) hs
+    simp [hzero] at hentry
+  have hnoncentral : s * e00 ≠ e00 * s := by
+    rw [hs]
+    decide
+  have hconj : s * e00 * si = e11 := by
+    rw [hs, hsi]
+    decide
+  have hcyclic : q (e01 * e10) = q (e10 * e01) :=
+    Ring.additiveCommutatorQuotient_mk_mul_comm e01 e10
+  have hquotConj : q (s * e00 * si) = q e00 :=
+    Ring.additiveCommutatorQuotient_mk_units_conj swapUnit e00
+  have hqeq : q e00 = q e11 := by
+    simpa only [h01, h10] using hcyclic
+  have hoff : e01 ≠ 0 := by
+    intro h
+    have hentry := congrArg (fun A : IntegerMatrix => A 0 1) h
+    simp [e01] at hentry
+  have hqoff : q e01 = 0 := by
+    apply (QuotientAddGroup.eq_zero_iff e01).2
+    exact Matrix.offDiagonal_single_mem_additiveCommutators (0 : Fin 2) 1 (by decide) 1
+  have htrace00 : Matrix.trace e00 = 1 := by
+    simp [e00]
+  have htrace11 : Matrix.trace e11 = 1 := by
+    simp [e11]
+  have hdet00 : t (q e00) = qZ 1 := by
+    simp [t, q, qZ, htrace00]
+  have hdet11 : t (q e11) = qZ 1 := by
+    simp [t, q, qZ, htrace11]
+  have hqZne : qZ 1 ≠ 0 := by
+    intro h
+    have hmem := (QuotientAddGroup.eq_zero_iff (1 : ℤ)).mp h
+    simp [integer_additiveCommutators_eq_bot] at hmem
+  have hq00ne : q e00 ≠ 0 := by
+    intro h
+    apply hqZne
+    rw [← hdet00, h, map_zero]
+  have hq11ne : q e11 ≠ 0 := by
+    intro h
+    exact hq00ne (hqeq.trans h)
+  have hraw : Matrix.trace blockSum =
+      Matrix.trace singletonBlock + Matrix.trace (0 : Matrix (Fin 1) (Fin 1) IntegerMatrix) :=
+    Matrix.trace_fromBlocks singletonBlock 0 0 0
+  have hblock : Matrix.trace blockSum = e00 := by
+    rw [hraw, Matrix.trace_zero, add_zero, Matrix.trace_fin_one]
+    rfl
+  have hblockq : q (Matrix.trace blockSum) = q e00 :=
+    congrArg q hblock
+  have hemptyentry : emptyBlockBoundary (Sum.inr 0) (Sum.inr 0) = e00 := rfl
+  have hemptytrace : Matrix.trace emptyBlockBoundary = e00 := by
+    calc
+      Matrix.trace emptyBlockBoundary =
+          Matrix.trace (0 : Matrix Empty Empty IntegerMatrix) + Matrix.trace singletonBlock :=
+        Matrix.trace_fromBlocks 0 0 0 singletonBlock
+      _ = e00 := by simp [Matrix.trace_fin_one, singletonBlock]
+  -- This equality computes the given reindexing, so its zero coordinate is last.
+  have hstabilization :
+      zeroBlockStabilization singletonBlock = !![e00, 0; 0, 0] := by
+    decide
+  have hstabentry : zeroBlockStabilization singletonBlock 0 0 = e00 := by
+    rw [hstabilization]
+    rfl
+  have hstablast : ∀ i : Fin 2,
+      zeroBlockStabilization singletonBlock (Fin.last 1) i = 0 ∧
+      zeroBlockStabilization singletonBlock i (Fin.last 1) = 0 := by
+    rw [hstabilization]
+    decide
+  have hstabtrace : Matrix.trace (zeroBlockStabilization singletonBlock) = e00 := by
+    rw [hstabilization, Matrix.trace_fin_two]
+    simp
+  have hstab0 :
+      zeroBlockStabilization (0 : Matrix (Fin 0) (Fin 0) IntegerMatrix) = 0 := by
+    decide
+  exact ⟨h01, h10, hdistinct, hs, hsi, hunit, hnoncentral, hconj, hcyclic, hquotConj,
+    hqeq, hoff, hqoff, htrace00, htrace11, hdet00, hdet11, hqZne, hq00ne, hq11ne,
+    hraw, hblock, hblockq, hemptyentry, hemptytrace, hstabentry, hstablast, hstabtrace,
+    hstab0⟩
 
 end MatrixTraceClient

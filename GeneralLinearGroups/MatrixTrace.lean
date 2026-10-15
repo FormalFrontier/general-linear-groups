@@ -15,6 +15,17 @@ public import Mathlib.GroupTheory.QuotientGroup.Defs
 For a finite square matrix over an arbitrary unital ring, trace descends to
 the additive quotients by commutators. Given an index, a diagonal corner
 defines its inverse. The forward map works even for empty index types.
+
+The raw `fromBlocks` trace statement requires only an additive commutative
+monoid and independently-universed finite index types. This Sum-indexed
+formula complements Mathlib's dependent
+Sigma-indexed `Matrix.trace_blockDiagonal'`; it is not a generalization of it.
+
+## References
+
+* Charles A. Weibel, *The K-book*, Chapter II, §2, for matrix trace modulo
+  additive commutators.
+* Mathlib's `Matrix.trace`, `Matrix.fromBlocks` and `Matrix.trace_blockDiagonal'`.
 -/
 
 set_option warningAsError true
@@ -26,6 +37,16 @@ namespace Matrix
 open scoped BigOperators
 
 universe uR uM uN
+
+/-- The trace of a raw two-by-two block matrix is the sum of the diagonal-block traces. -/
+theorem trace_fromBlocks
+    {R : Type uR} [AddCommMonoid R]
+    {ι : Type uM} {κ : Type uN} [Fintype ι] [Fintype κ]
+    (A : Matrix ι ι R) (B : Matrix ι κ R)
+    (C : Matrix κ ι R) (D : Matrix κ κ R) :
+    trace (fromBlocks A B C D) = trace A + trace D := by
+  simp only [trace, diag_apply, Fintype.sum_sum_type,
+    fromBlocks_apply₁₁, fromBlocks_apply₂₂]
 
 variable {R : Type uR} [Ring R]
 variable {m : Type uM} {n : Type uN} [Fintype m] [Fintype n]
