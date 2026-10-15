@@ -49,6 +49,7 @@ theorem trace_mul_sub_trace_mul_mem_additiveCommutators
 
 variable [DecidableEq n]
 
+omit [DecidableEq n] in
 /-- Trace carries the entire matrix commutator closure into scalar commutators. -/
 theorem additiveCommutators_le_trace_comap :
     Ring.additiveCommutators (Matrix n n R) ≤
@@ -59,13 +60,14 @@ theorem additiveCommutators_le_trace_comap :
   rw [trace_sub]
   exact trace_mul_sub_trace_mul_mem_additiveCommutators A B
 
-/-- The actual trace on the native additive-group quotients, including empty indices. -/
+/-- The trace homomorphism on additive commutator quotients, including empty indices. -/
 def traceOnCommutatorQuotient :
     (Matrix n n R ⧸ Ring.additiveCommutators (Matrix n n R)) →+
       (R ⧸ Ring.additiveCommutators R) :=
   QuotientAddGroup.map _ _ (traceAddMonoidHom n R)
     additiveCommutators_le_trace_comap
 
+omit [DecidableEq n] in
 /-- The induced trace sends the class of a matrix to the class of its trace. -/
 @[simp] theorem traceOnCommutatorQuotient_mk (A : Matrix n n R) :
     traceOnCommutatorQuotient (QuotientAddGroup.mk A) =
@@ -119,11 +121,13 @@ theorem sub_corner_trace_mem_additiveCommutators (p : n) (A : Matrix n n R) :
     (Ring.additiveCommutators (Matrix n n R)).sum_mem fun j _ =>
       single_sub_corner_trace_mem_additiveCommutators p i j (A i j)
 
+omit [DecidableEq n] in
 /-- For a nonempty finite index, membership in the matrix commutator closure
 is characterized by membership of its trace in the scalar closure. -/
 theorem mem_additiveCommutators_iff_trace_mem (p : n) (A : Matrix n n R) :
     A ∈ Ring.additiveCommutators (Matrix n n R) ↔
       trace A ∈ Ring.additiveCommutators R := by
+  classical
   constructor
   · exact fun membership => additiveCommutators_le_trace_comap membership
   · intro membership
