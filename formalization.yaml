@@ -41,7 +41,10 @@ project:
     subgroup, with quotient canonically the abelianization. Over commutative
     rings the stable determinant and its quotient and abelianization
     factorizations admit rank-one sections; the elementary subgroup lies in
-    the determinant kernel.
+    the determinant kernel. Entrywise matrix ideal-power bounds hold over
+    semirings for arbitrary left ideals and independent finite decidable
+    indices, including empty indices. Any exponent annihilating the whole
+    ideal also annihilates a matrix whose entries lie in it.
   authors:
     - "Formal Frontier Agents"
   responsible_maintainers:
@@ -74,10 +77,11 @@ related_formalizations:
   - id: "https://github.com/leanprover-community/mathlib4/tree/83abb3e776bdefcbc447a1e44d0debe4010039e5"
     relationship: "builds-on"
     note: >-
-      Reuses native matrices, units, ring homomorphisms, two-sided ideals,
-      Jacobson radicals, nonunital quasiregularity, unitization, subgroup
-      closure and additive quotients. Upstream authorship and license notices
-      remain with mathlib; its sources are not vendored. The Lake manifest
+      Reuses native matrices, units, ring homomorphisms, left and two-sided
+      ideals, regular-module powers, finite-sum closure, Jacobson radicals,
+      nonunital quasiregularity, unitization, subgroup closure and additive
+      quotients. Upstream authorship and license notices remain with mathlib;
+      its sources are not vendored. The Lake manifest
       includes generated dependency records derived from mathlib's manifest.
 
 status:
@@ -114,6 +118,21 @@ status:
     index types where stated. The results do not establish stable K1 or K2,
     a source-complete K-theory formalization, or source-passage coverage.
   main_results:
+    - declaration: "Matrix.pow_apply_mem_ideal_pow"
+      file: "GeneralLinearGroups/MatrixNilpotentIdeal.lean"
+      note: >-
+        Over a Semiring, entries in a left ideal I give entries of A^k in I^k
+        for independently-universed finite decidable square indices, including
+        empty indices. The induction uses the ordered recursions A^(k+1)=A^k*A
+        and I^(k+1)=I^k*I and finite-sum closure of the product ideal; I^0 is top.
+    - declaration: "Matrix.isNilpotent_of_isNilpotent_ideal"
+      file: "GeneralLinearGroups/MatrixNilpotentIdeal.lean"
+      note: >-
+        Uniform nilpotence of the left ideal containing all matrix entries
+        implies matrix nilpotence, with the same vanishing exponent, even
+        when that exponent is zero. No two-sidedness, Nonempty, commutativity,
+        additive inverses or nontriviality premise is imposed; pointwise
+        nilness of an ideal is not asserted to suffice.
     - declaration: "Matrix.GeneralLinearGroup.StableGL"
       file: "GeneralLinearGroups/StableGeneralLinear.lean"
       note: >-
@@ -813,6 +832,15 @@ fidelity:
     presentation. No kernel centrality, universal central extension, K2 or
     direct-limit theorem for this Steinberg presentation or its comparison
     with stable GL is claimed.
+    The matrix ideal-power bounds use arbitrary Semiring coefficients and
+    independent finite decidable indices, including empty indices, without a
+    two-sidedness hypothesis on the left ideal. Their matrix-nilpotence
+    consequence requires one exponent annihilating the whole ideal, not an
+    exponent depending on each element. Ideal powers are the stock submodule
+    powers on the regular left module, with I^0=top and I^(k+1)=I^k*I; no
+    multiplicative Monoid structure on arbitrary left ideals is asserted.
+    No source-passage correspondence is asserted for these matrix ideal-power
+    results.
     Source-indexed constructions are reorganized into generic ring and finite
     matrix APIs. Semiring, ring, nonunital-ring and commutative scalar-ring
     hypotheses remain distinct. Nil means pointwise nil, not a uniform exponent

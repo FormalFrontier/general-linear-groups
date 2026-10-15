@@ -11,6 +11,18 @@ supplies foundational APIs.
 
 ## Headline results
 
+- **Matrix ideal-power bounds and nilpotence.** For a `Semiring R`, a left ideal
+  `I : Ideal R` and a square matrix `A` on an independently-universed finite
+  decidable index type, entrywise membership in `I` gives
+  `(A ^ k) i j ∈ I ^ k`. Any exponent annihilating the whole ideal also
+  annihilates the matrix, so `IsNilpotent I` implies `IsNilpotent A`.
+  Empty indices and zero semirings are included, without two-sidedness or
+  commutativity. Powers follow the ordered recursions `A ^ (k + 1) = A ^ k * A`
+  and `I ^ (k + 1) = I ^ k * I`; pointwise nilness is not a substitute for
+  uniform ideal nilpotence.
+  [Power bound and nilpotence](GeneralLinearGroups/MatrixNilpotentIdeal.lean),
+  [nonzero dual-number diagonal](tests/GeneralLinearGroupsTests/MatrixNilpotentIdeal.lean).
+
 - **Kronecker products of matrix units.** Over any `Semiring`, the Kronecker
   product of two unit matrices is a unit, for independently-universed finite
   decidable square indices, including empty indices and zero semirings. The
