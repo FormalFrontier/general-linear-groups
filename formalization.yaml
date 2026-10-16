@@ -17,7 +17,15 @@ project:
     Ring-to-Semiring homomorphisms forces quasi-regularity of the canonical
     two-sided kernel without surjectivity; for surjective maps it is equivalent
     to this kernel condition. Source and target universes are independent,
-    with no commutativity or local-ring hypothesis. Dual-number GL, SL
+    with no commutativity or local-ring hypothesis. A square-zero kernel of
+    any Ring-to-Semiring homomorphism identifies units mapping to 1 with the
+    additive kernel via u - 1 and 1 + x; the inverse unit has value 1 - x.
+    All mixed kernel products must vanish, with no surjectivity assumption.
+    For left ideals I, J with I^2 contained in J, original-ring principal
+    units map to the additive layer I/(I intersect J); Jacobson containment
+    of I makes the map surjective and identifies its kernel quotient with
+    that layer. Neither two-sidedness nor J contained in I is required.
+    Dual-number GL, SL
     and scalar-unit reduction kernels, determinant/trace, coefficient maps
     and the left-conjugation adjoint action use commutative rings. The trace
     quotient is an additive group, not a quotient ring; its corner inverse
@@ -72,6 +80,22 @@ sources:
       the Lean proofs. No book PDF, scan or quoted passage is shipped.
       No explicit license or broader redistribution grant for the book was
       established; access to the source is not permission to reproduce it.
+
+  - title: "Local Fields and Their Extensions"
+    authors:
+      - "I. B. Fesenko"
+      - "S. V. Vostokov"
+    id: "https://ivanfesenko.org/wp-content/uploads/2021/10/vol.pdf"
+    type: "book"
+    location: "Second edition (2002), Chapter I, (5.3) and (5.4)(3)."
+    relationship: "adapts"
+    author_endorsement: "not-contacted"
+    note: >-
+      The first-order principal-unit product motivates the generic ideal-layer
+      construction on original-ring units. Uniformizer-dependent residue
+      coordinates and the full valuation-ring filtration are not supplied.
+      No book text or asset is shipped, and no open redistribution license
+      is inferred from author-hosted access.
 
 related_formalizations:
   - id: "https://github.com/leanprover-community/mathlib4/tree/83abb3e776bdefcbc447a1e44d0debe4010039e5"
@@ -600,6 +624,28 @@ status:
     - declaration: "Matrix.GeneralLinearGroup.diagonalPairUnit_inv_pair"
       file: "GeneralLinearGroups/RectangularBlockUnits.lean"
       note: "Equal-index inverse diagonal pairs agree with existing blockDiagonalUnit."
+    - declaration: Ideal.principalUnitsQuotientEquiv
+      file: GeneralLinearGroups/PrincipalUnits.lean
+      note: >-
+        For arbitrary left ideals in a Ring with I^2 contained in J and I
+        contained in the Jacobson radical, the quotient of original units
+        principal modulo I by the coordinate kernel is the additive layer
+        I/(I intersect J), written multiplicatively. The inverse on a
+        representative is the original-ring unit with value 1+x.
+    - declaration: Ideal.principalUnitsToQuotient_ker
+      file: GeneralLinearGroups/PrincipalUnits.lean
+      note: >-
+        Under I^2 contained in J alone, the coordinate kernel is the relative
+        J-stabilizer inside the I-stabilizer. Its normality is derived, not
+        assumed; no J contained in I or two-sidedness is needed.
+    - declaration: RingHom.unitsKerEquivOfSquareZero
+      file: GeneralLinearGroups/SquareZeroUnits.lean
+      note: "Square-zero kernel, Ring domain and Semiring codomain; algebraic unit coordinates, not a quotient-unit lifting theorem."
+    - declaration: DualNumber.fstRingHom_ker_sq
+      file: GeneralLinearGroups/DualNumberKernels.lean
+    - declaration: Matrix.DualNumberKernels.unitsKerEquiv_eq_unitsKerEquivOfSquareZero_symm
+      file: GeneralLinearGroups/DualNumberSquareZeroUnits.lean
+      note: "Pointwise comparison on every coefficient through the canonical inr inclusion."
     - declaration: DualNumber.mapRingHom
       file: GeneralLinearGroups/DualNumberKernels.lean
     - declaration: Matrix.DualNumberKernels.glKerEquiv
@@ -906,6 +952,12 @@ fidelity:
     its determinant kernel times units over arbitrary commutative rings, with
     natural coordinates. No prequotient kernel centrality or product splitting,
     or arbitrary-ring kernel vanishing is asserted.
+    Principal-unit ideal layers use the quotient left-module stabilizer of
+    the class of 1, not units of a quotient ring. For two-sided ideals this
+    agrees with the stock kernel of reduction on units. Jacobson containment
+    is used for original-unit lifting and surjectivity, not membership or
+    kernel identification. No DVR uniformizer/residue coordinate, complete
+    unit filtration, topology or p-adic powering is provided.
     No arbitrary-ring SL=E, same-rank ambient elementary normality, original-rank
     commutator containment, stable K1 identification, excision or full
     source-coverage claim follows.

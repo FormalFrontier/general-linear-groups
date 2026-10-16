@@ -204,6 +204,32 @@ supplies foundational APIs.
   [onto-`E` map](GeneralLinearGroups/Steinberg.lean#L206),
   [presentation guide](docs/FiniteRankSteinberg.md).
 
+- **Units over square-zero kernels.** For a homomorphism from any `Ring` to
+  any `Semiring`, a square-zero kernel identifies the units mapping to `1`
+  with the additive kernel, written multiplicatively. The coordinates are
+  `u ↦ u - 1` and `x ↦ 1 + x`, with inverse unit `1 - x`. The hypothesis
+  kills every mixed product of kernel elements; no commutativity or
+  surjectivity is needed. The scalar dual-number equivalence is a
+  specialization with its explicit lift and readback preserved. This is the
+  algebraic ingredient of Fesenko–Vostokov, Chapter I (5.4)(3), not a
+  unit-lifting or valuation-layer quotient theorem.
+  [Equivalence and coordinate API](GeneralLinearGroups/SquareZeroUnits.lean),
+  [dual-number comparison](GeneralLinearGroups/DualNumberSquareZeroUnits.lean).
+
+- **Principal-unit ideal layers on original-ring units.** For left ideals
+  `I, J` in any `Ring`, with `I ^ 2 ≤ J`, the stock stabilizer of `[1]` in
+  the quotient left module `R / I` maps by `u ↦ [u - 1]` to the additive
+  layer `I / (I ∩ J)`, written multiplicatively. Its kernel is exactly the
+  relative stabilizer modulo `J`, which is therefore normal. If additionally
+  `I ≤ Ring.jacobson R`, the map is surjective and its kernel quotient is
+  isomorphic to that additive layer, with inverse `[x] ↦ [1 + x]` in the
+  original ring. Neither ideal needs to be two-sided, and `J ≤ I` is not
+  assumed. For two-sided `I`, the carrier agrees with the kernel of reduction
+  on units. The nonzero-denominator model uses `(3)/(9)` in `ZMod 27`;
+  the integer boundary explains the original-unit lifting hypothesis.
+  [Equivalence and characteristic laws](GeneralLinearGroups/PrincipalUnits.lean),
+  [models and boundary](tests/GeneralLinearGroupsTests/PrincipalUnitsClient.lean).
+
 - **First-order dual-number kernels and conjugation.** Over any `CommRing`,
   the *multiplicative* native GL, SL and scalar-unit reduction identity fibers
   identify with additive matrices, trace-zero matrices and scalars. Native
@@ -213,8 +239,8 @@ supplies foundational APIs.
   even for nonconstant dual-number units; the SL-kernel action uses SL
   conjugators. First-order fiber groups are abelian, so their commutator is
   not the generally nonzero matrix Lie bracket.
-  [Kernel equivalences](GeneralLinearGroups/DualNumberKernels.lean#L132),
-  [determinant/trace](GeneralLinearGroups/DualNumberKernels.lean#L264),
+  [Kernel equivalences](GeneralLinearGroups/DualNumberKernels.lean#L145),
+  [determinant/trace](GeneralLinearGroups/DualNumberKernels.lean#L316),
   [adjoint guide](docs/DualNumberKernelAdjoint.md).
 
 - **Mixed dual-number GL and SL commutators.** For finite matrices over a
@@ -313,6 +339,10 @@ their own docstrings and statements.
 
 ## Conventions and limitations
 
+The principal-unit ideal-layer equivalence supplies no DVR uniformizer or
+residue-field layer identification, complete valuation-ring filtration,
+topology or p-adic powering construction.
+
 Matrix index and coefficient types may live in independent universes. Empty
 indices, singleton indices and zero rings are not silently excluded; theorems
 requiring a chosen index state it. A unit leading minor is stronger than a
@@ -348,6 +378,9 @@ default graph. Use the Lean sources, guides and import clients for other results
 - Charles A. Weibel, *The K-book: An Introduction to Algebraic K-theory*
   (2013), Exercises I.1.10–I.1.12 and Chapter II, §2. Selected constructions
   draw on its mathematics, not a complete formalization of the book.
+- I. B. Fesenko and S. V. Vostokov, *Local Fields and Their Extensions*,
+  second edition (2002), Chapter I, (5.3) and (5.4)(3), for principal-unit
+  multiplication and its additive ideal-layer coordinates.
 - [mathlib](https://github.com/leanprover-community/mathlib4) provides the
   foundational matrix, group, ideal, topology and dual-number interfaces.
 

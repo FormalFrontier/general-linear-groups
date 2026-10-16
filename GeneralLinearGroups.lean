@@ -29,6 +29,9 @@ public import GeneralLinearGroups.RelativeWhiteheadConsequences
 public import GeneralLinearGroups.RectangularBlockUnits
 public import GeneralLinearGroups.KroneckerUnits
 public import GeneralLinearGroups.DualNumberKernels
+public import GeneralLinearGroups.SquareZeroUnits
+public import GeneralLinearGroups.PrincipalUnits
+public import GeneralLinearGroups.DualNumberSquareZeroUnits
 public import GeneralLinearGroups.DualNumberKernelAdjoint
 public import GeneralLinearGroups.Steinberg
 public import GeneralLinearGroups.DualNumberMixedCommutator

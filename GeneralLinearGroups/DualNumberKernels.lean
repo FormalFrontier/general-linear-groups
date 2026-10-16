@@ -4,17 +4,23 @@ Authors: Formal Frontier Agents
 -/
 module
 
+public import GeneralLinearGroups.SquareZeroUnits
 public import Mathlib.Algebra.DualNumber
+public import Mathlib.Algebra.Group.TypeTags.Hom
+public import Mathlib.Algebra.TrivSqZeroExt.Ideal
 public import Mathlib.Algebra.Lie.Classical
 public import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
 public import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
 public import Mathlib.LinearAlgebra.Matrix.SpecialLinearGroup
 
 /-!
-# Native finite matrix kernels over dual numbers
+# Finite matrix kernels over dual numbers
 
-This module identifies the identity fibers of the native general and special linear groups
+This module identifies the identity fibers of the general and special linear groups
 under first-component reduction, together with the analogous scalar units fiber.
+The scalar equivalence specializes `RingHom.unitsKerEquivOfSquareZero` through
+the canonical second-coordinate inclusion; its explicit lift and readback remain
+computationally unchanged.
 -/
 
 @[expose] public section
@@ -26,6 +32,13 @@ namespace DualNumber
 /-- The first-component ring homomorphism from dual numbers. -/
 abbrev fstRingHom (R : Type u) [CommRing R] : DualNumber R →+* R :=
   (TrivSqZeroExt.fstHom R R R).toRingHom
+
+/-- The kernel of the first projection on dual numbers has square zero. -/
+@[simp] theorem fstRingHom_ker_sq (R : Type u) [CommRing R] :
+    RingHom.ker (fstRingHom R) ^ 2 = ⊥ := by
+  rw [fstRingHom, AlgHom.toRingHom_eq_coe,
+    RingHom.ker_coe_toRingHom (f := TrivSqZeroExt.fstHom R R R)]
+  exact TrivSqZeroExt.kerIdeal_sq R R
 
 /-- Coefficient change on dual numbers; unlike `TrivSqZeroExt.map`, the base ring changes. -/
 def mapRingHom {R : Type u} {S : Type w} [CommRing R] [CommRing S]
@@ -111,17 +124,17 @@ def liftGL (X : Matrix n n R) : Matrix.GeneralLinearGroup n (DualNumber R) :=
 @[simp] theorem liftGL_val (X : Matrix n n R) :
     (liftGL X : Matrix n n (DualNumber R)) = liftMatrix X := rfl
 
-/-- Reduction of the native general linear group along the first projection. -/
+/-- Reduction of the general linear group along the first projection. -/
 abbrev glReduce (R : Type u) [CommRing R] (n : Type v) [Fintype n] [DecidableEq n] :
     Matrix.GeneralLinearGroup n (DualNumber R) →* Matrix.GeneralLinearGroup n R :=
   Matrix.GeneralLinearGroup.map (DualNumber.fstRingHom R)
 
-/-- The native GL identity fiber has first component the identity matrix. -/
+/-- The GL identity fiber has first component the identity matrix. -/
 theorem glKernel_fst (g : (glReduce R n).ker) :
     (g.1 : Matrix n n (DualNumber R)).map (DualNumber.fstRingHom R) = 1 := by
   exact congrArg (fun h : Matrix.GeneralLinearGroup n R => (h : Matrix n n R)) g.property
 
-/-- The second component of an element of the native GL identity fiber. -/
+/-- The second component of an element of the GL identity fiber. -/
 def glReadback (g : (glReduce R n).ker) : Matrix n n R :=
   fun i j => ((g.1 : Matrix n n (DualNumber R)) i j).snd
 
@@ -158,7 +171,7 @@ theorem glKernel_mul_comm (g h : (glReduce R n).ker) : g * h = h * g := by
   obtain ⟨Y, rfl⟩ := glKerEquiv.surjective h
   rw [← map_mul, ← map_mul, mul_comm]
 
-/-- Native scalar units reduction along the first projection. -/
+/-- Scalar units reduction along the first projection. -/
 abbrev unitsReduce (R : Type u) [CommRing R] :
     (DualNumber R)ˣ →* Rˣ := Units.map (DualNumber.fstRingHom R)
 
@@ -181,26 +194,65 @@ def liftUnit (r : R) : (DualNumber R)ˣ :=
 @[simp] theorem liftUnit_fst (r : R) : (liftUnit r : DualNumber R).fst = 1 := rfl
 @[simp] theorem liftUnit_snd (r : R) : (liftUnit r : DualNumber R).snd = r := rfl
 
-theorem liftUnit_add (r s : R) : liftUnit (r + s) = liftUnit r * liftUnit s := by
-  apply Units.ext
-  apply TrivSqZeroExt.ext
-  · change (1 : R) = 1 * 1
-    simp
-  · change r + s = (1 : R) * s + r * 1
-    ring
+-- Compose the general inverse with the canonical second-coordinate inclusion.
+-- No separate equivalence for the projection kernel is needed.
+private def unitsKerOfSquareZero : Multiplicative R →* (unitsReduce R).ker :=
+  (RingHom.unitsKerEquivOfSquareZero (DualNumber.fstRingHom R)
+    (DualNumber.fstRingHom_ker_sq R)).symm.toMonoidHom.comp
+      (((TrivSqZeroExt.inrHom R R).toAddMonoidHom.codRestrict
+        (RingHom.ker (DualNumber.fstRingHom R)) (by intro r; rfl)).toMultiplicative)
 
-/-- The native scalar units identity fiber is the additive coefficient group. -/
+private theorem unitsKerOfSquareZero_apply (r : Multiplicative R) :
+    unitsKerOfSquareZero r =
+      ⟨liftUnit (Multiplicative.toAdd r), by apply Units.ext; rfl⟩ := by
+  apply Subtype.ext
+  apply Units.ext
+  change 1 + TrivSqZeroExt.inr (Multiplicative.toAdd r) =
+    (⟨1, Multiplicative.toAdd r⟩ : DualNumber R)
+  apply TrivSqZeroExt.ext
+  · change (1 : R) + 0 = 1
+    exact add_zero 1
+  · change (0 : R) + Multiplicative.toAdd r = Multiplicative.toAdd r
+    exact zero_add _
+
+private theorem unitsKerOfSquareZero_readback (g : (unitsReduce R).ker) :
+    unitsKerOfSquareZero (Multiplicative.ofAdd (g.1 : DualNumber R).snd) = g := by
+  let e := RingHom.unitsKerEquivOfSquareZero (DualNumber.fstRingHom R)
+    (DualNumber.fstRingHom_ker_sq R)
+  apply e.injective
+  change e (e.symm (Multiplicative.ofAdd
+    (⟨TrivSqZeroExt.inr (g.1 : DualNumber R).snd, by rfl⟩ :
+      RingHom.ker (DualNumber.fstRingHom R)))) = e g
+  rw [e.apply_symm_apply]
+  apply Multiplicative.toAdd.injective
+  apply Subtype.ext
+  -- Project before reducing the defining coordinate; this also removes the
+  -- `unitsReduce` abbreviation from the subtype transport.
+  change TrivSqZeroExt.inr (g.1 : DualNumber R).snd = (g.1 : DualNumber R) - 1
+  apply TrivSqZeroExt.ext
+  · have hg : (g.1 : DualNumber R).fst = 1 := congrArg Units.val g.property
+    change 0 = (g.1 : DualNumber R).fst - 1
+    rw [hg, sub_self]
+  · change (g.1 : DualNumber R).snd = (g.1 : DualNumber R).snd - 0
+    rw [sub_zero]
+
+theorem liftUnit_add (r s : R) : liftUnit (r + s) = liftUnit r * liftUnit s := by
+  have h := map_mul (unitsKerOfSquareZero (R := R))
+    (Multiplicative.ofAdd r) (Multiplicative.ofAdd s)
+  rw [unitsKerOfSquareZero_apply, unitsKerOfSquareZero_apply,
+    unitsKerOfSquareZero_apply] at h
+  exact congrArg Subtype.val h
+
+/-- The scalar units identity fiber is the additive coefficient group.
+Its algebraic laws are inherited from the square-zero unit-kernel equivalence
+through the canonical second-coordinate inclusion. The explicit lift and
+second-coordinate readback are retained as computational data. -/
 def unitsKerEquiv : Multiplicative R ≃* (unitsReduce R).ker where
   toFun r := ⟨liftUnit (Multiplicative.toAdd r), by apply Units.ext; rfl⟩
   invFun r := Multiplicative.ofAdd (r.1 : DualNumber R).snd
   left_inv r := rfl
   right_inv r := by
-    apply Subtype.ext
-    apply Units.ext
-    apply TrivSqZeroExt.ext
-    · have h := congrArg (fun x : Rˣ => (x : R)) r.property
-      exact h.symm
-    · rfl
+    exact (unitsKerOfSquareZero_apply _).symm.trans (unitsKerOfSquareZero_readback r)
   map_mul' r s := by
     apply Subtype.ext
     exact liftUnit_add (Multiplicative.toAdd r) (Multiplicative.toAdd s)
@@ -208,7 +260,7 @@ def unitsKerEquiv : Multiplicative R ≃* (unitsReduce R).ker where
 @[simp] theorem unitsKerEquiv_snd (r : Multiplicative R) :
     ((unitsKerEquiv r).1 : DualNumber R).snd = Multiplicative.toAdd r := rfl
 
-/-- The first component of a native units reduction-kernel element. -/
+/-- The first component of an element of the units reduction kernel. -/
 theorem unitsKernel_fst (r : (unitsReduce R).ker) : (r.1 : DualNumber R).fst = 1 := by
   have h := congrArg (fun t : Rˣ => (t : R)) r.property
   exact h
@@ -249,7 +301,7 @@ theorem det_liftMatrix (X : Matrix n n R) :
     rw [TrivSqZeroExt.algebraMap_eq_inl]
     simp
 
-/-- The determinant restricted to the *native* general-linear reduction kernel. -/
+/-- The determinant restricted to the general-linear reduction kernel. -/
 def detKer : (glReduce R n).ker →* (unitsReduce R).ker where
   toFun g := ⟨Matrix.GeneralLinearGroup.det g.1, by
     apply Units.ext
@@ -260,7 +312,7 @@ def detKer : (glReduce R n).ker →* (unitsReduce R).ker where
   map_one' := Subtype.ext (map_one _)
   map_mul' _ _ := Subtype.ext (map_mul _ _ _)
 
-/-- Commuting determinant/trace square for the actual native kernels. -/
+/-- Commuting determinant/trace square for the kernels. -/
 theorem detKer_glKerEquiv (X : Multiplicative (Matrix n n R)) :
     detKer (glKerEquiv X) = unitsKerEquiv (Multiplicative.ofAdd (Matrix.trace
       (Multiplicative.toAdd X))) := by
@@ -268,12 +320,12 @@ theorem detKer_glKerEquiv (X : Multiplicative (Matrix n n R)) :
   apply Units.ext
   exact det_liftMatrix (Multiplicative.toAdd X)
 
-/-- Native special-linear first-component reduction. -/
+/-- Special-linear first-component reduction. -/
 abbrev slReduce (R : Type u) [CommRing R] (n : Type v) [Fintype n] [DecidableEq n] :
     Matrix.SpecialLinearGroup n (DualNumber R) →* Matrix.SpecialLinearGroup n R :=
   Matrix.SpecialLinearGroup.map (DualNumber.fstRingHom R)
 
-/-- First component of a native SL reduction-kernel element. -/
+/-- First component of a SL reduction-kernel element. -/
 theorem slKernel_fst (g : (slReduce R n).ker) :
     (g.1 : Matrix n n (DualNumber R)).map (DualNumber.fstRingHom R) = 1 := by
   have h := congrArg (fun k : Matrix.SpecialLinearGroup n R => (k : Matrix n n R))
@@ -281,7 +333,7 @@ theorem slKernel_fst (g : (slReduce R n).ker) :
   change (g.1 : Matrix n n (DualNumber R)).map (DualNumber.fstRingHom R) = 1 at h
   exact h
 
-/-- Inclusion of the native SL identity fiber in the native GL identity fiber. -/
+/-- Inclusion of the SL identity fiber in the GL identity fiber. -/
 def slToGL : (slReduce R n).ker →* (glReduce R n).ker where
   toFun g := ⟨Matrix.SpecialLinearGroup.toGL g.1, by
     apply Units.ext
@@ -318,7 +370,7 @@ def slReadback (g : (slReduce R n).ker) : LieAlgebra.SpecialLinear.sl n R :=
     have hz := congrArg TrivSqZeroExt.snd hd
     simpa only [TrivSqZeroExt.snd_mk, TrivSqZeroExt.snd_one] using hz⟩
 
-/-- The native special-linear reduction kernel is the additive group of mathlib's `sl`. -/
+/-- The special-linear reduction kernel is the additive group of mathlib's `sl`. -/
 def slKerEquiv : Multiplicative (LieAlgebra.SpecialLinear.sl n R) ≃* (slReduce R n).ker where
   toFun X := ⟨liftSL (Multiplicative.toAdd X), by
     apply Subtype.ext
@@ -347,13 +399,13 @@ def slKerEquiv : Multiplicative (LieAlgebra.SpecialLinear.sl n R) ≃* (slReduce
 @[simp] theorem slReadback_apply (g : (slReduce R n).ker) (i j : n) :
     (slReadback g).1 i j = ((g.1 : Matrix n n (DualNumber R)) i j).snd := rfl
 
-/-- Products in the native first-order SL identity fiber commute. -/
+/-- Products in the first-order SL identity fiber commute. -/
 theorem slKernel_mul_comm (g h : (slReduce R n).ker) : g * h = h * g := by
   obtain ⟨X, rfl⟩ := slKerEquiv.surjective g
   obtain ⟨Y, rfl⟩ := slKerEquiv.surjective h
   rw [← map_mul, ← map_mul, mul_comm]
 
-/-- The inclusion square commutes on the actual native GL and SL kernels. -/
+/-- The inclusion square commutes on the GL and SL kernels. -/
 theorem slToGL_slKerEquiv (X : Multiplicative (LieAlgebra.SpecialLinear.sl n R)) :
     slToGL (slKerEquiv X) =
       glKerEquiv (Multiplicative.ofAdd (Multiplicative.toAdd X).1) := by
@@ -365,7 +417,7 @@ section CoefficientChange
 
 variable {S : Type w} [CommRing S] (f : R →+* S)
 
-/-- Coefficient change on the native GL identity fibers. -/
+/-- Coefficient change on the GL identity fibers. -/
 def glKerMap : (glReduce R n).ker →* (glReduce S n).ker where
   toFun g := ⟨Matrix.GeneralLinearGroup.map (DualNumber.mapRingHom f) g.1, by
     have h : glReduce S n (Matrix.GeneralLinearGroup.map (DualNumber.mapRingHom f) g.1) =
@@ -377,7 +429,7 @@ def glKerMap : (glReduce R n).ker →* (glReduce S n).ker where
   map_one' := Subtype.ext (map_one _)
   map_mul' _ _ := Subtype.ext (map_mul _ _ _)
 
-/-- Coefficient change on the native scalar units identity fibers. -/
+/-- Coefficient change on the scalar units identity fibers. -/
 def unitsKerMap : (unitsReduce R).ker →* (unitsReduce S).ker where
   toFun g := ⟨Units.map (DualNumber.mapRingHom f) g.1, by
     have h : unitsReduce S (Units.map (DualNumber.mapRingHom f) g.1) =
@@ -389,7 +441,7 @@ def unitsKerMap : (unitsReduce R).ker →* (unitsReduce S).ker where
   map_one' := Subtype.ext (map_one _)
   map_mul' _ _ := Subtype.ext (map_mul _ _ _)
 
-/-- Coefficient change on the native SL identity fibers. -/
+/-- Coefficient change on the SL identity fibers. -/
 def slKerMap : (slReduce R n).ker →* (slReduce S n).ker where
   toFun g := ⟨Matrix.SpecialLinearGroup.map (DualNumber.mapRingHom f) g.1, by
     have h : slReduce S n (Matrix.SpecialLinearGroup.map (DualNumber.mapRingHom f) g.1) =
@@ -466,7 +518,7 @@ theorem slKerMap_slKerEquiv (X : Multiplicative (LieAlgebra.SpecialLinear.sl n R
     by_cases h : i = j <;> simp [Matrix.one_apply, h]
   · rfl
 
-/-- Determinant commutes with coefficient change on the native fibers. -/
+/-- Determinant commutes with coefficient change on the fibers. -/
 theorem detKer_natural (g : (glReduce R n).ker) :
     detKer (glKerMap f g) = unitsKerMap f (detKer g) := by
   apply Subtype.ext
@@ -475,7 +527,7 @@ theorem detKer_natural (g : (glReduce R n).ker) :
     (DualNumber.mapRingHom f) (g.1 : Matrix n n (DualNumber R)).det
   exact (RingHom.map_det (DualNumber.mapRingHom f) (g.1 : Matrix n n (DualNumber R))).symm
 
-/-- Native SL inclusion commutes with coefficient change. -/
+/-- SL inclusion commutes with coefficient change. -/
 theorem slToGL_natural (g : (slReduce R n).ker) :
     slToGL (slKerMap f g) = glKerMap f (slToGL g) := by
   apply Subtype.ext
@@ -484,7 +536,7 @@ theorem slToGL_natural (g : (slReduce R n).ker) :
 
 end CoefficientChange
 
-/-- Identity coefficient change on the native GL kernel. -/
+/-- Identity coefficient change on the GL kernel. -/
 @[simp] theorem glKerMap_id :
     glKerMap (n := n) (RingHom.id R) =
       MonoidHom.id (glReduce R n).ker := by
@@ -494,7 +546,7 @@ end CoefficientChange
   apply Units.ext
   rfl
 
-/-- Identity coefficient change on the native scalar-units kernel. -/
+/-- Identity coefficient change on the scalar-units kernel. -/
 @[simp] theorem unitsKerMap_id :
     unitsKerMap (RingHom.id R) = MonoidHom.id (unitsReduce R).ker := by
   apply MonoidHom.ext
@@ -503,7 +555,7 @@ end CoefficientChange
   apply Units.ext
   rfl
 
-/-- Identity coefficient change on the native SL kernel. -/
+/-- Identity coefficient change on the SL kernel. -/
 @[simp] theorem slKerMap_id :
     slKerMap (n := n) (RingHom.id R) = MonoidHom.id (slReduce R n).ker := by
   apply MonoidHom.ext
@@ -517,7 +569,7 @@ section Composition
 variable {S : Type w} [CommRing S] {T : Type z} [CommRing T]
     (f : R →+* S) (g : S →+* T)
 
-/-- Coefficient change composes on native GL identity fibers. -/
+/-- Coefficient change composes on GL identity fibers. -/
 @[simp] theorem glKerMap_comp :
     glKerMap (n := n) (g.comp f) = (glKerMap (n := n) g).comp (glKerMap f) := by
   apply MonoidHom.ext
@@ -526,7 +578,7 @@ variable {S : Type w} [CommRing S] {T : Type z} [CommRing T]
   apply Units.ext
   rfl
 
-/-- Coefficient change composes on native scalar-units identity fibers. -/
+/-- Coefficient change composes on scalar-units identity fibers. -/
 @[simp] theorem unitsKerMap_comp :
     unitsKerMap (g.comp f) = (unitsKerMap g).comp (unitsKerMap f) := by
   apply MonoidHom.ext
@@ -535,7 +587,7 @@ variable {S : Type w} [CommRing S] {T : Type z} [CommRing T]
   apply Units.ext
   rfl
 
-/-- Coefficient change composes on native SL identity fibers. -/
+/-- Coefficient change composes on SL identity fibers. -/
 @[simp] theorem slKerMap_comp :
     slKerMap (n := n) (g.comp f) = (slKerMap (n := n) g).comp (slKerMap f) := by
   apply MonoidHom.ext
