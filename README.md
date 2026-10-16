@@ -229,6 +229,20 @@ supplies foundational APIs.
   the integer boundary explains the original-unit lifting hypothesis.
   [Equivalence and characteristic laws](GeneralLinearGroups/PrincipalUnits.lean),
   [models and boundary](tests/GeneralLinearGroupsTests/PrincipalUnitsClient.lean).
+  For a commutative domain `R`, a nonzero principal ideal
+  `I = Ideal.span {π}` contained in `Ideal.jacobson ⊥`, and `n ≥ 1`,
+  the original-ring unit stabilizer at `I ^ n`, modulo its exact coordinate
+  kernel (the relative deeper stabilizer at `I ^ (n + 1)`), is equivalent
+  to `Multiplicative (R ⧸ I)`. It sends `[1 + a * π ^ n]` to `[a]`;
+  the inverse returns that original-ring unit class. The target is the additive
+  coefficient **ring**, not necessarily a field. Replacing `π` by `u * π`
+  for `u : Rˣ` with residue unit `ū` multiplies a fixed class's forward coefficient
+  by `(ū⁻¹) ^ n`; the inverse at a fixed coefficient uses the old inverse
+  with parameter multiplied by `ū ^ n`. Normality and surjectivity are
+  conclusions, not assumptions; exponent zero instead gives multiplicative
+  reduction.
+  [Coefficients and generator-change laws](GeneralLinearGroups/PrincipalUnits/Powers.lean),
+  [coefficient clients](tests/GeneralLinearGroupsTests/PrincipalUnitsPowersClient.lean).
 
 - **First-order dual-number kernels and conjugation.** Over any `CommRing`,
   the *multiplicative* native GL, SL and scalar-unit reduction identity fibers
@@ -339,9 +353,11 @@ their own docstrings and statements.
 
 ## Conventions and limitations
 
-The principal-unit ideal-layer equivalence supplies no DVR uniformizer or
-residue-field layer identification, complete valuation-ring filtration,
-topology or p-adic powering construction.
+The supplied-generator principal-unit power coordinates are algebraic and need
+no local-ring, DVR, Noetherian, finiteness, characteristic, topology or completeness
+hypothesis. They do not supply an adapter from DVR or valuation-field unit
+carriers, assert a residue-field isomorphism, or construct a complete
+valuation-ring unit filtration, its topology or p-adic powering.
 
 Matrix index and coefficient types may live in independent universes. Empty
 indices, singleton indices and zero rings are not silently excluded; theorems
@@ -383,6 +399,11 @@ default graph. Use the Lean sources, guides and import clients for other results
   multiplication and its additive ideal-layer coordinates.
 - [mathlib](https://github.com/leanprover-community/mathlib4) provides the
   foundational matrix, group, ideal, topology and dual-number interfaces.
+- The [Adic Modules library](https://github.com/FormalFrontier/adic-modules), in
+  [`AdicModules.RingTheory.Ideal.IsPrincipalPowQuotient`](https://github.com/FormalFrontier/adic-modules/blob/d0ce9c7ea73e0f995d7318e448af3e14f2e473bd/AdicModules/RingTheory/Ideal/IsPrincipalPowQuotient.lean),
+  supplies the chosen-generator forward and inverse representative formulas
+  for the principal-power quotient equivalence. The underlying equivalence
+  is Yakov Pechersky's Mathlib formalization.
 
 ## Credits and license
 

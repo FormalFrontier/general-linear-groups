@@ -92,8 +92,11 @@ sources:
     author_endorsement: "not-contacted"
     note: >-
       The first-order principal-unit product motivates the generic ideal-layer
-      construction on original-ring units. Uniformizer-dependent residue
-      coordinates and the full valuation-ring filtration are not supplied.
+      construction on original-ring units. Supplied-generator coefficient
+      coordinates are provided for nonzero principal ideals contained in the
+      Jacobson radical of a commutative domain at positive exponents, but no
+      comparison with DVR or valuation-field unit carriers or full valuation-ring
+      filtration is supplied.
       No book text or asset is shipped, and no open redistribution license
       is inferred from author-hosted access.
 
@@ -956,8 +959,21 @@ fidelity:
     the class of 1, not units of a quotient ring. For two-sided ideals this
     agrees with the stock kernel of reduction on units. Jacobson containment
     is used for original-unit lifting and surjectivity, not membership or
-    kernel identification. No DVR uniformizer/residue coordinate, complete
-    unit filtration, topology or p-adic powering is provided.
+    kernel identification. For a commutative domain R, a nonzero principal
+    ideal I in the Jacobson radical, a supplied generator π with I=span{π},
+    and n>=1, the original-ring unit stabilizer at I^n modulo its exact
+    coordinate kernel, the relative deeper stabilizer at I^(n+1), is equivalent
+    to Multiplicative(R/I). The coefficient of 1+a*π^n is [a] in the
+    coefficient ring R/I, not necessarily a field; the inverse returns that
+    original-ring unit class. Replacing π by u*π for a unit u with residue
+    ubar scales a fixed class's forward coefficient by ubar^(-n), while the
+    inverse at a fixed coefficient uses the old inverse with parameter scaled
+    by ubar^n. Normality and surjectivity are derived, not assumed. Exponent
+    zero instead gives multiplicative reduction. No local-ring, DVR,
+    Noetherian, finiteness, characteristic, topology or completeness premise
+    is used. These supplied-generator algebraic coordinates do not provide
+    an adapter from DVR or valuation-field unit carriers, assert a residue-field
+    isomorphism, or construct a complete unit filtration, topology or p-adic powering.
     No arbitrary-ring SL=E, same-rank ambient elementary normality, original-rank
     commutator containment, stable K1 identification, excision or full
     source-coverage claim follows.
