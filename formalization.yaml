@@ -641,6 +641,17 @@ status:
         Under I^2 contained in J alone, the coordinate kernel is the relative
         J-stabilizer inside the I-stabilizer. Its normality is derived, not
         assumed; no J contained in I or two-sidedness is needed.
+    - declaration: Ideal.mem_map_stabilizer_quotient_one_iff
+      file: GeneralLinearGroups/PrincipalUnits/Images.lean
+      note: >-
+        For a ring homomorphism f from a Ring R to a Ring S in independent
+        universes and a left ideal I contained in Ideal.jacobson bot, a unit u
+        of S lies in the image under Units.map f.toMonoidHom of the original
+        R-unit stabilizer of [1] in the quotient left module R/I if and only if
+        there is a in I with f(a) = u - 1. This is the set image of ideal
+        elements, not membership in Ideal.map f I; neither injectivity of f
+        nor commutativity of either ring is required, and there is no domain,
+        local-ring or valuation hypothesis.
     - declaration: RingHom.unitsKerEquivOfSquareZero
       file: GeneralLinearGroups/SquareZeroUnits.lean
       note: "Square-zero kernel, Ring domain and Semiring codomain; algebraic unit coordinates, not a quotient-unit lifting theorem."

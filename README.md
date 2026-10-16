@@ -244,6 +244,17 @@ supplies foundational APIs.
   [Coefficients and generator-change laws](GeneralLinearGroups/PrincipalUnits/Powers.lean),
   [coefficient clients](tests/GeneralLinearGroupsTests/PrincipalUnitsPowersClient.lean).
 
+- **Images of principal-unit subgroups.** For a ring homomorphism
+  `f : R →+* S` with `Ring R` and `Ring S` in independent universes,
+  and a left ideal `I ≤ Ideal.jacobson ⊥`, a unit `u : Sˣ` lies in the image
+  under `Units.map f.toMonoidHom` of the original `R`-unit stabilizer of
+  `[1]` in the quotient left module `R ⧸ I` exactly when
+  `∃ a ∈ I, f a = (u : S) - 1`.
+  This uses the set image of ideal elements, not the extended ideal
+  `Ideal.map f I`. The map need not be injective, and neither ring needs
+  to be commutative; no domain, local-ring or valuation hypothesis is needed.
+  [Image membership criterion](GeneralLinearGroups/PrincipalUnits/Images.lean).
+
 - **First-order dual-number kernels and conjugation.** Over any `CommRing`,
   the *multiplicative* native GL, SL and scalar-unit reduction identity fibers
   identify with additive matrices, trace-zero matrices and scalars. Native
@@ -303,6 +314,11 @@ example {R S n : Type*} [Ring R] [Ring S] [Fintype n] [DecidableEq n]
 The [`PublicAPIClient`](tests/GeneralLinearGroupsTests/PublicAPIClient.lean) exercises this law using
 an ordinary import; other clients exercise the interfaces and edge cases.
 
+For the principal-unit image criterion alone, use
+`import GeneralLinearGroups.PrincipalUnits.Images`. The theorem
+`Ideal.mem_map_stabilizer_quotient_one_iff` uses the existing
+`MulAction.stabilizer` subgroup and `Units.map`.
+
 ## Building
 
 Install [elan](https://github.com/leanprover/elan) and use this repository's
@@ -341,6 +357,7 @@ client-only helpers are not promises of the library API.
 | Finite stabilization and rectangular blocks | [Stabilization](docs/ElementaryStabilization.md), [rectangular blocks](docs/RectangularBlockUnits.md), [rectangular unit switch](GeneralLinearGroups/RectangularUnitSwitch.lean), [zero-product units](GeneralLinearGroups/ZeroProductStabilization.lean) | Semiring stabilization is a *monoid hom on units*; the unit switch requires a `Ring` and `g = 1 + A * B`, but not `B * A = 0` |
 | Presented elementary group | [Steinberg](docs/FiniteRankSteinberg.md) | Finite rank does not imply finite presentation over an arbitrary ring |
 | Quasi-regular kernels, scalar unit reflection and ideal quotients | [QuasiregularIdeal](GeneralLinearGroups/QuasiregularIdeal.lean), [QuasiregularQuotient](GeneralLinearGroups/QuasiregularQuotient.lean), [NonUnitalQuasiregular](GeneralLinearGroups/NonUnitalQuasiregular.lean) | For `Ring` → `Semiring`, unit reflection forces a quasi-regular canonical kernel without surjectivity; the converse and iff require surjectivity. Arbitrary quotient-unit lifting still needs quasi-regularity |
+| Principal-unit images | [Image membership criterion](GeneralLinearGroups/PrincipalUnits/Images.lean) | `Ring R`, `Ring S`, Jacobson containment; set image of left-ideal elements, not ideal extension; no injectivity assumption |
 | Kronecker products of units | [KroneckerUnits](GeneralLinearGroups/KroneckerUnits.lean), [clients](tests/GeneralLinearGroupsTests/KroneckerUnits.lean) | Semiring coefficients; the inverse witness reverses the identity-factor order, without a generic product-group homomorphism |
 | Single-entry matrix corners | [MatrixCorner](GeneralLinearGroups/MatrixCorner.lean), [clients](tests/GeneralLinearGroupsTests/MatrixCornerClient.lean) | A chosen index gives a corner identity that may differ from the ambient identity; no commutativity assumption |
 | Additive trace quotient | [MatrixTrace](GeneralLinearGroups/MatrixTrace.lean), [AdditiveCommutator](GeneralLinearGroups/AdditiveCommutator.lean) | An inverse needs a chosen index; no ring quotient or `K₀` theorem |
