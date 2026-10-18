@@ -18,10 +18,15 @@ supplies foundational APIs.
   annihilates the matrix, so `IsNilpotent I` implies `IsNilpotent A`.
   Empty indices and zero semirings are included, without two-sidedness or
   commutativity. Powers follow the ordered recursions `A ^ (k + 1) = A ^ k * A`
-  and `I ^ (k + 1) = I ^ k * I`; pointwise nilness is not a substitute for
-  uniform ideal nilpotence.
+  and `I ^ (k + 1) = I ^ k * I`; pointwise nilness of an arbitrary ideal
+  does not give a uniform exponent. For a `CommSemiring R`, however, a finite
+  square matrix with nilpotent entries is nilpotent: its finitely generated
+  entry ideal is contained in the nilradical and is therefore nilpotent.
+  This needs no Noetherian hypothesis and includes empty indices and zero semirings.
   [Power bound and nilpotence](GeneralLinearGroups/MatrixNilpotentIdeal.lean),
-  [nonzero dual-number diagonal](tests/GeneralLinearGroupsTests/MatrixNilpotentIdeal.lean).
+  [nilpotent entries](GeneralLinearGroups/MatrixNilpotentEntries.lean),
+  [nonzero dual-number diagonal](tests/GeneralLinearGroupsTests/MatrixNilpotentIdeal.lean),
+  [nonzero matrix over `ZMod 4`](tests/GeneralLinearGroupsTests/MatrixNilpotentEntriesClient.lean).
 
 - **Kronecker products of matrix units.** Over any `Semiring`, the Kronecker
   product of two unit matrices is a unit, for independently-universed finite
@@ -416,6 +421,10 @@ default graph. Use the Lean sources, guides and import clients for other results
   multiplication and its additive ideal-layer coordinates.
 - [mathlib](https://github.com/leanprover-community/mathlib4) provides the
   foundational matrix, group, ideal, topology and dual-number interfaces.
+  Its `Submodule.fg_span`, `mem_nilradical` and
+  `Ideal.FG.isNilpotent_iff_le_nilradical` supply the finite entry-ideal
+  argument for matrices with nilpotent entries; the matrix step reuses this
+  library's uniform-ideal nilpotence theorem.
 - The [Adic Modules library](https://github.com/FormalFrontier/adic-modules), in
   [`AdicModules.RingTheory.Ideal.IsPrincipalPowQuotient`](https://github.com/FormalFrontier/adic-modules/blob/d0ce9c7ea73e0f995d7318e448af3e14f2e473bd/AdicModules/RingTheory/Ideal/IsPrincipalPowQuotient.lean),
   supplies the chosen-generator forward and inverse representative formulas
@@ -436,6 +445,9 @@ are distinct from Weibel's mathematical motivation and mathlib's third-party
 work, whose authorship and notices remain with mathlib. Kronecker unit
 preservation generalizes mathlib's commutative-coefficient theorem and follows
 its constant-family, block-diagonal, reindexing and `Units` formalizations.
+The nilpotent-entry matrix result follows Mathlib's finite-generation and
+nilradical formalizations and the existing uniform-ideal matrix theorem; its
+`ZMod 4` client adapts the Formal Frontier Agents' entrywise-nilpotence example.
 AI agents developed
 the Lean code and documentation with compiler feedback and independent agent
 review; no human mathematical review is claimed. Licensed under

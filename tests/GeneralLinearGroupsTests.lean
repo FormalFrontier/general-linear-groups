@@ -7,6 +7,7 @@ module
 import GeneralLinearGroupsTests.MatrixTraceClient
 import GeneralLinearGroupsTests.MatrixCornerClient
 import GeneralLinearGroupsTests.MatrixNilpotentIdeal
+import GeneralLinearGroupsTests.MatrixNilpotentEntriesClient
 import GeneralLinearGroupsTests.PublicAPIClient
 import GeneralLinearGroupsTests.LocalHomClient
 import GeneralLinearGroupsTests.LocalHomBoundaryClient
