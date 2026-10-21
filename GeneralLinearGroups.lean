@@ -3,6 +3,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Formal Frontier Agents
 -/
 module
+public import GeneralLinearGroups.StableGeneralLinearEntries
 
 public import GeneralLinearGroups.Whitehead
 public import GeneralLinearGroups.Elementary

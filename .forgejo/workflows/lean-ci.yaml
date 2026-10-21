@@ -16,6 +16,7 @@ jobs:
       # Run `ff-lean-ci tools-sha` in the selected image. Update this pin whenever
       # the checker changes; docs-only reuse requires the same workflow bytes.
       FF_LEAN_CI_TOOLS_SHA256: 9ae3f0a53361cfdc85cd22f96c0f7f63b445a55958288ab652d017cca58e75a3
+      FF_LEAN_LINT_TOOLS_SHA256: 5e158bd49b7085397aed0f6e451d6a2fe83243c26af35e79c977f41ed76a9bdd
     steps:
       - name: Check out the proposed commit
         uses: https://data.forgejo.org/actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
@@ -44,6 +45,9 @@ jobs:
       - name: Build and run the configured audit
         if: steps.reuse.outputs.reused != 'true'
         run: ff-lean-ci run
+      - name: Lint the configured libraries
+        if: steps.reuse.outputs.reused != 'true'
+        run: ff-lean-lint run
       - name: Preserve commands, inputs, audit output and result
         if: always()
         uses: https://data.forgejo.org/actions/upload-artifact@c6a3b2bd78b3985e4b2f15397fec357f0fd808de # v3.2.2-node20, Forgejo-compatible

@@ -47,7 +47,6 @@ def finStabilize (R : Type u) [Semiring R] {n m : ℕ} (h : n ≤ m) :
     GL (Fin n) R →* GL (Fin m) R :=
   (reindexEquiv R (finBlockEquiv h)).toMonoidHom.comp (stabilize (Y := Fin (m - n)))
 
-@[simp]
 theorem finStabilize_apply_inl_inl (R : Type u) [Semiring R]
     {n m : ℕ} (h : n ≤ m) (g : GL (Fin n) R) (i j : Fin n) :
     finStabilize R h g (finBlockEquiv h (Sum.inl i))
@@ -56,7 +55,6 @@ theorem finStabilize_apply_inl_inl (R : Type u) [Semiring R]
     (finBlockEquiv h (Sum.inl i)) (finBlockEquiv h (Sum.inl j)) = g i j
   simp only [reindexEquiv_apply, Equiv.symm_apply_apply, stabilize_apply_inl_inl]
 
-@[simp]
 theorem finStabilize_apply_inl_inr (R : Type u) [Semiring R]
     {n m : ℕ} (h : n ≤ m) (g : GL (Fin n) R)
     (i : Fin n) (j : Fin (m - n)) :
@@ -66,7 +64,6 @@ theorem finStabilize_apply_inl_inr (R : Type u) [Semiring R]
     (finBlockEquiv h (Sum.inl i)) (finBlockEquiv h (Sum.inr j)) = 0
   simp only [reindexEquiv_apply, Equiv.symm_apply_apply, stabilize_apply_inl_inr]
 
-@[simp]
 theorem finStabilize_apply_inr_inl (R : Type u) [Semiring R]
     {n m : ℕ} (h : n ≤ m) (g : GL (Fin n) R)
     (i : Fin (m - n)) (j : Fin n) :
@@ -76,7 +73,6 @@ theorem finStabilize_apply_inr_inl (R : Type u) [Semiring R]
     (finBlockEquiv h (Sum.inr i)) (finBlockEquiv h (Sum.inl j)) = 0
   simp only [reindexEquiv_apply, Equiv.symm_apply_apply, stabilize_apply_inr_inl]
 
-@[simp]
 theorem finStabilize_apply_inr_inr (R : Type u) [Semiring R]
     {n m : ℕ} (h : n ≤ m) (g : GL (Fin n) R)
     (i j : Fin (m - n)) :
@@ -145,7 +141,6 @@ theorem finStabilize_id (R : Type u) [Semiring R] (n : ℕ) :
   ext i j
   simpa using finStabilize_apply_castLE R (le_refl n) g i j
 
-@[simp]
 theorem finStabilize_comp (R : Type u) [Semiring R]
     {n m k : ℕ} (h : n ≤ m) (h' : m ≤ k) :
     finStabilize R (h.trans h') = (finStabilize R h').comp (finStabilize R h) := by

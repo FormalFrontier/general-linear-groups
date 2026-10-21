@@ -1,6 +1,7 @@
 name = "general-linear-groups"
 version = "0.1.0"
 defaultTargets = ["GeneralLinearGroups", "GeneralLinearGroupsTests"]
+lintDriver = "batteries/runLinter"
 
 [leanOptions]
 autoImplicit = false
@@ -25,3 +26,4 @@ name = "GeneralLinearGroups"
 name = "GeneralLinearGroupsTests"
 srcDir = "tests"
 roots = ["GeneralLinearGroupsTests"]
+leanOptions = { weak.linter.privateModule = false }
