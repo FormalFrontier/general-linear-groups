@@ -48,7 +48,6 @@ theorem rankOneUnits_injective (R : Type u) [Semiring R] :
   exact Matrix.scalar_inj.mp hscalar
 
 /-- Rank-one inclusion is compatible with changes of semiring coefficients. -/
-@[simp]
 theorem map_rankOneUnits {R : Type u} {S : Type v}
     [Semiring R] [Semiring S] (f : R →+* S) (unit : Rˣ) :
     map f (rankOneUnits R unit) = rankOneUnits S (Units.map f unit) := by
@@ -79,7 +78,6 @@ theorem det_stage (R : Type u) [CommRing R] (n : ℕ) (g : GL (Fin n) R) :
   lift_stage R _ _ n g
 
 /-- A rank-one scalar has determinant equal to its defining unit. -/
-@[simp]
 theorem det_rankOneUnits (R : Type u) [CommRing R] (unit : Rˣ) :
     det R (rankOneUnits R unit) = unit := by
   simp [Matrix.GeneralLinearGroup.det_scalar]
@@ -128,7 +126,6 @@ noncomputable def quotientRankOneUnits (R : Type u) [Ring R] :
   (QuotientGroup.mk' (stableElementarySubgroup R)).comp (rankOneUnits R)
 
 /-- The quotient determinant evaluates on a stable representative. -/
-@[simp]
 theorem quotientDet_mk (R : Type u) [CommRing R] (g : StableGL R) :
     quotientDet R (QuotientGroup.mk' (stableElementarySubgroup R) g) = det R g :=
   rfl
@@ -141,7 +138,6 @@ theorem quotientRankOneUnits_apply (R : Type u) [Ring R] (unit : Rˣ) :
   rfl
 
 /-- Rank-one units split the determinant of the elementary quotient. -/
-@[simp]
 theorem quotientDet_quotientRankOneUnits (R : Type u) [CommRing R] (unit : Rˣ) :
     quotientDet R (quotientRankOneUnits R unit) = unit := by
   rw [quotientRankOneUnits_apply, quotientDet_mk]
@@ -181,7 +177,6 @@ theorem abelianizationRankOneUnits_apply (R : Type u) [Semiring R] (unit : Rˣ) 
   rfl
 
 /-- Rank-one units split the determinant on the abelianization. -/
-@[simp]
 theorem abelianizationDet_abelianizationRankOneUnits
     (R : Type u) [CommRing R] (unit : Rˣ) :
     abelianizationDet R (abelianizationRankOneUnits R unit) = unit := by
@@ -208,7 +203,6 @@ theorem quotientDet_eq_abelianizationDet (R : Type u) [CommRing R] :
   simp only [quotientDet_mk, stableElementaryAbelianizationEquiv_mk, abelianizationDet_of]
 
 /-- The canonical equivalence carries quotient rank-one units to their abelianization. -/
-@[simp]
 theorem abelianizationEquiv_quotientRankOneUnits (R : Type u) [Ring R]
     (unit : Rˣ) :
     stableElementaryAbelianizationEquiv R (quotientRankOneUnits R unit) =
@@ -326,7 +320,6 @@ theorem quotientDetKernelMulEquiv_symm_apply_snd (R : Type u) [CommRing R]
     ((quotientDetKernelMulEquiv R).symm q).2 = quotientDet R q := by rfl
 
 /-- The determinant of a product-coordinate class is its unit coordinate. -/
-@[simp]
 theorem quotientDet_quotientDetKernelMulEquiv (R : Type u) [CommRing R]
     (pair : (quotientDet R).ker × Rˣ) :
     quotientDet R (quotientDetKernelMulEquiv R pair) = pair.2 := by
@@ -334,7 +327,6 @@ theorem quotientDet_quotientDetKernelMulEquiv (R : Type u) [CommRing R]
     MonoidHom.mem_ker.mp pair.1.property, quotientDet_quotientRankOneUnits, one_mul]
 
 /-- The kernel factor is included without altering its quotient class. -/
-@[simp]
 theorem quotientDetKernelMulEquiv_ker (R : Type u) [CommRing R]
     (kernel : (quotientDet R).ker) :
     quotientDetKernelMulEquiv R (kernel, 1) =
@@ -342,7 +334,6 @@ theorem quotientDetKernelMulEquiv_ker (R : Type u) [CommRing R]
   simp only [quotientDetKernelMulEquiv_apply, map_one, mul_one]
 
 /-- The unit factor is the existing rank-one section. -/
-@[simp]
 theorem quotientDetKernelMulEquiv_units (R : Type u) [CommRing R]
     (unit : Rˣ) :
     quotientDetKernelMulEquiv R (1, unit) = quotientRankOneUnits R unit := by
