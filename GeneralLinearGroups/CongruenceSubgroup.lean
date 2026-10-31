@@ -170,15 +170,24 @@ theorem liftCongruenceEntry_fst (I : TwoSidedIdeal R)
     (liftCongruenceEntry I u i j).fst =
       (1 : Matrix n n ℤ) i j := rfl
 
-/-- Mapping a lifted coefficient back to the ambient ring recovers the original entry. -/
+/-- The ambient value of a lifted entry's ideal component is the original entry minus
+its prescribed integer identity component, mapped into the ambient ring. -/
 @[simp]
+theorem liftCongruenceEntry_snd_val (I : TwoSidedIdeal R)
+    (u : congruenceSubgroup (n := n) I) (i j : n) :
+    ((liftCongruenceEntry I u i j).snd : R) =
+      (u.1 : Matrix n n R) i j - ((1 : Matrix n n ℤ) i j : R) := by
+  simp [liftCongruenceEntry, Matrix.one_apply]
+
+/-- Mapping a lifted coefficient back to the ambient ring recovers the original entry.
+This follows by simplification from the two component formulas and
+`idealUnitizationToRing_apply`. -/
 theorem idealUnitizationToRing_liftCongruenceEntry
     (I : TwoSidedIdeal R) (u : congruenceSubgroup (n := n) I)
     (i j : n) :
     idealUnitizationToRing I (liftCongruenceEntry I u i j) =
       (u.1 : Matrix n n R) i j := by
-  simp only [liftCongruenceEntry, idealUnitizationToRing_apply]
-  simp [Matrix.one_apply]
+  simp
 
 /-- Entrywise augmentation of a lifted congruence matrix is the identity matrix over `ℤ`. -/
 theorem fstHom_map_liftCongruenceMatrix (I : TwoSidedIdeal R)

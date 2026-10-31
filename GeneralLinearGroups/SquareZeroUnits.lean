@@ -93,21 +93,18 @@ def unitsKerEquivOfSquareZero (f : R →+* S) (hker : ker f ^ 2 = ⊥) :
       _ = _ := by rw [hxy, zero_add]
 
 /-- The forward coordinate is the value of the unit minus `1`. -/
-@[simp]
 theorem unitsKerEquivOfSquareZero_apply_coe (f : R →+* S)
     (hker : ker f ^ 2 = ⊥) (u : (Units.map f.toMonoidHom).ker) :
     ((Multiplicative.toAdd (unitsKerEquivOfSquareZero f hker u) : ker f) : R) =
       (u.1 : R) - 1 := rfl
 
 /-- The inverse coordinate has value `1 + x`. -/
-@[simp]
 theorem unitsKerEquivOfSquareZero_symm_apply_coe (f : R →+* S)
     (hker : ker f ^ 2 = ⊥) (x : Multiplicative (ker f)) :
     (((unitsKerEquivOfSquareZero f hker).symm x).1 : R) =
       1 + ((Multiplicative.toAdd x : ker f) : R) := rfl
 
 /-- The inverse of the unit associated to `x` has value `1 - x`. -/
-@[simp]
 theorem unitsKerEquivOfSquareZero_symm_apply_inv_coe (f : R →+* S)
     (hker : ker f ^ 2 = ⊥) (x : Multiplicative (ker f)) :
     Units.val ((((unitsKerEquivOfSquareZero f hker).symm x).1)⁻¹) =

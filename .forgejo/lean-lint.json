@@ -1,5 +1,5 @@
 {
   "version": 1,
-  "mode": "report",
+  "mode": "required",
   "test_libraries": ["GeneralLinearGroupsTests"]
 }

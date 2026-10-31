@@ -69,7 +69,7 @@ noncomputable def principalUnitsPowQuotientEquiv [IsDomain R] (I : Ideal R)
     (hI : I ≠ ⊥)
     (hJ : I ≤ Ideal.jacobson ⊥) (π : R) (hgen : I = Ideal.span {π})
     (n : ℕ) (hpos : 1 ≤ n) :
-    MulAction.stabilizer Rˣ (Submodule.Quotient.mk (1 : R) : R ⧸ (I ^ n : Ideal R)) ⧸
+    MulAction.stabilizer Rˣ (1 : R ⧸ (I ^ n : Ideal R)) ⧸
         ((I ^ n).principalUnitsToQuotient (I ^ (n + 1)) (by
           rw [← pow_mul]
           exact Ideal.pow_le_pow_right (by

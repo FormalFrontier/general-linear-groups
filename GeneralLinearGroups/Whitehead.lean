@@ -162,7 +162,8 @@ noncomputable def liftMatrix (f : R →+* S) (hf : Function.Surjective f)
   fun i j ↦ Classical.choose (hf (a i j))
 
 /-- Mapping a chosen entrywise lift along the surjective homomorphism recovers the matrix. -/
-@[simp]
+-- Preserve simplification of the whole-matrix map/lift equation.
+@[simp, nolint simpNF]
 theorem mapMatrix_liftMatrix (f : R →+* S) (hf : Function.Surjective f)
     (a : Matrix ι ι S) :
     f.mapMatrix (liftMatrix f hf a) = a := by

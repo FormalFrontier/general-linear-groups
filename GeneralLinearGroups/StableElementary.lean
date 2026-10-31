@@ -305,7 +305,8 @@ noncomputable def stableElementaryAbelianizationEquiv (R : Type u) [Ring R] :
     (StableGL R ⧸ stableElementarySubgroup R) ≃* Abelianization (StableGL R) :=
   QuotientGroup.quotientMulEquivOfEq (stableElementarySubgroup_eq_commutator R)
 
-@[simp]
+-- Retain the characteristic simp computation on quotient representatives.
+@[simp, nolint simpNF]
 theorem stableElementaryAbelianizationEquiv_mk (R : Type u) [Ring R] (g : StableGL R) :
     stableElementaryAbelianizationEquiv R
       (QuotientGroup.mk' (stableElementarySubgroup R) g) = Abelianization.of g := by

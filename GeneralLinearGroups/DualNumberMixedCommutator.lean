@@ -191,22 +191,25 @@ def mixedKernel (X Y : Matrix n n R) : (glReduce (DualNumber R) n).ker :=
     glReadback (mixedKernel X Y) = innerPure (⁅X, Y⁆ : Matrix n n R) := by
   exact glKerEquiv_readback _
 
+-- Eliminate an observed coordinate before simplifying the coerced kernel value.
+-- The separate `mixedKernel_val` rule intentionally expands that value to the
+-- four-factor commutator; none of these coordinate normal forms contains a kernel value.
 /-- The entire outer first coordinate is the identity matrix over inner dual numbers. -/
-@[simp] theorem mixedKernel_fst (X Y : Matrix n n R) (i j : n) :
+@[simp↓] theorem mixedKernel_fst (X Y : Matrix n n R) (i j : n) :
     (((mixedKernel X Y).1 : Matrix n n (DualNumber (DualNumber R))) i j).fst =
       (1 : Matrix n n (DualNumber R)) i j := by
   exact congrArg (fun A : Matrix n n (DualNumber R) => A i j)
     (glKernel_fst (mixedKernel X Y))
 
 /-- The outer second coordinate has zero inner first coefficient. -/
-@[simp] theorem mixedKernel_snd_fst (X Y : Matrix n n R) (i j : n) :
+@[simp↓] theorem mixedKernel_snd_fst (X Y : Matrix n n R) (i j : n) :
     (((mixedKernel X Y).1 : Matrix n n (DualNumber (DualNumber R))) i j).snd.fst =
       0 := by
   rw [← glReadback_apply, mixedKernel_readback]
   rfl
 
 /-- The mixed coordinate is mathlib's existing associative matrix Lie bracket. -/
-@[simp] theorem mixedKernel_snd_snd (X Y : Matrix n n R) (i j : n) :
+@[simp↓] theorem mixedKernel_snd_snd (X Y : Matrix n n R) (i j : n) :
     (((mixedKernel X Y).1 : Matrix n n (DualNumber (DualNumber R))) i j).snd.snd =
       (⁅X, Y⁆ : Matrix n n R) i j := by
   rw [← glReadback_apply, mixedKernel_readback]

@@ -73,12 +73,21 @@ theorem IsNilpotent.oneAddUnitOfPowEqZero_val {A : Type*} [Ring A]
     (r : A) (k : ℕ) (hk : r ^ k = 0) :
     (IsNilpotent.oneAddUnitOfPowEqZero r k hk : A) = 1 + r := rfl
 
-/-- The stored inverse of the unit `1 + r` is the finite sum of `(-r) ^ i` for `i < k`. -/
+/-- The inverse unit of `1 + r` has underlying ring element equal to the finite sum of
+`(-r) ^ i` for `i < k`. -/
 @[simp]
+theorem IsNilpotent.oneAddUnitOfPowEqZero_coe_inv {A : Type*} [Ring A]
+    (r : A) (k : ℕ) (hk : r ^ k = 0) :
+    (↑((IsNilpotent.oneAddUnitOfPowEqZero r k hk)⁻¹) : A) =
+      ∑ i ∈ Finset.range k, (-r) ^ i := rfl
+
+/-- The stored inverse of the unit `1 + r` is the finite sum of `(-r) ^ i` for `i < k`.
+This is also the simplification of the coerced inverse unit. -/
 theorem IsNilpotent.oneAddUnitOfPowEqZero_inv {A : Type*} [Ring A]
     (r : A) (k : ℕ) (hk : r ^ k = 0) :
     (IsNilpotent.oneAddUnitOfPowEqZero r k hk).inv =
-      ∑ i ∈ Finset.range k, (-r) ^ i := rfl
+      ∑ i ∈ Finset.range k, (-r) ^ i := by
+  simp
 
 namespace Matrix
 
@@ -215,13 +224,21 @@ theorem nilpotentMatrixElement_val
     ((nilpotentMatrixElement x k hk).1 : Matrix n n (Unitization ℤ I)) =
       1 + unitizationMatrix x := rfl
 
+/-- The inverse of the relative element has underlying matrix equal to the finite alternating
+geometric series in the unitized matrix, with length the supplied nilpotence exponent. -/
+@[simp]
+theorem nilpotentMatrixElement_coe_inv
+    (x : Matrix n n I) (k : ℕ) (hk : unitizationMatrix x ^ k = 0) :
+    (↑((nilpotentMatrixElement x k hk).1⁻¹) : Matrix n n (Unitization ℤ I)) =
+      ∑ i ∈ Finset.range k, (-unitizationMatrix x) ^ i := rfl
+
 /-- The stored inverse of the relative element is the finite alternating geometric series
 in the unitized matrix, with length the supplied nilpotence exponent. -/
-@[simp]
 theorem nilpotentMatrixElement_inv
     (x : Matrix n n I) (k : ℕ) (hk : unitizationMatrix x ^ k = 0) :
     (nilpotentMatrixElement x k hk).1.inv =
-      ∑ i ∈ Finset.range k, (-unitizationMatrix x) ^ i := rfl
+      ∑ i ∈ Finset.range k, (-unitizationMatrix x) ^ i := by
+  simp
 
 /-- A nilpotent matrix over a nonunital ring canonically determines the
 relative general-linear-group element represented by `1 + x`. -/

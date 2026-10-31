@@ -7,6 +7,7 @@ import GeneralLinearGroupsTests.StableGeneralLinearEntriesUses
 
 import GeneralLinearGroupsTests.MatrixTraceClient
 import GeneralLinearGroupsTests.MatrixCornerClient
+import GeneralLinearGroupsTests.MatrixIdeal
 import GeneralLinearGroupsTests.MatrixNilpotentIdeal
 import GeneralLinearGroupsTests.MatrixNilpotentEntriesClient
 import GeneralLinearGroupsTests.PublicAPIClient

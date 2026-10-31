@@ -29,15 +29,15 @@ universe u v w z
 
 namespace DualNumber
 
-/-- The first-component ring homomorphism from dual numbers. -/
+/-- The first-component ring homomorphism from dual numbers, in the canonical
+ring-hom coercion form of the algebra projection. -/
 abbrev fstRingHom (R : Type u) [CommRing R] : DualNumber R →+* R :=
-  (TrivSqZeroExt.fstHom R R R).toRingHom
+  (TrivSqZeroExt.fstHom R R R : DualNumber R →+* R)
 
 /-- The kernel of the first projection on dual numbers has square zero. -/
 @[simp] theorem fstRingHom_ker_sq (R : Type u) [CommRing R] :
     RingHom.ker (fstRingHom R) ^ 2 = ⊥ := by
-  rw [fstRingHom, AlgHom.toRingHom_eq_coe,
-    RingHom.ker_coe_toRingHom (f := TrivSqZeroExt.fstHom R R R)]
+  rw [fstRingHom, RingHom.ker_coe_toRingHom (f := TrivSqZeroExt.fstHom R R R)]
   exact TrivSqZeroExt.kerIdeal_sq R R
 
 /-- Coefficient change on dual numbers; unlike `TrivSqZeroExt.map`, the base ring changes. -/

@@ -25,7 +25,9 @@ and reducing modulo `J` is a homomorphism to the additive subquotient
 original-ring units that are also congruent to `1` modulo `J`. When
 `I ≤ Ring.jacobson R`, every coordinate has a lift with value `1 + x`.
 
-Neither ideal needs to be two-sided. The hypothesis `J ≤ I` is unnecessary:
+Neither ideal needs to be two-sided. The point `(1 : R ⧸ I)` is the canonical
+class of `1`, defined even for a quotient by a left ideal; it does not require a
+quotient-ring multiplication. The hypothesis `J ≤ I` is unnecessary:
 `Submodule.comap I.subtype J` and the relative subgroup of stabilizers already
 take intersections. The quotient by the coordinate homomorphism's kernel
 uses Mathlib's canonical normal-subgroup instance. Its kernel equality
@@ -57,15 +59,32 @@ namespace Ideal
 
 variable {R : Type u} [Ring R]
 
-/-- Stabilizing the class of `1` in a quotient left module is precisely
-congruence to `1` in the original ring. -/
+/-- The class of `1` in a quotient by a left ideal is its distinguished `1`.
+No two-sidedness hypothesis or quotient-ring multiplication is needed. -/
 @[simp]
+theorem Quotient.mk_one (I : Ideal R) :
+    (Submodule.Quotient.mk (1 : R) : R ⧸ I) = 1 := rfl
+
+/-- A unit fixes `1` in a quotient left module precisely when it is congruent
+to `1` in the original ring. The quotient has a distinguished `1` even when the
+left ideal is not two-sided. -/
+@[simp]
+theorem units_smul_quotient_one_eq_one (I : Ideal R) (u : Rˣ) :
+    u • (1 : R ⧸ I) = 1 ↔ (u : R) - 1 ∈ I := by
+  change u • (Submodule.Quotient.mk (1 : R) : R ⧸ I) =
+    Submodule.Quotient.mk 1 ↔ _
+  rw [Units.smul_def, ← Submodule.Quotient.mk_smul]
+  simpa only [smul_eq_mul, mul_one] using (Submodule.Quotient.eq I :
+    (Submodule.Quotient.mk (u : R) : R ⧸ I) = Submodule.Quotient.mk 1 ↔ _)
+
+/-- Stabilizing the class of `1` in a quotient left module is precisely
+congruence to `1` in the original ring. This named rewrite is also a consequence
+of the generic stabilizer-membership simp rule and
+`units_smul_quotient_one_eq_one`. -/
 theorem mem_stabilizer_quotient_one (I : Ideal R) (u : Rˣ) :
     u ∈ MulAction.stabilizer Rˣ (Submodule.Quotient.mk (1 : R) : R ⧸ I) ↔
       (u : R) - 1 ∈ I := by
-  rw [MulAction.mem_stabilizer_iff, Units.smul_def, ← Submodule.Quotient.mk_smul]
-  simpa only [smul_eq_mul, mul_one] using (Submodule.Quotient.eq I :
-    (Submodule.Quotient.mk (u : R) : R ⧸ I) = Submodule.Quotient.mk 1 ↔ _)
+  simp
 
 /-- Inclusion of left ideals gives inclusion of their principal-unit stabilizers. -/
 theorem stabilizer_quotient_one_mono {I J : Ideal R} (h : I ≤ J) :
@@ -80,8 +99,10 @@ the kernel of reduction on units. Both sides are Mathlib subgroup carriers. -/
 theorem stabilizer_quotient_one_eq_ker_unitsMap (I : Ideal R) [I.IsTwoSided] :
     MulAction.stabilizer Rˣ (Submodule.Quotient.mk (1 : R) : R ⧸ I) =
       (Units.map (Ideal.Quotient.mk I).toMonoidHom).ker := by
+  rw [Quotient.mk_one I]
   ext u
-  rw [mem_stabilizer_quotient_one, MonoidHom.mem_ker, Units.ext_iff]
+  rw [MulAction.mem_stabilizer_iff, units_smul_quotient_one_eq_one I,
+    MonoidHom.mem_ker, Units.ext_iff]
   exact (Ideal.Quotient.eq (I := I)).symm
 
 private theorem isUnit_one_add_of_mem_ringJacobson (x : R)
@@ -93,10 +114,10 @@ private theorem isUnit_one_add_of_mem_ringJacobson (x : R)
 /-- Lift an ideal coordinate to an original-ring principal unit using the
 Jacobson-radical condition. Its ring value is `1 + x`. -/
 noncomputable def principalUnitsMk (I : Ideal R) (hI : I ≤ Ring.jacobson R)
-    (x : I) : MulAction.stabilizer Rˣ (Submodule.Quotient.mk (1 : R) : R ⧸ I) :=
+    (x : I) : MulAction.stabilizer Rˣ (1 : R ⧸ I) :=
   ⟨(show IsUnit (1 + (x : R)) from by
     exact isUnit_one_add_of_mem_ringJacobson (x : R) (hI x.property)).unit, by
-    rw [mem_stabilizer_quotient_one, IsUnit.unit_spec]
+    rw [MulAction.mem_stabilizer_iff, units_smul_quotient_one_eq_one I, IsUnit.unit_spec]
     simpa only [add_sub_cancel_left] using x.property⟩
 
 /-- The Jacobson lift has value `1 + x` in the original ring. -/
@@ -108,7 +129,7 @@ theorem principalUnitsMk_coe (I : Ideal R) (hI : I ≤ Ring.jacobson R) (x : I) 
 /-- Subtract `1` from a principal unit and reduce its ideal coordinate modulo `J`.
 The square containment kills the product cross term. -/
 def principalUnitsToQuotient (I J : Ideal R) (hsq : I ^ 2 ≤ J) :
-    MulAction.stabilizer Rˣ (Submodule.Quotient.mk (1 : R) : R ⧸ I) →*
+    MulAction.stabilizer Rˣ (1 : R ⧸ I) →*
       Multiplicative (I ⧸ Submodule.comap I.subtype J) where
   toFun u := Multiplicative.ofAdd
     (Submodule.Quotient.mk (⟨(u.1 : R) - 1, (I.mem_stabilizer_quotient_one u.1).mp u.property⟩ : I))
@@ -140,15 +161,13 @@ theorem principalUnitsToQuotient_apply (I J : Ideal R) (hsq : I ^ 2 ≤ J)
       (Submodule.Quotient.mk
         (⟨(u.1 : R) - 1, (I.mem_stabilizer_quotient_one u.1).mp u.property⟩ : I)) := rfl
 
-/-- The coordinate of the Jacobson lift of `x` is the class of `x`. -/
-@[simp]
+/-- The coordinate of the Jacobson lift of `x` is the class of `x`.
+The simp normal form follows compositionally from `principalUnitsToQuotient_apply`
+and `principalUnitsMk_coe`; this named lemma is retained for explicit rewrites. -/
 theorem principalUnitsToQuotient_mk (I J : Ideal R) (hsq : I ^ 2 ≤ J)
     (hI : I ≤ Ring.jacobson R) (x : I) :
     I.principalUnitsToQuotient J hsq (I.principalUnitsMk hI x) =
       Multiplicative.ofAdd (Submodule.Quotient.mk x) := by
-  rw [principalUnitsToQuotient_apply]
-  congr 2
-  apply Subtype.ext
   simp
 
 /-- The denominator is precisely the subgroup of original-ring units that are
@@ -192,7 +211,7 @@ Fesenko–Vostokov, Chapter I, (5.4)(3), before identifying a discrete valuation
 ring's ideal layer with its additive residue field. -/
 noncomputable def principalUnitsQuotientEquiv (I J : Ideal R) (hsq : I ^ 2 ≤ J)
     (hI : I ≤ Ring.jacobson R) :
-    MulAction.stabilizer Rˣ (Submodule.Quotient.mk (1 : R) : R ⧸ I) ⧸
+    MulAction.stabilizer Rˣ (1 : R ⧸ I) ⧸
         (I.principalUnitsToQuotient J hsq).ker ≃*
       Multiplicative (I ⧸ Submodule.comap I.subtype J) :=
   QuotientGroup.quotientKerEquivOfSurjective (I.principalUnitsToQuotient J hsq)

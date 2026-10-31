@@ -168,6 +168,13 @@ theorem leadingPrincipalMinor_zero {n : ℕ} (M : Matrix (Fin n) (Fin n) R) :
     leadingPrincipalMinor M 0 (Nat.zero_le n) = 1 := by
   exact det_isEmpty
 
+/-- The leading principal minor of order one is the first diagonal entry. -/
+@[simp]
+theorem leadingPrincipalMinor_one {n : ℕ} (M : Matrix (Fin n) (Fin n) R)
+    (h : 1 ≤ n) :
+    leadingPrincipalMinor M 1 h = M (Fin.castLE h 0) (Fin.castLE h 0) := by
+  exact det_fin_one _
+
 @[simp]
 theorem leadingPrincipalMinor_full {n : ℕ} (M : Matrix (Fin n) (Fin n) R) :
     leadingPrincipalMinor M n le_rfl = M.det := by
@@ -219,11 +226,18 @@ def firstRestBlock {n : ℕ} (M : Matrix (Fin (n + 1)) (Fin (n + 1)) R) :
     Matrix (Fin 1 ⊕ Fin n) (Fin 1 ⊕ Fin n) R :=
   M.submatrix (firstRestEquiv n).symm (firstRestEquiv n).symm
 
+omit [CommRing R] in
+/-- Every entry of the one-by-one first block is the leading entry of the matrix. -/
 @[simp]
+theorem firstRestBlock_toBlocks₁₁_apply {n : ℕ}
+    (M : Matrix (Fin (n + 1)) (Fin (n + 1)) R) (i j : Fin 1) :
+    (firstRestBlock M).toBlocks₁₁ i j = M 0 0 := by
+  simp [firstRestBlock, Matrix.toBlocks₁₁]
+
+/-- The first block determinant is the first leading principal minor. -/
 theorem firstRestBlock_pivot {n : ℕ} (M : Matrix (Fin (n + 1)) (Fin (n + 1)) R) :
     (firstRestBlock M).toBlocks₁₁.det = leadingPrincipalMinor M 1 (Nat.le_add_left 1 n) := by
-  simp [leadingPrincipalMinor, firstRestBlock,
-    Matrix.toBlocks₁₁, Matrix.submatrix_apply]
+  simp
 
 omit [CommRing R] in
 /-- Restricting an ordered first-coordinate block decomposition to an initial segment

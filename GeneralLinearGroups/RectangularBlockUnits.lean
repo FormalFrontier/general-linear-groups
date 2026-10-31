@@ -92,7 +92,6 @@ theorem rectangularUpperUnit_val (C : Matrix X Y R) :
 
 /-- Left multiplication by an upper block unit adds the ordered off-block
 linear combination to each upper row of a matrix with arbitrary columns. -/
-@[simp]
 theorem rectangularUpperUnit_mul_apply_inl {columns : Type*}
     (C : Matrix X Y R) (matrix : Matrix (X ⊕ Y) columns R)
     (row : X) (column : columns) :
@@ -103,7 +102,6 @@ theorem rectangularUpperUnit_mul_apply_inl {columns : Type*}
   simp [Matrix.mul_apply, Fintype.sum_sum_type, Matrix.one_apply]
 
 /-- Left multiplication by an upper block unit does not change lower rows. -/
-@[simp]
 theorem rectangularUpperUnit_mul_apply_inr {columns : Type*}
     (C : Matrix X Y R) (matrix : Matrix (X ⊕ Y) columns R)
     (row : Y) (column : columns) :

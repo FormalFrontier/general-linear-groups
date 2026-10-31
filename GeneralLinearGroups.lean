@@ -12,6 +12,7 @@ public import GeneralLinearGroups.Reindex
 public import GeneralLinearGroups.CongruenceSubgroup
 public import GeneralLinearGroups.QuasiregularIdeal
 public import GeneralLinearGroups.MatrixQuasiregular
+public import GeneralLinearGroups.MatrixIdeal
 public import GeneralLinearGroups.MatrixNilpotentIdeal
 public import GeneralLinearGroups.MatrixNilpotentEntries
 public import GeneralLinearGroups.QuasiregularQuotient

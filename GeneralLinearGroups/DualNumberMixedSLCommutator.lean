@@ -120,8 +120,10 @@ def mixedSLKernel (X Y : LieAlgebra.SpecialLinear.sl n R) :
     slReadback (mixedSLKernel X Y) = innerPureSL ⁅X, Y⁆ :=
   slKerEquiv_readback _
 
+-- Read the coordinate before `mixedSLKernel_val` expands the coerced value to a
+-- four-factor matrix commutator. The Lie-bracket normal form contains no kernel value.
 /-- The outer-second, inner-second matrix entry is the ordered Lie bracket. -/
-@[simp] theorem mixedSLKernel_snd_snd (X Y : LieAlgebra.SpecialLinear.sl n R) (i j : n) :
+@[simp↓] theorem mixedSLKernel_snd_snd (X Y : LieAlgebra.SpecialLinear.sl n R) (i j : n) :
     (((mixedSLKernel X Y).1 : Matrix n n (DualNumber (DualNumber R))) i j).snd.snd =
       (⁅X, Y⁆ : LieAlgebra.SpecialLinear.sl n R).1 i j := by
   rw [← slReadback_apply, mixedSLKernel_readback]
