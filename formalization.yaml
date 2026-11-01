@@ -29,15 +29,15 @@ project:
     and scalar-unit reduction kernels, determinant/trace, coefficient maps
     and the left-conjugation adjoint action use commutative rings. The trace
     quotient is an additive group, not a quotient ring; its corner inverse
-    requires a chosen matrix index. A native Steinberg presentation adds
+    requires a chosen matrix index. A Steinberg presentation adds
     elementary-symbol relations, universal lifts and a finite map onto the
     elementary subgroup, without opposite-root or central-extension assertions.
-    Over iterated dual numbers, genuine native GL units have an ordered
+    Over iterated dual numbers, Mathlib's GL units have an ordered
     commutator equal to the mixed lift of the associative matrix bracket;
-    its actual outer reduction-kernel element has complete pure-inner readback.
-    For trace-zero inputs, the native SL refinement uses actual special-linear
-    factors, identifies the ordered mixed commutator and reads back its
-    pure-inner trace-zero coefficient in the actual outer SL kernel.
+    its outer reduction-kernel element has complete pure-inner readback.
+    For trace-zero inputs, the refinement in Mathlib's SL group uses
+    special-linear factors, identifies the ordered mixed commutator and reads back its
+    pure-inner trace-zero coefficient in the outer SL kernel.
     Elementary unit-pivot diagonalization, product-one diagonal membership,
     continuous elementary paths and finite special-linear elementary
     neighborhoods add algebraic and topological interfaces with their
@@ -56,8 +56,7 @@ project:
   authors:
     - "Formal Frontier Agents"
   responsible_maintainers:
-    - "Prism (source-maintainer team)"
-    - "Lattice (source-maintainer team)"
+    - "Formal Frontier Agents (maintainer team)"
   license: "Apache-2.0"
 
 sources:
@@ -104,24 +103,28 @@ related_formalizations:
   - id: "https://github.com/leanprover-community/mathlib4/tree/83abb3e776bdefcbc447a1e44d0debe4010039e5"
     relationship: "builds-on"
     note: >-
-      Reuses native matrices, units, ring homomorphisms, left and two-sided
+      Reuses Mathlib's matrices, units, ring homomorphisms, left and two-sided
       ideals, regular-module powers, finite-sum closure, Jacobson radicals,
       nonunital quasiregularity, unitization, subgroup closure and additive
-      quotients. Upstream authorship and license notices remain with mathlib;
+      quotients. The rectangular complement and matrix inverse-value results
+      use the preadditive and isomorphism APIs, Mat_ and SingleObj categories,
+      finite-index reindexing, and the Units/Aut correspondence.
+      Upstream authorship and license notices remain with mathlib;
       its sources are not vendored. The Lake manifest
       includes generated dependency records derived from mathlib's manifest.
 
 status:
+  sorry_count: 0
   scope: >-
     Reusable finite general-linear-group mathematics over rings, including
     elementary and relative groups, block factorizations,
     congruence and quasi-regular quotients, additive trace, a Steinberg
-    presentation, and native GL/SL dual-number kernels and ordered mixed
-    commutators. Core rings may be noncommutative; the dual-number layer
+    presentation, and dual-number kernels in Mathlib's GL/SL groups and ordered
+    mixed commutators. Core rings may be noncommutative; the dual-number layer
     requires CommRing. The additional elementary algebra/topology layer covers
     unit-pivot diagonalization, product-one diagonals, local-ring elementary
-    generation, elementary paths and native SL neighborhoods, each with its
-    stated hypotheses.
+    generation, elementary paths and neighborhoods in Mathlib's SL group,
+    each with its stated hypotheses.
     Scalar unit-reflecting Ring-to-Semiring homomorphisms have quasi-regular
     canonical two-sided kernels without surjectivity; for surjective maps,
     this kernel condition is also sufficient for unit reflection. Source and
@@ -145,6 +148,19 @@ status:
     index types where stated. The results do not establish stable K1 or K2,
     a source-complete K-theory formalization, or source-passage coverage.
   main_results:
+    - declaration: "CategoryTheory.isIso_id_sub_comp_iff"
+      file: "GeneralLinearGroups/RectangularIsomorphisms.lean"
+      note: >-
+        In a preadditive category with independent object and
+        morphism universes, for arbitrary objects X, Y and morphisms a:X->Y,
+        b:Y->X, IsIso (𝟙 X - a ≫ b) iff IsIso (𝟙 Y - b ≫ a).
+        No finiteness, biproduct or nonzero-object hypothesis is imposed.
+    - declaration: "CategoryTheory.inv_id_sub_comp"
+      file: "GeneralLinearGroups/RectangularIsomorphisms.lean"
+      note: >-
+        Assuming only IsIso (𝟙 Y - b ≫ a), the canonical inverse
+        of 𝟙 X - a ≫ b is 𝟙 X + a ≫ inv (𝟙 Y - b ≫ a) ≫ b.
+        The left IsIso proof is derived from the criterion, not a second premise.
     - declaration: "Matrix.pow_apply_mem_ideal_pow"
       file: "GeneralLinearGroups/MatrixNilpotentIdeal.lean"
       note: >-
@@ -246,9 +262,9 @@ status:
       file: "GeneralLinearGroups/Elementary.lean"
       note: >-
         Off-diagonal unit 1 + single i j c over any Ring, with inverse,
-        coefficient-addition product and a CommRing-only native-transvection
-        comparison. It requires a finite decidable index type and i different
-        from j, not a commutative coefficient ring.
+        coefficient-addition product and a CommRing-only comparison with
+        Mathlib transvections. It requires a finite decidable index type and
+        i different from j, not a commutative coefficient ring.
     - declaration: "Matrix.GeneralLinearGroup.elementarySubgroup"
       file: "GeneralLinearGroups/Elementary.lean"
       note: >-
@@ -327,7 +343,7 @@ status:
       file: "GeneralLinearGroups/LocalQuotient.lean"
       note: >-
         A proper two-sided ideal with unit complement gives a maximal left
-        ideal and a native division-ring quotient; commutativity and uniqueness
+        ideal and a division-ring quotient; commutativity and uniqueness
         of maximal ideals are not assumed.
     - declaration: "Matrix.GeneralLinearGroup.idealGeneralLinearGroupEquivCongruence"
       file: "GeneralLinearGroups/CongruenceSubgroup.lean"
@@ -391,7 +407,7 @@ status:
     - declaration: "Matrix.GeneralLinearGroup.isUnit_one_add_unitizationMatrix_iff_isQuasiregular"
       file: "GeneralLinearGroups/NonUnitalQuasiregular.lean"
       note: >-
-        Native nonunital quasiregularity is equivalent to invertibility of
+        Nonunital quasiregularity is equivalent to invertibility of
         1+x after unitization, and to representability in the augmentation
         kernel. No coefficient commutativity or nontriviality is inserted.
     - declaration: "Unitization.ringEquivProd"
@@ -405,7 +421,7 @@ status:
     - declaration: "Ring.additiveCommutators"
       file: "GeneralLinearGroups/AdditiveCommutator.lean"
       note: >-
-        Native additive-subgroup closure of a*b-b*a in a unital ring.
+        Additive-subgroup closure of a*b-b*a in a unital ring.
         It is not defined as a two-sided ideal.
     - declaration: "Matrix.trace_mul_sub_trace_mul_commutators"
       file: "GeneralLinearGroups/MatrixTrace.lean"
@@ -443,7 +459,7 @@ status:
       note: "Entrywise coefficient mapping preserves the absolute elementary subgroup."
     - declaration: "Matrix.GeneralLinearGroup.mapElementarySubgroup"
       file: "GeneralLinearGroups/RelativeElementary.lean"
-      note: "The native restricted map on elementary subgroups."
+      note: "The restricted map on elementary subgroups."
     - declaration: "Matrix.GeneralLinearGroup.mapElementarySubgroup_coe"
       file: "GeneralLinearGroups/RelativeElementary.lean"
       note: "The restricted coefficient map has the same ambient GL value as mapRingHom."
@@ -509,7 +525,7 @@ status:
       note: "An ideal-valued lower block unit belongs to the doubled relative elementary subgroup. Its lower-left block is `-a`, so its elementary generators use `-a i j`."
     - declaration: "Matrix.GeneralLinearGroup.blockDiagonalUnit_eq_five"
       file: "GeneralLinearGroups/RelativeWhitehead.lean"
-      note: "The native five-factor block identity; `lowerUnit b` has lower-left block `-b`. No ideal hypothesis is needed."
+      note: "The five-factor block identity; `lowerUnit b` has lower-left block `-b`. No ideal hypothesis is needed."
     - declaration: "Matrix.GeneralLinearGroup.blockDiagonalUnit_mem_relativeElementarySubgroup"
       file: "GeneralLinearGroups/RelativeWhitehead.lean"
       note: "The Whitehead diagonal of a congruence unit is relative elementary after doubling, with conjugation only inside the existing elementary subgroup."
@@ -830,7 +846,7 @@ status:
       note: "Mathlib transvection lists yield elementary GL factors and a unit diagonal for invertible field matrices."
     - declaration: Matrix.GeneralLinearGroup.elementaryUnitPathSubtype
       file: GeneralLinearGroups/ElementaryPaths.lean
-      note: "Path within the actual elementary subgroup over a topological Ring."
+      note: "Path within the elementary subgroup over a topological Ring."
     - declaration: Matrix.GeneralLinearGroup.elementarySubgroup_pathConnectedSpace
       file: GeneralLinearGroups/ElementaryPaths.lean
       note: "Subgroup path-connectedness additionally requiring PathConnectedSpace R."
@@ -873,12 +889,12 @@ fidelity:
     The iterated-dual-number result has independent coefficient and index
     universes, CommRing and finite decidable indices, including empty and
     singleton types, zero rings and characteristic two. Its ordered full
-    native-unit commutator is liftGL(innerPure (XY-YX)); epsilon's actual
+    unit commutator is liftGL(innerPure (XY-YX)); epsilon's
     outer reduction is liftGL X, generally not 1. The resulting genuine
     outer-kernel element has complete pure-inner matrix readback. This is
     not a bracket of the abelian first-order kernel; this GL statement alone
-    asserts no SL, scheme-point or global Lie theorem. Its native SL refinement
-    requires trace-zero inputs for both actual factors, identifies their
+    asserts no SL, scheme-point or global Lie theorem. Its refinement in
+    Mathlib's SL group requires trace-zero inputs for both factors, identifies their
     ordered XY-YX commutator and reads back the pure-inner trace-zero SL
     reduction-kernel element. No source-passage correspondence for these mixed
     identities is claimed.
@@ -938,18 +954,18 @@ fidelity:
     diagonals are elementary even at empty rank and over a zero ring. Paths
     use Ring and a topological-ring structure, including noncommutative
     coefficients; connectedness of E additionally needs PathConnectedSpace R
-    and gives no connectedness of ambient GL. In finite native SL the comap E
-    is open/closed when scalar units form an open locus; equality with the
+    and gives no connectedness of ambient GL. In Mathlib's finite SL group the
+    comap E is open/closed when scalar units form an open locus; equality with the
     identity path component additionally needs PathConnectedSpace R. Neither
     continuous factor selection, a quantitative neighborhood nor SL=E follows.
-    Native dual-number reduction uses actual multiplicative GL/SL/unit kernels,
-    not additive ideal kernels. The native dual-number modules require CommRing, independent
-    coefficient/index universes and finite decidable indices, allowing empty
-    ranks, zero rings and characteristic two. SL kernel coefficients use
+    Dual-number reduction uses multiplicative kernels in Mathlib's GL/SL groups
+    and scalar units, not additive ideal kernels. The dual-number modules require
+    CommRing, independent coefficient/index universes and finite decidable indices,
+    allowing empty ranks, zero rings and characteristic two. SL kernel coefficients use
     mathlib's trace-zero Lie subalgebra; determinant has a first-order trace
     square and SL includes into GL. Ring-hom coefficient maps are natural but
     not generally R-linear. Adjoint means left conjugation g * X * g⁻¹,
-    including nonconstant native units; it is not GL left multiplication.
+    including nonconstant GL units; it is not GL left multiplication.
     Abelian first-order kernel group commutators do not implement the
     nonzero matrix Lie bracket. No tangent scheme, arbitrary scheme base
     change or point bridge is established.
@@ -996,14 +1012,13 @@ review:
     source correspondence or source formalization is asserted.
 
 acknowledgements: >-
-  Formal Frontier Agents contributed original proof expression and subsequent
-  library adaptation. Prism developed general-linear, ideal and trace-related
-  proofs and API documentation; Lattice contributed native dual-number kernel
-  and adjoint integration; Anchor's Markdown documentation adapter informed the
-  historical API reference. Other Formal Frontier Agents authored trace,
+  Formal Frontier Agents contributed original proof expression and library
+  adaptation: general-linear, ideal and trace-related proofs and API
+  documentation; dual-number kernel and adjoint integration; the Markdown
+  documentation adapter that informed the historical API reference; trace,
   elementary, relative, stabilization, Steinberg, dual-number, unit-pivot,
-  elementary-path, diagonal and neighborhood proofs and clients; further agents
-  adapted examples and mathematical guides. mathlib retains its own authorship
+  elementary-path, diagonal and neighborhood proofs and clients; and adaptation
+  of examples and mathematical guides. mathlib retains its own authorship
   and notices for third-party foundations. Charles A. Weibel's book supplies
   mathematical motivation, not proof authorship. The collective author credit
   does not assert a copyright holder or third-party redistribution rights.

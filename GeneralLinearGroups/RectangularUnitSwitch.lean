@@ -5,7 +5,11 @@ Authors: Formal Frontier Agents
 module
 
 public import GeneralLinearGroups.ZeroProductStabilization
+import GeneralLinearGroups.RectangularIsomorphisms
+import Mathlib.CategoryTheory.Preadditive.Mat
+import Mathlib.Data.Fintype.EquivFin
 public import Mathlib.LinearAlgebra.Matrix.Invertible
+import Mathlib.LinearAlgebra.Matrix.Reindex
 
 /-!
 # Switching rectangular unit products
@@ -15,6 +19,13 @@ matrix `1 + B * A`. Its inverse is read back through the ordered product
 `1 - B * (1 + A * B)⁻¹ * A`. The diagonal pair of the original unit and the
 inverse switched unit admits an ordered factorization into four rectangular
 elementary shears. Empty blocks and the zero ring are permitted.
+
+## References
+
+The inverse-value proof specializes the two-object preadditive Jacobson identity.
+It uses Mathlib's `Mat_` and `SingleObj` categories, finite-index reindexing and the
+`Units`/`Aut` correspondence. The unit construction retains Mathlib's matrix
+invertibility interfaces.
 -/
 
 set_option warningAsError true
@@ -48,36 +59,111 @@ theorem rectangularUnitSwitch_val (A : Matrix X Y R) (B : Matrix Y X R)
     (g : GL X R) (hg : (g : Matrix X X R) = 1 + A * B) :
     (rectangularUnitSwitch A B g hg : Matrix Y Y R) = 1 + B * A := rfl
 
-/-- The inverse switched unit has the ordered inverse from the matrix Woodbury identity. -/
+open CategoryTheory in
+/-- The inverse switched unit has the ordered inverse from the preadditive Jacobson identity. -/
 @[simp]
 theorem rectangularUnitSwitch_inv_val (A : Matrix X Y R) (B : Matrix Y X R)
     (g : GL X R) (hg : (g : Matrix X X R) = 1 + A * B) :
     (((rectangularUnitSwitch A B g hg)⁻¹ : GL Y R) : Matrix Y Y R) =
       1 - B * ((g⁻¹ : GL X R) : Matrix X X R) * A := by
-  let : Invertible (1 + A * B : Matrix X X R) := hg ▸ g.invertible
-  let : Invertible (1 : Matrix X X R) := invertibleOne
-  let : Invertible (1 : Matrix Y Y R) := invertibleOne
-  let : Invertible (⅟(1 : Matrix X X R) + A * ⅟(1 : Matrix Y Y R) * B) := by
-    simpa only [invOf_one, Matrix.one_mul, Matrix.mul_one] using
-      (inferInstance : Invertible (1 + A * B : Matrix X X R))
-  let : Invertible (1 + B * A : Matrix Y Y R) := by
-    simpa only [Matrix.mul_one] using
-      (Matrix.invertibleAddMulMul (1 : Matrix Y Y R) B (1 : Matrix X X R) A)
-  let : Invertible (1 + B * (1 : Matrix X X R) * A : Matrix Y Y R) :=
-    Matrix.invertibleAddMulMul (1 : Matrix Y Y R) B (1 : Matrix X X R) A
-  have hwoodbury : ⅟(1 + B * A : Matrix Y Y R) =
-      1 - B * ⅟(1 + A * B : Matrix X X R) * A := by
-    simpa only [invOf_one, Matrix.one_mul, Matrix.mul_one] using
-      (Matrix.invOf_add_mul_mul (1 : Matrix Y Y R) B (1 : Matrix X X R) A)
-  have hinv : ⅟(1 + A * B : Matrix X X R) =
-      ((g⁻¹ : GL X R) : Matrix X X R) := by
-    let : Invertible (g : Matrix X X R) := g.invertible
+  -- Reindex before forming the stock matrix category: its indices are small,
+  -- while X, Y and the coefficient ring retain their independent universes.
+  let eX := Fintype.equivFin X
+  let eY := Fintype.equivFin Y
+  let rX := Matrix.reindexRingEquiv R eX
+  let rY := Matrix.reindexRingEquiv R eY
+  let Af := Matrix.reindex eX eY A
+  let Bf := Matrix.reindex eY eX B
+  let J (ι : Type) [Fintype ι] : Mat_ (SingleObj R) :=
+    ⟨ι, fun _ => SingleObj.star R⟩
+  let T {ι κ : Type} [Fintype ι] [Fintype κ] (M : Matrix ι κ R) : J κ ⟶ J ι :=
+    fun i j => M j i
+  have T_one (ι : Type) [Fintype ι] [DecidableEq ι] :
+      T (1 : Matrix ι ι R) = 𝟙 (J ι) := by
+    apply Mat_.hom_ext
+    intro i j
+    by_cases h : i = j
+    · subst j
+      simp [T, J, SingleObj.id_as_one]
+    · simp [T, J, h, Ne.symm h]
+  have T_mul {ι κ ν : Type} [Fintype ι] [Fintype κ] [Fintype ν]
+      (M : Matrix ι κ R) (N : Matrix κ ν R) : T (M * N) = T N ≫ T M := rfl
+  have T_add {ι κ : Type} [Fintype ι] [Fintype κ] (M N : Matrix ι κ R) :
+      T (M + N) = T M + T N := rfl
+  have T_sub {ι κ : Type} [Fintype ι] [Fintype κ] (M N : Matrix ι κ R) :
+      T (M - N) = T M - T N := rfl
+  have T_injective {ι κ : Type} [Fintype ι] [Fintype κ] :
+      Function.Injective (T (ι := ι) (κ := κ)) := by
+    intro M N h
+    ext i j
+    exact congrFun (congrFun h j) i
+  -- End multiplication reverses composition, so this transpose is multiplicative.
+  let F (ι : Type) [Fintype ι] [DecidableEq ι] : Matrix ι ι R →+* End (J ι) :=
+    { toFun := T
+      map_zero' := rfl
+      map_one' := T_one ι
+      map_add' := T_add
+      map_mul' := T_mul }
+  let fX := (F (Fin (Fintype.card X))).comp rX.toRingHom
+  let fY := (F (Fin (Fintype.card Y))).comp rY.toRingHom
+  let w := rectangularUnitSwitch A B g hg
+  let ig : Aut (J (Fin (Fintype.card X))) :=
+    Aut.unitsEndEquivAut _ (Units.map fX.toMonoidHom g)
+  let iw : Aut (J (Fin (Fintype.card Y))) :=
+    Aut.unitsEndEquivAut _ (Units.map fY.toMonoidHom w)
+  have ig_hom : ig.hom = T (rX (g : Matrix X X R)) := rfl
+  have ig_inv : ig.inv = T (rX ((g⁻¹ : GL X R) : Matrix X X R)) := rfl
+  have iw_hom : iw.hom = T (rY (w : Matrix Y Y R)) := rfl
+  have iw_inv : iw.inv = T (rY ((w⁻¹ : GL Y R) : Matrix Y Y R)) := rfl
+  have hAB : rX (A * B) = Af * Bf :=
+    (Matrix.submatrix_mul_equiv A B eX.symm eY.symm eX.symm).symm
+  have hBA : rY (B * A) = Bf * Af :=
+    (Matrix.submatrix_mul_equiv B A eY.symm eX.symm eY.symm).symm
+  have hg' : rX (g : Matrix X X R) = 1 + Af * Bf := by
+    rw [hg, map_add, map_one, hAB]
+  have hw' : rY (w : Matrix Y Y R) = 1 + Bf * Af := by
+    change rY (rectangularUnitSwitch A B g hg : Matrix Y Y R) = _
+    rw [rectangularUnitSwitch_val, map_add, map_one, hBA]
+  let a : J (Fin (Fintype.card Y)) ⟶ J (Fin (Fintype.card X)) := -T Af
+  let b : J (Fin (Fintype.card X)) ⟶ J (Fin (Fintype.card Y)) := T Bf
+  have hp : 𝟙 _ - b ≫ a = ig.hom := by
+    dsimp only [a, b]
+    rw [ig_hom, hg', T_add, T_one, T_mul, Preadditive.comp_neg, sub_neg_eq_add]
+  have hq : 𝟙 _ - a ≫ b = iw.hom := by
+    dsimp only [a, b]
+    rw [iw_hom, hw', T_add, T_one, T_mul, Preadditive.neg_comp, sub_neg_eq_add]
+  let : IsIso (𝟙 _ - b ≫ a) := by rw [hp]; exact ig.isIso_hom
+  let : IsIso (𝟙 _ - a ≫ b) := (isIso_id_sub_comp_iff a b).mpr inferInstance
+  have hpi : CategoryTheory.inv (𝟙 _ - b ≫ a) = ig.inv := by
+    apply IsIso.inv_eq_of_hom_inv_id
+    rw [hp]
+    exact ig.hom_inv_id
+  have hqi : CategoryTheory.inv (𝟙 _ - a ≫ b) = iw.inv := by
+    apply IsIso.inv_eq_of_hom_inv_id
+    rw [hq]
+    exact iw.hom_inv_id
+  have h := inv_id_sub_comp a b
+  rw [hqi, hpi, iw_inv, ig_inv] at h
+  have hfinite : rY ((w⁻¹ : GL Y R) : Matrix Y Y R) =
+      1 - Bf * rX ((g⁻¹ : GL X R) : Matrix X X R) * Af := by
+    apply T_injective
     calc
-      ⅟(1 + A * B : Matrix X X R) = ⅟(g : Matrix X X R) :=
-        invertible_unique (1 + A * B : Matrix X X R) (g : Matrix X X R) hg.symm
-      _ = ((g⁻¹ : GL X R) : Matrix X X R) := invOf_units g
-  change ⅟(1 + B * A : Matrix Y Y R) = _
-  rw [hwoodbury, hinv]
+      T (rY ((w⁻¹ : GL Y R) : Matrix Y Y R)) =
+          𝟙 _ + a ≫ T (rX ((g⁻¹ : GL X R) : Matrix X X R)) ≫ b := h
+      _ = T (1 - Bf * rX ((g⁻¹ : GL X R) : Matrix X X R) * Af) := by
+        rw [T_sub, T_one, T_mul, T_mul]
+        simp only [a, b, Preadditive.neg_comp, sub_eq_add_neg]
+  have hproduct : Bf * rX ((g⁻¹ : GL X R) : Matrix X X R) * Af =
+      (B * ((g⁻¹ : GL X R) : Matrix X X R) * A).submatrix eY.symm eY.symm := by
+    change B.submatrix eY.symm eX.symm *
+      (((g⁻¹ : GL X R) : Matrix X X R).submatrix eX.symm eX.symm) *
+      A.submatrix eX.symm eY.symm = _
+    rw [Matrix.submatrix_mul_equiv, Matrix.submatrix_mul_equiv]
+  apply rY.injective
+  change rY ((w⁻¹ : GL Y R) : Matrix Y Y R) = _
+  rw [hfinite, map_sub, map_one]
+  exact congrArg
+    (fun M : Matrix (Fin (Fintype.card Y)) (Fin (Fintype.card Y)) R => 1 - M) hproduct
 
 /-- The switched unit is uniquely characterized by its matrix value. -/
 theorem eq_rectangularUnitSwitch (A : Matrix X Y R) (B : Matrix Y X R)

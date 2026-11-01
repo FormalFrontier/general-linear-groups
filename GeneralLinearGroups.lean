@@ -44,6 +44,7 @@ public import GeneralLinearGroups.DualNumberMixedSLCommutator
 public import GeneralLinearGroups.UnitPivotDiagonalization
 public import GeneralLinearGroups.SchurReduction
 public import GeneralLinearGroups.ZeroProductStabilization
+public import GeneralLinearGroups.RectangularIsomorphisms
 public import GeneralLinearGroups.RectangularUnitSwitch
 public import GeneralLinearGroups.ElementaryPaths
 public import GeneralLinearGroups.ElementaryDiagonal

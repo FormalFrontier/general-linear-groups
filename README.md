@@ -94,6 +94,17 @@ supplies foundational APIs.
   [Construction and factorization](GeneralLinearGroups/ZeroProductStabilization.lean),
   [integer and boundary examples](tests/GeneralLinearGroupsTests/ZeroProductStabilizationClient.lean).
 
+- **Rectangular complement isomorphisms.** In any preadditive category
+  `C : Type u` with `Category.{v} C`, for arbitrary objects `X`, `Y` and
+  morphisms `a : X ⟶ Y`, `b : Y ⟶ X`, the complements are simultaneously
+  isomorphisms:
+  `IsIso (𝟙 X - a ≫ b) ↔ IsIso (𝟙 Y - b ≫ a)`. Their canonical inverse is
+  `inv (𝟙 X - a ≫ b) = 𝟙 X + a ≫ inv (𝟙 Y - b ≫ a) ≫ b` under only
+  `IsIso (𝟙 Y - b ≫ a)`. The universes `u`, `v` are independent; no
+  finiteness, biproduct or nonzero-object hypothesis is imposed. The
+  rectangular unit-switch inverse below is a finite-matrix specialization.
+  [Criterion and inverse](GeneralLinearGroups/RectangularIsomorphisms.lean).
+
 - **Rectangular unit switch.** Over any `Ring`, for independently finite,
   decidable index types, a unit `g = 1 + A * B` determines a unit
   `h = 1 + B * A` with inverse `1 - B * g⁻¹ * A`. Its diagonal pair
@@ -143,8 +154,9 @@ supplies foundational APIs.
   elementary GL units vary continuously with coefficients, even when the
   coefficient ring is noncommutative. Path-connected coefficients make the
   elementary subgroup path connected. For commutative coefficients, an open
-  scalar-unit locus makes its native SL comap open and closed; additionally
-  path-connected coefficients identify it with the identity path component.
+  scalar-unit locus makes its comap in Mathlib's special linear group open
+  and closed; additionally path-connected coefficients identify it with the
+  identity path component.
   [Paths guide](docs/ElementaryPaths.md),
   [neighborhood guide](docs/ElementaryNeighborhood.md).
 
@@ -261,11 +273,11 @@ supplies foundational APIs.
   [Image membership criterion](GeneralLinearGroups/PrincipalUnits/Images.lean).
 
 - **First-order dual-number kernels and conjugation.** Over any `CommRing`,
-  the *multiplicative* native GL, SL and scalar-unit reduction identity fibers
-  identify with additive matrices, trace-zero matrices and scalars. Native
-  determinant corresponds to trace; arbitrary ring-hom coefficient maps
-  commute with these constructions without being implicitly `R`-linear.
-  Actual native-unit **left conjugation** corresponds to `g * X * g⁻¹`,
+  the *multiplicative* reduction identity fibers of Mathlib's GL and SL groups
+  and of scalar units identify with additive matrices, trace-zero matrices
+  and scalars. The determinant corresponds to trace; arbitrary ring-hom
+  coefficient maps commute with these constructions without being implicitly
+  `R`-linear. Unit **left conjugation** corresponds to `g * X * g⁻¹`,
   even for nonconstant dual-number units; the SL-kernel action uses SL
   conjugators. First-order fiber groups are abelian, so their commutator is
   not the generally nonzero matrix Lie bracket.
@@ -274,11 +286,11 @@ supplies foundational APIs.
   [adjoint guide](docs/DualNumberKernelAdjoint.md).
 
 - **Mixed dual-number GL and SL commutators.** For finite matrices over a
-  `CommRing`, actual units over iterated dual numbers satisfy the ordered
+  `CommRing`, units over iterated dual numbers satisfy the ordered
   identity `[1 + εX, 1 + ηY] = 1 + εη(XY - YX)` with full outer-kernel
-  readback. When *each input* is trace zero, actual special-linear factors
-  yield the analogous native SL identity and trace-zero readback. The
-  ε-factor reduces to the inner lift `liftGL X` (in SL, `liftSL X`), usually
+  readback. When *each input* is trace zero, special-linear factors
+  yield the analogous identity in Mathlib's SL group and trace-zero readback.
+  The ε-factor reduces to the inner lift `liftGL X` (in SL, `liftSL X`), usually
   not `1`: this is not a bracket of two elements of the abelian first-order
   outer kernel, nor a global Lie- or scheme-tangent theorem.
   [GL identity](GeneralLinearGroups/DualNumberMixedCommutator.lean#L155),
@@ -344,7 +356,10 @@ Do not replace the cache fetch with a full mathlib source build.
 
 Import the [aggregate root](GeneralLinearGroups.lean) for the public library API,
 or import a [specific subject module](GeneralLinearGroups/)
-to keep a narrower dependency surface. Its `public import` declarations expose
+to keep a narrower dependency surface. The generic preadditive statements alone
+are available through `import GeneralLinearGroups.RectangularIsomorphisms`, as
+`CategoryTheory.isIso_id_sub_comp_iff` and `CategoryTheory.inv_id_sub_comp`.
+The aggregate root's `public import` declarations expose
 the corresponding module APIs to downstream ordinary imports. The default
 build also checks the clients under `tests/GeneralLinearGroupsTests/`, including examples at
 empty and singleton index types, over noncommutative rings and the zero ring;
@@ -366,7 +381,7 @@ client-only helpers are not promises of the library API.
 | Kronecker products of units | [KroneckerUnits](GeneralLinearGroups/KroneckerUnits.lean), [clients](tests/GeneralLinearGroupsTests/KroneckerUnits.lean) | Semiring coefficients; the inverse witness reverses the identity-factor order, without a generic product-group homomorphism |
 | Single-entry matrix corners | [MatrixCorner](GeneralLinearGroups/MatrixCorner.lean), [clients](tests/GeneralLinearGroupsTests/MatrixCornerClient.lean) | A chosen index gives a corner identity that may differ from the ambient identity; no commutativity assumption |
 | Additive trace quotient | [MatrixTrace](GeneralLinearGroups/MatrixTrace.lean), [AdditiveCommutator](GeneralLinearGroups/AdditiveCommutator.lean) | An inverse needs a chosen index; no ring quotient or `K₀` theorem |
-| Native first-order and mixed dual numbers | [Kernel guide](docs/DualNumberKernels.md), [adjoint guide](docs/DualNumberKernelAdjoint.md), [mixed GL guide](docs/DualNumberMixedCommutator.md), [mixed SL guide](docs/DualNumberMixedSLCommutator.md) | `CommRing`, finite decidable indices; SL requires individual trace-zero factors |
+| First-order and mixed dual numbers | [Kernel guide](docs/DualNumberKernels.md), [adjoint guide](docs/DualNumberKernelAdjoint.md), [mixed GL guide](docs/DualNumberMixedCommutator.md), [mixed SL guide](docs/DualNumberMixedSLCommutator.md) | `CommRing`, finite decidable indices; SL requires individual trace-zero factors |
 
 Additional [nonunital](GeneralLinearGroups/NonUnitalNilpotent.lean),
 [local quotient](GeneralLinearGroups/LocalQuotient.lean) and
@@ -425,6 +440,13 @@ default graph. Use the Lean sources, guides and import clients for other results
   `Ideal.FG.isNilpotent_iff_le_nilradical` supply the finite entry-ideal
   argument for matrices with nilpotent entries; the matrix step reuses this
   library's uniform-ideal nilpotence theorem.
+- Jacobson's lemma is the standard unit identity relating `1 - ab` and
+  `1 - ba`. The rectangular complement theorem gives its two-object
+  preadditive form, using Mathlib's preadditive and isomorphism APIs.
+  Its matrix inverse-value specialization uses Mathlib's `Mat_` and
+  `SingleObj` categories, finite-index reindexing and the `Units`/`Aut`
+  correspondence, with the given unit's inverse over a noncommutative ring.
+  Mathlib's finite-matrix inverse identities are related formalizations.
 - The [Adic Modules library](https://github.com/FormalFrontier/adic-modules), in
   [`AdicModules.RingTheory.Ideal.IsPrincipalPowQuotient`](https://github.com/FormalFrontier/adic-modules/blob/d0ce9c7ea73e0f995d7318e448af3e14f2e473bd/AdicModules/RingTheory/Ideal/IsPrincipalPowQuotient.lean),
   supplies the chosen-generator forward and inverse representative formulas
@@ -433,14 +455,13 @@ default graph. Use the Lean sources, guides and import clients for other results
 
 ## Credits and license
 
-Authors: Formal Frontier Agents. Prism contributed original general-linear,
-ideal and trace-related proof expression and API documentation; Lattice
-contributed native dual-number kernel and adjoint integration; Anchor's
-Markdown documentation adapter informed the historical API reference.
-Other Formal Frontier Agents authored the trace, elementary, relative,
+Authors: Formal Frontier Agents. Contributions include original general-linear,
+ideal and trace-related proof expression and API documentation; dual-number
+kernel and adjoint integration; the Markdown documentation adapter that
+informed the historical API reference; trace, elementary, relative,
 stabilization, Steinberg, dual-number, unit-pivot, elementary-path, diagonal
-and neighborhood proofs and clients; additional agents adapted their
-examples and mathematical guides. These original project contributions
+and neighborhood proofs and clients; and adaptation of examples and
+mathematical guides. These original project contributions
 are distinct from Weibel's mathematical motivation and mathlib's third-party
 work, whose authorship and notices remain with mathlib. Kronecker unit
 preservation generalizes mathlib's commutative-coefficient theorem and follows
