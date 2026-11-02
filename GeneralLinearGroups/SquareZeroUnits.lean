@@ -7,6 +7,7 @@ module
 public import GeneralLinearGroups.NonUnitalNilpotent
 public import Mathlib.Algebra.Group.TypeTags.Basic
 public import Mathlib.Algebra.Group.Subgroup.Ker
+public import Mathlib.GroupTheory.GroupAction.ConjAct
 public import Mathlib.RingTheory.Ideal.Maps
 public import Mathlib.RingTheory.Ideal.Operations
 
@@ -111,5 +112,18 @@ theorem unitsKerEquivOfSquareZero_symm_apply_inv_coe (f : R →+* S)
       1 - ((Multiplicative.toAdd x : ker f) : R) := by
   change (∑ i ∈ Finset.range 2, (-((Multiplicative.toAdd x : ker f) : R)) ^ i) = _
   simp [Finset.sum_range_succ, sub_eq_add_neg]
+
+/-- Conjugation by an ambient unit conjugates the additive kernel coordinate
+by the same unit in the ring. -/
+theorem unitsKerEquivOfSquareZero_conj_apply_coe (f : R →+* S)
+    (hker : ker f ^ 2 = ⊥) (u : Rˣ) (v : (Units.map f.toMonoidHom).ker) :
+    ((Multiplicative.toAdd
+      (unitsKerEquivOfSquareZero f hker (MulAut.conjNormal u v)) : ker f) : R) =
+      (u : R) *
+        ((Multiplicative.toAdd (unitsKerEquivOfSquareZero f hker v) : ker f) : R) *
+          (↑(u⁻¹) : R) := by
+  have hu : (u : R) * (↑(u⁻¹) : R) = 1 := Units.val_inv u
+  simp only [unitsKerEquivOfSquareZero_apply_coe, MulAut.conjNormal_apply,
+    Units.val_mul, mul_sub, sub_mul, mul_one, hu]
 
 end RingHom
