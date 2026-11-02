@@ -40,13 +40,50 @@ For positive successive layers, `GeneralLinearGroups.PrincipalUnits`
 provides the additive quotient equivalence and its lifting API under square
 containment and Jacobson hypotheses. This does not give an additive
 description of the zeroth unit layer.
+
+Inverse images of left ideals under semiring homomorphisms preserve ordered
+products and natural powers up to containment, including the zeroth power.
+A containment in an inverse image therefore induces containments at every power.
 -/
 
 @[expose] public section
 
-universe u
+universe u v w
 
 namespace Ideal
+
+section Semiring
+
+variable {R : Type u} {S : Type v} {F : Type w} [Semiring R] [Semiring S]
+  [FunLike F R S] [RingHomClass F R S]
+
+/-- The product of the inverse images of two left ideals is contained in the
+inverse image of their ordered product. Neither ideal needs to be two-sided. -/
+theorem comap_mul_comap_le (f : F) (K L : Ideal S) :
+    K.comap f * L.comap f ≤ (K * L).comap f := by
+  apply Ideal.mul_le.mpr
+  intro x hx y hy
+  change f (x * y) ∈ K * L
+  rw [map_mul]
+  exact Ideal.mul_mem_mul hx hy
+
+/-- Every natural power of the inverse image of a left ideal is contained in
+the inverse image of its power. At exponent zero both ideals are the top ideal. -/
+theorem pow_comap_le (f : F) (K : Ideal S) (n : ℕ) :
+    K.comap f ^ n ≤ (K ^ n).comap f := by
+  induction n with
+  | zero => simp only [Submodule.pow_zero, Ideal.one_eq_top, Ideal.comap_top, le_refl]
+  | succ n ih =>
+      rw [Submodule.pow_succ, Submodule.pow_succ]
+      exact (Ideal.mul_mono ih le_rfl).trans (comap_mul_comap_le f (K ^ n) K)
+
+/-- A containment in the inverse image of a left ideal induces containments
+at all natural powers, including exponent zero. -/
+theorem pow_le_comap_pow (f : F) {I : Ideal R} {J : Ideal S}
+    (h : I ≤ J.comap f) (n : ℕ) : I ^ n ≤ (J ^ n).comap f :=
+  (Ideal.pow_right_mono h n).trans (pow_comap_le f J n)
+
+end Semiring
 
 variable {R : Type u} [Ring R]
 
