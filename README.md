@@ -289,6 +289,17 @@ supplies foundational APIs.
   additive equivalence at exponent zero.
   [Commutator bounds and nilpotence](GeneralLinearGroups/PrincipalUnits/Filtration.lean).
 
+- **Leading coordinates of principal-unit commutators.** For any left ideal
+  `I` in any `Ring R` and positive `a, b`, let `x = u - 1 ∈ I ^ a` and
+  `y = v - 1 ∈ I ^ b` for original-ring units `u, v`. Then
+  `[u, v] - 1 - (x * y - y * x) ∈ I ^ (a + b + min a b)`.
+  In particular, `[u, v] - 1` and `x * y - y * x` have the same class
+  in the quotient **left module** `R ⧸ I ^ (a + b + 1)`.
+  No two-sidedness, commutativity or nilpotence is needed; the commutator
+  is `u * v * u⁻¹ * v⁻¹`, with no degree-dependent sign.
+  [Coordinate estimate and quotient equality](GeneralLinearGroups/PrincipalUnits/Filtration.lean),
+  [API guide](docs/README.md#principal-unit-commutator-coordinates).
+
 - **Images of principal-unit subgroups.** For a ring homomorphism
   `f : R →+* S` with `Ring R` and `Ring S` in independent universes,
   and a left ideal `I ≤ Ideal.jacobson ⊥`, a unit `u : Sˣ` lies in the image
@@ -405,7 +416,7 @@ client-only helpers are not promises of the library API.
 | Finite stabilization and rectangular blocks | [Stabilization](docs/ElementaryStabilization.md), [rectangular blocks](docs/RectangularBlockUnits.md), [rectangular unit switch](GeneralLinearGroups/RectangularUnitSwitch.lean), [zero-product units](GeneralLinearGroups/ZeroProductStabilization.lean) | Semiring stabilization is a *monoid hom on units*; the unit switch requires a `Ring` and `g = 1 + A * B`, but not `B * A = 0` |
 | Presented elementary group | [Steinberg](docs/FiniteRankSteinberg.md) | Finite rank does not imply finite presentation over an arbitrary ring |
 | Quasi-regular kernels, scalar unit reflection and ideal quotients | [QuasiregularIdeal](GeneralLinearGroups/QuasiregularIdeal.lean), [QuasiregularQuotient](GeneralLinearGroups/QuasiregularQuotient.lean), [NonUnitalQuasiregular](GeneralLinearGroups/NonUnitalQuasiregular.lean) | For `Ring` → `Semiring`, unit reflection forces a quasi-regular canonical kernel without surjectivity; the converse and iff require surjectivity. Arbitrary quotient-unit lifting still needs quasi-regularity |
-| Principal-unit commutators and nilpotence | [Filtration API](GeneralLinearGroups/PrincipalUnits/Filtration.lean) | Left ideals suffice for mixed commutators and nilpotence; the all-index power bound requires two-sidedness; nilpotence concerns the principal-unit subgroup, not all units |
+| Principal-unit commutators, leading coordinates and nilpotence | [Filtration API](GeneralLinearGroups/PrincipalUnits/Filtration.lean), [coordinate guide](docs/README.md#principal-unit-commutator-coordinates) | Left ideals suffice for mixed commutators, positive-power leading coordinates and nilpotence; the all-index power bound requires two-sidedness; nilpotence concerns the principal-unit subgroup, not all units |
 | Principal-unit images | [Image membership criterion](GeneralLinearGroups/PrincipalUnits/Images.lean) | `Ring R`, `Ring S`, Jacobson containment; set image of left-ideal elements, not ideal extension; no injectivity assumption |
 | Kronecker products of units | [KroneckerUnits](GeneralLinearGroups/KroneckerUnits.lean), [clients](tests/GeneralLinearGroupsTests/KroneckerUnits.lean) | Semiring coefficients; the inverse witness reverses the identity-factor order, without a generic product-group homomorphism |
 | Single-entry matrix corners | [MatrixCorner](GeneralLinearGroups/MatrixCorner.lean), [clients](tests/GeneralLinearGroupsTests/MatrixCornerClient.lean) | A chosen index gives a corner identity that may differ from the ambient identity; no commutativity assumption |

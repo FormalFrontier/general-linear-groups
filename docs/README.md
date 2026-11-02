@@ -62,6 +62,26 @@ loading, and the changed bytes would also violate the binding. This drift does
 not diagnose a mathematical or proof failure. Do not replace old hashes with
 current ones: that would falsely imply a fresh native run.
 
+## Principal-unit commutator coordinates
+
+Import `GeneralLinearGroups.PrincipalUnits.Filtration` for commutator estimates
+on the original units of any possibly noncommutative `Ring R`. For a left
+ideal `I`, positive `a, b`, and units with `x = u - 1 ∈ I ^ a` and
+`y = v - 1 ∈ I ^ b`, the API provides:
+
+- `Ideal.commutator_sub_one_sub_mul_sub_mem_pow`: the remainder
+  `[u, v] - 1 - (x * y - y * x)` belongs to `I ^ (a + b + min a b)`.
+- `Ideal.quotient_mk_commutator_sub_one_eq`: the classes of `[u, v] - 1`
+  and `x * y - y * x` agree in `R ⧸ I ^ (a + b + 1)`.
+
+Here `[u, v] = u * v * u⁻¹ * v⁻¹` (Lean's scoped `⁅u, v⁆` notation).
+The quotient is a left module, not a quotient ring; neither two-sidedness
+nor nilpotence of `I` is assumed. The bracket has no degree-dependent sign.
+These are representative-coordinate statements, not a descended pairing
+or a bilinear operation on successive quotients. For the subgroup and
+nilpotence bounds, see the other declarations in the
+[filtration module](../GeneralLinearGroups/PrincipalUnits/Filtration.lean).
+
 ## Reproducing the historical reference
 
 Reproduction requires authorized **private** access to both the original

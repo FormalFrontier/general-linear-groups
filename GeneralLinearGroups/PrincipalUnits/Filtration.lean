@@ -30,6 +30,12 @@ class bound is the natural truncated subtraction `N - 1`. The exponent `N`
 may be zero; then the ring is the zero ring. At `N = 1` the subgroup is
 already trivial.
 
+For positive powers `a` and `b` of any left ideal `I`, the coordinate
+`↑⁅u, v⁆ - 1` of a commutator agrees with the ring commutator of `↑u - 1`
+and `↑v - 1` modulo `I ^ (a + b + min a b)`. In particular, their classes
+agree in the quotient left module `R ⧸ I ^ (a + b + 1)`. This is the ordinary
+commutator `u * v * u⁻¹ * v⁻¹`, with no degree-dependent sign.
+
 For positive successive layers, `GeneralLinearGroups.PrincipalUnits`
 provides the additive quotient equivalence and its lifting API under square
 containment and Jacobson hypotheses. This does not give an additive
@@ -43,6 +49,18 @@ universe u
 namespace Ideal
 
 variable {R : Type u} [Ring R]
+
+open scoped commutatorElement in
+private theorem commutator_sub_one_eq (u v : Rˣ) :
+    (↑⁅u, v⁆ : R) - 1 =
+      (((u : R) - 1) * ((v : R) - 1) - ((v : R) - 1) * ((u : R) - 1)) *
+        (1 + ((↑u⁻¹ : R) - 1)) * (1 + ((↑v⁻¹ : R) - 1)) := by
+  calc
+    (↑⁅u, v⁆ : R) - 1 =
+        ((u : R) * (v : R) - (v : R) * (u : R)) * ↑u⁻¹ * ↑v⁻¹ := by
+      simp only [commutatorElement_def, Units.val_mul, sub_mul,
+        Units.mul_inv_cancel_right, Units.mul_inv]
+    _ = _ := by noncomm_ring
 
 private theorem commutator_coordinate_mem (A B : Ideal R) {a b a' b' : R}
     (ha : a ∈ A) (hb : b ∈ B) (ha' : a' ∈ A) (hb' : b' ∈ B) :
@@ -91,13 +109,68 @@ theorem commutator_stabilizer_quotient_one_le (A B : Ideal R) :
       ((MulAction.stabilizer Rˣ (1 : R ⧸ A)).inv_mem hu))
     ((B.mem_stabilizer_quotient_one v⁻¹).mp
       ((MulAction.stabilizer Rˣ (1 : R ⧸ B)).inv_mem hv))
-  convert hcoord using 1
-  calc
-    (↑⁅u, v⁆ : R) - 1 =
-        ((u : R) * (v : R) - (v : R) * (u : R)) * ↑u⁻¹ * ↑v⁻¹ := by
-      simp only [commutatorElement_def, Units.val_mul, sub_mul,
-        Units.mul_inv_cancel_right, Units.mul_inv]
-    _ = _ := by noncomm_ring
+  rw [commutator_sub_one_eq]
+  exact hcoord
+
+open scoped commutatorElement in
+/-- For positive powers of a left ideal, the difference between the unit
+commutator coordinate and the ring commutator of the two coordinates lies in
+`I ^ (a + b + min a b)`. The ideal need not be two-sided or nilpotent. -/
+theorem commutator_sub_one_sub_mul_sub_mem_pow (I : Ideal R)
+    {a b : ℕ} (ha : 0 < a) (hb : 0 < b) {u v : Rˣ}
+    (hu : (u : R) - 1 ∈ I ^ a) (hv : (v : R) - 1 ∈ I ^ b) :
+    ((↑⁅u, v⁆ : R) - 1) -
+        (((u : R) - 1) * ((v : R) - 1) - ((v : R) - 1) * ((u : R) - 1)) ∈
+      I ^ (a + b + min a b) := by
+  let c := ((u : R) - 1) * ((v : R) - 1) - ((v : R) - 1) * ((u : R) - 1)
+  let p := (↑u⁻¹ : R) - 1
+  let q := (↑v⁻¹ : R) - 1
+  have hp : p ∈ I ^ a :=
+    ((I ^ a).mem_stabilizer_quotient_one u⁻¹).mp
+      ((MulAction.stabilizer Rˣ (1 : R ⧸ (I ^ a : Ideal R))).inv_mem
+        (((I ^ a).mem_stabilizer_quotient_one u).mpr hu))
+  have hq : q ∈ I ^ b :=
+    ((I ^ b).mem_stabilizer_quotient_one v⁻¹).mp
+      ((MulAction.stabilizer Rˣ (1 : R ⧸ (I ^ b : Ideal R))).inv_mem
+        (((I ^ b).mem_stabilizer_quotient_one v).mpr hv))
+  -- The right exponent must be positive for products of left-ideal powers.
+  have hmul {m n : ℕ} (hn : n ≠ 0) {x y : R}
+      (hx : x ∈ I ^ m) (hy : y ∈ I ^ n) : x * y ∈ I ^ (m + n) := by
+    rw [Submodule.pow_add _ hn]
+    exact mul_mem_mul hx hy
+  have hc : c ∈ I ^ (a + b) :=
+    (I ^ (a + b)).sub_mem (hmul (Nat.ne_of_gt hb) hu hv)
+      (by simpa only [Nat.add_comm b a] using hmul (Nat.ne_of_gt ha) hv hu)
+  have hcp : c * p ∈ I ^ (a + b + a) := hmul (Nat.ne_of_gt ha) hc hp
+  have hcq : c * q ∈ I ^ (a + b + b) := hmul (Nat.ne_of_gt hb) hc hq
+  have hcpq : c * p * q ∈ I ^ (a + b + a + b) := hmul (Nat.ne_of_gt hb) hcp hq
+  have hrem : ((↑⁅u, v⁆ : R) - 1) - c = c * p + c * q + c * p * q := by
+    rw [commutator_sub_one_eq]
+    change c * (1 + p) * (1 + q) - c = _
+    noncomm_ring
+  change ((↑⁅u, v⁆ : R) - 1) - c ∈ _
+  rw [hrem]
+  exact (I ^ (a + b + min a b)).add_mem
+    ((I ^ (a + b + min a b)).add_mem
+      (Ideal.pow_le_pow_right (by omega) hcp)
+      (Ideal.pow_le_pow_right (by omega) hcq))
+    (Ideal.pow_le_pow_right (by omega) hcpq)
+
+open scoped commutatorElement in
+/-- For positive powers of a left ideal, the unit commutator coordinate and
+the ring commutator of the coordinates have the same class modulo
+`I ^ (a + b + 1)`. This is an equality in a quotient left module; it does not
+require a quotient ring or a two-sided ideal. -/
+theorem quotient_mk_commutator_sub_one_eq (I : Ideal R)
+    {a b : ℕ} (ha : 0 < a) (hb : 0 < b) {u v : Rˣ}
+    (hu : (u : R) - 1 ∈ I ^ a) (hv : (v : R) - 1 ∈ I ^ b) :
+    (Submodule.Quotient.mk ((↑⁅u, v⁆ : R) - 1) :
+        R ⧸ (I ^ (a + b + 1) : Ideal R)) =
+      Submodule.Quotient.mk
+        (((u : R) - 1) * ((v : R) - 1) - ((v : R) - 1) * ((u : R) - 1)) := by
+  apply (Submodule.Quotient.eq _).mpr
+  exact Ideal.pow_le_pow_right (by omega)
+    (I.commutator_sub_one_sub_mul_sub_mem_pow ha hb hu hv)
 
 /-- Principal units at powers `a` and `b` of a two-sided ideal have commutator
 in the principal units at power `a + b`. Both exponents may be zero, and the

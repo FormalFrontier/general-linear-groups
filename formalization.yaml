@@ -59,6 +59,31 @@ project:
     - "Formal Frontier Agents (maintainer team)"
   license: "Apache-2.0"
 
+highlights:
+  - title: "Principal-unit quotients and Jacobson lifting"
+    statement: "For left ideals I, J in any ring R with I^2 ≤ J and I ≤ Ring.jacobson R, the subgroup U(I) = {u : Rˣ | u - 1 ∈ I} modulo the kernel of u ↦ [u - 1] is canonically isomorphic to the additive quotient I / (I ∩ J), with inverse [x] ↦ [1 + x], without two-sidedness or J ≤ I."
+    declarations:
+      - declaration: "Ideal.principalUnitsQuotientEquiv"
+        file: "GeneralLinearGroups/PrincipalUnits.lean"
+      - declaration: "Ideal.principalUnitsToQuotient_ker"
+        file: "GeneralLinearGroups/PrincipalUnits.lean"
+      - declaration: "Ideal.principalUnitsQuotientEquiv_symm_mk"
+        file: "GeneralLinearGroups/PrincipalUnits.lean"
+  - title: "Square-zero unit kernels and conjugation"
+    statement: "For any ring homomorphism f : R →+* S from a possibly noncommutative ring to a semiring with (ker f)^2 = 0, the units mapping to 1 are isomorphic to the additive group ker f by u ↦ u - 1 and x ↦ 1 + x, and conjugation by any g : Rˣ corresponds to x ↦ g * x * g⁻¹, without a surjectivity hypothesis."
+    declarations:
+      - declaration: "RingHom.unitsKerEquivOfSquareZero"
+        file: "GeneralLinearGroups/SquareZeroUnits.lean"
+      - declaration: "RingHom.unitsKerEquivOfSquareZero_conj_apply_coe"
+        file: "GeneralLinearGroups/SquareZeroUnits.lean"
+  - title: "Nilpotent principal-unit groups"
+    statement: "For any left ideal I of a possibly noncommutative ring R and any natural N with I^N = 0, the principal-unit subgroup {u : Rˣ | u - 1 ∈ I} is nilpotent of class at most N - 1, using natural subtraction and including the trivial-subgroup cases N = 0 and N = 1."
+    declarations:
+      - declaration: "Ideal.isNilpotent_stabilizer_quotient_one_of_pow_eq_bot"
+        file: "GeneralLinearGroups/PrincipalUnits/Filtration.lean"
+      - declaration: "Ideal.nilpotencyClass_stabilizer_quotient_one_le_of_pow_eq_bot"
+        file: "GeneralLinearGroups/PrincipalUnits/Filtration.lean"
+
 sources:
   - title: "The K-book: An Introduction to Algebraic K-theory"
     authors:
