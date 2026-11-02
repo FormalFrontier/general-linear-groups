@@ -24,19 +24,21 @@ supplies foundational APIs.
   [Upper-triangular nilpotence](GeneralLinearGroups/UpperTriangularNilpotent.lean),
   [nonunital powers and strict triangularity](GeneralLinearGroups/NonUnitalNilpotent.lean).
 
-- **Matrix ideal-power bounds and nilpotence.** For a `Semiring R`, a left ideal
-  `I : Ideal R` and a square matrix `A` on an independently-universed finite
-  decidable index type, entrywise membership in `I` gives
-  `(A ^ k) i j ∈ I ^ k`. Any exponent annihilating the whole ideal also
-  annihilates the matrix, so `IsNilpotent I` implies `IsNilpotent A`.
-  Empty indices and zero semirings are included, without two-sidedness or
-  commutativity. Powers follow the ordered recursions `A ^ (k + 1) = A ^ k * A`
-  and `I ^ (k + 1) = I ^ k * I`; pointwise nilness of an arbitrary ideal
-  does not give a uniform exponent. For a `CommSemiring R`, however, a finite
+- **Matrix ideal-power bounds and nilpotence.** For a `Semiring R` and a left
+  ideal `I : Ideal R`, an ordered list `As` of square matrices with entries in
+  `I` has `(As.prod) i j ∈ I ^ As.length`. The finite decidable index type has
+  a universe independent of the coefficients. Repeated factors recover
+  `(A ^ k) i j ∈ I ^ k`. Any exponent annihilating
+  the whole ideal also annihilates the matrix, so `IsNilpotent I` implies
+  `IsNilpotent A`. Empty lists, empty indices and zero semirings are included,
+  without two-sidedness or commutativity. Right-append induction matches
+  `I ^ (k + 1) = I ^ k * I`, without a multiplicative monoid on arbitrary
+  left ideals; pointwise nilness of an arbitrary ideal does not give a
+  uniform exponent. For a `CommSemiring R`, however, a finite
   square matrix with nilpotent entries is nilpotent: its finitely generated
   entry ideal is contained in the nilradical and is therefore nilpotent.
   This needs no Noetherian hypothesis and includes empty indices and zero semirings.
-  [Power bound and nilpotence](GeneralLinearGroups/MatrixNilpotentIdeal.lean),
+  [Ordered-product bound and nilpotence](GeneralLinearGroups/MatrixNilpotentIdeal.lean),
   [nilpotent entries](GeneralLinearGroups/MatrixNilpotentEntries.lean),
   [nonzero dual-number diagonal](tests/GeneralLinearGroupsTests/MatrixNilpotentIdeal.lean),
   [nonzero matrix over `ZMod 4`](tests/GeneralLinearGroupsTests/MatrixNilpotentEntriesClient.lean).

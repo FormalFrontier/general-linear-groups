@@ -49,10 +49,11 @@ project:
     subgroup, with quotient canonically the abelianization. Over commutative
     rings the stable determinant and its quotient and abelianization
     factorizations admit rank-one sections; the elementary subgroup lies in
-    the determinant kernel. Entrywise matrix ideal-power bounds hold over
-    semirings for arbitrary left ideals and independent finite decidable
-    indices, including empty indices. Any exponent annihilating the whole
-    ideal also annihilates a matrix whose entries lie in it.
+    the determinant kernel. Ordered products of matrices with entries in a
+    left ideal I over a semiring have entries in I raised to the list length,
+    for independent finite decidable indices, including empty lists and indices.
+    Repeated factors recover the matrix-power bound. Any exponent annihilating
+    the whole ideal also annihilates a matrix whose entries lie in it.
   authors:
     - "Formal Frontier Agents"
   responsible_maintainers:
@@ -198,13 +199,19 @@ status:
         Assuming only IsIso (𝟙 Y - b ≫ a), the canonical inverse
         of 𝟙 X - a ≫ b is 𝟙 X + a ≫ inv (𝟙 Y - b ≫ a) ≫ b.
         The left IsIso proof is derived from the criterion, not a second premise.
+    - declaration: "Matrix.list_prod_apply_mem_ideal_pow"
+      file: "GeneralLinearGroups/MatrixNilpotentIdeal.lean"
+      note: >-
+        Over a Semiring, an ordered list As of square matrices with entries
+        in the same left ideal I has each product entry in I^As.length, for
+        independently-universed finite decidable indices. Empty lists and
+        indices are included. Right-append induction matches I^(k+1)=I^k*I;
+        no commutativity, two-sidedness or monoid on left ideals is assumed.
     - declaration: "Matrix.pow_apply_mem_ideal_pow"
       file: "GeneralLinearGroups/MatrixNilpotentIdeal.lean"
       note: >-
-        Over a Semiring, entries in a left ideal I give entries of A^k in I^k
-        for independently-universed finite decidable square indices, including
-        empty indices. The induction uses the ordered recursions A^(k+1)=A^k*A
-        and I^(k+1)=I^k*I and finite-sum closure of the product ideal; I^0 is top.
+        The replicate specialization gives entries of A^k in I^k for every
+        natural k, including zero, over a Semiring with finite decidable indices.
     - declaration: "Matrix.isNilpotent_of_isNilpotent_ideal"
       file: "GeneralLinearGroups/MatrixNilpotentIdeal.lean"
       note: >-
@@ -990,9 +997,10 @@ fidelity:
     presentation. No kernel centrality, universal central extension, K2 or
     direct-limit theorem for this Steinberg presentation or its comparison
     with stable GL is claimed.
-    The matrix ideal-power bounds use arbitrary Semiring coefficients and
-    independent finite decidable indices, including empty indices, without a
-    two-sidedness hypothesis on the left ideal. Their matrix-nilpotence
+    The matrix ideal-power bounds cover arbitrary ordered lists of matrices
+    over Semirings and independent finite decidable indices, including empty
+    lists and indices, without a two-sidedness hypothesis on the left ideal.
+    The repeated-factor power bound is the replicate specialization. Their matrix-nilpotence
     consequence requires one exponent annihilating the whole ideal, not an
     exponent depending on each element. Ideal powers are the stock submodule
     powers on the regular left module, with I^0=top and I^(k+1)=I^k*I; no
