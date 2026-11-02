@@ -340,6 +340,18 @@ supplies foundational APIs.
   to be commutative; no domain, local-ring or valuation hypothesis is needed.
   [Image membership criterion](GeneralLinearGroups/PrincipalUnits/Images.lean).
 
+- **Finite exponential and logarithm coordinates.** Over a possibly noncommutative
+  or zero rational algebra, Mathlib's finite exponential, packaged as a unit,
+  and a concrete logarithm give a plain equivalence between nilpotent elements
+  and units `u` with nilpotent coordinate `u - 1`. This restricts to the elements
+  of any pointwise-nil left ideal `I` and its principal-unit stabilizer of `1`
+  in the quotient left module `R ⧸ I`; neither two-sidedness nor a uniform
+  nilpotence exponent is required. Addition and product laws require commuting
+  inputs; integer multiples correspond to integer powers in the unit group.
+  These are equivalences of types, not group equivalences.
+  [Exponential units and logarithm](GeneralLinearGroups/NilpotentExpLog.lean),
+  [principal-unit restriction](GeneralLinearGroups/PrincipalUnits/ExpLog.lean).
+
 - **First-order dual-number kernels and conjugation.** Over any `CommRing`,
   the *multiplicative* reduction identity fibers of Mathlib's GL and SL groups
   and of scalar units identify with additive matrices, trace-zero matrices
@@ -448,6 +460,8 @@ client-only helpers are not promises of the library API.
 | Principal-unit commutators, leading coordinates and nilpotence | [Filtration API](GeneralLinearGroups/PrincipalUnits/Filtration.lean), [coordinate guide](docs/README.md#principal-unit-commutator-coordinates) | Left ideals suffice for mixed commutators, positive-power leading coordinates and nilpotence; the all-index power bound requires two-sidedness; nilpotence concerns the principal-unit subgroup, not all units |
 | Positive principal-unit layer pairings | [Pairing API](GeneralLinearGroups/PrincipalUnits/Commutator.lean), [guide](docs/README.md#positive-principal-unit-layer-pairings) | Arbitrary left ideals in a ring; positive degrees and integer bilinearity; injective symbols need not be surjective; ordinary alternation and skew symmetry |
 | Principal-unit images | [Image membership criterion](GeneralLinearGroups/PrincipalUnits/Images.lean) | `Ring R`, `Ring S`, Jacobson containment; set image of left-ideal elements, not ideal extension; no injectivity assumption |
+| Finite exponential and logarithm | [NilpotentExpLog](GeneralLinearGroups/NilpotentExpLog.lean) | Possibly noncommutative or zero rational algebras; plain equivalence for nilpotent elements and units with nilpotent `u - 1`; commuting-only sum/product laws; integer powers in units |
+| Exponential coordinates on principal units | [ExpLog](GeneralLinearGroups/PrincipalUnits/ExpLog.lean) | Rational algebras; pointwise-nil left ideals and their principal-unit stabilizers; no two-sidedness or uniform exponent; not a group equivalence |
 | Kronecker products of units | [KroneckerUnits](GeneralLinearGroups/KroneckerUnits.lean), [clients](tests/GeneralLinearGroupsTests/KroneckerUnits.lean) | Semiring coefficients; the inverse witness reverses the identity-factor order, without a generic product-group homomorphism |
 | Single-entry matrix corners | [MatrixCorner](GeneralLinearGroups/MatrixCorner.lean), [clients](tests/GeneralLinearGroupsTests/MatrixCornerClient.lean) | A chosen index gives a corner identity that may differ from the ambient identity; no commutativity assumption |
 | Additive trace quotient | [MatrixTrace](GeneralLinearGroups/MatrixTrace.lean), [AdditiveCommutator](GeneralLinearGroups/AdditiveCommutator.lean) | An inverse needs a chosen index; no ring quotient or `K₀` theorem |

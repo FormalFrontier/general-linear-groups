@@ -17,6 +17,7 @@ public import GeneralLinearGroups.MatrixNilpotentIdeal
 public import GeneralLinearGroups.MatrixNilpotentEntries
 public import GeneralLinearGroups.QuasiregularQuotient
 public import GeneralLinearGroups.NilIdeal
+public import GeneralLinearGroups.NilpotentExpLog
 public import GeneralLinearGroups.LocalQuotient
 public import GeneralLinearGroups.NonUnitalNilpotent
 public import GeneralLinearGroups.UpperTriangularNilpotent
@@ -35,6 +36,7 @@ public import GeneralLinearGroups.KroneckerUnits
 public import GeneralLinearGroups.DualNumberKernels
 public import GeneralLinearGroups.SquareZeroUnits
 public import GeneralLinearGroups.PrincipalUnits
+public import GeneralLinearGroups.PrincipalUnits.ExpLog
 public import GeneralLinearGroups.PrincipalUnits.Filtration
 public import GeneralLinearGroups.PrincipalUnits.Commutator
 public import GeneralLinearGroups.PrincipalUnits.Naturality
