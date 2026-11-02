@@ -19,6 +19,7 @@ public import GeneralLinearGroups.QuasiregularQuotient
 public import GeneralLinearGroups.NilIdeal
 public import GeneralLinearGroups.LocalQuotient
 public import GeneralLinearGroups.NonUnitalNilpotent
+public import GeneralLinearGroups.UpperTriangularNilpotent
 public import GeneralLinearGroups.UnitalComparison
 public import GeneralLinearGroups.NonUnitalQuasiregular
 public import GeneralLinearGroups.AdditiveCommutator
@@ -71,9 +72,14 @@ elementary subgroup, doubled relative Whitehead membership, and stabilization
 of elementary and congruence subgroups over arbitrary rings.
 
 The nonunital-nilpotent layer defines positive-power nilpotence without a
-multiplicative identity, proves strictly upper triangular matrices nilpotent,
-and constructs their canonical `1 + x` elements in the augmentation-kernel
-general linear group.
+multiplicative identity and constructs canonical `1 + x` elements in the
+augmentation-kernel general linear group over nonunital rings. Strict
+triangularity uses only zero; its support bound holds over nonunital,
+nonassociative semirings and its nilpotence over nonunital semirings. When a unit
+is present, positive powers and nilpotence agree with ordinary powers and nilpotence.
+The upper-triangular semiring layer characterizes nilpotence by diagonal nilpotence
+and bounds the killing exponent by the sum of diagonal killing exponents, including
+empty indices and zero exponents, without commutativity.
 
 The unital-comparison layer identifies the unitization of a unital algebra
 with the product of its scalar ring and the algebra. It consequently proves

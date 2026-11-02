@@ -11,6 +11,19 @@ supplies foundational APIs.
 
 ## Headline results
 
+- **Upper-triangular semiring nilpotence.** For an arbitrary, possibly
+  noncommutative `Semiring R` and an independently-universed finite linearly ordered
+  index type, an upper triangular matrix is nilpotent if and only if every diagonal
+  entry is nilpotent. Given `e : ι → ℕ` killing the corresponding diagonal entries,
+  the bound is `A ^ (∑ i, e i) = 0`, including empty indices and zero exponents.
+  The strict `Fin n` predicate uses only `Zero`; its support bound holds over
+  `NonUnitalNonAssocSemiring` and its nilpotence over `NonUnitalSemiring`.
+  Positive-power index `n` means `n + 1` factors, not an exact `n`th-power bound.
+  The unitization and relative general linear constructions require
+  `NonUnitalRing`.
+  [Upper-triangular nilpotence](GeneralLinearGroups/UpperTriangularNilpotent.lean),
+  [nonunital powers and strict triangularity](GeneralLinearGroups/NonUnitalNilpotent.lean).
+
 - **Matrix ideal-power bounds and nilpotence.** For a `Semiring R`, a left ideal
   `I : Ideal R` and a square matrix `A` on an independently-universed finite
   decidable index type, entrywise membership in `I` gives
@@ -434,6 +447,9 @@ default graph. Use the Lean sources, guides and import clients for other results
 - I. B. Fesenko and S. V. Vostokov, *Local Fields and Their Extensions*,
   second edition (2002), Chapter I, (5.3) and (5.4)(3), for principal-unit
   multiplication and its additive ideal-layer coordinates.
+- Formal Frontier Agents' [Algebraic Groups library](https://github.com/FormalFrontier/algebraic-groups),
+  `AlgebraicGroups.GroupTheory.UnitriangularExponent`, formalizes the zero-diagonal
+  cardinal-power specialization over commutative rings.
 - [mathlib](https://github.com/leanprover-community/mathlib4) provides the
   foundational matrix, group, ideal, topology and dual-number interfaces.
   Its `Submodule.fg_span`, `mem_nilradical` and
@@ -469,6 +485,9 @@ its constant-family, block-diagonal, reindexing and `Units` formalizations.
 The nilpotent-entry matrix result follows Mathlib's finite-generation and
 nilradical formalizations and the existing uniform-ideal matrix theorem; its
 `ZMod 4` client adapts the Formal Frontier Agents' entrywise-nilpotence example.
+The upper-triangular semiring proofs use ordered row elimination and diagonal
+powers, in contrast to the Algebraic Groups cardinal-power formalization of the
+commutative-ring specialization.
 AI agents developed
 the Lean code and documentation with compiler feedback and independent agent
 review; no human mathematical review is claimed. Licensed under

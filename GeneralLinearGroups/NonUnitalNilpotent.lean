@@ -5,18 +5,25 @@ Authors: Formal Frontier Agents
 module
 
 public import GeneralLinearGroups.CongruenceSubgroup
+public import Mathlib.LinearAlgebra.Matrix.Block
 public import Mathlib.RingTheory.Nilpotent.Basic
 
 /-!
-# Nilpotent matrices over nonunital rings
+# Nilpotent matrices over nonunital semirings
 
 This file defines strictly positive powers and nilpotence without assuming a
-multiplicative identity.  It relates that notion to ordinary nilpotence after
-canonical inclusion into a unitization, and constructs the corresponding
-element of the relative general linear group.
+multiplicative identity. It proves their agreement with ordinary powers and
+nilpotence when a unit is present. Strict upper triangularity is defined using
+only zero; its positive-power support bound holds over nonunital,
+nonassociative semirings, and its nilpotence over nonunital semirings.
+No commutativity is assumed.
 
-It also proves directly that a strictly upper triangular square matrix over an
-arbitrary nonunital ring is nilpotent.  No commutativity is used.
+For nonunital rings, entrywise inclusion into the canonical unitization relates
+nonunital nilpotence to ordinary nilpotence and constructs the corresponding
+element of the relative general linear group. These constructions retain their
+nonunital ring hypotheses.
+
+Positive-power index `k` always means `k + 1` factors, including on empty matrices.
 -/
 
 set_option warningAsError true
@@ -47,6 +54,26 @@ theorem positivePow_succ [Mul A] (x : A) (k : ℕ) :
 strictly positive power is zero. -/
 def IsNilpotent [SemigroupWithZero A] (x : A) : Prop :=
   ∃ k, positivePow x k = 0
+
+/-- In a monoid, positive-power index `k` agrees with the ordinary power `k + 1`. -/
+theorem positivePow_eq_pow [Monoid A] (x : A) (k : ℕ) :
+    positivePow x k = x ^ (k + 1) := by
+  induction k with
+  | zero => simp
+  | succ k ih =>
+      simpa only [positivePow_succ, ih] using (pow_succ x (k + 1)).symm
+
+/-- In a monoid with zero, strictly-positive-power nilpotence agrees with ordinary
+nilpotence, including when an ordinary nilpotence witness is zero. -/
+theorem isNilpotent_iff [MonoidWithZero A] (x : A) :
+    NonUnital.IsNilpotent x ↔ _root_.IsNilpotent x := by
+  constructor
+  · rintro ⟨k, hk⟩
+    refine ⟨k + 1, ?_⟩
+    rwa [positivePow_eq_pow] at hk
+  · rintro ⟨k, hk⟩
+    refine ⟨k, ?_⟩
+    rw [positivePow_eq_pow, pow_succ, hk, zero_mul]
 
 end NonUnital
 
@@ -93,13 +120,38 @@ namespace Matrix
 
 universe u
 
-variable {I : Type u} [NonUnitalRing I]
-variable {n : ℕ}
+variable {I : Type u}
 
-/-- Literal strict upper triangularity: diagonal and below-diagonal entries
-vanish. -/
+section Zero
+
+variable [Zero I] {n : ℕ}
+
+/-- Strict upper triangularity: diagonal and below-diagonal entries vanish. -/
 def IsStrictlyUpperTriangular (x : Matrix (Fin n) (Fin n) I) : Prop :=
   ∀ i j, j.val ≤ i.val → x i j = 0
+
+/-- Strict upper triangularity is upper triangularity together with zero diagonal. -/
+theorem isStrictlyUpperTriangular_iff (x : Matrix (Fin n) (Fin n) I) :
+    x.IsStrictlyUpperTriangular ↔
+      x.IsUpperTriangular ∧ ∀ i : Fin n, x i i = 0 := by
+  constructor
+  · intro hx
+    constructor
+    · intro i j hij
+      exact hx i j (le_of_lt hij)
+    · intro i
+      exact hx i i le_rfl
+  · rintro ⟨hupper, hdiag⟩ i j hij
+    rcases lt_or_eq_of_le (show j ≤ i from hij) with hlt | hEq
+    · exact hupper hlt
+    · subst j
+      exact hdiag i
+
+end Zero
+
+section NonUnitalNonAssocSemiring
+
+variable [NonUnitalNonAssocSemiring I] {n : ℕ}
 
 /-- After multiplying `k + 1` copies of a strictly upper triangular matrix,
 possible nonzero entries lie at least `k + 1` places above the diagonal. -/
@@ -122,9 +174,15 @@ theorem positivePow_apply_eq_zero_of_isStrictlyUpperTriangular
       · have hjl : j.val ≤ l.val := by omega
         rw [hx l j hjl, mul_zero]
 
-/-- A strictly upper triangular `n × n` matrix over a nonunital ring is
-nilpotent.  The witness here is the deliberately uniform product of `n + 1`
-copies, which also handles the empty matrix without a separate case. -/
+end NonUnitalNonAssocSemiring
+
+section NonUnitalSemiring
+
+variable [NonUnitalSemiring I] {n : ℕ}
+
+/-- A strictly upper triangular `n × n` matrix over a nonunital semiring is
+nilpotent. The uniform positive-power witness `n` means `n + 1` factors,
+including for an empty matrix. -/
 theorem IsStrictlyUpperTriangular.isNilpotent
     {x : Matrix (Fin n) (Fin n) I} (hx : x.IsStrictlyUpperTriangular) :
     NonUnital.IsNilpotent x := by
@@ -132,6 +190,31 @@ theorem IsStrictlyUpperTriangular.isNilpotent
   ext i j
   apply positivePow_apply_eq_zero_of_isStrictlyUpperTriangular hx
   omega
+
+end NonUnitalSemiring
+
+section NonUnitalRing
+
+variable [NonUnitalRing I] {n : ℕ}
+
+private theorem isStrictlyUpperTriangular_iff_le_entries_eq_zero
+    (x : Matrix (Fin n) (Fin n) I) :
+    IsStrictlyUpperTriangular (I := I) (n := n) x ↔
+      ∀ i j : Fin n, j.val ≤ i.val → x i j = 0 :=
+  Iff.rfl
+
+private theorem positivePow_apply_eq_zero_of_strictlyUpperTriangular
+    {x : Matrix (Fin n) (Fin n) I} (hx : x.IsStrictlyUpperTriangular) :
+    ∀ (k : ℕ) (i j : Fin n),
+      j.val < i.val + (k + 1) → NonUnital.positivePow x k i j = 0 :=
+  Matrix.positivePow_apply_eq_zero_of_isStrictlyUpperTriangular
+    (I := I) (n := n) (x := x) (hx := hx)
+
+private theorem strictlyUpperTriangular_isNilpotent
+    {x : Matrix (Fin n) (Fin n) I} (hx : x.IsStrictlyUpperTriangular) :
+    NonUnital.IsNilpotent x :=
+  Matrix.IsStrictlyUpperTriangular.isNilpotent
+    (I := I) (n := n) (x := x) (hx := hx)
 
 namespace GeneralLinearGroup
 
@@ -258,5 +341,7 @@ theorem nonUnitalGeneralLinearGroupOfIsNilpotent_val
   nilpotentMatrixElement_val _ _ _
 
 end GeneralLinearGroup
+
+end NonUnitalRing
 
 end Matrix
