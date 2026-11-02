@@ -35,6 +35,7 @@ public import GeneralLinearGroups.KroneckerUnits
 public import GeneralLinearGroups.DualNumberKernels
 public import GeneralLinearGroups.SquareZeroUnits
 public import GeneralLinearGroups.PrincipalUnits
+public import GeneralLinearGroups.PrincipalUnits.Filtration
 public import GeneralLinearGroups.PrincipalUnits.Powers
 public import GeneralLinearGroups.PrincipalUnits.Images
 public import GeneralLinearGroups.DualNumberSquareZeroUnits

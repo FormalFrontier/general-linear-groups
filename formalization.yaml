@@ -657,6 +657,51 @@ status:
         Under I^2 contained in J alone, the coordinate kernel is the relative
         J-stabilizer inside the I-stabilizer. Its normality is derived, not
         assumed; no J contained in I or two-sidedness is needed.
+    - declaration: Ideal.commutator_stabilizer_quotient_one_le
+      file: GeneralLinearGroups/PrincipalUnits/Filtration.lean
+      note: >-
+        For arbitrary left ideals A, B in any Ring, including noncommutative
+        and zero rings, the commutator of their principal-unit subgroups lies
+        in the principal units at A*B+B*A. Principal units use the stock
+        R-unit stabilizer of 1 in the quotient left module R/I; for two-sided
+        I this agrees with the kernel of reduction on units to the quotient
+        ring. The commutator inclusion requires neither two-sidedness nor
+        ambient normality.
+    - declaration: Ideal.commutator_stabilizer_quotient_one_pow_le
+      file: GeneralLinearGroups/PrincipalUnits/Filtration.lean
+      note: >-
+        For a two-sided ideal I in a Ring, the commutator of principal units
+        at I^a and I^b lies in those at I^(a+b) for all natural indices a, b,
+        including zero. No nilpotence assumption is imposed; two-sidedness
+        is required for this all-index bound.
+    - declaration: Ideal.stabilizer_quotient_one_lowerCentralSeries_le_pow
+      file: GeneralLinearGroups/PrincipalUnits/Filtration.lean
+      note: >-
+        For any left ideal I in a Ring and k a natural number, the kth lower
+        central term of its principal-unit subgroup, computed in the ambient
+        unit group, lies in the principal units at I^(k+1). The zeroth term
+        is the principal-unit subgroup itself; no two-sidedness or ambient
+        normality is assumed.
+    - declaration: Ideal.stabilizer_quotient_one_lowerCentralSeries_eq_bot_of_pow_eq_bot
+      file: GeneralLinearGroups/PrincipalUnits/Filtration.lean
+      note: >-
+        If a left ideal I in a Ring satisfies I^N=bot, the lower central
+        series of its principal-unit subgroup is bot at index N-1, using
+        natural subtraction. N=0 and N=1 are included and give a trivial
+        zeroth term.
+    - declaration: Ideal.isNilpotent_stabilizer_quotient_one_of_pow_eq_bot
+      file: GeneralLinearGroups/PrincipalUnits/Filtration.lean
+      note: >-
+        For any left ideal I in a Ring with I^N=bot, its principal-unit
+        subgroup is a nilpotent group. This includes N=0 and N=1 and asserts
+        no nilpotence of the full ambient unit group.
+    - declaration: Ideal.nilpotencyClass_stabilizer_quotient_one_le_of_pow_eq_bot
+      file: GeneralLinearGroups/PrincipalUnits/Filtration.lean
+      note: >-
+        For any left ideal I in a Ring with I^N=bot, the nilpotency class of
+        its principal-unit subgroup is at most N-1, using natural subtraction.
+        Nilpotence is supplied by isNilpotent_stabilizer_quotient_one_of_pow_eq_bot;
+        N=0 and N=1 give the trivial subgroup and class zero.
     - declaration: Ideal.mem_map_stabilizer_quotient_one_iff
       file: GeneralLinearGroups/PrincipalUnits/Images.lean
       note: >-
