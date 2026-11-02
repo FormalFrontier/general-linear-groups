@@ -123,6 +123,58 @@ nontriviality hypothesis. The scalar ring of the pairings is `ℤ`, not `R`;
 the ideal layers remain quotient left modules, not quotient rings. No
 additive description at degree zero is supplied.
 
+## Functorial symbols and Jacobson equivalences
+
+Import `GeneralLinearGroups.PrincipalUnits.Naturality` for forward maps.
+For arbitrary rings `R`, `S` in independent universes, a unital ring map
+`f : R →+* S`, left ideals `I`, `J` and containment `I ≤ J.comap f`, the
+positive-layer API provides:
+
+- `Ideal.powLayerMap I J f h n`: the integer-linear map `[x] ↦ [f x]`
+  between successive ideal layers. Its `_mk` theorem works on original
+  ideal representatives.
+- `Ideal.principalUnitsPowLayerMap I J f h n`: the integer-linear map on
+  additive unit layers, taking an original-unit class to the class of its
+  image under `Units.map f`. Its `_mk` theorem identifies this representative.
+- Both `_id` and `_comp` laws are equalities of bundled linear maps. The
+  composite applies the first ring map and then the second; containment
+  proofs have canonical defaults and may also be supplied explicitly.
+- `principalUnitsPowLayerSymbol_map` is the symbol square:
+  `σ_J (φ_U x) = φ_A (σ_I x)`. The two `_commutator` laws preserve the
+  coordinate and unit pairings, with target degree the same positive `a+b`.
+
+The maps use the existing quotient carriers and operations. Their scalars are
+`ℤ`, not the source coefficient ring. There is no injectivity, surjectivity,
+commutativity, two-sidedness or Jacobson condition on these forward maps.
+
+Import `GeneralLinearGroups.PrincipalUnits.LayerEquivalence` for lifting.
+If `hJac : I ≤ Ring.jacobson R`, then
+`Ideal.principalUnitsPowLayerEquiv I hJac n` is an integer-linear equivalence
+from the additive unit layer to the successive ideal layer. The
+`_toLinearMap` and `_apply` theorems identify its forward map with the exact
+symbol above. The `_symm_mk` theorem takes a coordinate representative `x`
+to the class of `(I ^ n).principalUnitsMk`, the original-ring unit of value
+`1 + x`; the usual `LinearEquiv` inverse laws apply directly.
+
+`principalUnitsPowLayerEquiv_symm_map` identifies the inverse symbol square,
+`φ_U (σ_I⁻¹ x) = σ_J⁻¹ (φ_A x)`, under **both**
+`I ≤ Ring.jacobson R` and `J ≤ Ring.jacobson S`. Containment under a ring
+map does not by itself make the target ideal Jacobson-contained.
+
+The surjectivity theorem
+`principalUnitsPowLayerSymbol_surjective_of_forall_isNilpotent` needs only
+`∀ x : R, x ∈ I → IsNilpotent x`, with no two-sidedness or uniform exponent.
+`principalUnitsPowLayerSymbol_surjective_of_pow_eq_bot` specializes to
+`I ^ N = ⊥` for any natural `N`. If `N = 0`, the ring is zero; if `N = 1`,
+then `I = ⊥`. In both cases the positive layers are trivial. Existing symbol
+injectivity is unconditional and remains the same in these cases.
+
+The radical or nil condition is substantive: for `R = ℤ`, `I = 2ℤ` and
+`n = 2`, only the unit `1` is principal modulo `4ℤ`, so the unit layer is
+trivial but the coordinate layer `4ℤ/8ℤ` is not. No surjectivity for arbitrary
+left ideals, additive equivalence at degree zero, splitting, or nilpotence
+of the full ambient unit group is asserted.
+
 ## Reproducing the historical reference
 
 Reproduction requires authorized **private** access to both the original

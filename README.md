@@ -314,6 +314,21 @@ supplies foundational APIs.
   [Pairings and characteristic laws](GeneralLinearGroups/PrincipalUnits/Commutator.lean),
   [API guide](docs/README.md#positive-principal-unit-layer-pairings).
 
+- **Functorial symbols and Jacobson equivalences.** A unital ring map
+  carrying a left ideal `I` into `J` induces integer-linear maps on their
+  positive ideal and unit layers, preserving symbols and both commutator
+  pairings. The maps respect identities and composition, without injectivity,
+  surjectivity or radical assumptions on the ring map. If
+  `I ≤ Ring.jacobson R`, its symbol is an integer-linear equivalence, with
+  inverse represented by the original-ring unit `1 + x`. Inverse naturality
+  requires the Jacobson condition on **both** source and target ideals.
+  Symbols are also surjective when every element of the left ideal is
+  nilpotent, or when `I ^ N = ⊥`, including `N = 0, 1`; no two-sidedness
+  or common exponent is assumed for the pointwise-nil result.
+  [Forward maps and naturality](GeneralLinearGroups/PrincipalUnits/Naturality.lean),
+  [Equivalences and nil lifting](GeneralLinearGroups/PrincipalUnits/LayerEquivalence.lean),
+  [API guide](docs/README.md#functorial-symbols-and-jacobson-equivalences).
+
 - **Images of principal-unit subgroups.** For a ring homomorphism
   `f : R →+* S` with `Ring R` and `Ring S` in independent universes,
   and a left ideal `I ≤ Ideal.jacobson ⊥`, a unit `u : Sˣ` lies in the image

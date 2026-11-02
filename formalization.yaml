@@ -97,6 +97,24 @@ highlights:
       - declaration: "Ideal.principalUnitsPowLayerSymbol_commutator"
         file: "GeneralLinearGroups/PrincipalUnits/Commutator.lean"
 
+  - title: "Functorial symbols and Jacobson equivalences"
+    statement: "On positive layers, unital ring maps carrying left ideals into left ideals induce integer-linear maps preserving symbols and commutator pairings, while Jacobson-contained ideals have symbol equivalences with natural inverses when both ideals satisfy the radical condition, and pointwise-nil or power-nilpotent left ideals have surjective symbols."
+    declarations:
+      - declaration: "Ideal.principalUnitsPowLayerSymbol_map"
+        file: "GeneralLinearGroups/PrincipalUnits/Naturality.lean"
+      - declaration: "Ideal.powLayerMap_commutator"
+        file: "GeneralLinearGroups/PrincipalUnits/Naturality.lean"
+      - declaration: "Ideal.principalUnitsPowLayerMap_commutator"
+        file: "GeneralLinearGroups/PrincipalUnits/Naturality.lean"
+      - declaration: "Ideal.principalUnitsPowLayerEquiv"
+        file: "GeneralLinearGroups/PrincipalUnits/LayerEquivalence.lean"
+      - declaration: "Ideal.principalUnitsPowLayerEquiv_symm_map"
+        file: "GeneralLinearGroups/PrincipalUnits/LayerEquivalence.lean"
+      - declaration: "Ideal.principalUnitsPowLayerSymbol_surjective_of_forall_isNilpotent"
+        file: "GeneralLinearGroups/PrincipalUnits/LayerEquivalence.lean"
+      - declaration: "Ideal.principalUnitsPowLayerSymbol_surjective_of_pow_eq_bot"
+        file: "GeneralLinearGroups/PrincipalUnits/LayerEquivalence.lean"
+
 sources:
   - title: "The K-book: An Introduction to Algebraic K-theory"
     authors:
