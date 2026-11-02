@@ -300,6 +300,18 @@ supplies foundational APIs.
   [Coordinate estimate and quotient equality](GeneralLinearGroups/PrincipalUnits/Filtration.lean),
   [API guide](docs/README.md#principal-unit-commutator-coordinates).
 
+- **Positive principal-unit layer pairings.** For any left ideal `I` in any
+  `Ring R` and `a, b : ℕ+`, the bracket `xy - yx` descends to an
+  **integer-bilinear** pairing of successive ideal layers in degrees
+  `a`, `b` and `a + b`. The additive positive unit layers embed in these
+  ideal layers by the injective symbol `[u] ↦ [u - 1]`; their pairing is
+  represented by the ordered commutator of original-ring units. Both pairings
+  are alternating, with ordinary negation under swapping and the canonical
+  degree cast. No two-sidedness, Jacobson condition or symbol surjectivity
+  is assumed, and no degree-zero additive layer is asserted.
+  [Pairings and characteristic laws](GeneralLinearGroups/PrincipalUnits/Commutator.lean),
+  [API guide](docs/README.md#positive-principal-unit-layer-pairings).
+
 - **Images of principal-unit subgroups.** For a ring homomorphism
   `f : R →+* S` with `Ring R` and `Ring S` in independent universes,
   and a left ideal `I ≤ Ideal.jacobson ⊥`, a unit `u : Sˣ` lies in the image
@@ -417,6 +429,7 @@ client-only helpers are not promises of the library API.
 | Presented elementary group | [Steinberg](docs/FiniteRankSteinberg.md) | Finite rank does not imply finite presentation over an arbitrary ring |
 | Quasi-regular kernels, scalar unit reflection and ideal quotients | [QuasiregularIdeal](GeneralLinearGroups/QuasiregularIdeal.lean), [QuasiregularQuotient](GeneralLinearGroups/QuasiregularQuotient.lean), [NonUnitalQuasiregular](GeneralLinearGroups/NonUnitalQuasiregular.lean) | For `Ring` → `Semiring`, unit reflection forces a quasi-regular canonical kernel without surjectivity; the converse and iff require surjectivity. Arbitrary quotient-unit lifting still needs quasi-regularity |
 | Principal-unit commutators, leading coordinates and nilpotence | [Filtration API](GeneralLinearGroups/PrincipalUnits/Filtration.lean), [coordinate guide](docs/README.md#principal-unit-commutator-coordinates) | Left ideals suffice for mixed commutators, positive-power leading coordinates and nilpotence; the all-index power bound requires two-sidedness; nilpotence concerns the principal-unit subgroup, not all units |
+| Positive principal-unit layer pairings | [Pairing API](GeneralLinearGroups/PrincipalUnits/Commutator.lean), [guide](docs/README.md#positive-principal-unit-layer-pairings) | Arbitrary left ideals in a ring; positive degrees and integer bilinearity; injective symbols need not be surjective; ordinary alternation and skew symmetry |
 | Principal-unit images | [Image membership criterion](GeneralLinearGroups/PrincipalUnits/Images.lean) | `Ring R`, `Ring S`, Jacobson containment; set image of left-ideal elements, not ideal extension; no injectivity assumption |
 | Kronecker products of units | [KroneckerUnits](GeneralLinearGroups/KroneckerUnits.lean), [clients](tests/GeneralLinearGroupsTests/KroneckerUnits.lean) | Semiring coefficients; the inverse witness reverses the identity-factor order, without a generic product-group homomorphism |
 | Single-entry matrix corners | [MatrixCorner](GeneralLinearGroups/MatrixCorner.lean), [clients](tests/GeneralLinearGroupsTests/MatrixCornerClient.lean) | A chosen index gives a corner identity that may differ from the ambient identity; no commutativity assumption |

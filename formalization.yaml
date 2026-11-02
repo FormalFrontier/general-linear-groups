@@ -84,6 +84,18 @@ highlights:
       - declaration: "Ideal.nilpotencyClass_stabilizer_quotient_one_le_of_pow_eq_bot"
         file: "GeneralLinearGroups/PrincipalUnits/Filtration.lean"
 
+  - title: "Positive principal-unit layer commutator pairings"
+    statement: "For a left ideal I in any ring R and positive degrees a, b, the bracket xy - yx descends to an integer-bilinear pairing of successive ideal layers in degree a+b, and its restriction along the injective principal-unit symbols is the pairing represented by the ordered commutator of original-ring units, without two-sidedness, Jacobson containment or symbol surjectivity."
+    declarations:
+      - declaration: "Ideal.powLayerCommutator"
+        file: "GeneralLinearGroups/PrincipalUnits/Commutator.lean"
+      - declaration: "Ideal.principalUnitsPowLayerCommutator"
+        file: "GeneralLinearGroups/PrincipalUnits/Commutator.lean"
+      - declaration: "Ideal.principalUnitsPowLayerCommutator_mk_mk"
+        file: "GeneralLinearGroups/PrincipalUnits/Commutator.lean"
+      - declaration: "Ideal.principalUnitsPowLayerSymbol_commutator"
+        file: "GeneralLinearGroups/PrincipalUnits/Commutator.lean"
+
 sources:
   - title: "The K-book: An Introduction to Algebraic K-theory"
     authors:

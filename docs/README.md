@@ -77,10 +77,51 @@ ideal `I`, positive `a, b`, and units with `x = u - 1 ∈ I ^ a` and
 Here `[u, v] = u * v * u⁻¹ * v⁻¹` (Lean's scoped `⁅u, v⁆` notation).
 The quotient is a left module, not a quotient ring; neither two-sidedness
 nor nilpotence of `I` is assumed. The bracket has no degree-dependent sign.
-These are representative-coordinate statements, not a descended pairing
-or a bilinear operation on successive quotients. For the subgroup and
+These are representative-coordinate statements. For descended pairings on
+positive successive layers, use the following API. For the subgroup and
 nilpotence bounds, see the other declarations in the
 [filtration module](../GeneralLinearGroups/PrincipalUnits/Filtration.lean).
+
+## Positive principal-unit layer pairings
+
+Import `GeneralLinearGroups.PrincipalUnits.Commutator`. Throughout, `R` is any
+possibly noncommutative ring, `I` is a left ideal, and degrees are in `ℕ+`.
+
+- `Ideal.powLayer I n` is the successive ideal quotient in degree `n`, with
+  its quotient-module operations. `powLayer_mk_eq_zero_iff` and
+  `powLayer_mk_eq_mk_iff` express vanishing and equality of representatives
+  as membership in `I ^ ((n : ℕ) + 1)` in the original ring.
+- `Ideal.principalUnitsPowLayer I n` is the quotient of the original-unit
+  stabilizer at `I ^ n` by the coordinate kernel at `I ^ (n + 1)`.
+  Its operations are the quotient-group operations, and it is commutative.
+  `principalUnitsPowAdditiveLayer` is its additive tag, carrying the usual
+  integer module structure.
+- `Ideal.principalUnitsPowLayerSymbol I n` is the injective integer-linear
+  map from the additive unit layer to the ideal layer. The `_mk` theorem
+  computes it as `[u] ↦ [u - 1]`; `_injective` allows cancellation and
+  `_ker` simplifies its kernel to `⊥`. The symbol need not be surjective.
+- `Ideal.powLayerCommutator I a b` is the integer-bilinear map on ideal
+  layers with target degree `a + b`. The `_mk_mk` theorem computes it as
+  `[x], [y] ↦ [x * y - y * x]`.
+- `Ideal.principalUnitsPowLayerCommutator I a b` has values in the additive
+  unit layer of degree `a + b`, not in a replacement image carrier. Its
+  `_mk_mk` theorem computes it as `[u], [v] ↦ [u * v * u⁻¹ * v⁻¹]` for
+  original-ring unit representatives.
+- `principalUnitsPowLayerSymbol_commutator` identifies the symbol of the
+  unit pairing with the coordinate pairing of the symbols.
+  `principalUnitsPowLayerCommutator_unique` characterizes the unit pairing
+  by this square.
+
+For either pairing, `_self` gives alternation in one degree. The `_swap`
+theorem uses `cast` along `add_comm b a` to compare the target degrees and
+then gives ordinary negation, without a degree-dependent sign. The bundled
+linear maps already supply the usual addition, negation, integer-scalar and
+finite-sum laws in each argument.
+
+There is no two-sidedness, Jacobson-radical, nilpotence, finiteness or
+nontriviality hypothesis. The scalar ring of the pairings is `ℤ`, not `R`;
+the ideal layers remain quotient left modules, not quotient rings. No
+additive description at degree zero is supplied.
 
 ## Reproducing the historical reference
 
