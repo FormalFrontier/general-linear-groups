@@ -5,6 +5,7 @@ Authors: Formal Frontier Agents
 module
 public import GeneralLinearGroups.RingTheory.Nilpotent.CentralCommutator
 public import GeneralLinearGroups.RingTheory.TwoSidedIdeal.PrincipalUnits
+public import GeneralLinearGroups.RingTheory.TwoSidedIdeal.PrincipalUnitsExp
 public import GeneralLinearGroups.StableGeneralLinearEntries
 
 public import GeneralLinearGroups.Whitehead
