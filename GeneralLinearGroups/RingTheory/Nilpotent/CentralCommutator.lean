@@ -8,6 +8,7 @@ public import Mathlib.Algebra.Group.Hom.End
 public import Mathlib.Algebra.GroupWithZero.Action.Units
 public import Mathlib.Algebra.Module.NatInt
 public import Mathlib.Algebra.Module.Rat
+public import Mathlib.Algebra.Ring.Action.ConjAct
 public import Mathlib.Algebra.Ring.Basic
 public import Mathlib.Algebra.Ring.Commute
 public import Mathlib.Data.Nat.Cast.Field
@@ -41,6 +42,10 @@ is assumed; the ambient ring need not have central commutators.
   commutation with the finite exponential when only `x` is nilpotent.
 * `CentralCommutator.exp_mul_mul_exp_neg_eq_add_commutator` gives the corresponding
   conjugation formula without requiring the commutator to commute with `y`.
+* `CentralCommutator.exp_mul_exp_mul_exp_neg_mul_exp_neg_eq_exp_commutator` gives
+  the ordered four-factor exponential word with positive commutator.
+* `CentralCommutator.unit_exp_mul_unit_exp_mul_inv_mul_inv_eq_unit_exp_commutator`
+  gives the same ordered commutator in the existing unit group.
 
 The rational results use the given `[Module ℚ A]` and its stock compatibility
 with ring multiplication, not an additional algebra structure. Zero rings and
@@ -52,6 +57,8 @@ Johannes Hölzl, Mario Carneiro, Kevin Buzzard, Yury Kudryashov, Frédéric Dupu
 and Heather Macbeth.
 The finite nilpotent-exponential API is reused from Mathlib, with contributions by
 Janos Wolosz; the exponential identities below use the given rational module action.
+The conjugation-action API is reused from Mathlib, with contributions by Eric Wieser
+(2022) and Chris Hughes (2021).
 -/
 
 @[expose] public section
@@ -489,5 +496,60 @@ theorem exp_mul_mul_exp_neg_eq_add_commutator [Module ℚ A] {x y : A}
     (IsNilpotent.exp x * y) * IsNilpotent.exp (-x) = y + (x * y - y * x) := by
   rw [exp_mul_eq_add_commutator_mul_exp hx hzx, mul_assoc,
     IsNilpotent.exp_mul_exp_neg_self hx, mul_one]
+
+private theorem coe_inv_unit_exp [Module ℚ A] {x : A} (hx : IsNilpotent x) :
+    (↑((IsNilpotent.isUnit_exp hx).unit⁻¹) : A) = IsNilpotent.exp (-x) := by
+  calc
+    (↑((IsNilpotent.isUnit_exp hx).unit⁻¹) : A) =
+        ↑((IsNilpotent.isUnit_exp hx).unit⁻¹) *
+          (IsNilpotent.exp x * IsNilpotent.exp (-x)) := by
+      rw [IsNilpotent.exp_mul_exp_neg_self hx, mul_one]
+    _ = (↑((IsNilpotent.isUnit_exp hx).unit⁻¹) * IsNilpotent.exp x) *
+        IsNilpotent.exp (-x) := (mul_assoc _ _ _).symm
+    _ = IsNilpotent.exp (-x) := by
+      rw [Units.inv_mul_of_eq (IsNilpotent.isUnit_exp hx).unit_spec, one_mul]
+
+/-- The ordered four-factor word in finite exponentials is the exponential of the
+positive commutator when the commutator commutes with both nilpotent generators. -/
+theorem exp_mul_exp_mul_exp_neg_mul_exp_neg_eq_exp_commutator [Module ℚ A] {x y : A}
+    (hx : IsNilpotent x) (hy : IsNilpotent y)
+    (hzx : Commute (x * y - y * x) x) (hzy : Commute (x * y - y * x) y) :
+    ((IsNilpotent.exp x * IsNilpotent.exp y) * IsNilpotent.exp (-x)) *
+        IsNilpotent.exp (-y) = IsNilpotent.exp (x * y - y * x) := by
+  have hz := isNilpotent_commutator_of_isNilpotent_left hzx hzy hx
+  let u : Aˣ := (IsNilpotent.isUnit_exp hx).unit
+  have hu : (u : A) = IsNilpotent.exp x := (IsNilpotent.isUnit_exp hx).unit_spec
+  have huinv : (↑(u⁻¹) : A) = IsNilpotent.exp (-x) := coe_inv_unit_exp hx
+  have hconj :
+      IsNilpotent.exp ((u : A) * y * (↑(u⁻¹) : A)) =
+        (u : A) * IsNilpotent.exp y * (↑(u⁻¹) : A) := by
+    simpa only [ConjAct.units_smul_def, ConjAct.ofConjAct_toConjAct] using
+      (IsNilpotent.exp_smul (ConjAct.toConjAct u) hy)
+  rw [hu, huinv, exp_mul_mul_exp_neg_eq_add_commutator hx hzx] at hconj
+  calc
+    ((IsNilpotent.exp x * IsNilpotent.exp y) * IsNilpotent.exp (-x)) *
+        IsNilpotent.exp (-y) =
+        IsNilpotent.exp (y + (x * y - y * x)) * IsNilpotent.exp (-y) := by
+      rw [← hconj]
+    _ = (IsNilpotent.exp (x * y - y * x) * IsNilpotent.exp y) *
+        IsNilpotent.exp (-y) := by
+      rw [add_comm y (x * y - y * x), IsNilpotent.exp_add_of_commute hzy hz hy]
+    _ = IsNilpotent.exp (x * y - y * x) := by
+      rw [mul_assoc, IsNilpotent.exp_mul_exp_neg_self hy, mul_one]
+
+/-- The canonical units of two finite exponentials have ordered commutator
+`u * v * u⁻¹ * v⁻¹` equal to the canonical unit of the positive additive commutator's
+exponential. Only commutation with the two nilpotent generators is required. -/
+theorem unit_exp_mul_unit_exp_mul_inv_mul_inv_eq_unit_exp_commutator
+    [Module ℚ A] {x y : A} (hx : IsNilpotent x) (hy : IsNilpotent y)
+    (hzx : Commute (x * y - y * x) x) (hzy : Commute (x * y - y * x) y) :
+    (((IsNilpotent.isUnit_exp hx).unit * (IsNilpotent.isUnit_exp hy).unit) *
+        (IsNilpotent.isUnit_exp hx).unit⁻¹) * (IsNilpotent.isUnit_exp hy).unit⁻¹ =
+      (IsNilpotent.isUnit_exp
+        (isNilpotent_commutator_of_isNilpotent_left hzx hzy hx)).unit := by
+  apply Units.ext
+  simpa only [Units.val_mul, IsUnit.unit_spec, coe_inv_unit_exp hx,
+    coe_inv_unit_exp hy] using
+    (exp_mul_exp_mul_exp_neg_mul_exp_neg_eq_exp_commutator hx hy hzx hzy)
 
 end CentralCommutator
