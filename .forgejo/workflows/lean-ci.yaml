@@ -60,6 +60,13 @@ jobs:
           import json, pathlib, re
           # Build and audit commands only; dependency and credential steps stay in the artifact.
           labels = {"official-mathlib-cache", "verify-mathlib-cache", "lake-build", "sorry-gate", "axiom-audit"}
+          # Lake starts each reported job with "<icon> [n/m]"; a failed job's icon is ✖ and its messages follow.
+          job = re.compile(r"[✔✖⚠ℹ] \[\d+/\d+\]")
+
+          def show(line):
+              # The prefix stops output lines being read as workflow commands.
+              print("| " + re.sub(r"[\x00-\x08\x0b-\x1f\x7f]", "", line)[:1000])
+
           for command in sorted(pathlib.Path(".lean-ci-evidence/commands").glob("*-*")):
               receipt = command / "receipt.json"
               if (command.name.split("-", 1)[1] not in labels or not receipt.is_file()
@@ -67,10 +74,21 @@ jobs:
                   continue
               for stream in ["stderr", "stdout"]:
                   lines = (command / stream).read_bytes().decode(errors="replace").splitlines()
+                  # The failed jobs' messages above the tail, which a large build pushes out of it.
+                  failed, inside = [], False
+                  for line in lines[:-200]:
+                      if job.match(line):
+                          inside = line.startswith("✖")
+                      if inside:
+                          failed.append(line)
+                  if failed:
+                      print(f"{command.name} {stream}: failed Lake jobs before the last 200 lines, "
+                            f"first {min(len(failed), 2000)} of {len(failed)} lines")
+                      for line in failed[:2000]:
+                          show(line)
                   print(f"{command.name} {stream}: last {min(len(lines), 200)} of {len(lines)} lines")
                   for line in lines[-200:]:
-                      # The prefix stops output lines being read as workflow commands.
-                      print("| " + re.sub(r"[\x00-\x08\x0b-\x1f\x7f]", "", line)[:1000])
+                      show(line)
           EOF
       - name: Preserve commands, inputs, audit output and result
         if: always()
