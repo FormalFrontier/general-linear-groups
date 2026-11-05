@@ -11,6 +11,16 @@ supplies foundational APIs.
 
 ## Headline results
 
+- **Signed swaps and even permutation matrices.** Over any possibly noncommutative
+  `Ring R`, the word `e_ij(1) e_ji(-1) e_ij(1)` gives the signed coordinate swap
+  with block `[0,1;-1,0]`. Every even permutation of a finite decidable basis gives
+  an element of the original finite elementary subgroup, including ranks zero,
+  one and two and zero rings. The permutation unit sends `e_i` to `e_(σ i)`;
+  no parity converse is asserted in characteristic two. The argument follows
+  Weibel, *The K-book*, III.1.2.1, using Mathlib's permutation units and generation
+  of the alternating group by three-cycles.
+  [Signed coordinate swaps and even permutations](GeneralLinearGroups/ElementaryPermutation.lean).
+
 - **Upper-triangular semiring nilpotence.** For an arbitrary, possibly
   noncommutative `Semiring R` and an independently-universed finite linearly ordered
   index type, an upper triangular matrix is nilpotent if and only if every diagonal

@@ -11,6 +11,7 @@ public import GeneralLinearGroups.StableGeneralLinearEntries
 
 public import GeneralLinearGroups.Whitehead
 public import GeneralLinearGroups.Elementary
+public import GeneralLinearGroups.ElementaryPermutation
 public import GeneralLinearGroups.ElementaryWhitehead
 public import GeneralLinearGroups.Reindex
 public import GeneralLinearGroups.CongruenceSubgroup
