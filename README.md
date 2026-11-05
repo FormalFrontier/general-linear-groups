@@ -115,6 +115,18 @@ supplies foundational APIs.
   [stable elementary group](GeneralLinearGroups/StableElementary.lean),
   [boundary and quotient clients](tests/GeneralLinearGroupsTests/StableElementaryClient.lean).
 
+- **Opposite coefficients.** Over any `Semiring R`, inverse-transpose gives
+  `GL ι R ≃* GL ι Rᵐᵒᵖ` for finite decidable indices and an equivalence of the
+  original stable groups. Its entries are `op ((g⁻¹) j i)`, using the unit inverse.
+  Both directions commute with stabilization and arbitrary unital coefficient maps;
+  double application is canonical double-opposite coefficient transport. Over a
+  `Ring R`, it identifies the original stable elementary subgroups and induces an
+  equivalence of their quotients, with representative and coefficient-naturality
+  formulas. Empty ranks and zero semirings are allowed.
+  [Finite inverse-transpose](GeneralLinearGroups/Opposite.lean),
+  [stable inverse-transpose](GeneralLinearGroups/StableOpposite.lean),
+  [elementary quotients](GeneralLinearGroups/StableElementaryOpposite.lean).
+
 - **Finite coefficient products of stable groups and elementary quotients.**
   For arbitrary `Semiring R` and `Semiring S` in independent universes,
   coefficient projections give `StableGL (R × S) ≃* (StableGL R × StableGL S)`.
@@ -502,6 +514,7 @@ client-only helpers are not promises of the library API.
 | Paths and SL neighborhoods | [Elementary paths](docs/ElementaryPaths.md), [finite SL neighborhoods](docs/ElementaryNeighborhood.md) | Path-connected coefficients and open scalar units are distinct hypotheses |
 | Relative groups and doubled identities | [Relative elementary](docs/RelativeElementary.md), [Whitehead](docs/RelativeWhitehead.md), [consequences](docs/RelativeWhiteheadConsequences.md) | Normal closure inside `E`; arbitrary-GL conjugation only after doubling |
 | Stable general linear and elementary groups | [Stable GL](GeneralLinearGroups/StableGeneralLinear.lean), [stable elementary](GeneralLinearGroups/StableElementary.lean) | Semiring-direct-limit `GL`; over rings, elementary equals the stable commutator, with an abelian quotient but no public `K₁` construction |
+| Opposite finite and stable groups | [Finite inverse-transpose](GeneralLinearGroups/Opposite.lean), [stable inverse-transpose](GeneralLinearGroups/StableOpposite.lean), [elementary quotients](GeneralLinearGroups/StableElementaryOpposite.lean) | `Semiring` for finite and stable groups; `Ring` for the original elementary subgroups and quotients; no nontriviality or positive-rank premise |
 | Stable determinant and rank-one units | [Stable determinant](GeneralLinearGroups/StableDeterminant.lean), [clients](tests/GeneralLinearGroupsTests/StableDeterminantClient.lean) | Rank-one maps over semirings; the elementary quotient determinant has trivial kernel over commutative local rings, not arbitrary rings |
 | Finite stabilization and rectangular blocks | [Stabilization](docs/ElementaryStabilization.md), [rectangular blocks](docs/RectangularBlockUnits.md), [rectangular unit switch](GeneralLinearGroups/RectangularUnitSwitch.lean), [zero-product units](GeneralLinearGroups/ZeroProductStabilization.lean) | Semiring stabilization is a *monoid hom on units*; the unit switch requires a `Ring` and `g = 1 + A * B`, but not `B * A = 0` |
 | Finite heterogeneous block units | [Block-triangular criterion](GeneralLinearGroups/BlockTriangularUnits.lean) | Strict range-chain in a `Preorder`, or a `≤` range-chain in a `PartialOrder`; ring sufficiency, semiring necessity under diagonal-matrix DF, and inverse support given invertibility and unit diagonals |
