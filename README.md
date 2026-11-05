@@ -24,6 +24,16 @@ supplies foundational APIs.
   [Upper-triangular nilpotence](GeneralLinearGroups/UpperTriangularNilpotent.lean),
   [nonunital powers and strict triangularity](GeneralLinearGroups/NonUnitalNilpotent.lean).
 
+- **Finite block-triangular units.** Over any possibly noncommutative `Ring`,
+  a block-triangular matrix on a finite decidable index type is a unit if each
+  equality-fiber diagonal block is a unit and its represented labels form a
+  strict chain in a `Preorder`. For a `PartialOrder`, a chain for `≤` suffices.
+  The index, label and coefficient universes are independent. Labels have
+  decidable equality but need not be finite or globally linearly ordered,
+  and block sizes may differ. Empty indices, empty fibers and zero rings are
+  included. No arbitrary-ring converse is asserted.
+  [Block-unit criterion](GeneralLinearGroups/BlockTriangularUnits.lean).
+
 - **Matrix ideal-power bounds and nilpotence.** For a `Semiring R` and a left
   ideal `I : Ideal R`, an ordered list `As` of square matrices with entries in
   `I` has `(As.prod) i j ∈ I ^ As.length`. The finite decidable index type has
@@ -455,6 +465,7 @@ client-only helpers are not promises of the library API.
 | Stable general linear and elementary groups | [Stable GL](GeneralLinearGroups/StableGeneralLinear.lean), [stable elementary](GeneralLinearGroups/StableElementary.lean) | Semiring-direct-limit `GL`; over rings, elementary equals the stable commutator, with an abelian quotient but no public `K₁` construction |
 | Stable determinant and rank-one units | [Stable determinant](GeneralLinearGroups/StableDeterminant.lean), [clients](tests/GeneralLinearGroupsTests/StableDeterminantClient.lean) | Rank-one maps over semirings; the elementary quotient determinant has trivial kernel over commutative local rings, not arbitrary rings |
 | Finite stabilization and rectangular blocks | [Stabilization](docs/ElementaryStabilization.md), [rectangular blocks](docs/RectangularBlockUnits.md), [rectangular unit switch](GeneralLinearGroups/RectangularUnitSwitch.lean), [zero-product units](GeneralLinearGroups/ZeroProductStabilization.lean) | Semiring stabilization is a *monoid hom on units*; the unit switch requires a `Ring` and `g = 1 + A * B`, but not `B * A = 0` |
+| Finite heterogeneous block units | [Block-triangular criterion](GeneralLinearGroups/BlockTriangularUnits.lean) | `Ring`; strict range-chain in a `Preorder`, or a `≤` range-chain in a `PartialOrder`; no arbitrary-ring converse |
 | Presented elementary group | [Steinberg](docs/FiniteRankSteinberg.md) | Finite rank does not imply finite presentation over an arbitrary ring |
 | Quasi-regular kernels, scalar unit reflection and ideal quotients | [QuasiregularIdeal](GeneralLinearGroups/QuasiregularIdeal.lean), [QuasiregularQuotient](GeneralLinearGroups/QuasiregularQuotient.lean), [NonUnitalQuasiregular](GeneralLinearGroups/NonUnitalQuasiregular.lean) | For `Ring` → `Semiring`, unit reflection forces a quasi-regular canonical kernel without surjectivity; the converse and iff require surjectivity. Arbitrary quotient-unit lifting still needs quasi-regularity |
 | Principal-unit commutators, leading coordinates and nilpotence | [Filtration API](GeneralLinearGroups/PrincipalUnits/Filtration.lean), [coordinate guide](docs/README.md#principal-unit-commutator-coordinates) | Left ideals suffice for mixed commutators, positive-power leading coordinates and nilpotence; the all-index power bound requires two-sidedness; nilpotence concerns the principal-unit subgroup, not all units |
