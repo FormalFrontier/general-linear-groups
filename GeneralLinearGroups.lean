@@ -64,6 +64,7 @@ public import GeneralLinearGroups.UnitPivotInduction
 public import GeneralLinearGroups.ElementaryNeighborhood
 public import GeneralLinearGroups.StableElementary
 public import GeneralLinearGroups.StableDeterminant
+public import GeneralLinearGroups.StableMatrix
 public import GeneralLinearGroups.LocalElementaryGeneration
 
 /-!

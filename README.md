@@ -105,6 +105,14 @@ supplies foundational APIs.
   [stable elementary group](GeneralLinearGroups/StableElementary.lean),
   [boundary and quotient clients](tests/GeneralLinearGroupsTests/StableElementaryClient.lean).
 
+- **Matrix invariance of stable groups and elementary quotients.** For `0 < n`,
+  fixed row-major flattening gives
+  `StableGL (Matrix (Fin n) (Fin n) R) ≃* StableGL R` over any `Semiring R`.
+  Over a `Ring R`, it induces an equivalence of the existing stable elementary
+  quotients. Over a `CommRing R`, the transported quotient determinant on a
+  matrix-ring unit is its ordinary finite determinant.
+  [Matrix invariance](GeneralLinearGroups/StableMatrix.lean).
+
 - **Stable determinant.** Over a commutative ring, finite determinants induce
   homomorphisms on stable general linear groups, their elementary quotient and
   their abelianization. Rank-one units provide determinant sections; the
