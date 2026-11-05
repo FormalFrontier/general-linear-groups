@@ -31,7 +31,14 @@ supplies foundational APIs.
   The index, label and coefficient universes are independent. Labels have
   decidable equality but need not be finite or globally linearly ordered,
   and block sizes may differ. Empty indices, empty fibers and zero rings are
-  included. No arbitrary-ring converse is asserted.
+  included. Over a `Semiring`, the converse holds if each original
+  diagonal-block matrix monoid is Dedekind-finite: an ambient matrix unit
+  then has unit diagonal blocks. Separately, given `[Invertible M]` and unit
+  diagonal blocks, the given inverse `⅟M` is block triangular over a semiring,
+  with no direct-finiteness assumption. Both directions retain the same
+  represented-chain hypotheses; neither asserts semiring sufficiency from
+  diagonal units or derives matrix direct finiteness from scalar direct
+  finiteness.
   [Block-unit criterion](GeneralLinearGroups/BlockTriangularUnits.lean).
 
 - **Matrix ideal-power bounds and nilpotence.** For a `Semiring R` and a left
@@ -465,7 +472,7 @@ client-only helpers are not promises of the library API.
 | Stable general linear and elementary groups | [Stable GL](GeneralLinearGroups/StableGeneralLinear.lean), [stable elementary](GeneralLinearGroups/StableElementary.lean) | Semiring-direct-limit `GL`; over rings, elementary equals the stable commutator, with an abelian quotient but no public `K₁` construction |
 | Stable determinant and rank-one units | [Stable determinant](GeneralLinearGroups/StableDeterminant.lean), [clients](tests/GeneralLinearGroupsTests/StableDeterminantClient.lean) | Rank-one maps over semirings; the elementary quotient determinant has trivial kernel over commutative local rings, not arbitrary rings |
 | Finite stabilization and rectangular blocks | [Stabilization](docs/ElementaryStabilization.md), [rectangular blocks](docs/RectangularBlockUnits.md), [rectangular unit switch](GeneralLinearGroups/RectangularUnitSwitch.lean), [zero-product units](GeneralLinearGroups/ZeroProductStabilization.lean) | Semiring stabilization is a *monoid hom on units*; the unit switch requires a `Ring` and `g = 1 + A * B`, but not `B * A = 0` |
-| Finite heterogeneous block units | [Block-triangular criterion](GeneralLinearGroups/BlockTriangularUnits.lean) | `Ring`; strict range-chain in a `Preorder`, or a `≤` range-chain in a `PartialOrder`; no arbitrary-ring converse |
+| Finite heterogeneous block units | [Block-triangular criterion](GeneralLinearGroups/BlockTriangularUnits.lean) | Strict range-chain in a `Preorder`, or a `≤` range-chain in a `PartialOrder`; ring sufficiency, semiring necessity under diagonal-matrix DF, and inverse support given invertibility and unit diagonals |
 | Presented elementary group | [Steinberg](docs/FiniteRankSteinberg.md) | Finite rank does not imply finite presentation over an arbitrary ring |
 | Quasi-regular kernels, scalar unit reflection and ideal quotients | [QuasiregularIdeal](GeneralLinearGroups/QuasiregularIdeal.lean), [QuasiregularQuotient](GeneralLinearGroups/QuasiregularQuotient.lean), [NonUnitalQuasiregular](GeneralLinearGroups/NonUnitalQuasiregular.lean) | For `Ring` → `Semiring`, unit reflection forces a quasi-regular canonical kernel without surjectivity; the converse and iff require surjectivity. Arbitrary quotient-unit lifting still needs quasi-regularity |
 | Principal-unit commutators, leading coordinates and nilpotence | [Filtration API](GeneralLinearGroups/PrincipalUnits/Filtration.lean), [coordinate guide](docs/README.md#principal-unit-commutator-coordinates) | Left ideals suffice for mixed commutators, positive-power leading coordinates and nilpotence; the all-index power bound requires two-sidedness; nilpotence concerns the principal-unit subgroup, not all units |
@@ -570,6 +577,10 @@ nilradical formalizations and the existing uniform-ideal matrix theorem; its
 The upper-triangular semiring proofs use ordered row elimination and diagonal
 powers, in contrast to the Algebraic Groups cardinal-power formalization of the
 commutative-ring specialization.
+The block-triangular proofs follow Mathlib's maximal-fiber splitting and
+subtype-reindexing approach, using its block multiplication and stock
+Dedekind-finiteness transport; the commutative inverse comparison uses its
+nonsingular-inverse API.
 AI agents developed
 the Lean code and documentation with compiler feedback and independent agent
 review; no human mathematical review is claimed. Licensed under
