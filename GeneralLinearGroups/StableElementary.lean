@@ -21,6 +21,8 @@ without imposing normality on any finite or stable elementary group.
 It is perfect in its own right over every ring. As a subgroup of stable general
 linear matrices, it is the commutator subgroup; hence the existing quotient
 is canonically the abelianization, compatibly with coefficient maps.
+Two finite matrices have the same quotient class exactly when their stabilized
+ratio is elementary at a common later rank.
 -/
 
 set_option warningAsError true
@@ -283,6 +285,40 @@ instance stableElementarySubgroup_normal (R : Type u) [Ring R] :
     (stableElementarySubgroup R).Normal := by
   rw [stableElementarySubgroup_eq_commutator]
   infer_instance
+
+/-- Two finite matrices have equal classes in the stable elementary quotient exactly
+when their ratio becomes elementary at a common later rank. -/
+theorem stableElementary_quotient_stage_eq_iff (R : Type u) [Ring R]
+    {n m : ℕ} (A : GL (Fin n) R) (B : GL (Fin m) R) :
+    QuotientGroup.mk' (stableElementarySubgroup R) (StableGL.stage R n A) =
+      QuotientGroup.mk' (stableElementarySubgroup R) (StableGL.stage R m B) ↔
+      ∃ (k : ℕ) (hn : n ≤ k) (hm : m ≤ k),
+        finStabilize R hn A * (finStabilize R hm B)⁻¹ ∈
+          elementarySubgroup (Fin k) R := by
+  simp only [QuotientGroup.mk'_apply, QuotientGroup.eq_iff_div_mem, div_eq_mul_inv]
+  constructor
+  · intro h
+    let l := max n m
+    let hn : n ≤ l := le_max_left n m
+    let hm : m ≤ l := le_max_right n m
+    let C := finStabilize R hn A * (finStabilize R hm B)⁻¹
+    have hC : StableGL.stage R l C =
+        StableGL.stage R n A * (StableGL.stage R m B)⁻¹ := by
+      simp only [C, map_mul, map_inv, StableGL.stage_finStabilize]
+    obtain ⟨r, e, he⟩ := (mem_stableElementarySubgroup_iff R _).mp h
+    obtain ⟨k, hl, hr, hEq⟩ :=
+      (StableGL.stage_eq_stage_iff R C (e : GL (Fin r) R)).mp (hC.trans he.symm)
+    refine ⟨k, hn.trans hl, hm.trans hl, ?_⟩
+    have hmem : finStabilize R hr (e : GL (Fin r) R) ∈
+        elementarySubgroup (Fin k) R :=
+      finStabilize_elementarySubgroup_le R hr (Subgroup.mem_map_of_mem _ e.property)
+    rw [← hEq] at hmem
+    simpa only [C, finStabilize_comp R hn hl, finStabilize_comp R hm hl,
+      MonoidHom.comp_apply, map_mul, map_inv] using hmem
+  · rintro ⟨k, hn, hm, h⟩
+    have hmem := elementary_stage_le R k
+      (Subgroup.mem_map_of_mem (StableGL.stage R k) h)
+    simpa only [map_mul, map_inv, StableGL.stage_finStabilize] using hmem
 
 /-- The quotient of stable GL by the stable elementary subgroup is abelian. -/
 theorem stableElementary_quotient_mul_comm (R : Type u) [Ring R]
