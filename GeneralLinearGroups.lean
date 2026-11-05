@@ -66,6 +66,7 @@ public import GeneralLinearGroups.StableElementary
 public import GeneralLinearGroups.StableDeterminant
 public import GeneralLinearGroups.StableMatrix
 public import GeneralLinearGroups.StableOpposite
+public import GeneralLinearGroups.StableProduct
 public import GeneralLinearGroups.LocalElementaryGeneration
 
 /-!

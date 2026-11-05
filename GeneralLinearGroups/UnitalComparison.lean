@@ -82,11 +82,13 @@ namespace Matrix.GeneralLinearGroup
 
 universe u v w
 
+section MatrixProduct
+
 variable (R : Type u) (A : Type v)
-variable [CommRing R] [Ring A] [Algebra R A]
+variable [Semiring R] [Semiring A]
 variable {n : Type w} [Fintype n] [DecidableEq n]
 
-/-- Matrices over a product ring are canonically a product of matrix rings. -/
+/-- Matrices over a product semiring are canonically a product of matrix semirings. -/
 def matrixRingEquivProd :
     Matrix n n (R × A) ≃+* Matrix n n R × Matrix n n A where
   toFun x := ((RingHom.fst R A).mapMatrix x,
@@ -102,6 +104,12 @@ def matrixRingEquivProd :
     apply Prod.ext
     · exact (RingHom.fst R A).mapMatrix.map_mul x y
     · exact (RingHom.snd R A).mapMatrix.map_mul x y
+
+end MatrixProduct
+
+variable (R : Type u) (A : Type v)
+variable [CommRing R] [Ring A] [Algebra R A]
+variable {n : Type w} [Fintype n] [DecidableEq n]
 
 /-- The finite general linear group over a unital algebra's unitization is the
 product of the general linear groups over the scalar ring and the algebra. -/

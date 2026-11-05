@@ -105,6 +105,20 @@ supplies foundational APIs.
   [stable elementary group](GeneralLinearGroups/StableElementary.lean),
   [boundary and quotient clients](tests/GeneralLinearGroupsTests/StableElementaryClient.lean).
 
+- **Finite coefficient products of stable groups and elementary quotients.**
+  For arbitrary `Semiring R` and `Semiring S` in independent universes,
+  coefficient projections give `StableGL (R × S) ≃* (StableGL R × StableGL S)`.
+  For `[Finite ι]` and a family of semirings `R i`, evaluation gives
+  `StableGL (∀ i, R i) ≃* (∀ i, StableGL (R i))`, including the empty family.
+  Over arbitrary rings these comparisons carry the stable elementary subgroup
+  onto the product of the elementary subgroups and induce equivalences of the
+  existing elementary quotients. All comparisons commute with arbitrary
+  coefficient maps; inverse-stage computations allow unequal representative
+  ranks after passage to any common upper bound. Zero rings and rank zero are
+  included; no unrestricted infinite-product stable-group equivalence is asserted.
+  These extend the binary ring example in Weibel, *The K-book*, Example III.1.1.3.
+  [Finite coefficient products](GeneralLinearGroups/StableProduct.lean).
+
 - **Matrix invariance of stable groups and elementary quotients.** For `0 < n`,
   fixed row-major flattening gives
   `StableGL (Matrix (Fin n) (Fin n) R) ≃* StableGL R` over any `Semiring R`.
