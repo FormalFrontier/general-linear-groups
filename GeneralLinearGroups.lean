@@ -65,6 +65,7 @@ public import GeneralLinearGroups.ElementaryNeighborhood
 public import GeneralLinearGroups.StableElementary
 public import GeneralLinearGroups.StableDeterminant
 public import GeneralLinearGroups.StableMatrix
+public import GeneralLinearGroups.StableOpposite
 public import GeneralLinearGroups.LocalElementaryGeneration
 
 /-!
@@ -74,6 +75,10 @@ Reusable results about general linear groups, ideal congruence subgroups, nil
 and quasi-regular ideals, reflection of matrix units through quasi-regular
 quotients, local quotients, block factorizations, stability, and matrix trace
 modulo additive commutators over arbitrary unital rings.
+
+Inverse-transpose gives a natural isomorphism between the general linear groups
+over a semiring and its opposite. It commutes with stabilization and induces the
+corresponding stable isomorphism, with canonical double-opposite compatibility.
 
 The elementary layer supplies Ring-only off-diagonal GL units, their generated
 subgroup, and membership of Whitehead's upper/lower/signed-swap and doubled
