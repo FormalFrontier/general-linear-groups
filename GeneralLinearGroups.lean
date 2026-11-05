@@ -3,6 +3,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Formal Frontier Agents
 -/
 module
+public import GeneralLinearGroups.Topology.SquareZeroUnits
 public import GeneralLinearGroups.RingTheory.Nilpotent.CentralCommutator
 public import GeneralLinearGroups.RingTheory.TwoSidedIdeal.PrincipalUnits
 public import GeneralLinearGroups.RingTheory.TwoSidedIdeal.PrincipalUnitsExp
