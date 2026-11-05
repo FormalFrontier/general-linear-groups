@@ -11,6 +11,14 @@ supplies foundational APIs.
 
 ## Headline results
 
+- **Elementary generation over Euclidean domains.** For any `EuclideanDomain R`,
+  an invertible finite matrix belongs to the elementary subgroup exactly when
+  its determinant is one, including empty and singleton index types. The stable
+  elementary quotient is multiplicatively equivalent to `Rˣ`, with the existing
+  quotient determinant as forward map and the existing rank-one section as inverse.
+  Both directions commute with arbitrary ring homomorphisms between Euclidean
+  domains. [Euclidean elementary generation](GeneralLinearGroups/EuclideanElementaryGeneration.lean).
+
 - **Signed swaps and even permutation matrices.** Over any possibly noncommutative
   `Ring R`, the word `e_ij(1) e_ji(-1) e_ij(1)` gives the signed coordinate swap
   with block `[0,1;-1,0]`. Every even permutation of a finite decidable basis gives
@@ -472,6 +480,14 @@ example {R S n : Type*} [Ring R] [Ring S] [Fintype n] [DecidableEq n]
 The [`PublicAPIClient`](tests/GeneralLinearGroupsTests/PublicAPIClient.lean) exercises this law using
 an ordinary import; other clients exercise the interfaces and edge cases.
 
+For Euclidean elementary generation alone, use
+`import GeneralLinearGroups.EuclideanElementaryGeneration`.
+`Matrix.GeneralLinearGroup.mem_elementarySubgroup_iff_det_eq_one_euclidean`
+provides the finite classification. In `Matrix.GeneralLinearGroup.StableGL`,
+`quotientDetMulEquivEuclidean` packages the original `quotientDet` and
+`quotientRankOneUnits`; its map laws apply to arbitrary coefficient ring
+homomorphisms between Euclidean domains.
+
 For the principal-unit image criterion alone, use
 `import GeneralLinearGroups.PrincipalUnits.Images`. The theorem
 `Ideal.mem_map_stabilizer_quotient_one_iff` uses the existing
@@ -510,12 +526,13 @@ client-only helpers are not promises of the library API.
 | --- | --- | --- |
 | Elementary blocks and reindexing | [Elementary matrices](docs/ElementaryMatrices.md), [commutators](docs/ElementaryCommutators.md) | Ring-only units; no arbitrary-ring `SL = E` |
 | Unit pivots and diagonal units | [Unit-pivot diagonalization](docs/UnitPivotDiagonalization.md), [conditional pivot induction](GeneralLinearGroups/UnitPivotInduction.lean), [product-one diagonals](docs/ElementaryDiagonal.md) | `CommRing`; either unit ordered leading minors or an elementary pivot producer at every successor rank for the respective reduction |
+| Euclidean elementary generation | [Euclidean generation](GeneralLinearGroups/EuclideanElementaryGeneration.lean) | `EuclideanDomain`; well-founded Euclidean reduction, finite determinant-one classification and stable quotient equivalence, with no positive-rank assumption |
 | Local elementary generation | [Local generation](GeneralLinearGroups/LocalElementaryGeneration.lean), [clients](tests/GeneralLinearGroupsTests/LocalElementaryGenerationClient.lean) | `CommRing` and `IsLocalRing`; no ordered leading-minor condition; finite and stable determinant kernels |
 | Paths and SL neighborhoods | [Elementary paths](docs/ElementaryPaths.md), [finite SL neighborhoods](docs/ElementaryNeighborhood.md) | Path-connected coefficients and open scalar units are distinct hypotheses |
 | Relative groups and doubled identities | [Relative elementary](docs/RelativeElementary.md), [Whitehead](docs/RelativeWhitehead.md), [consequences](docs/RelativeWhiteheadConsequences.md) | Normal closure inside `E`; arbitrary-GL conjugation only after doubling |
 | Stable general linear and elementary groups | [Stable GL](GeneralLinearGroups/StableGeneralLinear.lean), [stable elementary](GeneralLinearGroups/StableElementary.lean) | Semiring-direct-limit `GL`; over rings, elementary equals the stable commutator, with an abelian quotient but no public `K₁` construction |
 | Opposite finite and stable groups | [Finite inverse-transpose](GeneralLinearGroups/Opposite.lean), [stable inverse-transpose](GeneralLinearGroups/StableOpposite.lean), [elementary quotients](GeneralLinearGroups/StableElementaryOpposite.lean) | `Semiring` for finite and stable groups; `Ring` for the original elementary subgroups and quotients; no nontriviality or positive-rank premise |
-| Stable determinant and rank-one units | [Stable determinant](GeneralLinearGroups/StableDeterminant.lean), [clients](tests/GeneralLinearGroupsTests/StableDeterminantClient.lean) | Rank-one maps over semirings; the elementary quotient determinant has trivial kernel over commutative local rings, not arbitrary rings |
+| Stable determinant and rank-one units | [Stable determinant](GeneralLinearGroups/StableDeterminant.lean), [clients](tests/GeneralLinearGroupsTests/StableDeterminantClient.lean) | Rank-one maps over semirings; the elementary quotient determinant has trivial kernel over commutative local rings or Euclidean domains, not arbitrary rings |
 | Finite stabilization and rectangular blocks | [Stabilization](docs/ElementaryStabilization.md), [rectangular blocks](docs/RectangularBlockUnits.md), [rectangular unit switch](GeneralLinearGroups/RectangularUnitSwitch.lean), [zero-product units](GeneralLinearGroups/ZeroProductStabilization.lean) | Semiring stabilization is a *monoid hom on units*; the unit switch requires a `Ring` and `g = 1 + A * B`, but not `B * A = 0` |
 | Finite heterogeneous block units | [Block-triangular criterion](GeneralLinearGroups/BlockTriangularUnits.lean) | Strict range-chain in a `Preorder`, or a `≤` range-chain in a `PartialOrder`; ring sufficiency, semiring necessity under diagonal-matrix DF, and inverse support given invertibility and unit diagonals |
 | Presented elementary group | [Steinberg](docs/FiniteRankSteinberg.md) | Finite rank does not imply finite presentation over an arbitrary ring |
@@ -578,6 +595,9 @@ default graph. Use the Lean sources, guides and import clients for other results
 - Charles A. Weibel, *The K-book: An Introduction to Algebraic K-theory*
   (2013), Exercises I.1.10–I.1.12 and Chapter II, §2. Selected constructions
   draw on its mathematics, not a complete formalization of the book.
+  III.1.2.2 (field case) states `E_n(F) = SL_n(F)` for ranks at least one;
+  the Euclidean-domain extension uses Mathlib's well-founded Euclidean relation
+  and this library's unit-pivot diagonalization.
 - I. B. Fesenko and S. V. Vostokov, *Local Fields and Their Extensions*,
   second edition (2002), Chapter I, (5.3) and (5.4)(3), for principal-unit
   multiplication and its additive ideal-layer coordinates.

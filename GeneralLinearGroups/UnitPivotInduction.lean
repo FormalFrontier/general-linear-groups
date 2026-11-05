@@ -13,7 +13,10 @@ public import GeneralLinearGroups.RectangularUpperAction
 A unit pivot produced by an elementary left factor for every invertible matrix
 at every successor rank reduces the diagonalization problem to the invertible
 Schur residual. The premise is a property of the coefficient ring, not an
-unconditional existence result for elementary pivot factors.
+unconditional existence result for elementary pivot factors. Under the same
+premise, product-one diagonals give the determinant-one characterization of
+the elementary subgroup for arbitrary finite index types, including the empty
+type. Local-ring and Euclidean-domain generation use this shared closure step.
 -/
 
 set_option warningAsError true
@@ -84,5 +87,51 @@ theorem exists_elementary_diagonalization_of_unit_pivots
       apply Units.ext
       simpa only [Subgroup.coe_mul, Units.val_mul, corrected, M,
         Matrix.mul_assoc, diagonalUnit_val] using hfactor
+
+/-- If elementary left factors produce unit leading entries at every successor
+rank, the finite elementary subgroup is exactly the determinant-one subgroup,
+including for empty index types. -/
+theorem mem_elementarySubgroup_iff_det_eq_one_of_unit_pivots
+    (pivot : ∀ (rank : ℕ) (matrix : GL (Fin (rank + 1)) R),
+      ∃ factor : elementarySubgroup (Fin (rank + 1)) R,
+        IsUnit (((((factor : GL (Fin (rank + 1)) R) * matrix) :
+          GL (Fin (rank + 1)) R) : Matrix (Fin (rank + 1)) (Fin (rank + 1)) R) 0 0))
+    {ι : Type*} [Fintype ι] [DecidableEq ι] (g : GL ι R) :
+    g ∈ elementarySubgroup ι R ↔ Matrix.GeneralLinearGroup.det g = 1 := by
+  constructor
+  · intro hg
+    exact Matrix.det_elementarySubgroup_eq_one ⟨g, hg⟩
+  · intro hdet
+    let equiv : ι ≃ Fin (Fintype.card ι) := Fintype.equivOfCardEq (by simp)
+    let reindexed : GL (Fin (Fintype.card ι)) R := reindexEquiv R equiv g
+    have hdet' : Matrix.GeneralLinearGroup.det reindexed =
+        Matrix.GeneralLinearGroup.det g := by
+      apply Units.ext
+      change (Matrix.reindex equiv equiv (g : Matrix ι ι R)).det =
+        (g : Matrix ι ι R).det
+      exact Matrix.det_reindex_self equiv _
+    obtain ⟨left, right, diagonal, hfactor⟩ :=
+      exists_elementary_diagonalization_of_unit_pivots pivot reindexed
+    have hproduct : (∏ i, diagonal i) = 1 := by
+      apply Units.ext
+      have hmatrix := congrArg
+        (fun x : GL (Fin (Fintype.card ι)) R =>
+          (x : Matrix (Fin (Fintype.card ι)) (Fin (Fintype.card ι)) R)) hfactor
+      have hfactorDet := Matrix.det_eq_prod_of_elementary_diagonalization
+        (L := left) (Q := right)
+        (M := (reindexed : Matrix (Fin (Fintype.card ι)) (Fin (Fintype.card ι)) R))
+        (by simpa only [Units.val_mul, diagonalUnit_val] using hmatrix)
+      change (Units.coeHom R) (∏ i, diagonal i) = 1
+      rw [map_prod]
+      exact hfactorDet.symm.trans (congrArg Units.val (hdet'.trans hdet))
+    have hreindexed : reindexed ∈ elementarySubgroup (Fin (Fintype.card ι)) R := by
+      apply ((elementarySubgroup (Fin (Fintype.card ι)) R).mul_mem_cancel_left
+        left.property).mp
+      apply ((elementarySubgroup (Fin (Fintype.card ι)) R).mul_mem_cancel_right
+        right.property).mp
+      rw [hfactor]
+      exact diagonalUnit_mem_elementarySubgroup (Fintype.card ι) diagonal hproduct
+    have hback := reindexEquiv_mem_elementarySubgroup equiv.symm hreindexed
+    simpa only [reindexed, ← reindexEquiv_symm, MulEquiv.symm_apply_apply] using hback
 
 end Matrix.GeneralLinearGroup

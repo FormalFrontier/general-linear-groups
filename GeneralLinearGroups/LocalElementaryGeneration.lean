@@ -98,36 +98,8 @@ theorem exists_elementary_diagonalization_local {n : ℕ} (g : GL (Fin n) R) :
 private theorem mem_elementarySubgroup_iff_det_eq_one_fin {n : ℕ}
     (g : GL (Fin n) R) :
     g ∈ elementarySubgroup (Fin n) R ↔ Matrix.GeneralLinearGroup.det g = 1 := by
-  constructor
-  · intro hg
-    exact Matrix.det_elementarySubgroup_eq_one ⟨g, hg⟩
-  · intro hdet
-    obtain ⟨left, right, diagonal, hfactor⟩ := exists_elementary_diagonalization_local g
-    have hmatrix := congrArg
-      (fun x : GL (Fin n) R => (x : Matrix (Fin n) (Fin n) R)) hfactor
-    have hproduct : (∏ i, diagonal i) = 1 := by
-      apply Units.ext
-      have hfactorDet := Matrix.det_eq_prod_of_elementary_diagonalization
-        (L := left) (Q := right) (M := (g : Matrix (Fin n) (Fin n) R))
-        (by simpa only [Units.val_mul, diagonalUnit_val] using hmatrix)
-      change (Units.coeHom R) (∏ i, diagonal i) = 1
-      rw [map_prod]
-      exact hfactorDet.symm.trans (congrArg Units.val hdet)
-    have hdiagonal : diagonalUnit diagonal ∈ elementarySubgroup (Fin n) R :=
-      diagonalUnit_mem_elementarySubgroup n diagonal hproduct
-    have hg : g = (left : GL (Fin n) R)⁻¹ * diagonalUnit diagonal *
-        (right : GL (Fin n) R)⁻¹ := by
-      calc
-        g = ((left : GL (Fin n) R)⁻¹ *
-            ((left : GL (Fin n) R) * g * (right : GL (Fin n) R))) *
-              (right : GL (Fin n) R)⁻¹ := by group
-        _ = (left : GL (Fin n) R)⁻¹ * diagonalUnit diagonal *
-            (right : GL (Fin n) R)⁻¹ := by rw [hfactor]
-    rw [hg]
-    exact (elementarySubgroup (Fin n) R).mul_mem
-      ((elementarySubgroup (Fin n) R).mul_mem
-        ((elementarySubgroup (Fin n) R).inv_mem left.property) hdiagonal)
-      ((elementarySubgroup (Fin n) R).inv_mem right.property)
+  exact mem_elementarySubgroup_iff_det_eq_one_of_unit_pivots
+    (fun _ matrix => exists_elementary_unit_pivot_local matrix) g
 
 /-- Over a commutative local ring, the finite elementary subgroup is exactly
 the determinant-one subgroup, for arbitrary finite decidable index types. -/

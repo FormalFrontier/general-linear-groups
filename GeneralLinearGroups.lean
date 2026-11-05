@@ -70,6 +70,7 @@ public import GeneralLinearGroups.StableOpposite
 public import GeneralLinearGroups.StableElementaryOpposite
 public import GeneralLinearGroups.StableProduct
 public import GeneralLinearGroups.LocalElementaryGeneration
+public import GeneralLinearGroups.EuclideanElementaryGeneration
 
 /-!
 # General linear groups
@@ -120,6 +121,13 @@ elementary factors. Product-one diagonals are elementary. Elementary units
 depend continuously on coefficients over topological rings; under separately
 stated path-connectedness and open-unit assumptions, the elementary subgroup
 of the native finite special linear group equals its identity path component.
+
+Over a Euclidean domain, elementary row operations produce unit pivots without a
+chosen natural-valued norm. Hence finite elementary membership is equivalent to
+determinant one, including ranks zero and one, and the stable elementary quotient
+is naturally isomorphic to the coefficient units through the determinant and its
+rank-one section. The construction agrees with the local-ring equivalence when
+both hypotheses hold.
 
 The native dual-number layer identifies the actual GL, SL and scalar-unit
 reduction kernels over commutative rings with additive first-order coefficients,
